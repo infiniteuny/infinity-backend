@@ -38,7 +38,9 @@ class LandingController extends Controller
 
     public function event()
     {
-        return view('landing.event');
+        return view('landing.event')->with([
+            'config' => $this->config(),
+        ]);
     }
 
     public function team()
