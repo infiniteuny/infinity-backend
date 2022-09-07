@@ -32,210 +32,28 @@
       <div class="container">
         <div class="row justify-content-center text-center pt-5 mb-5" data-aos="fade-up">
           <div class="col-md-8  section-heading">
-            <h2 class="heading mb-3">PENGURUS INFINITE {{ $data['latestYear']->year }}</h2>
+            <h2 class="heading mb-3">PENGURUS INFINITE {{ $data[0]->period }}</h2>
           </div>
         </div>
 
         <!-- TEAMS ROW START  -->
         <div class="row">
-            @foreach ($data['organization'] as $item)
+            @foreach ($data as $item)
                 <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="100">
                     <div class="person">
-                        <a href="http://www.instagram.com/" target="blank" >
-                            <img src="{{ $item->avatar ? asset('storage/images').'/'.$data['latestYear']->year.'/'.$item->avatar : asset('storage/images/default.png') }}" alt="Image" class="img-fluid">
+                        <a href="http://www.instagram.com/{{ $item->instagram ? $item->instagram : 'infinite.uny' }}" target="blank" >
+                            <img src="{{ $item->photo }}" alt="Image" class="img-fluid">
                         </a>
                         <h3 style="color:black;">{{ $item->name }}</h3>
-                        <p class="position">{{ $item->position }}</p>
-                        <p>{{ $item->studyProgram.' '.$item->studyYear }}</p>
+                        <p class="position">{{ $item->division }}</p>
+                        <p>{{ $item->study_program.' '.$item->year }}</p>
                     </div>
                 </div>
             @endforeach
-          {{-- <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="person">
-              <a href="http://www.instagram.com/maulidinalif/" target="blank"> <img src="assets/images/alif.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Alifah Maulidin Nur Ikhsan</h3>
-              <p class="position">Ketua Divisi</p>
-              <p>Teknologi Informasi 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="person">
-              <a href="http://www.instagram.com/hajidahsaf_" target="blank"> <img src="assets/images/bila.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Hajidah Salsabila</h3>
-              <p class="position">Wakil Kepala Divisi</p>
-              <p>Pendidikan Kimia 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="person">
-              <a href="http://www.instagram.com/yuyul_31/" target="blank"> <img src="assets/images/yuli.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Yuli Setyowati</h3>
-              <p class="position">Admin</p>
-              <p>Matematika 2019</p>
-            </div>
-          </div>    --}}
         </div>
         <br> <br>
         <!-- TEAMS ROW END  -->
 
-        {{-- <!-- TEAMS ROW START  -->
-         <div class="row">
-           <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
-            <div class="person">
-              <a href="http://www.instagram.com/larasatilatifah/" target="blank"> <img src="assets/images/laras.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Larasati Nur Latifah</h3>
-              <p class="position">Admin</p>
-              <p>Teknologi Informasi 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="">
-            <div class="person">
-              <a href="http://www.instagram.com/salastanm" target="blank">  <img src="assets/images/salasta.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Salasta Nastika Maulidya</h3>
-              <p class="position">Staff AdminKeu</p>
-              <p>Pend. Teknik Informatika 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="person">
-              <a href="http://www.instagram.com/atul.id/" target="blank"> <img src="assets/images/anisatul.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Anisatul Afita</h3>
-              <p class="position">Staff AdminKeu</p>
-              <p>Pendidikan IPS 2020</p>
-            </div>
-          </div>
-          <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="person">
-              <a href="http://www.instagram.com/firsty_dian/" target="blank"> <img src="assets/images/firsty.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Firsty Dian Pratiwi</h3>
-              <p class="position">Staff AdminKeu</p>
-              <p>Teknologi Informasi 2020</p>
-            </div>
-          </div>    
-        </div>
-        <br> <br>
-        <!-- TEAMS ROW END  -->
-
-        <!-- TEAMS ROW START  -->
-        <div class="row">
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="">
-            <div class="person">
-              <a href="http://www.instagram.com/fahrul.site/" target="blank"> <img src="assets/images/fahrul.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Fahrul Ahmad Fauzi</h3>
-              <p class="position"> RESEARCH AND DEVELOPMENT</p>
-              <p>Pend. Teknik Informatika 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="person">
-              <a href="http://www.instagram.com/zulfikarisvhny/" target="blank"> <img src="assets/images/zulfikar.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Zulfikar Isvahany</h3>
-              <p class="position">STAFF 
-                RESEARCH AND DEVELOPMENT</p>
-              <p>Matematika 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="person">
-              <a href="http://www.instagram.com/dany_christian/" target="blank"> <img src="assets/images/dany.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Dany Christian</h3>
-              <p class="position">STAFF 
-                RESEARCH AND DEVELOPMENT</p>
-              <p>Teknologi Informasi 2020</p>
-            </div>
-          </div>
-        </div>
-        <br> <br>
-        <!-- TEAMS ROW END  -->
-
-        <!-- TEAMS ROW START  -->
-        <div class="row">
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="">
-            <div class="person">
-              <a href="http://www.instagram.com/mrif.45/" target="blank"> <img src="assets/images/adam.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Rifqi Muhammad Adam</h3>
-              <p class="position"> MEDIA AND INFORMATION</p>
-              <p>Pend. Teknik Informatika 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="person">
-              <a href="http://www.instagram.com/salsabilarizkip_/" target="blank"> <img src="assets/images/sabil.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Salsabila Rizki Prasasti</h3>
-              <p class="position">STAFF 
-                MEDIA AND INFORMATION</p>
-              <p>Pendidikan Fisika 2020</p>
-            </div>
-          </div>
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="person">
-              <a href="http://www.instagram.com/azizmu.ii/" target="blank"> <img src="assets/images/aziz.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Aziz Muzaki</h3>
-              <p class="position">STAFF 
-                MEDIA AND INFORMATION</p>
-              <p>Pendidikan Fisika 2019</p>
-            </div>
-          </div>
-        </div>
-        <br> <br>
-        <!-- TEAMS ROW END  -->
-
-        <!-- TEAMS ROW START  -->
-        <div class="row">
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="person">
-              <a href="http://www.instagram.com/menarawas/" target="blank"> <img src="assets/images/ltg.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Menara Lintang Was</h3>
-              <p class="position">
-                Entrepreneurship</p>
-              <p>Pend. Teknik Informatika 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="">
-            <div class="person">
-              <a href="http://www.instagram.com/ikhwanizh_/" target="blank"> <img src="assets/images/ikhwan.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Ikhwan Inzhagi Siswanto</h3>
-              <p class="position"> STAFF
-                Entrepreneurship</p>
-              <p>Teknologi Informasi 2020</p>
-            </div>
-          </div>
-          
-          <div class="col-lg-4 mb-3 mb-lg-2 col-md-4 text-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="person">
-              <a href="http://www.instagram.com/onion.zzzzz/" target="blank">  <img src="assets/images/aulia.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Aulia Azzahra</h3>
-              <p class="position">STAFF 
-                Entrepreneurship</p>
-              <p>Teknologi Informasi 2020</p>
-            </div>
-          </div>
-        </div>
-        <br> <br>
-        <!-- TEAMS ROW END  -->
-        
-        <!-- TEAMS ROW START  -->
-        <div class="row">
-          <div class="col-lg-6 mb-3 mb-lg-4 mb-md-2 col-md-6 text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="person">
-              <a href="http://www.instagram.com/ahistadrdiansyah_/" target="blank"> <img src="assets/images/dhista.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Dhista Dwi Nur Ardhiansyah</h3>
-              <p class="position">
-                Competition</p>
-              <p>Pend. Teknik Informatika 2019</p>
-            </div>
-          </div>
-          <div class="col-lg-6 mb-3 mb-lg-4 mb-md-2 col-md-6 text-center" data-aos="fade-up" data-aos-delay="">
-            <div class="person">
-              <a href="http://www.instagram.com/mujib.luth/" target="blank"> <img src="assets/images/mujib.png" alt="Image" class="img-fluid"> </a>
-              <h3 style="color:black;">Abdul Mujiburrohman Luthfi</h3>
-              <p class="position"> STAFF
-                Competition</p>
-              <p>D4 Teknik Elektronika 2019</p>
-            </div>
-          </div>
-        </div>
-        <!-- TEAMS ROW END  --> --}}
       </div>
 
       <div class="schedule-wrap2 clearfix">

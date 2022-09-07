@@ -5,23 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use App\Models\OrganizationYear;
 use App\Models\StudyProgram;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class LandingController extends Controller
 {
     public function index()
     {
-        $data['latestYear'] = OrganizationYear::orderBy('year', 'desc')->first();
-        $data['organization'] = Organization::orderBy('created_at', 'asc')->limit(4)->get();
 
-        foreach ($data['organization'] as $org) {
-            $studyYear = substr($org->student_id, 0, 2);
-            $studyProgram = StudyProgram::where('code', substr($org->student_id, 2, 5))->first();
-            $org->studyYear = '20' . $studyYear;
-            $org->studyProgram = $studyProgram->name;
-        }
+        $response = Http::get(config('app.api_url') . '/api' . '/commitees?populate=photo,division');
 
-        return view('landing.index')->with(['data' => $data]);
+        $data = collect(json_decode($response->body())->data)->map(function ($item) {
+            return (object)[
+                'name' => $item->attributes->name,
+                'study_program' => $item->attributes->study_program,
+                'year' => '20' . substr($item->attributes->student_id, 0, 2),
+                'period' => $item->attributes->period,
+                'instagram' => $item->attributes->instagram,
+                'division' => $item->attributes->division->data->attributes->name,
+                'priority' => $item->attributes->division->data->attributes->priority,
+                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+            ];
+        });
+
+        return view('landing.index')->with(['data' => $data->sortBy('priority')->take(4)]);
     }
 
     public function event()
@@ -31,16 +39,26 @@ class LandingController extends Controller
 
     public function team()
     {
-        $data['latestYear'] = OrganizationYear::orderBy('year', 'desc')->first();
-        $data['organization'] = Organization::orderBy('created_at', 'asc')->get();
+        $response = Http::get(config('app.api_url') . '/api' . '/commitees?populate=photo,division');
 
-        foreach ($data['organization'] as $org) {
-            $studyYear = substr($org->student_id, 0, 2);
-            $studyProgram = StudyProgram::where('code', substr($org->student_id, 2, 5))->first();
-            $org->studyYear = '20' . $studyYear;
-            $org->studyProgram = $studyProgram->name;
-        }
+        $data = collect(json_decode($response->body())->data)->map(function ($item) {
+            return (object)[
+                'name' => $item->attributes->name,
+                'study_program' => $item->attributes->study_program,
+                'year' => '20' . substr($item->attributes->student_id, 0, 2),
+                'period' => $item->attributes->period,
+                'instagram' => $item->attributes->instagram,
+                'division' => $item->attributes->division->data->attributes->name,
+                'priority' => $item->attributes->division->data->attributes->priority,
+                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+            ];
+        });
 
-        return view('landing.team')->with(['data' => $data]);
+        return view('landing.team')->with(['data' => $data->sortBy('priority')]);
+    }
+
+    public function member()
+    {
+        # code...
     }
 }

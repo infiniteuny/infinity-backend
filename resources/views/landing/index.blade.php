@@ -14,7 +14,7 @@
 
     <style>
         .intro-section::before{
-            background-image: url({{ asset('storage/images').'/'.$data['latestYear']->year.'/banner_2.png' }});
+            background-image: url({{ asset('storage/images').'/2022/banner_2.png' }});
         }
     </style>
     
@@ -92,7 +92,7 @@
     <!-- HOME SECTION END -->
 
     <!-- EVENT SECTION START -->
-    <div class="bgimg" id="events-section" style="background-image: url('{{ asset('storage/images').'/'.$data['latestYear']->year.'/banner_1.png' }}');"  data-stellar-background-ratio="0.9">
+    <div class="bgimg" id="events-section" style="background-image: url('{{ asset('storage/images').'/2022/banner_1.png' }}');"  data-stellar-background-ratio="0.9">
         <div class="container">
             <div class="row align-items-center justify-content-center text-center">
                 <div class="col-md-6 acara">
@@ -110,18 +110,18 @@
         <div class="container">
             <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
                 <div class="col-md-8 section-heading">
-                    <h2 class="heading mb-3">Pengurus INFINITE 2021</h2>
+                    <h2 class="heading mb-3">Pengurus INFINITE {{ $data[0]->period }}</h2>
                 </div>
             </div>
 
             <div class="row mb-4">
-                @foreach ($data['organization'] as $item)
+                @foreach ($data as $item)
                     <div class="col-lg-3 mb-4 mb-lg-0 col-md-6 text-center" data-aos="fade-up" data-aos-delay="">
                         <div class="person">
-                            <img src="{{ $item->avatar ? asset('storage/images').'/'.$data['latestYear']->year.'/'.$item->avatar : asset('storage/images/default.png') }}" alt="Image" class="img-fluid">
+                            <img src="{{ $item->photo }}" alt="Image" class="img-fluid">
                             <h3 style="color:black;">{{ $item->name }}</h3>
-                            <p class="position">{{ $item->position }}</p>
-                            <p>{{ $item->studyProgram.' '.$item->studyYear }}</p>
+                            <p class="position">{{ $item->division }}</p>
+                            <p>{{ $item->study_program.' '.$item->year }}</p>
                         </div>
                     </div>
                 @endforeach

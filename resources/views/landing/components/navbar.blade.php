@@ -31,11 +31,13 @@
                             <li><a href="{{ url('/') }}/#events-section" class="nav-link">Event</a></li>
                             <li><a href="{{ url('/') }}/#team-section" class="nav-link">Tim Kami</a></li>
                             <li><a href="{{ url('/') }}/#footer-section" class="nav-link">Kontak</a></li>
+                            {{-- <li><a href="{{ route('member') }}/" class="nav-link">Cek Keanggotaan</a></li> --}}
                         @elseif(Route::is('event') || Route::is('team'))
                             <li><a href="{{ url('/') }}/#about-section" style="color: #27835d;" class="nav-link">Tentang</a></li>
                             <li><a href="{{ url('/') }}/#events-section" style="color: #27835d;" class="nav-link">Event</a></li>
                             <li><a href="{{ url('/') }}/#team-section" style="color: #27835d;" class="nav-link">Tim Kami</a></li>
                             <li><a href="{{ url('/') }}/#footer-section" style="color: #27835d;" class="nav-link">Kontak</a></li>
+                            {{-- <li><a href="{{ route('member') }}/" style="color: #27835d;" class="nav-link">Cek Keanggotaan</a></li> --}}
                         @endif
                     </ul> 
                 </nav>

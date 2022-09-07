@@ -17,6 +17,7 @@ use App\Http\Controllers\LandingController;
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/event', [LandingController::class, 'event'])->name('event');
 Route::get('/team', [LandingController::class, 'team'])->name('team');
+Route::get('/member', [LandingController::class, 'team'])->name('member');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
