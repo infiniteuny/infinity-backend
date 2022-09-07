@@ -14,7 +14,7 @@
 
     <style>
         .intro-section::before{
-            background-image: url({{ asset('storage/images').'/2022/banner_2.png' }});
+            background-image: url({{ config('app.api_url').$config['LANDING_BG_1'] }});
         }
     </style>
     
@@ -92,7 +92,7 @@
     <!-- HOME SECTION END -->
 
     <!-- EVENT SECTION START -->
-    <div class="bgimg" id="events-section" style="background-image: url('{{ asset('storage/images').'/2022/banner_1.png' }}');"  data-stellar-background-ratio="0.9">
+    <div class="bgimg" id="events-section" style="background-image: url('{{ config('app.api_url').$config['LANDING_BG_2'] }}');"  data-stellar-background-ratio="0.9">
         <div class="container">
             <div class="row align-items-center justify-content-center text-center">
                 <div class="col-md-6 acara">
@@ -110,7 +110,7 @@
         <div class="container">
             <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
                 <div class="col-md-8 section-heading">
-                    <h2 class="heading mb-3">Pengurus INFINITE {{ $data[0]->period }}</h2>
+                    <h2 class="heading mb-3">Pengurus INFINITE {{ $data[0]->cabinet }}</h2>
                 </div>
             </div>
 

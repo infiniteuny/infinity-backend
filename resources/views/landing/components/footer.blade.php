@@ -4,15 +4,15 @@
         <div class="row">
             <div class="col-md-6 mb-5">
                 <h3 class="text-dark">Temukan Kami</h3>
-                <a href="https://g.page/infiniteuny?share">Basecamp Infinite UNY <br> Gedung Aula Fakultas Teknik UNY <br> Karangmalang, Caturtunggal, Depok, Sleman, Yogyakarta, 55281 </a>
+                <a href="{{ $config['ADDRESS_URL'] }}">{!! $config['ADDRESS_NAME'] !!} </a>
             </div>
 
             <div class="col-md-6">
                 <h3 class="text-dark">SOCIAL MEDIA</h3>
-                <a href="https://discord.gg/AQqRfgErA8" target="blank" class="fab fa-discord"></a><span> &nbsp;Infinite UNY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-                <a href="https://twitter.com/infinite_uny" target="blank" class="fab fa-twitter"></a><span> &nbsp;@infinite_uny&nbsp;&nbsp;</span> <br><br>
-                <a href="https://www.instagram.com/infinite.uny/" target="blank" class="fab fa-instagram"></a><span> &nbsp;@infinite.uny&nbsp;&nbsp;&nbsp;</span>
-                <a href="http://wa.infiniteuny.id/" target="blank" class="fab fa-whatsapp"></a><span> &nbsp;0896-8600-1040</span>
+                <a href="{{ $config['DISCORD_URL'] }}" target="blank" class="fab fa-discord"></a><span> &nbsp;{{ $config['DISCORD_NAME'] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+                <a href="{{ $config['TWITTER_URL'] }}" target="blank" class="fab fa-twitter"></a><span> &nbsp;{{ $config['TWITTER_NAME'] }}&nbsp;&nbsp;</span> <br><br>
+                <a href="{{ $config['INSTAGRAM_URL'] }}" target="blank" class="fab fa-instagram"></a><span> &nbsp;{{ $config['INSTAGRAM_NAME'] }}&nbsp;&nbsp;&nbsp;</span>
+                <a href="{{ $config['WHATSAPP_URL'] }}" target="blank" class="fab fa-whatsapp"></a><span> &nbsp;{{ $config['WHATSAPP_NAME'] }}</span>
             </div>
         </div>
         <div class="row mt-5 text-center footer-end">

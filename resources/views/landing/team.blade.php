@@ -32,7 +32,7 @@
       <div class="container">
         <div class="row justify-content-center text-center pt-5 mb-5" data-aos="fade-up">
           <div class="col-md-8  section-heading">
-            <h2 class="heading mb-3">PENGURUS INFINITE {{ $data[0]->period }}</h2>
+            <h2 class="heading mb-3">PENGURUS INFINITE {{ $data[0]->cabinet }}</h2>
           </div>
         </div>
 
