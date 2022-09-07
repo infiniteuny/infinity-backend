@@ -1,0 +1,37 @@
+name: Laravel Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release_production:
+    name: Release web to production
+    if: startsWith(github.event.head_commit.message, 'release-production:')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      
+      - name: Deploy to production with SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script_stop: true
+          script: |
+            eval "$(ssh-agent -s)"
+            ssh-add .ssh/id_rsa_hello_infinite
+            cd public_html
+            git stash
+            git pull
+            git stash drop
+            composer update
+            composer install
+            php artisan optimize
+            php artisan migrate --force
