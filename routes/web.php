@@ -20,11 +20,17 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
+
 Route::get('/event', [LandingController::class, 'event'])->name('event');
-Route::get('/event-detail', [LandingController::class, 'eventDetail'])->name('event.detail');
+Route::get('/event-detail/{event_id}', [LandingController::class, 'eventDetail'])->name('event.detail');
+
 Route::get('/member', [LandingController::class, 'member'])->name('member');
+Route::post('/member', [LandingController::class, 'memberChecker'])->name('member.check');
+
+Route::get('/team', [LandingController::class, 'team'])->name('team');
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+Route::get('/leaderboard/{member_id}', [LeaderboardController::class, 'detail'])->name('leaderboard.detail');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

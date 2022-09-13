@@ -656,9 +656,9 @@ button.tm-button::after {
 .tm-service-image-1.is-visible, .tm-service-image-2.is-visible, .tm-service-image-3.is-visible {
   visibility: visible;
   opacity: 1;
-  -webkit-transform: scale(1) translate(-50%, -50%);
-  -ms-transform: scale(1) translate(-50%, -50%);
-  transform: scale(1) translate(-50%, -50%);
+  -webkit-transform: scale(1.5) translate(-50%, -50%);
+  -ms-transform: scale(1.5) translate(-50%, -50%);
+  transform: scale(1.5) translate(-50%, -50%);
   -webkit-transition-delay: 0.5s;
   -o-transition-delay: 0.5s;
   transition-delay: 0.5s;
@@ -727,4 +727,29 @@ button.tm-button::after {
 
 .table td, .table th {
   vertical-align: middle;
+}
+
+.tm-contact-block-content P a:hover {
+  color: #27835d;
+}
+
+.points-info:hover {
+  color: #27835d;
+}
+
+.points-info {
+  color: #686b77;
+}
+
+.tm-blog-image {
+  max-height: 220px;
+}
+
+.tm-blog-meta a:hover {
+  color: #27835d;
+}
+
+.blogitem-tags ul li a:hover, .blogitem-share ul li a:hover {
+  background: #27835d;
+  border-color: #27835d;
 }

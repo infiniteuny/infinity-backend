@@ -70,25 +70,25 @@
                 <div class="col-md-5">
                     <ul class="tm-footer-social">
                         <li>
-                            <a href="#">
+                            <a href="{{ $config['DISCORD_URL'] }}">
                                 <i class="fa-brands fa-discord"></i>
                                 <i class="fa-brands fa-discord"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ $config['TWITTER_URL'] }}">
                                 <i class="zmdi zmdi-twitter"></i>
                                 <i class="zmdi zmdi-twitter"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ $config['INSTAGRAM_URL'] }}">
                                 <i class="zmdi zmdi-instagram"></i>
                                 <i class="zmdi zmdi-instagram"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ $config['WHATSAPP_URL'] }}">
                                 <i class="zmdi zmdi-whatsapp"></i>
                                 <i class="zmdi zmdi-whatsapp"></i>
                             </a>

@@ -5,7 +5,8 @@
     <!-- Heroslider Area -->
     <div id="tm-area-heroslider" class="tm-heroslider">
         <div class="tm-heroslider-inner">
-            <img src="assets/images/heroslider-overlay-shape.png" alt="heroslider ovelay" class="tm-heroslider-ovelayshape">
+            <img src="{{ asset('assets/images/heroslider-overlay-shape.png') }}" alt="heroslider ovelay"
+                class="tm-heroslider-ovelayshape">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xl-8 col-lg-7 order-2 order-lg-1">
@@ -26,7 +27,7 @@
                     </div>
                     <div class="col-xl-4 col-lg-5 order-1 order-lg-2">
                         <div class="tm-heroslider-mobileshow">
-                            <img src="assets/images/inf.png" alt="appmyil logo 3d">
+                            <img src="{{ asset('assets/images/inf.png') }}" alt="appmyil logo 3d">
                             <div class="tm-heroslider-mobileshowanim">
                                 <span></span>
                                 <span></span>
@@ -130,18 +131,18 @@
                     <div class="col-lg-6">
                         <div class="tm-about-content">
                             <h4>INFINITE UNY?</h4>
-                            <h6>A mobile app or mobile application is a computer program designed to run on a
-                                mobile device.</h6>
+                            <h6><i>Let's Make Infinite Technology</i></h6>
                             <p>INFINITE merupakan Divisi Teknologi Informasi yang berada dibawah naungan UKM Rekayasa
                                 Teknologi UNY. Sejak tahun 2014, INFINITE mewadahi mahasiswa dari berbagai jurusan yang
                                 memiliki minat dan bakat di bidang Teknologi Informasi.</p>
                             <ul class="stylish-list">
-                                <li><i class="zmdi zmdi-check"></i> Apps are generally downloaded from application.</li>
-                                <li><i class="zmdi zmdi-check"></i> Most mobile devices are sold with several apps
-                                    bundled.</li>
-                                <li><i class="zmdi zmdi-check"></i> Mobile apps were originally offered for general
-                                    productivity.</li>
-                                <li><i class="zmdi zmdi-check"></i> App presents the service's technology news.</li>
+                                <li><i class="zmdi zmdi-check"></i> Berkolaborasi menciptakan karya dalam bentuk mobile,
+                                    apps, web, iot, ml untuk menjawab permasalahan di masyarakat.</li>
+                                <li><i class="zmdi zmdi-check"></i> Kesempatan mengikuti lomba baik skala nasional dan
+                                    internasional.</li>
+                                <li><i class="zmdi zmdi-check"></i> Kesempatan mengembangkan cv dan portfolio.</li>
+                                <li><i class="zmdi zmdi-check"></i> BC 24 jam.</li>
+                                <li><i class="zmdi zmdi-check"></i> Networking.</li>
                             </ul>
                             <a href="#" class="tm-button"><span>Read More</span></a>
                         </div>
@@ -181,6 +182,7 @@
                                         <h4>Hustler</h4>
                                         <p>Seseorang yang memiliki peran dalam memperkenalkan dan memasarkan produk kepada
                                             konsumen.</p>
+                                        <p>Skill: Management, Negotiation, Writing, Critical Thinking</p>
                                     </div>
                                 </div>
                             </div>
@@ -201,6 +203,7 @@
                                         <h4>Hipster</h4>
                                         <p>Seseorang yang memiliki peran dalam menyajikan dan memastikan keestetikan
                                             tampilan dari sebuah produk.</p>
+                                        <p>Skill: Design, Copywriting, Research, Ideation</p>
                                     </div>
                                 </div>
                             </div>
@@ -221,6 +224,7 @@
                                         <h4>Hacker</h4>
                                         <p>Seseorang yang memiliki peran dalam mengembangkan teknologi yang ada dalam produk
                                             (coding).</p>
+                                        <p>Skill: Mobile Apps, Web Apps, IoT, Network Security</p>
                                     </div>
                                 </div>
                             </div>
@@ -231,13 +235,13 @@
                     <div class="col-lg-6">
                         <div class="tm-service-image">
                             <div class="tm-service-image-1 is-visible">
-                                <img src="assets/images/char-hustler.svg" alt="hustler">
+                                <img src="{{ asset('assets/images/char-hustler.svg') }}" alt="hustler">
                             </div>
                             <div class="tm-service-image-2">
-                                <img src="assets/images/char-hipster.svg" alt="hipster">
+                                <img src="{{ asset('assets/images/char-hipster.svg') }}" alt="hipster">
                             </div>
                             <div class="tm-service-image-3">
-                                <img src="assets/images/char-hacker.svg" alt="hacker">
+                                <img src="{{ asset('assets/images/char-hacker.svg') }}" alt="hacker">
                             </div>
                             <div class="tm-service-mobileshowanim">
                                 <span></span>
@@ -254,7 +258,7 @@
         <!-- Team Member Area -->
         <div id="tm-area-team" class="tm-team-area tm-section tm-padding-section bg-grey">
             <div class="tm-team-areabgshape">
-                <img src="assets/images/team-area-bgshape.png" alt="appmyil bg shape">
+                <img src="{{ asset('assets/images/team-area-bgshape.png') }}" alt="appmyil bg shape">
             </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -298,7 +302,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="tm-sectiontitle text-center">
-                            <a href="#" class="btn btn-outline-success more-team">Selengkapnya</a>
+                            <a href="{{ route('team') }}" class="btn btn-outline-success more-team">Selengkapnya</a>
                         </div>
                     </div>
                 </div>
@@ -309,14 +313,14 @@
         <!-- Video & Funfact Area -->
         <div id="tm-area-video" class="tm-video-funfact-area tm-section tm-padding-section bg-grey">
             <div class="tm-video-funfact-bgshape">
-                <img src="assets/images/funfact-bg-shape.png" alt="bg shape">
+                <img src="{{ asset('assets/images/funfact-bg-shape.png') }}" alt="bg shape">
             </div>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="tm-videobox tm-videobox-circle tm-funfact-videobox">
-                            <img src="assets/images/video-thumb.svg" alt="appmyil video image">
-                            <a href="https://www.youtube.com/watch?v=mHUOCxVT5ro" data-fancybox="video"><i
+                            <img src="{{ asset('assets/images/video-thumb.svg') }}" alt="appmyil video image">
+                            <a href="{{ $config['PROFILE_VIDEO_URL'] }}" data-fancybox="video"><i
                                     class="flaticon-play-button"></i></a>
                             <span class="tm-videobox-roundicon"></span>
                         </div>
@@ -347,8 +351,8 @@
                                     </span>
                                     <div class="tm-funfact-content">
                                         <span class="tm-funfact-number"><span class="odometer"
-                                                data-count-to="1000"></span>+</span>
-                                        <h4>Total Member Achivement</h4>
+                                                data-count-to="{{ $count['achievement'] }}"></span>+</span>
+                                        <h4>Total Member Achievements</h4>
                                     </div>
                                 </div>
                             </div>
@@ -362,8 +366,8 @@
                                     </span>
                                     <div class="tm-funfact-content">
                                         <span class="tm-funfact-number"><span class="odometer"
-                                                data-count-to="100"></span>+</span>
-                                        <h4>Members</h4>
+                                                data-count-to="{{ $count['member'] }}"></span>+</span>
+                                        <h4>Active Members</h4>
                                     </div>
                                 </div>
                             </div>
@@ -394,13 +398,14 @@
         <!-- Screenshot Slideshow Area -->
         <div id="tm-area-screenshots" class="tm-screenshot-area tm-section tm-padding-section bg-white">
             <div class="tm-screenshots-bgshape">
-                <img src="assets/images/screenshot-background-shape.png" alt="screenshot background shape">
+                <img src="{{ asset('assets/images/screenshot-background-shape.png') }}"
+                    alt="screenshot background shape">
             </div>
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="tm-sectiontitle text-center">
-                            <h2>Portofolio Kami</h2>
+                            <h2>Member Products</h2>
                             <span class="tm-sectiontitle-divider"><i class="zmdi zmdi-fullscreen"></i></span>
                         </div>
                     </div>
@@ -450,7 +455,7 @@
         <!-- Testimonial Area -->
         <div id="tm-area-testimonial" class="tm-testimonial-area tm-section tm-padding-section bg-white">
             <div class="tm-testimonial-bgshape">
-                <img src="assets/images/testimonial-bg-shape.png" alt="appmyil bg shape">
+                <img src="{{ asset('assets/images/testimonial-bg-shape.png') }}" alt="appmyil bg shape">
             </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -663,7 +668,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-5">
                         <div class="tm-faq-image">
-                            <img src="assets/images/faq-image.svg" alt="faq image">
+                            <img src="{{ asset('assets/images/faq-image.svg') }}" alt="faq image">
                         </div>
                     </div>
                     <div class="col-lg-7">
@@ -676,17 +681,16 @@
                                         <button class="btn btn-link" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse1" aria-expanded="true"
                                             aria-controls="tm-accordion1-collapse1">
-                                            How can I download the app ?
+                                            Bagaimana cara menjadi anggota Infinite?
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="tm-accordion1-collapse1" class="collapse show"
                                     aria-labelledby="tm-accordion1-heading1" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>An App is a term to describe a web-based program. These web-based or
-                                            mobile applications perform a specific task for the user. website where
-                                            one can download these small programs for use on mobile devices such as
-                                            a Smart phone.</p>
+                                        <p>Mengikuti pendaftaran penerima anggota baru rekayasa teknologi, mengikuti seluruh
+                                            tahapan seleksi, dan memilih Infinite sebagai divisi yang diinginkan. Jangan
+                                            lupa ya, karena PAB hanya dibuka satu kali se tahun</p>
                                     </div>
                                 </div>
                             </div>
@@ -697,21 +701,14 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse2" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse2">
-                                            How can I install the app ?
+                                            Dimana lokasi BC Infinite?
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="tm-accordion1-collapse2" class="collapse"
                                     aria-labelledby="tm-accordion1-heading2" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>An App is a term to describe a web-based program. These web-based or
-                                            mobile applications perform a specific task for the user. website where
-                                            one can download these small programs for use on mobile devices such as
-                                            a Smart phone.</p>
-                                        <ul>
-                                            <li>Libero exercitationem omnis blanditiis ea quo et rem.</li>
-                                            <li>Beatae veritatis aliquid vel quisquam saepe incidunt.</li>
-                                        </ul>
+                                        <p>Gedung Aula Fakultas Teknik UNY, belakang LPPM Universitas Negeri Yogyakarta.</p>
                                     </div>
                                 </div>
                             </div>
@@ -722,17 +719,14 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse3" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse3">
-                                            How can I active all the features ?
+                                            Kapan BC buka dan tutup?
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="tm-accordion1-collapse3" class="collapse"
                                     aria-labelledby="tm-accordion1-heading3" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>An App is a term to describe a web-based program. These web-based or
-                                            mobile applications perform a specific task for the user. website where
-                                            one can download these small programs for use on mobile devices such as
-                                            a Smart phone.</p>
+                                        <p>Untuk keperluan riset BC Infinite buka 24/7 ya</p>
                                     </div>
                                 </div>
                             </div>
@@ -743,17 +737,15 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse4" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse4">
-                                            What platform should we target?
+                                            Apakah anggota lama perlu melakukan pendaftaran kembali ketika PAB berlangsung?
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="tm-accordion1-collapse4" class="collapse"
                                     aria-labelledby="tm-accordion1-heading4" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>An App is a term to describe a web-based program. These web-based or
-                                            mobile applications perform a specific task for the user. website where
-                                            one can download these small programs for use on mobile devices such as
-                                            a Smart phone.</p>
+                                        <p>Anggota lama tidak perlu melakukan pendaftaran PAB Infinite kembali, cukup
+                                            melakukan daftar ulang di website.</p>
                                     </div>
                                 </div>
                             </div>
@@ -764,17 +756,15 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse5" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse5">
-                                            Do I have to buy the Mobile App?
+                                            Bagaimana cara mengikuti lomba, mencari anggota team, dan mencari dosen
+                                            pembimbing?
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="tm-accordion1-collapse5" class="collapse"
                                     aria-labelledby="tm-accordion1-heading5" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>An App is a term to describe a web-based program. These web-based or
-                                            mobile applications perform a specific task for the user. website where
-                                            one can download these small programs for use on mobile devices such as
-                                            a Smart phone.</p>
+                                        <p>Carane pie?.</p>
                                     </div>
                                 </div>
                             </div>
@@ -785,12 +775,50 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse6" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse6">
-                                            Will I need to test my app fully?
+                                            Saya masih bingung dalam pengembangan karya saya, apa saya bisa melakukan
+                                            konsultasi?
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="tm-accordion1-collapse6" class="collapse"
                                     aria-labelledby="tm-accordion1-heading6" data-parent="#tm-accordion1">
+                                    <div class="card-body">
+                                        <p>Tentu! dapat langsung menghubungi kontak Infinite dibagian bawah halaman ini ya.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="tm-accordion1-heading7">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                            data-target="#tm-accordion1-collapse7" aria-expanded="false"
+                                            aria-controls="tm-accordion1-collapse7">
+                                            Bagaimana cara mengajukan pendanaan riset?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="tm-accordion1-collapse7" class="collapse"
+                                    aria-labelledby="tm-accordion1-heading7" data-parent="#tm-accordion1">
+                                    <div class="card-body">
+                                        <p>Silahkan menghubungi kontak di bagian bawah halaman ini.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="tm-accordion1-heading8">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                            data-target="#tm-accordion1-collapse8" aria-expanded="false"
+                                            aria-controls="tm-accordion1-collapse8">
+                                            Bagaimana cara bekerja sama?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="tm-accordion1-collapse8" class="collapse"
+                                    aria-labelledby="tm-accordion1-heading8" data-parent="#tm-accordion1">
                                     <div class="card-body">
                                         <p>An App is a term to describe a web-based program. These web-based or
                                             mobile applications perform a specific task for the user. website where
@@ -810,33 +838,34 @@
 
         <!-- Downlaod Area -->
         {{-- <div id="tm-area-download" class="tm-downlaod-area tm-section tm-padding-section bg-gradient">
-        <div class="tm-download-bgshape">
-            <img src="assets/images/download-bgshape.png" alt="bg shape">
-        </div>
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="tm-download-content">
-                        <img src="assets/images/logo-white.png" alt="appmyil">
-                        <h4>Get The App</h4>
-                        <h3>It’s Free to Download for Everyone</h3>
-                        <div class="tm-buttongroup">
-                            <a href="#" class="tm-button tm-button-lg tm-button-white"><i class="zmdi zmdi-android"></i><span>Google
-                                    Play</span></a>
-                            <a href="#" class="tm-button tm-button-lg tm-button-white tm-button-transparent"><i
-                                    class="zmdi zmdi-apple"></i><span>IOS App Store</span></a>
+            <div class="tm-download-bgshape">
+                <img src="assets/images/download-bgshape.png" alt="bg shape">
+            </div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="tm-download-content">
+                            <img src="assets/images/logo-white.png" alt="appmyil">
+                            <h4>Get The App</h4>
+                            <h3>It’s Free to Download for Everyone</h3>
+                            <div class="tm-buttongroup">
+                                <a href="#" class="tm-button tm-button-lg tm-button-white"><i
+                                        class="zmdi zmdi-android"></i><span>Google
+                                        Play</span></a>
+                                <a href="#" class="tm-button tm-button-lg tm-button-white tm-button-transparent"><i
+                                        class="zmdi zmdi-apple"></i><span>IOS App Store</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="tm-download-graph text-center">
+                            <h5>Download Statics (Last 6 month)</h5>
+                            <canvas id="downloadgraph" height="185"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="tm-download-graph text-center">
-                        <h5>Download Statics (Last 6 month)</h5>
-                        <canvas id="downloadgraph" height="185"></canvas>
-                    </div>
-                </div>
             </div>
-        </div>
-    </div> --}}
+        </div> --}}
         <!--// Downlaod Area -->
 
         <!-- Subscribe Area -->
@@ -883,92 +912,35 @@
                 </div>
                 <div class="row tm-blog-slider tm-slider-arrow">
 
-                    <!-- Single Blog -->
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="tm-blog">
-                            <div class="tm-blog-topside">
-                                <div class="tm-blog-image">
-                                    <img src="assets/images/blog-image-1.jpg" alt="appmyil blog image">
+                    {{-- @for ($i = 0; $i < 4; $i++) --}}
+                    @foreach ($events as $event)
+                        <!-- Single Blog -->
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="tm-blog">
+                                <div class="tm-blog-topside">
+                                    <div class="tm-blog-image">
+                                        <img src="{{ $event->media ?: 'assets/images/blog-image-1.jpg' }}"
+                                            alt="appmyil blog image">
+                                    </div>
+                                    <span
+                                        class="tm-blog-date">{{ Carbon\Carbon::parse($event->published_at)->format('F d, Y') }}</span>
                                 </div>
-                                <span class="tm-blog-date">September 16, 2019</span>
-                            </div>
-                            <div class="tm-blog-content">
-                                <h4><a href="blog-details.html">How To Active New Features In Current App?</a></h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipis
-                                    cing elit. Nunc mauris arcu, lobortis id interdum vitae, interdum eget elit.
-                                    Curabitur quis urna nulla. Suspendisse potenti.</p>
-                                <a href="blog-details.html" class="tm-button tm-button-sm tm-button-dark"><span>Read
-                                        more</span></a>
+                                <div class="tm-blog-content">
+                                    <h4><a
+                                            href="{{ route('event.detail', $event->id) }}">{{ strlen($event->title) > 40 ? substr($event->title, 0, 40) . '...' : $event->title }}</a>
+                                    </h4>
+                                    <p>{!! strlen(str_replace('&nbsp;', '', strip_tags($event->content))) > 150
+                                        ? substr(str_replace('&nbsp;', '', strip_tags($event->content)), 0, 150) . '...'
+                                        : str_replace('&nbsp;', '', strip_tags($event->content)) !!}</p>
+                                    <a href="{{ route('event.detail', $event->id) }}"
+                                        class="tm-button tm-button-sm tm-button-dark"><span>Read
+                                            more</span></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--// Single Blog -->
-
-                    <!-- Single Blog -->
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="tm-blog">
-                            <div class="tm-blog-topside">
-                                <div class="tm-blog-image">
-                                    <img src="assets/images/blog-image-2.jpg" alt="appmyil blog image">
-                                </div>
-                                <span class="tm-blog-date">December 16, 2019</span>
-                            </div>
-                            <div class="tm-blog-content">
-                                <h4><a href="blog-details.html">Developing apps for mobile
-                                        devices</a></h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipis
-                                    cing elit. Nunc mauris arcu, lobortis id interdum vitae, interdum eget elit.
-                                    Curabitur quis urna nulla. Suspendisse potenti.</p>
-                                <a href="blog-details.html" class="tm-button tm-button-sm tm-button-dark"><span>Read
-                                        more</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// Single Blog -->
-
-                    <!-- Single Blog -->
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="tm-blog">
-                            <div class="tm-blog-topside">
-                                <div class="tm-blog-image">
-                                    <img src="assets/images/blog-image-3.jpg" alt="appmyil blog image">
-                                </div>
-                                <span class="tm-blog-date">September 16, 2019</span>
-                            </div>
-                            <div class="tm-blog-content">
-                                <h4><a href="blog-details.html">Mobile applications are first
-                                        tested within the development</a></h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipis
-                                    cing elit. Nunc mauris arcu, lobortis id interdum vitae, interdum eget elit.
-                                    Curabitur quis urna nulla. Suspendisse potenti.</p>
-                                <a href="blog-details.html" class="tm-button tm-button-sm tm-button-dark"><span>Read
-                                        more</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// Single Blog -->
-
-                    <!-- Single Blog -->
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="tm-blog">
-                            <div class="tm-blog-topside">
-                                <div class="tm-blog-image">
-                                    <img src="assets/images/blog-image-3.jpg" alt="appmyil blog image">
-                                </div>
-                                <span class="tm-blog-date">September 16, 2019</span>
-                            </div>
-                            <div class="tm-blog-content">
-                                <h4><a href="blog-details.html">Mobile applications are first
-                                        tested within the development</a></h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipis
-                                    cing elit. Nunc mauris arcu, lobortis id interdum vitae, interdum eget elit.
-                                    Curabitur quis urna nulla. Suspendisse potenti.</p>
-                                <a href="blog-details.html" class="tm-button tm-button-sm tm-button-dark"><span>Read
-                                        more</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// Single Blog -->
+                        <!--// Single Blog -->
+                    @endforeach
+                    {{-- @endfor --}}
 
                 </div>
                 <br>
@@ -988,7 +960,7 @@
         <!-- Contact Area -->
         <div id="tm-area-contact" class="tm-contact-area tm-section tm-padding-section bg-white">
             <div class="tm-contact-bgshape">
-                <img src="assets/images/bg-shape-contact.png" alt="contact shape">
+                <img src="{{ asset('assets/images/bg-shape-contact.png') }}" alt="contact shape">
             </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -1011,12 +983,8 @@
                                         required="required">
                                     <span class="tm-form-animatedline"></span>
                                 </div>
-                                <div class="tm-form-field tm-form-fieldhalf">
+                                <div class="tm-form-field">
                                     <input type="text" name="subject" placeholder="Subject" required="required">
-                                    <span class="tm-form-animatedline"></span>
-                                </div>
-                                <div class="tm-form-field tm-form-fieldhalf">
-                                    <input name="phone" type="text" placeholder="Phone">
                                     <span class="tm-form-animatedline"></span>
                                 </div>
                                 <div class="tm-form-field">
@@ -1038,8 +1006,9 @@
                                 </span>
                                 <div class="tm-contact-block-content">
                                     <h6>Basecamp Infinite UNY</h6>
-                                    <p>Gedung Aula Fakultas Teknik UNY Karangmalang, Caturtunggal, Depok, Sleman,
-                                        Yogyakarta, 55281</p>
+                                    <a href="{{ $config['ADDRESS_URL'] }}">
+                                        <p>{!! $config['ADDRESS_NAME'] !!}</p>
+                                    </a>
                                 </div>
                             </div>
                             <div class="tm-contact-block">
@@ -1048,7 +1017,7 @@
                                 </span>
                                 <div class="tm-contact-block-content">
                                     <h6>Whatsapp</h6>
-                                    <p><a href="http://wa.me/6288295389203">(+62) - 882 953 892 03</a></p>
+                                    <p><a href="{{ $config['WHATSAPP_URL'] }}">{{ $config['WHATSAPP_NAME'] }}</a></p>
                                 </div>
                             </div>
                             <div class="tm-contact-block">
@@ -1057,8 +1026,12 @@
                                 </span>
                                 <div class="tm-contact-block-content">
                                     <h6>Email</h6>
-                                    <p><a href="mailto:infiniteuny@gmail.com">infiniteuny@gmail.com</a></p>
-                                    <p><a href="mailto:infinite@student.uny.ac.id">infinite@student.uny.ac.id</a></p>
+                                    <p><a
+                                            href="mailto:{{ strip_tags($config['EMAIL_1']) }}">{{ strip_tags($config['EMAIL_1']) }}</a>
+                                    </p>
+                                    <p><a
+                                            href="mailto:{{ strip_tags($config['EMAIL_2']) }}">{{ strip_tags($config['EMAIL_2']) }}</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
