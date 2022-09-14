@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('css')
+    <style>
+        .tm-sectiontitle-divider::before,
+        .tm-sectiontitle-divider::after {
+            background-image: url({{ asset('assets/images/title-shape.png') }});
+        }
+    </style>
+@endsection
 
 @section('content')
     <!-- Heroslider Area -->
@@ -144,7 +152,7 @@
                                 <li><i class="zmdi zmdi-check"></i> BC 24 jam.</li>
                                 <li><i class="zmdi zmdi-check"></i> Networking.</li>
                             </ul>
-                            <a href="#" class="tm-button"><span>Read More</span></a>
+                            {{-- <a href="#" class="tm-button"><span>Read More</span></a> --}}
                         </div>
                     </div>
                 </div>
@@ -681,7 +689,7 @@
                                         <button class="btn btn-link" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse1" aria-expanded="true"
                                             aria-controls="tm-accordion1-collapse1">
-                                            Bagaimana cara menjadi anggota Infinite?
+                                            Bagaimana cara menjadi anggota INFINITE?
                                         </button>
                                     </h5>
                                 </div>
@@ -689,7 +697,7 @@
                                     aria-labelledby="tm-accordion1-heading1" data-parent="#tm-accordion1">
                                     <div class="card-body">
                                         <p>Mengikuti pendaftaran penerima anggota baru rekayasa teknologi, mengikuti seluruh
-                                            tahapan seleksi, dan memilih Infinite sebagai divisi yang diinginkan. Jangan
+                                            tahapan seleksi, dan memilih INFINITE sebagai divisi yang diinginkan. Jangan
                                             lupa ya, karena PAB hanya dibuka satu kali se tahun</p>
                                     </div>
                                 </div>
@@ -701,7 +709,7 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse2" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse2">
-                                            Dimana lokasi BC Infinite?
+                                            Dimana lokasi BC INFINITE?
                                         </button>
                                     </h5>
                                 </div>
@@ -726,7 +734,7 @@
                                 <div id="tm-accordion1-collapse3" class="collapse"
                                     aria-labelledby="tm-accordion1-heading3" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>Untuk keperluan riset BC Infinite buka 24/7 ya</p>
+                                        <p>Untuk keperluan riset BC INFINITE buka 24/7 ya!</p>
                                     </div>
                                 </div>
                             </div>
@@ -744,7 +752,7 @@
                                 <div id="tm-accordion1-collapse4" class="collapse"
                                     aria-labelledby="tm-accordion1-heading4" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>Anggota lama tidak perlu melakukan pendaftaran PAB Infinite kembali, cukup
+                                        <p>Anggota lama tidak perlu melakukan pendaftaran PAB INFINITE kembali, cukup
                                             melakukan daftar ulang di website.</p>
                                     </div>
                                 </div>
@@ -764,7 +772,19 @@
                                 <div id="tm-accordion1-collapse5" class="collapse"
                                     aria-labelledby="tm-accordion1-heading5" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>Carane pie?.</p>
+                                        <p>Untuk mengikuti lomba, teman-teman dibebaskan mencari dan merencanakan lomba apa
+                                            yang akan diikuti.
+
+                                            Jika sudah menentukan lomba, teman-teman wajib membentuk tim, apabila
+                                            membutuhkan bantuan INFINITE dapat memberikan rekomendasi, harap menghubungi sie
+                                            competition (usahakan team kamu memiliki komposisi hacker, hipster dan hustler
+                                            ya).
+
+                                            Setelah itu untuk keperluan dosen pembimbing, usahakan teman-teman mencari dosen
+                                            sesuai dengan karya yang akan dikembangkan. Teman teman dapat mencari secara
+                                            manual melalui web staff uny atau meminta bantuan kepada sie competition.
+
+                                            Selamat berlomba!</p>
                                     </div>
                                 </div>
                             </div>
@@ -783,7 +803,9 @@
                                 <div id="tm-accordion1-collapse6" class="collapse"
                                     aria-labelledby="tm-accordion1-heading6" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>Tentu! dapat langsung menghubungi kontak Infinite dibagian bawah halaman ini ya.
+                                        <p>Teman-teman dapat menghubungi Divisi Competition, kami akan merencanakan
+                                            konsultasi
+                                            bersama dengan kakak tingkat, alumni, ataupun dosen yang ahli di bidangnya.
                                         </p>
                                     </div>
                                 </div>
@@ -802,7 +824,17 @@
                                 <div id="tm-accordion1-collapse7" class="collapse"
                                     aria-labelledby="tm-accordion1-heading7" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>Silahkan menghubungi kontak di bagian bawah halaman ini.</p>
+                                        <p>Untuk mengajukan pendanaan, teman-teman dapat mengisi form pada link berikut</p>
+                                        <p>Bahan-bahan yang harus disiapkan diantaranya:</p>
+                                        <ul>
+                                            <li>Booklet</li>
+                                            <li>Timeline lomba</li>
+                                            <li>RAB</li>
+                                            <li>Anggota Tim</li>
+                                            <li>LOA (dapat disusulkan)</li>
+                                        </ul>
+
+                                        <p>Setelah mengisi form, harap melakukan konfirmasi kepada CP tertera ya!</p>
                                     </div>
                                 </div>
                             </div>
@@ -813,17 +845,15 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse8" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse8">
-                                            Bagaimana cara bekerja sama?
+                                            Jika saya pihak eksternal, bagaimana cara berkolaborasi dengan INFINITE?
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="tm-accordion1-collapse8" class="collapse"
                                     aria-labelledby="tm-accordion1-heading8" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>An App is a term to describe a web-based program. These web-based or
-                                            mobile applications perform a specific task for the user. website where
-                                            one can download these small programs for use on mobile devices such as
-                                            a Smart phone.</p>
+                                        <p>Silahkan hubungi CP beserta deskripsi kerja sama yang dikehendaki, apabila kedua
+                                            belah pihak setuju, INFINITE dengan senang hati akan siap membantu.</p>
                                     </div>
                                 </div>
                             </div>

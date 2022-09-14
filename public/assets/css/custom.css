@@ -147,7 +147,6 @@
 }
 
 .tm-sectiontitle-divider::before, .tm-sectiontitle-divider::after {
-  /* background-image: url(../images/title-shape.png); */
   background-image: url(../../public/assets/images/title-shape.png);
 }
 
