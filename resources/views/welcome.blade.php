@@ -422,36 +422,13 @@
                     <div class="col-12">
                         <div class="tm-screenshots">
                             <div class="tm-screenshots-slider tm-slider-arrow">
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-1.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-2.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-3.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-4.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-5.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-1.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-2.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-3.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-4.jpg" alt="appmyil screenshot">
-                                </div>
-                                <div class="tm-screenshots-single">
-                                    <img src="assets/images/screenshot-5.jpg" alt="appmyil screenshot">
-                                </div>
+                                @foreach ($products as $product)
+                                    <div class="tm-screenshots-single">
+                                        <a href="{{ $product->url ?: '#' }}">
+                                            <img src="{{ $product->photo }}" alt="{{ $product->description }}">
+                                        </a>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -942,7 +919,6 @@
                 </div>
                 <div class="row tm-blog-slider tm-slider-arrow">
 
-                    {{-- @for ($i = 0; $i < 4; $i++) --}}
                     @foreach ($events as $event)
                         <!-- Single Blog -->
                         <div class="col-lg-4 col-md-6 col-12">
@@ -970,7 +946,6 @@
                         </div>
                         <!--// Single Blog -->
                     @endforeach
-                    {{-- @endfor --}}
 
                 </div>
                 <br>

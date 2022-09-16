@@ -16,6 +16,7 @@ class LandingController extends Controller
     {
         $response = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=2022&sort[1]=division.priority');
         $events = Http::get(config('app.api_url') . '/api/events?populate=media');
+        $products = Http::get(config('app.api_url') . '/api/galleries?populate=photo');
 
         $data = collect(json_decode($response->body())->data)->map(function ($item) {
             return (object)[
@@ -44,6 +45,16 @@ class LandingController extends Controller
             }
         );
 
+        $products = collect(json_decode($products->body())->data)->map(function ($item) {
+            return (object)[
+                'title' => $item->attributes->title,
+                'description' => $item->attributes->description,
+                'url' => $item->attributes->url,
+                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+                'caption' => $item->attributes->photo->data->attributes->caption,
+            ];
+        });
+
         $count['member'] = floor(Member::where('status', 1)->count() / 10) * 10;
         $count['achievement'] = floor(Achievement::count() / 10) * 10;
 
@@ -51,6 +62,7 @@ class LandingController extends Controller
             'data' => $data,
             'events' => $events,
             'count' => $count,
+            'products' => $products,
             'config' => $this->config(),
         ]);
     }
