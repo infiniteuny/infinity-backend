@@ -6,6 +6,24 @@
         .tm-sectiontitle-divider::after {
             background-image: url({{ asset('assets/images/title-shape.png') }});
         }
+
+        .tm-screenshots-single-web {
+            margin-top: auto;
+            margin-bottom: auto;
+            transform: scale(1.1);
+            transition: all 0.3s ease-in 0s;
+        }
+
+        @media (min-width: 574px) {
+            .tm-screenshots-single.tm-screenshots-single-web.slick-center {
+                transform: scale(2);
+                transition: all 0.3s ease-in 0s;
+            }
+        }
+
+        #tm-area-screenshots .slick-track {
+            display: flex;
+        }
     </style>
 @endsection
 
@@ -423,7 +441,8 @@
                         <div class="tm-screenshots">
                             <div class="tm-screenshots-slider tm-slider-arrow">
                                 @foreach ($products as $product)
-                                    <div class="tm-screenshots-single">
+                                    <div
+                                        class="tm-screenshots-single {{ $product->type == 'web' ? 'tm-screenshots-single-web' : '' }}">
                                         <a href="{{ $product->url ?: '#' }}">
                                             <img src="{{ $product->photo }}" alt="{{ $product->description }}">
                                         </a>
@@ -455,65 +474,25 @@
                     <div class="col-lg-8 col-md-10">
 
                         <div class="tm-testimonial-authors">
-                            <div class="tm-testimonial-author">
-                                <div class="tm-testimonial-authorinner">
-                                    <img src="assets/images/author-image-1.jpg" alt="appmyil author image">
+                            @foreach ($testimonials as $testimonial)
+                                <div class="tm-testimonial-author">
+                                    <div class="tm-testimonial-authorinner">
+                                        <img src="{{ $testimonial->photo }}" alt="{{ $testimonial->name }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tm-testimonial-author">
-                                <div class="tm-testimonial-authorinner">
-                                    <img src="assets/images/author-image-2.jpg" alt="appmyil author image">
-                                </div>
-                            </div>
-                            <div class="tm-testimonial-author">
-                                <div class="tm-testimonial-authorinner">
-                                    <img src="assets/images/author-image-3.jpg" alt="appmyil author image">
-                                </div>
-                            </div>
-                            <div class="tm-testimonial-author">
-                                <div class="tm-testimonial-authorinner">
-                                    <img src="assets/images/author-image-4.jpg" alt="appmyil author image">
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
 
                         <div class="tm-testimonial-contents tm-slider-arrow">
-                            <div class="tm-testimonial-content">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiuod incididunt
-                                    ametfh consectetur dolore magna aliqua. Ut enim admim veniam dolor sit amet
-                                    magnaelit ate consectetur. Progravida nibh vel velit auctor alinean
-                                    sollicitudin. </p>
-                                <i class="zmdi zmdi-quote"></i>
-                                <h4>Albert Barnes</h4>
-                                <h6>Visual Designer</h6>
-                            </div>
-                            <div class="tm-testimonial-content">
-                                <p>Atque dicta voluptas et eos sint accusantium aut laboriosam. Omnis voluptatum ea
-                                    aut tempora recusandae qui facere. Consectetur hic tempore deleniti ea sit.
-                                    repellendus reprehenderit est veritatis quam laudantium. consequatur qui nihil
-                                    eos quibusdam</p>
-                                <i class="zmdi zmdi-quote"></i>
-                                <h4>Frankie Anderson</h4>
-                                <h6>Frontend Developer</h6>
-                            </div>
-                            <div class="tm-testimonial-content">
-                                <p>Architecto aut error explicabo. Voluptatem eaque sequi qui beatae velit vero aut
-                                    autem. Et adipisci perferendis corporis et similique vitae consequatur. Aut
-                                    eveniet quam. Et ut placeat consequatur qui nihil eos quibusdam. Impedit
-                                    blanditiis delectus.</p>
-                                <i class="zmdi zmdi-quote"></i>
-                                <h4>Tyreek Hoppe</h4>
-                                <h6>UI/UX Designer</h6>
-                            </div>
-                            <div class="tm-testimonial-content">
-                                <p>Eos asperiores minima non eaque. Quisquam voluptas impedit nihil. Repellat
-                                    dolorum et repellat earum voluptates ut voluptatibus quo. Autem eius non
-                                    quibusdam dolore. Neque doloribus repellendus reprehenderit est veritatis quam
-                                    laudantium.</p>
-                                <i class="zmdi zmdi-quote"></i>
-                                <h4>Darrick Kuvalis</h4>
-                                <h6>Web Developer</h6>
-                            </div>
+
+                            @foreach ($testimonials as $testimonial)
+                                <div class="tm-testimonial-content">
+                                    <p>{{ strip_tags($testimonial->testimonial) }}</p>
+                                    <i class="zmdi zmdi-quote"></i>
+                                    <h4>{{ $testimonial->name }}</h4>
+                                    <h6>{{ $testimonial->position }}</h6>
+                                </div>
+                            @endforeach
                         </div>
 
                     </div>

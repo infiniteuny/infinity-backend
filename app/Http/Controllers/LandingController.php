@@ -17,6 +17,8 @@ class LandingController extends Controller
         $response = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=2022&sort[1]=division.priority');
         $events = Http::get(config('app.api_url') . '/api/events?populate=media');
         $products = Http::get(config('app.api_url') . '/api/galleries?populate=photo');
+        $testimonials = Http::get(config('app.api_url') . '/api/testimonials?populate=photo');
+        // dd(json_decode($testimonials->body()));
 
         $data = collect(json_decode($response->body())->data)->map(function ($item) {
             return (object)[
@@ -50,8 +52,18 @@ class LandingController extends Controller
                 'title' => $item->attributes->title,
                 'description' => $item->attributes->description,
                 'url' => $item->attributes->url,
+                'type' => $item->attributes->type,
                 'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
                 'caption' => $item->attributes->photo->data->attributes->caption,
+            ];
+        });
+
+        $testimonials = collect(json_decode($testimonials->body())->data)->map(function ($item) {
+            return (object)[
+                'name' => $item->attributes->name,
+                'position' => $item->attributes->position,
+                'testimonial' => $item->attributes->testimonial,
+                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
             ];
         });
 
@@ -63,6 +75,7 @@ class LandingController extends Controller
             'events' => $events,
             'count' => $count,
             'products' => $products,
+            'testimonials' => $testimonials,
             'config' => $this->config(),
         ]);
     }
