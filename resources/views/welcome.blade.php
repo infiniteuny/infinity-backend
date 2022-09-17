@@ -144,8 +144,8 @@
                                 Teknologi UNY. Sejak tahun 2014, INFINITE mewadahi mahasiswa dari berbagai jurusan yang
                                 memiliki minat dan bakat di bidang Teknologi Informasi.</p>
                             <ul class="stylish-list">
-                                <li><i class="zmdi zmdi-check"></i> Berkolaborasi menciptakan karya dalam bentuk mobile,
-                                    apps, web, iot, ml untuk menjawab permasalahan di masyarakat.</li>
+                                <li><i class="zmdi zmdi-check"></i> Berkolaborasi menciptakan karya dalam bentuk mobile
+                                    apps, web apps, IoT, ML untuk menjawab permasalahan di masyarakat.</li>
                                 <li><i class="zmdi zmdi-check"></i> Kesempatan mengikuti lomba baik skala nasional dan
                                     internasional.</li>
                                 <li><i class="zmdi zmdi-check"></i> Kesempatan mengembangkan cv dan portfolio.</li>
@@ -210,7 +210,7 @@
                                     <div class="tm-service-content">
                                         <h4>Hipster</h4>
                                         <p>Seseorang yang memiliki peran dalam menyajikan dan memastikan keestetikan
-                                            tampilan dari sebuah produk.</p>
+                                            tampilan serta pengalaman dari sebuah produk.</p>
                                         <p>Skill: Design, Copywriting, Research, Ideation</p>
                                     </div>
                                 </div>
@@ -232,7 +232,7 @@
                                         <h4>Hacker</h4>
                                         <p>Seseorang yang memiliki peran dalam mengembangkan teknologi yang ada dalam produk
                                             (coding).</p>
-                                        <p>Skill: Mobile Apps, Web Apps, Desktop Apps, IoT, Network Security, Etc</p>
+                                        <p>Skill: Mobile Apps, Web Apps, Desktop Apps, IoT, Network Security, etc</p>
                                     </div>
                                 </div>
                             </div>
@@ -447,7 +447,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="tm-sectiontitle text-center">
-                            <h2>Testimonials</h2>
+                            <h2>What They Say</h2>
                             <span class="tm-sectiontitle-divider"><i class="zmdi zmdi-fullscreen"></i></span>
                         </div>
                     </div>
