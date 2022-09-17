@@ -6,24 +6,6 @@
         .tm-sectiontitle-divider::after {
             background-image: url({{ asset('assets/images/title-shape.png') }});
         }
-
-        .tm-screenshots-single-web {
-            margin-top: auto;
-            margin-bottom: auto;
-            transform: scale(1.1);
-            transition: all 0.3s ease-in 0s;
-        }
-
-        @media (min-width: 574px) {
-            .tm-screenshots-single.tm-screenshots-single-web.slick-center {
-                transform: scale(2);
-                transition: all 0.3s ease-in 0s;
-            }
-        }
-
-        #tm-area-screenshots .slick-track {
-            display: flex;
-        }
     </style>
 @endsection
 
@@ -167,7 +149,7 @@
                                 <li><i class="zmdi zmdi-check"></i> Kesempatan mengikuti lomba baik skala nasional dan
                                     internasional.</li>
                                 <li><i class="zmdi zmdi-check"></i> Kesempatan mengembangkan cv dan portfolio.</li>
-                                <li><i class="zmdi zmdi-check"></i> BC 24 jam.</li>
+                                <li><i class="zmdi zmdi-check"></i> Basecamp 24 jam.</li>
                                 <li><i class="zmdi zmdi-check"></i> Networking.</li>
                             </ul>
                             {{-- <a href="#" class="tm-button"><span>Read More</span></a> --}}
@@ -250,7 +232,7 @@
                                         <h4>Hacker</h4>
                                         <p>Seseorang yang memiliki peran dalam mengembangkan teknologi yang ada dalam produk
                                             (coding).</p>
-                                        <p>Skill: Mobile Apps, Web Apps, IoT, Network Security</p>
+                                        <p>Skill: Mobile Apps, Web Apps, Desktop Apps, IoT, Network Security, Etc</p>
                                     </div>
                                 </div>
                             </div>
@@ -665,7 +647,7 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse2" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse2">
-                                            Dimana lokasi BC INFINITE?
+                                            Dimana lokasi basecamp INFINITE?
                                         </button>
                                     </h5>
                                 </div>
@@ -683,14 +665,14 @@
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                             data-target="#tm-accordion1-collapse3" aria-expanded="false"
                                             aria-controls="tm-accordion1-collapse3">
-                                            Kapan BC buka dan tutup?
+                                            Kapan basecamp buka dan tutup?
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="tm-accordion1-collapse3" class="collapse"
                                     aria-labelledby="tm-accordion1-heading3" data-parent="#tm-accordion1">
                                     <div class="card-body">
-                                        <p>Untuk keperluan riset BC INFINITE buka 24/7 ya!</p>
+                                        <p>Untuk keperluan riset basecamp INFINITE buka 24/7 ya!</p>
                                     </div>
                                 </div>
                             </div>
@@ -990,9 +972,11 @@
                                 </span>
                                 <div class="tm-contact-block-content">
                                     <h6>Basecamp Infinite UNY</h6>
-                                    <a href="{{ $config['ADDRESS_URL'] }}">
-                                        <p>{!! $config['ADDRESS_NAME'] !!}</p>
-                                    </a>
+                                    <p>
+                                        <a href="{{ $config['ADDRESS_URL'] }}">
+                                            {!! $config['ADDRESS_NAME'] !!}
+                                        </a>
+                                    </p>
                                 </div>
                             </div>
                             <div class="tm-contact-block">

@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('css')
+    <style>
+        .tm-sectiontitle-divider::before,
+        .tm-sectiontitle-divider::after {
+            background-image: url({{ asset('assets/images/title-shape.png') }});
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Breadcrumb Area -->
     <div class="tm-breadcrumb-area tm-padding-section bg-gradient">
@@ -27,40 +36,42 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Kompetisi</th>
-                            <th scope="col">Penyelenggara</th>
-                            <th scope="col">Tanggal</th>
-                            <th scope="col">Pencapaian</th>
-                            <th scope="col">Deskripsi</th>
-                            <th scope="col">Points</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($member as $team)
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
                             <tr>
-                                <th scope="row">{{ $loop->iteration }}</th>
-                                <td>{{ $team->achievements->competition_name }}</td>
-                                <td>{{ $team->achievements->organizer }}</td>
-                                <td>{{ Carbon\Carbon::parse($team->achievements->date)->format('F d, Y') }}</td>
-                                <td><span
-                                        class="badge badge-success">{{ $team->achievements->competitionRanks->name }}</span>
-                                </td>
-                                <td>{{ $team->achievements->description }}</td>
-                                <td><span class="badge badge-warning">{{ $team->points }} pts</span></td>
+                                <th scope="col">#</th>
+                                <th scope="col">Kompetisi</th>
+                                <th scope="col">Penyelenggara</th>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Pencapaian</th>
+                                <th scope="col">Deskripsi</th>
+                                <th scope="col">Points</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="6" style="text-align: center"><b>Total Point</b></th>
-                            <th><span class="badge badge-warning">{{ $member->sum('points') }} pts</span></th>
-                        </tr>
-                    </tfoot>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($member as $team)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ $team->achievements->competition_name }}</td>
+                                    <td>{{ $team->achievements->organizer }}</td>
+                                    <td>{{ Carbon\Carbon::parse($team->achievements->date)->format('F d, Y') }}</td>
+                                    <td><span
+                                            class="badge badge-success">{{ $team->achievements->competitionRanks->name }}</span>
+                                    </td>
+                                    <td>{{ $team->achievements->description }}</td>
+                                    <td><span class="badge badge-warning">{{ $team->points }} pts</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="6" style="text-align: center"><b>Total Point</b></th>
+                                <th><span class="badge badge-warning">{{ $member->sum('points') }} pts</span></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
         <!--// Blog Area -->

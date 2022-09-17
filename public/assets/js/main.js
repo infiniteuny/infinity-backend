@@ -93,7 +93,7 @@
             screenshotSlider: function () {
                 var tmsreenshotSlider = $('.tm-screenshots-slider').slick({
                     infinite: true,
-                    autoplay: false,
+                    autoplay: true,
                     autoplaySpeed: 5000,
                     slidesToScroll: 1,
                     slidesToShow: 3,
@@ -348,7 +348,7 @@
             });
 
             $('.tm-mobilenav nav.mean-nav li a').on('click', function (event) {
-                event.preventDefault();
+                // event.preventDefault();
                 var $anchor = $(this);
                 $('html, body').stop().animate({
                     scrollTop: ($($anchor.attr('href')).offset().top - 65)

@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('css')
+    <style>
+        .tm-sectiontitle-divider::before,
+        .tm-sectiontitle-divider::after {
+            background-image: url({{ asset('assets/images/title-shape.png') }});
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Breadcrumb Area -->
     <div class="tm-breadcrumb-area tm-padding-section bg-gradient">

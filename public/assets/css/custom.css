@@ -765,3 +765,21 @@ button.tm-button::after {
   background: #27835d;
   border-color: #27835d;
 }
+
+.tm-screenshots-single-web {
+    margin-top: auto;
+    margin-bottom: auto;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in 0s;
+}
+
+@media (min-width: 574px) {
+    .tm-screenshots-single.tm-screenshots-single-web.slick-center {
+        transform: scale(2);
+        transition: all 0.3s ease-in 0s;
+    }
+}
+
+#tm-area-screenshots .slick-track {
+    display: flex;
+}
