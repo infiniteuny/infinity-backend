@@ -69,7 +69,7 @@
                                     </div>
                                     <button class="tm-team-socialtrigger"><i class="zmdi zmdi-share"></i></button>
                                     <ul class="tm-team-socialicons">
-                                        <li><a href="https:/instagram.com/{{ $item->instagram ?: 'infinite.uny' }}"
+                                        <li><a href="https://instagram.com/{{ $item->instagram ?: 'infinite.uny' }}"
                                                 target="_blank"><i class="zmdi zmdi-instagram"></i></a></li>
                                     </ul>
                                 </div>
