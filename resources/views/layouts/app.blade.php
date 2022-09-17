@@ -63,6 +63,20 @@
     {{-- <script src="assets/js/chartactive.js"></script> --}}
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <!--// Js Files -->
+
+    <!-- google analytic -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6EQGGKXPV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-S6EQGGKXPV');
+    </script>
 </body>
 
 </html>

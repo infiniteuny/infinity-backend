@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Achievement;
 use App\Models\Member;
-use App\Models\ProgramStudy;
 use Carbon\Carbon;
+use Analytics;
+use Spatie\Analytics\Period;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,6 @@ class LandingController extends Controller
         $events = Http::get(config('app.api_url') . '/api/events?populate=media');
         $products = Http::get(config('app.api_url') . '/api/galleries?populate=photo');
         $testimonials = Http::get(config('app.api_url') . '/api/testimonials?populate=photo');
-        // dd(json_decode($testimonials->body()));
 
         $data = collect(json_decode($response->body())->data)->map(function ($item) {
             return (object)[
