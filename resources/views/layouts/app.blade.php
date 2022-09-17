@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <meta name="description" content="">
+    <meta name="description" content="Official INFINITE UNY Website">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="apple-touch-icon" href="{{ asset('assets/images/logo_infinite_green.ico') }}">
@@ -33,7 +33,7 @@
     <!-- Preloader -->
     <div class="tm-preloader">
         <span class="tm-preloader-box"></span>
-        <button class="tm-button tm-button-sm tm-button-white"><span>Cancel Loader</span></button>
+        <button class="tm-button tm-button-sm tm-button-white"><span>Close Loader</span></button>
     </div>
     <!--// Preloader -->
 

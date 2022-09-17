@@ -4,7 +4,7 @@
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-9 col-9">
                 <a class="tm-header-logo" href="{{ route('landing') }}">
-                    <img src="{{ asset('assets/images/infinite_light.svg') }}" alt="appmyil logo">
+                    <img src="{{ asset('assets/images/infinite_light.svg') }}" alt="infinite logo">
                 </a>
             </div>
             <div class="col-lg-9 col-md-3 col-3">

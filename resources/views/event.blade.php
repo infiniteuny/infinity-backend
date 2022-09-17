@@ -31,8 +31,6 @@
             <div class="container">
                 <div class="row mt-50-reverse blog-masonry-active">
 
-                    {{-- @for ($i = 0; $i < 9; $i++) --}}
-                    {{-- @endfor --}}
                     @foreach ($events as $event)
                         <!-- Single Blog -->
                         <div class="col-lg-4 col-md-6 col-12 mt-50 blog-masonry-item">
