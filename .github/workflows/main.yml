@@ -21,17 +21,16 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT 
           script_stop: true
           script: |
             eval "$(ssh-agent -s)"
-            ssh-add .ssh/id_rsa_hello_infinite
-            cd public_html
+            ssh-add .ssh/id_rsa_hello_infinite_deployer
+            cd public_html/hello.infiniteuny.id
+            php artisan down
             git stash
             git pull
-            git stash drop
-            composer update
             composer install
-            php artisan optimize
             php artisan migrate --force
+            php artisan optimize
+            php artisan up
