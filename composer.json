@@ -1,9 +1,10 @@
 {
-    "name": "laravel/laravel",
+    "name": "infinite/company-profile",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Hello Infinite",
+    "keywords": ["infinite", "uny", "laravel", "restek"],
     "license": "MIT",
+    "version": "2.1.14",
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
