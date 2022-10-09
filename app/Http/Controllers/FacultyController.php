@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Faculty;
 use App\Http\Requests\StoreFacultyRequest;
 use App\Http\Requests\UpdateFacultyRequest;
+use App\Models\ProgramStudy;
+use Illuminate\Http\Request;
 
 class FacultyController extends Controller
 {
@@ -16,6 +18,31 @@ class FacultyController extends Controller
     public function index()
     {
         //
+    }
+
+    public function facultiesList(Request $request)
+    {
+        $faculties = Faculty::where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $faculties = $faculties->map(function ($faculty) {
+            return [
+                'id' => $faculty->id,
+                'name' => $faculty->name,
+            ];
+        });
+        return response()->json($faculties);
+    }
+
+    public function programStudiesList(Request $request, $faculty)
+    {
+        $programStudies = ProgramStudy::where('faculty_id', $faculty)->where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $programStudies = $programStudies->map(function ($programStudy) {
+            return [
+                'id' => $programStudy->id,
+                'name' => $programStudy->grades->name . " - " . $programStudy->name,
+            ];
+        });
+
+        return response()->json($programStudies);
     }
 
     /**

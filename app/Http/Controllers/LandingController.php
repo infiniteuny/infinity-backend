@@ -6,32 +6,38 @@ use App\Models\Achievement;
 use App\Models\Member;
 use Carbon\Carbon;
 use Analytics;
+use App\Mail\ContactUs;
 use Spatie\Analytics\Period;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class LandingController extends Controller
 {
     public function index()
     {
-        $response = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=2022&sort[1]=division.priority');
-        $events = Http::get(config('app.api_url') . '/api/events?populate=media');
-        $products = Http::get(config('app.api_url') . '/api/galleries?populate=photo');
+        $response = Http::get(config('app.api_url') . '/api/cabinets?populate=commitees.photo,commitees.division&filters[year][$eq]=' . Carbon::now()->year);
+        $events = Http::get(config('app.api_url') . '/api/events?populate=media&pagination[page]=1&pagination[pageSize]=5&sort[0]=event_date:desc');
+        $products = Http::get(config('app.api_url') . '/api/galleries?populate=photo&sort[0]=type&sort[1]=updatedAt');
         $testimonials = Http::get(config('app.api_url') . '/api/testimonials?populate=photo');
 
         $data = collect(json_decode($response->body())->data)->map(function ($item) {
-            return (object)[
-                'name' => $item->attributes->name,
-                'study_program' => $item->attributes->study_program,
-                'year' => '20' . substr($item->attributes->student_id, 0, 2),
-                'cabinet' => $item->attributes->cabinet->data->attributes->year,
-                'instagram' => $item->attributes->instagram,
-                'division' => $item->attributes->division->data->attributes->name,
-                'priority' => $item->attributes->division->data->attributes->priority,
-                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
-            ];
+            $commitees = collect($item->attributes->commitees->data)->map(function ($commitee) use ($item) {
+                return (object)[
+                    'name' => $commitee->attributes->name,
+                    'study_program' => $commitee->attributes->study_program,
+                    'year' => '20' . substr($commitee->attributes->student_id, 0, 2),
+                    'cabinet' => $item->attributes->year,
+                    'instagram' => $commitee->attributes->instagram,
+                    'division' => $commitee->attributes->division->data->attributes->name,
+                    'priority' => $commitee->attributes->division->data->attributes->priority,
+                    'photo' => config('app.api_url') . $commitee->attributes->photo->data->attributes->url,
+                ];
+            });
+            return $commitees;
         });
+        $data = $data->flatten()->sortBy('priority')->values()->all();
 
         $events = collect(json_decode($events->body())->data)->map(
             function ($item) {
@@ -70,7 +76,7 @@ class LandingController extends Controller
         $count['member'] = floor(Member::where('status', 1)->count() / 10) * 10;
         $count['achievement'] = floor(Achievement::count() / 10) * 10;
 
-        return view('welcome')->with([
+        return view('landing.welcome')->with([
             'data' => $data,
             'events' => $events,
             'count' => $count,
@@ -98,7 +104,7 @@ class LandingController extends Controller
             }
         );
 
-        return view('event')->with([
+        return view('landing.event')->with([
             'events' => $events,
             'config' => $this->config(),
         ]);
@@ -110,7 +116,7 @@ class LandingController extends Controller
 
         $event = collect(json_decode($event->body())->data)['attributes'];
         $event->media = config('app.api_url') . $event->media->data[0]->attributes->url;
-        return view('event-detail')->with([
+        return view('landing.event-detail')->with([
             'event' => $event,
             'config' => $this->config(),
         ]);
@@ -118,7 +124,7 @@ class LandingController extends Controller
 
     public function member()
     {
-        return view('member')->with([
+        return view('landing.member')->with([
             'config' => $this->config(),
         ]);
     }
@@ -142,32 +148,85 @@ class LandingController extends Controller
             $member->end_date = $member->end_date ? Carbon::parse($member->end_date)->format('d/m/Y') : 'Sekarang';
         }
 
-        return view('member')->with([
+        return view('landing.member')->with([
             'config' => $this->config(),
             'member' => $member
         ]);
     }
 
-    public function team()
+    public function team(Request $request)
     {
-        $response = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=2022&sort[1]=division.priority');
-        $data = collect(json_decode($response->body())->data)->map(function ($item) {
+        if ($request->has('year')) {
+            $response = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . $request->year . '&sort[1]=division.priority');
+            $data['commitees'] = collect(json_decode($response->body())->data)->map(function ($item) {
+                return (object)[
+                    'name' => $item->attributes->name,
+                    'study_program' => $item->attributes->study_program,
+                    'year' => '20' . substr($item->attributes->student_id, 0, 2),
+                    'cabinet' => $item->attributes->cabinet->data->attributes->year,
+                    'instagram' => $item->attributes->instagram,
+                    'division' => $item->attributes->division->data->attributes->name,
+                    'priority' => $item->attributes->division->data->attributes->priority,
+                    'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+                ];
+            });
+        } else {
+            $response = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->year . '&sort[1]=division.priority');
+            $data['commitees'] = collect(json_decode($response->body())->data)->map(function ($item) {
+                return (object)[
+                    'name' => $item->attributes->name,
+                    'study_program' => $item->attributes->study_program,
+                    'year' => '20' . substr($item->attributes->student_id, 0, 2),
+                    'cabinet' => $item->attributes->cabinet->data->attributes->year,
+                    'instagram' => $item->attributes->instagram,
+                    'division' => $item->attributes->division->data->attributes->name,
+                    'priority' => $item->attributes->division->data->attributes->priority,
+                    'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+                ];
+            });
+        }
+
+        $data['cabinets'] = Http::get(config('app.api_url') . '/api/cabinets');
+        $data['cabinets'] = collect(json_decode($data['cabinets']->body())->data)->map(function ($item) {
             return (object)[
                 'name' => $item->attributes->name,
-                'study_program' => $item->attributes->study_program,
-                'year' => '20' . substr($item->attributes->student_id, 0, 2),
-                'cabinet' => $item->attributes->cabinet->data->attributes->year,
-                'instagram' => $item->attributes->instagram,
-                'division' => $item->attributes->division->data->attributes->name,
-                'priority' => $item->attributes->division->data->attributes->priority,
-                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+                'year' => $item->attributes->year,
             ];
-        });
+        })->flatten()->sortByDesc('year');
 
-        return view('team')->with([
+        return view('landing.team')->with([
             'data' => $data,
             'config' => $this->config(),
         ]);
+    }
+
+    public function contactUs(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|regex:/^[a-zA-Z ]+$/u|max:255',
+            'email' => 'required|email',
+            'subject' => 'required|string|regex:/^[a-zA-Z ]+$/u|max:100',
+            'message' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ];
+
+        try {
+            Mail::to('infiniteuny@gmail.com')->send(new ContactUs($data));
+            return redirect()->back()->with('success', 'Pesan berhasil dikirim');
+        } catch (\Throwable $th) {
+            return $th;
+            return redirect()->back()->with('error', 'Pesan gagal dikirim');
+        }
     }
 
     public static function config()

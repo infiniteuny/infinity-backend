@@ -21,9 +21,44 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
+        // foreach ($guards as $guard) {
+        //     if (Auth::guard($guard)->check()) {
+        //         return redirect(RouteServiceProvider::HOME);
+        //     }
+        // }
+        // return $next($request);
+        // if (Auth::guard($guards)->check()) {
+        //     $role = Auth::user()->getRoleNames()[0];
+
+        //     switch ($role) {
+        //         case 'admin':
+        //             return redirect('/admin/dahsboard');
+        //             break;
+        //         case 'student':
+        //             return redirect('/student/dashboard');
+        //             break;
+        //         default:
+        //             return redirect('/');
+        //             break;
+        //     }
+        // }
+        // return $next($request);
+
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $role = Auth::user()->getRoleNames()[0];
+
+                switch ($role) {
+                    case 'admin':
+                        return redirect('/admin')->with('success', 'Login Berhasil');
+                        break;
+                    case 'student':
+                        return redirect('/student')->with('success', 'Login Berhasil');
+                        break;
+                    default:
+                        return redirect('/');
+                        break;
+                }
             }
         }
 
