@@ -16,11 +16,11 @@ class ProgramStudy extends Model
 
     public function grades()
     {
-        return $this->belongsTo(Grade::class);
+        return $this->belongsTo(Grade::class, 'grade_id', 'id');
     }
 
     public function faculties()
     {
-        return $this->belongsTo(Faculty::class);
+        return $this->belongsTo(Faculty::class, 'faculty_id', 'id');
     }
 }

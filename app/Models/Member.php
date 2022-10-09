@@ -16,6 +16,6 @@ class Member extends Model
 
     public function teams()
     {
-        return $this->belongsToMany(Team::class)->withPivot('role');
+        return $this->belongsToMany(Team::class)->withPivot('role')->withTimestamps();
     }
 }

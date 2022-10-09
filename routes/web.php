@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+require __DIR__ . '/authentication.php';
+
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 Route::get('/event', [LandingController::class, 'event'])->name('event');
@@ -32,8 +39,24 @@ Route::get('/team', [LandingController::class, 'team'])->name('team');
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 Route::get('/leaderboard/{member_id}', [LeaderboardController::class, 'detail'])->name('leaderboard.detail');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::post('/contact-us', [LandingController::class, 'contactUs'])->name('contact-us');
 
-require __DIR__ . '/auth.php';
+Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->group(function () {
+    Route::get('/', [DashboardController::class, 'adminDashboard'])->name('dashboard');
+    Route::prefix('config')->name('config.')->group(function () {
+        Route::get('/', [ConfigController::class, 'index'])->name('index');
+        Route::put('/', [ConfigController::class, 'update'])->name('update');
+    });
+    Route::resources([
+        'member' => MemberController::class,
+        'achievement' => AchievementController::class,
+        'user' => UserController::class,
+    ]);
+});
+
+Route::prefix('student')->name('student.')->middleware(['role:student', 'verified'])->group(function () {
+    // Route::get('/', [DashboardController::class, 'studentDashboard'])->name('dashboard');
+    Route::get('/', function () {
+        return view('errors.503');
+    })->name('dashboard');
+});

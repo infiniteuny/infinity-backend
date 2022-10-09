@@ -9,9 +9,13 @@ class Team extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function members()
     {
-        return $this->belongsToMany(Member::class)->withPivot('role');
+        return $this->belongsToMany(Member::class)->withPivot('role')->withTimestamps();
     }
 
     public function achievements()

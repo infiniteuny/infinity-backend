@@ -9,9 +9,24 @@ class Achievement extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'team_id',
+        'competition_type_id',
+        'competition_scale_id',
+        'competition_output_id',
+        'competition_time_range_id',
+        'competition_rank_id',
+        'competition_level_id',
+        'competition_name',
+        'organizer',
+        'date',
+        'description',
+        'image',
+    ];
+
     public function teams()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
     public function competitionScales()

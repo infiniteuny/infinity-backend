@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Analytics;
+use App\Models\Achievement;
+use App\Models\Config;
+use App\Models\Faculty;
+use App\Models\Member;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+use Spatie\Analytics\Period;
+
+class DashboardController extends Controller
+{
+    public function adminDashboard()
+    {
+        $most_visited_data = Analytics::fetchMostVisitedPages(Period::days(7))->take(8);
+        $visitors_and_page_data = Analytics::fetchVisitorsAndPageViews(Period::days(7))->take(10);
+        $top_referrers = Analytics::fetchTopReferrers(Period::days(7))->take(5);
+        $user_types = Analytics::fetchUserTypes(Period::days(7))->take(10);
+        $analitics['most_visited_url'] = json_encode($most_visited_data->pluck('url')->map(function ($url) {
+            return substr($url, 0, 20);
+        }));
+        $analitics['most_visited_pageViews'] = json_encode($most_visited_data->pluck('pageViews'));
+        $analitics['visitors_and_page_date'] = json_encode($visitors_and_page_data->map(function ($date) {
+            return Carbon::parse($date['date'])->format('d M Y');
+        }));
+        $analitics['visitors_and_page_visitors'] = json_encode($visitors_and_page_data->pluck('visitors'));
+        $analitics['visitors_and_page_pageViews'] = json_encode($visitors_and_page_data->pluck('pageViews'));
+        $analitics['top_referrers_url'] = json_encode($top_referrers->pluck('url'));
+        $analitics['top_referrers_page_view'] = json_encode($top_referrers->pluck('pageViews'));
+        $analitics['user_type'] = json_encode($user_types->pluck('type'));
+        $analitics['user_type_sessions'] = json_encode($user_types->pluck('sessions'));
+
+        $data['achievements'] = Achievement::whereYear('date', Carbon::now()->year)->orderBy('date')->count();
+        $data['products'] = count(json_decode(Http::get(config('app.api_url') . '/api/galleries')->body())->data);
+        $data['events'] = count(json_decode(Http::get(config('app.api_url') . '/api/events')->body())->data);
+        $data['members'] = Member::where('status', true)->count() . ' / ' . Member::count();
+
+        $faculties = Faculty::withCount('members')->having('members_count', '>', 0)->get();
+        $data['faculty_name'] = json_encode($faculties->pluck('name'));
+        $data['faculty_member_count'] = json_encode($faculties->pluck('members_count'));
+
+        $data['users'] = User::orderBy('created_at', 'desc')->take(6)->get();
+        $data['users'] = $data['users']->map(function ($user) {
+            return [
+                'name' => $user->name,
+                'is_verified' => $user->email_verified_at ? true : false,
+                'is_verified_text' => $user->email_verified_at ? 'Email Terverifikasi' : 'Email Belum Terverifikasi',
+                'avatar' => $user->avatar,
+                'created_at_date' => Carbon::parse($user->created_at)->format('d M'),
+                'created_at_hour' => Carbon::parse($user->created_at)->format('H:i'),
+            ];
+        });
+
+        $data['configs'] = Config::all()->mapWithKeys(function ($item) {
+            return [$item['key'] => $item['value']];
+        });
+
+        return view('admin.dashboard')->with([
+            'analitics' => $analitics,
+            'data' => $data,
+        ]);
+    }
+
+    public function studentDashboard()
+    {
+        return view('student.dashboard');
+    }
+}
