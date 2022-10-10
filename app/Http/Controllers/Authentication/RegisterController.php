@@ -75,15 +75,15 @@ class RegisterController extends Controller
                 'student_id' => $request->student_id,
             ]);
 
-            if (!$user->hasRole(['student', 'admin'])) {
-                $user->assignRole('student');
-            }
+            // if (!$user->hasRole(['student', 'admin'])) {
+            $user->assignRole('student');
+            // }
 
             event(new Registered($user));
 
             Auth::login($user);
 
-            if ($user->getRoleNames() == 'admin') {
+            if ($user->getRoleNames()->first() == 'admin') {
                 return redirect()->route('admin.dashboard')->with('success', 'Akun berhasil dibuat!');
             } else {
                 return redirect()->route('student.dashboard')->with('success', 'Akun berhasil dibuat!');
