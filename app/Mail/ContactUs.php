@@ -29,7 +29,6 @@ class ContactUs extends Mailable
     public function build()
     {
         return $this->view('emails.contact-us')
-            ->from('', $this->data['name'] . ' (via Contact Us Form)')
             ->subject($this->data['subject'])
             ->with([
                 'name' => $this->data['name'],
