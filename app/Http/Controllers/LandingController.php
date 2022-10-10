@@ -224,7 +224,6 @@ class LandingController extends Controller
             Mail::to('infiniteuny@gmail.com')->send(new ContactUs($data));
             return redirect()->back()->with('success', 'Pesan berhasil dikirim');
         } catch (\Throwable $th) {
-            return $th;
             return redirect()->back()->with('error', 'Pesan gagal dikirim');
         }
     }
