@@ -91,7 +91,7 @@ class UserController extends Controller
             ];
         });
         if ($user) {
-            $user->roles = $user->getRoleNames()[0];
+            $user->roles = $user->getRoleNames()->first();
         }
         return view('admin.user.edit')->with([
             'user' => $user,

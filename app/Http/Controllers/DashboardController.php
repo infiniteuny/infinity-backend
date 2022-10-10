@@ -10,6 +10,7 @@ use App\Models\Faculty;
 use App\Models\Member;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Spatie\Analytics\Period;
 

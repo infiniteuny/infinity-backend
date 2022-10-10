@@ -53,7 +53,7 @@ class LoginController extends Controller
                 }
                 Auth::login($userLogin);
 
-                if ($userLogin->getRoleNames()[0] == "admin") {
+                if ($userLogin->getRoleNames()->first() == "admin") {
                     return redirect()->route('admin.dashboard')->with('success', 'Login Berhasil');
                 } else {
                     return redirect()->route('student.dashboard')->with('success', 'Login Berhasil');
@@ -102,7 +102,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->has('remember'))) {
             $request->session()->regenerate();
 
-            if (Auth::user()->getRoleNames()[0] == "admin") {
+            if (Auth::user()->getRoleNames()->first() == "admin") {
                 return redirect()->intended('admin')->with('success', 'Login Berhasil');
             } else {
                 return redirect()->intended('student')->with('success', 'Login Berhasil');

@@ -123,7 +123,7 @@ class MemberController extends Controller
         });
         $user = User::where("student_id", $member->student_id)->first();
         if ($user) {
-            $user->roles = $user->getRoleNames()[0];
+            $user->roles = $user->getRoleNames()->first();
         }
         $member->avatar = $user ? $user->avatar : "https://ui-avatars.com/api/?name=" . $member->name . "&background=0D8ABC&color=fff";
         $member->email = $user ? $user->email : "Belum buat akun";

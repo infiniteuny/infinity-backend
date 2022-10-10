@@ -29,7 +29,7 @@ Route::middleware('auth')->group(
 
         Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
             $request->fulfill();
-            switch (Auth::user()->getRoleNames()[0]) {
+            switch (Auth::user()->getRoleNames()->first()) {
                 case 'admin':
                     return redirect('/admin')->with('success', 'Login Berhasil');
                     break;
