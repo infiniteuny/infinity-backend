@@ -62,7 +62,7 @@
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
         <!-- Page Header Start-->
-        @include('admin.layouts.navbar')
+        @include('student.layouts.navbar')
         <!-- Page Header Ends-->
         <!-- Page Body Start-->
 
@@ -70,7 +70,8 @@
             <!-- Page Sidebar Start-->
             <div class="sidebar-wrapper">
                 <div>
-                    <div class="logo-wrapper"><a href="{{ route('admin.dashboard') }}"><img class="img-fluid for-light"
+                    <div class="logo-wrapper"><a href="{{ route('student.dashboard') }}"><img
+                                class="img-fluid for-light"
                                 src="{{ asset('landing/assets/images/infinite_dark.svg') }}" alt=""><img
                                 class="img-fluid for-dark" src="{{ asset('landing/assets/images/infinite_dark.svg') }}"
                                 alt=""></a>
@@ -81,7 +82,7 @@
                     <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid"
                                 src="{{ asset('landing/assets/images/logo_infinite_dark.svg') }}" alt=""></a>
                     </div>
-                    @include('admin.layouts.navigation')
+                    @include('student.layouts.navigation')
                 </div>
             </div>
             <!-- Page Sidebar Ends-->
@@ -92,7 +93,7 @@
                 <!-- Container-fluid Ends-->
             </div>
             <!-- footer start-->
-            @include('admin.layouts.footer')
+            @include('student.layouts.footer')
         </div>
     </div>
     <!-- latest jquery-->
@@ -116,17 +117,7 @@
     <script src="{{ asset('admin-panel/assets/js/chart/apex-chart/apex-chart.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/apex-chart/stock-prices.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/chartjs/chart.min.js') }}"></script>
-    {{-- <script src="{{ asset('admin-panel/assets/js/chart/chartjs/chart.custom.js') }}"></script> --}}
     <script src="{{ asset('admin-panel/assets/js/notify/bootstrap-notify.min.js') }}"></script>
-    {{-- <script src="{{ asset('admin-panel/assets/js/notify/index.js') }}"></script> --}}
-    {{-- <script src="{{ asset('admin-panel/assets/js/datepicker/date-picker/datepicker.js') }}"></script>
-    <script src="{{ asset('admin-panel/assets/js/datepicker/date-picker/datepicker.en.js') }}"></script>
-    <script src="{{ asset('admin-panel/assets/js/datepicker/date-picker/datepicker.custom.js') }}"></script> --}}
-    {{-- <script src="{{ asset('admin-panel/assets/js/typeahead/handlebars.js') }}"></script>
-    <script src="{{ asset('admin-panel/assets/js/typeahead/typeahead.bundle.js') }}"></script>
-    <script src="{{ asset('admin-panel/assets/js/typeahead/typeahead.custom.js') }}"></script>
-    <script src="{{ asset('admin-panel/assets/js/typeahead-search/handlebars.js') }}"></script>
-    <script src="{{ asset('admin-panel/assets/js/typeahead-search/typeahead-custom.js') }}"></script> --}}
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('admin-panel/assets/js/script.js') }}"></script>

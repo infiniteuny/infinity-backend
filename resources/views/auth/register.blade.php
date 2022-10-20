@@ -23,23 +23,23 @@
                                 @csrf
                                 <div class="form-group">
                                     <label class="col-form-label pt-0">Nama Kamu</label>
-                                    <input class="form-control" type="text" name="name" required=""
-                                        placeholder="Infinite">
+                                    <input class="form-control" type="text" name="name" required
+                                        value="{{ old('name') }}" placeholder="Infinite">
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Alamat Email</label>
-                                    <input class="form-control" type="email" name="email" required=""
-                                        placeholder="infinite@student.uny.ac.id">
+                                    <input class="form-control" type="email" name="email" required
+                                        value="{{ old('email') }}" placeholder="infinite@student.uny.ac.id">
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">NIM</label>
-                                    <input class="form-control" type="number" name="student_id" required=""
-                                        placeholder="20999999999">
+                                    <input class="form-control" type="number" name="student_id" required
+                                        value="{{ old('student_id') }}" placeholder="20999999999">
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Password</label>
                                     <div class="form-input position-relative">
-                                        <input class="form-control" type="password" name="password" required=""
+                                        <input class="form-control" type="password" name="password" required
                                             placeholder="*********">
                                         <div class="show-hide"><span class="show"></span></div>
                                     </div>
@@ -47,8 +47,8 @@
                                 <div class="form-group">
                                     <label class="col-form-label">Ulangi Password</label>
                                     <div class="form-input position-relative">
-                                        <input class="form-control" type="password" name="password_confirmation"
-                                            required="" placeholder="*********">
+                                        <input class="form-control" type="password" name="password_confirmation" required
+                                            placeholder="*********">
                                         <div class="show-hide"><span class="show"></span></div>
                                     </div>
                                 </div>

@@ -12,7 +12,10 @@ class ConfigController extends Controller
     public function index()
     {
         $data['configs'] = Config::all()->mapWithKeys(function ($item) {
-            return [$item['key'] => $item['value']];
+            return [$item['key'] => [
+                'value' => $item['value'],
+                'type' => $item['type'],
+            ]];
         });
 
         return view('admin.config.index')->with([
@@ -22,14 +25,6 @@ class ConfigController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'competition_target' => 'required|numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
         try {
             DB::transaction(function () use ($request) {
                 foreach ($request->all() as $key => $value) {

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('student.layouts.app')
 
 @section('title', 'Dashboard')
 
@@ -7,11 +7,11 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Admin Panel</h3>
+                    <h3>Member Panel</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a>
+                        <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}"> <i data-feather="home"></i></a>
                         </li>
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
@@ -21,7 +21,25 @@
     </div>
 @endsection
 
+@section('plugins')
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin-panel/assets/css/vendors/datatables.css') }}">
+@endsection
+
 @section('js')
+    <script src="{{ asset('admin-panel/assets/js/dashboard/default.js') }}"></script>
+    <script src="{{ asset('admin-panel/assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin-panel/assets/js/datatable/datatables/datatable.custom.js') }}"></script>
+    <script>
+        $('#freepik_table').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    </script>
     @if (session()->has('success'))
         <script>
             $(document).ready(function() {
@@ -79,8 +97,8 @@
                     <div class="card-body">
                         <div class="media static-top-widget">
                             <div class="media-body">
-                                <h6 class="font-roboto">Prestasi</h6>
-                                <h4 class="mb-0 counter">6659</h4>
+                                <h6 class="font-roboto">Prestasi ku</h6>
+                                <h4 class="mb-0 counter">{{ $data['achievements'] }}</h4>
                             </div>
                             <svg width="36" height="46" viewBox="0 0 36 46" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -104,27 +122,16 @@
                     <div class="card-body">
                         <div class="media static-top-widget">
                             <div class="media-body">
-                                <h6 class="font-roboto">Member Products</h6>
-                                <h4 class="mb-0 counter">9856</h4>
+                                <h6 class="font-roboto">Kuota Down Freepik</h6>
+                                <h4 class="mb-0 counter">{{ $data['freepik']['used'] }}/{{ $data['freepik']['quota'] }}</h4>
                             </div>
-                            <svg class="fill-success" width="45" height="39" viewBox="0 0 45 39" fill="none"
+                            <svg width="44" height="46" viewBox="0 0 44 46" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M5.92047 8.49509C5.81037 8.42629 5.81748 8.25971 5.93378 8.20177C7.49907 7.41686 9.01464 6.65821 10.5302 5.89775C14.4012 3.95495 18.2696 2.00762 22.1478 0.0792996C22.3387 -0.0157583 22.6468 -0.029338 22.8359 0.060288C28.2402 2.64315 33.6357 5.24502 39.033 7.84327C39.0339 7.84327 39.0339 7.84417 39.0348 7.84417C39.152 7.90121 39.1582 8.06869 39.0472 8.1375C38.9939 8.17009 38.9433 8.20087 38.8918 8.22984C33.5398 11.2228 28.187 14.2121 22.8385 17.2115C22.5793 17.3572 22.3839 17.3762 22.1131 17.2296C16.7851 14.3507 11.4518 11.4826 6.12023 8.61188C6.05453 8.57748 5.98972 8.53855 5.92047 8.49509Z">
-                                </path>
-                                <path
-                                    d="M21.1347 23.3676V38.8321C21.1347 38.958 21.0042 39.0386 20.895 38.9806C20.4182 38.7271 19.9734 38.4918 19.5295 38.2528C14.498 35.5441 9.46833 32.8317 4.43154 30.1339C4.12612 29.97 4.02046 29.7944 4.02224 29.4422C4.03822 26.8322 4.03023 24.2222 4.02934 21.6122C4.02934 21.4719 4.02934 21.3325 4.02934 21.1659C4.02934 21.0428 4.15542 20.9622 4.26373 21.0147C4.35252 21.0581 4.43065 21.0962 4.50434 21.1396C8.18539 23.2888 11.8664 25.438 15.5457 27.5909C16.5081 28.154 17.0622 28.0453 17.7627 27.1464C18.7748 25.8472 19.7896 24.5508 20.8045 23.2535C20.8053 23.2526 20.8062 23.2517 20.8071 23.2499C20.9172 23.1132 21.1347 23.192 21.1347 23.3676Z">
-                                </path>
-                                <path
-                                    d="M23.83 23.3784C23.83 23.2019 24.0484 23.1241 24.1567 23.2626C25.2168 24.6178 26.2192 25.9016 27.2233 27.1835C27.8928 28.039 28.4504 28.1494 29.3719 27.6117C33.0521 25.4643 36.7323 23.316 40.4133 21.1686C40.4914 21.1233 40.5713 21.0799 40.6592 21.0337C40.7613 20.9803 40.8856 21.0473 40.8972 21.164C40.9025 21.2184 40.9069 21.2691 40.9069 21.3189C40.9087 23.928 40.9052 26.5371 40.9132 29.1462C40.914 29.4006 40.8421 29.5518 40.6131 29.6794C35.1057 32.7539 29.6037 35.8365 24.099 38.9163C24.0892 38.9218 24.0803 38.9263 24.0706 38.9317C23.9605 38.9879 23.8309 38.9082 23.8309 38.7833L23.83 23.3784Z">
-                                </path>
-                                <path
-                                    d="M28.4752 24.454C27.2908 22.9385 26.118 21.4384 24.9203 19.9066C24.6983 19.6232 24.7809 19.2031 25.0925 19.0293L41.3092 9.95809C41.5746 9.80962 41.9076 9.89743 42.0692 10.1582C43.0147 11.6791 43.9541 13.1891 44.9103 14.7264C45.0852 15.0079 44.9946 15.3818 44.7114 15.5475C39.5414 18.5649 34.3875 21.5742 29.2086 24.5979C28.9627 24.74 28.651 24.6794 28.4752 24.454Z">
-                                </path>
-                                <path
-                                    d="M20.0132 19.931C18.819 21.4592 17.6506 22.9539 16.4804 24.4512C16.3037 24.6767 15.9921 24.7373 15.747 24.5943C10.586 21.5814 5.45504 18.5857 0.288619 15.5701C6.65486e-05 15.4017 -0.087831 15.0188 0.0968427 14.7372C1.02554 13.3204 1.94269 11.9208 2.86872 10.5085C3.03209 10.2596 3.35349 10.1763 3.61363 10.3157C9.018 13.2254 14.3975 16.1215 19.833 19.0483C20.1508 19.2194 20.2378 19.644 20.0132 19.931Z">
-                                </path>
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M24.2309 21.589L27.1376 18.6822C28.0313 17.7791 29.4611 17.5534 30.5241 18.2683C31.9634 19.2278 32.1045 21.1939 30.9474 22.3509L23.1585 30.1399C22.293 31.0053 20.8914 31.0053 20.0259 30.1399L12.237 22.3509C11.0799 21.1939 11.221 19.2278 12.6603 18.2683C13.7139 17.5628 15.1437 17.7885 16.0374 18.6822L18.9441 21.589V2.64335C18.9441 1.18528 20.1294 0 21.5875 0C23.0456 0 24.2309 1.18528 24.2309 2.64335V21.589ZM28.7457 31.5223C28.7928 31.099 29.1314 30.7791 29.5547 30.7791V30.7885H39.3568C41.4075 30.7885 43.0725 32.4536 43.0725 34.5043V42.2838C43.0725 44.3345 41.4075 45.9996 39.3568 45.9996H3.81731C1.76659 45.9996 0.101562 44.3345 0.101562 42.2838V34.4949C0.101562 32.4442 1.76659 30.7791 3.81731 30.7791H13.6005C14.0239 30.7791 14.3625 31.1084 14.4095 31.5223C14.7858 35.1534 17.8525 37.9848 21.5776 37.9848C25.3122 37.9848 28.3789 35.1534 28.7457 31.5223Z"
+                                    fill="#51BB25" />
                             </svg>
+
                         </div>
                         <div class="progress-widget">
                             <div class="progress sm-progress-bar progress-animate">
@@ -141,17 +148,14 @@
                     <div class="card-body">
                         <div class="media static-top-widget">
                             <div class="media-body">
-                                <h6 class="font-roboto">Event/Artikel</h6>
-                                <h4 class="mb-0 counter">893</h4>
+                                <h6 class="font-roboto">Pengajuan Dana</h6>
+                                <h4 class="mb-0 counter">{{ $data['fund_applications'] }}</h4>
                             </div>
-                            <svg class="fill-primary" width="44" height="46" viewBox="0 0 44 46"
+                            <svg width="59" height="46" viewBox="0 0 59 46" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
-                                    d="M9.73709 35.2337C6.17884 31.58 4.00316 26.8452 3.49802 21.7377C1.60687 24.237 0.581465 27.3024 0.586192 30.5195C0.589372 32.612 1.03986 34.692 1.89348 36.5729L0.1333 41.9282C-0.169286 42.8488 0.0517454 43.8484 0.7102 44.5369C1.17358 45.0213 1.78451 45.2794 2.4128 45.2794C2.67714 45.2794 2.94458 45.2337 3.2054 45.14L8.32806 43.2997C10.1272 44.1922 12.1167 44.6631 14.1182 44.6665C17.2557 44.6709 20.2418 43.558 22.657 41.5068C17.8005 41.0474 13.2702 38.8615 9.73709 35.2337Z">
-                                </path>
-                                <path
-                                    d="M43.8418 35.7427L41.2863 27.9674C42.5181 25.3348 43.1691 22.407 43.1735 19.4611C43.181 14.3388 41.2854 9.49561 37.8357 5.82369C34.3853 2.15096 29.7875 0.0836476 24.889 0.00251856C19.8097 -0.0814855 15.0354 1.93839 11.446 5.69081C7.85665 9.44332 5.92425 14.4346 6.00469 19.7451C6.08229 24.8661 8.05972 29.673 11.5726 33.2803C15.078 36.8798 19.6988 38.861 24.5879 38.8608C24.5975 38.8608 24.6077 38.8608 24.6171 38.8608C27.435 38.8563 30.2356 38.1757 32.7537 36.8879L40.1911 39.5596C40.501 39.671 40.8188 39.7252 41.1329 39.7252C41.8795 39.7252 42.6055 39.4187 43.1563 38.8428C43.9388 38.0247 44.2014 36.8369 43.8418 35.7427ZM26.3834 26.1731H16.7865C16.0633 26.1731 15.477 25.5601 15.477 24.804C15.477 24.0479 16.0633 23.435 16.7865 23.435H26.3833C27.1066 23.435 27.6929 24.048 27.6929 24.804C27.6929 25.5602 27.1067 26.1731 26.3834 26.1731ZM32.3894 20.5426H16.7866C16.0633 20.5426 15.4771 19.9296 15.4771 19.1736C15.4771 18.4176 16.0634 17.8046 16.7866 17.8046H32.3894C33.1127 17.8046 33.6989 18.4176 33.6989 19.1736C33.6989 19.9296 33.1127 20.5426 32.3894 20.5426ZM32.3894 14.912H16.7866C16.0633 14.912 15.4771 14.299 15.4771 13.543C15.4771 12.7869 16.0634 12.1739 16.7866 12.1739H32.3894C33.1127 12.1739 33.6989 12.787 33.6989 13.543C33.6989 14.299 33.1127 14.912 32.3894 14.912Z">
-                                </path>
+                                    d="M36.6773 12.5859C32.6234 10.2701 26.0748 10.2701 22.0449 12.5859C18.015 14.9018 18.039 18.6666 22.0929 20.9825C26.1468 23.2984 32.6954 23.2984 36.7253 20.9825C40.7552 18.6547 40.7312 14.9018 36.6773 12.5859ZM34.8183 16.232C34.4705 16.3389 34.1227 16.4576 33.7748 16.5645C33.5589 16.6239 33.427 16.6358 33.3311 16.5883C33.2831 16.5526 33.2351 16.5051 33.1871 16.4339C32.9593 16.0657 32.6114 15.745 32.1437 15.4838C32.0837 15.4481 32.0117 15.4125 31.9398 15.3769C31.7839 15.2937 31.6399 15.2344 31.448 15.1869C30.7764 15.0325 30.1767 15.2819 30.2607 15.6975C30.2966 15.9113 30.4166 16.1013 30.5605 16.3032C30.8004 16.6358 31.0642 16.9683 31.2322 17.3246C31.7959 18.441 30.5725 19.5455 28.6055 19.6524C27.8979 19.688 27.2262 19.6049 26.6025 19.403C26.3267 19.3198 26.1228 19.3198 25.9189 19.4623C25.715 19.593 25.4871 19.7117 25.2712 19.8305C25.0793 19.9374 24.8754 19.9493 24.6835 19.8424C24.5396 19.7711 24.4077 19.688 24.2638 19.6167C24.1678 19.5574 24.0719 19.5098 23.9759 19.4505C23.772 19.3317 23.796 19.2129 23.9879 19.0942C24.1438 18.9992 24.2997 18.916 24.4437 18.821C24.7915 18.6191 24.7915 18.6072 24.5036 18.3816C24.1438 18.0966 23.82 17.7997 23.6161 17.4671C23.4602 17.2058 23.4961 17.1465 23.9159 17.0039C24.2278 16.9089 24.5276 16.802 24.8395 16.707C25.0673 16.6358 25.1993 16.6239 25.2952 16.6714C25.3552 16.707 25.3912 16.7545 25.4391 16.8377C25.643 17.2177 25.9909 17.5502 26.4106 17.8709C26.4826 17.9303 26.5666 17.9778 26.6385 18.0253C26.8664 18.1559 27.1303 18.251 27.4301 18.3222C28.2097 18.5004 28.9054 18.1916 28.8334 17.7046C28.8094 17.5384 28.7254 17.3959 28.6175 17.2415C28.3536 16.8495 28.0058 16.4814 27.8259 16.0657C27.5381 15.4006 27.67 14.7949 28.5935 14.3199C29.649 13.7855 30.8244 13.7498 32.0717 14.0824C32.5875 14.2249 32.5755 14.2249 32.9713 13.9992C33.1032 13.9161 33.2351 13.8448 33.367 13.7736C33.6669 13.6073 33.7748 13.6073 34.0747 13.7736C34.1706 13.8211 34.2546 13.8805 34.3505 13.928C34.9862 14.2843 34.9862 14.2843 34.3625 14.6524C33.9188 14.9018 33.9188 14.9018 34.2906 15.1987C34.5784 15.4244 34.8063 15.6619 34.9742 15.9232C35.1061 16.0538 35.0582 16.1607 34.8183 16.232ZM42.0865 24.0466C40.9711 24.6879 39.1601 24.6879 38.0326 24.0466C36.9172 23.4053 36.9052 22.3602 38.0206 21.7188C39.1361 21.0775 40.9471 21.0775 42.0745 21.7188C43.202 22.3602 43.214 23.4053 42.0865 24.0466ZM20.7376 11.8377C19.6222 12.4791 17.8111 12.4791 16.6837 11.8377C15.5563 11.1964 15.5563 10.1513 16.6717 9.50997C17.7871 8.86865 19.5982 8.86865 20.7256 9.50997C21.841 10.1513 21.853 11.1964 20.7376 11.8377ZM57.2587 19.0704L25.2952 0.792745C23.4482 -0.264248 20.4497 -0.264248 18.6147 0.792745L1.47553 10.6501C-0.359525 11.7071 -0.347531 13.4292 1.49951 14.4862L33.463 32.7638C35.31 33.8208 38.3085 33.8208 40.1435 32.7638L57.2707 22.9065C59.1177 21.8495 59.1057 20.1274 57.2587 19.0704ZM40.4914 29.2841C40.2875 29.094 40.0476 28.9159 39.7597 28.7496C37.8887 27.6808 34.8543 27.6808 32.9952 28.7496C32.8513 28.8328 32.7314 28.9159 32.5994 29.0109L7.78427 14.8187C8.02414 14.7237 8.25203 14.6168 8.46791 14.498C10.327 13.4292 10.315 11.6952 8.44393 10.6263C8.24003 10.5076 8.02414 10.4007 7.79626 10.3176L18.027 4.4269C18.1829 4.55754 18.3628 4.67631 18.5667 4.79507C20.4377 5.86394 23.4722 5.86394 25.3312 4.79507C25.5471 4.67631 25.727 4.54567 25.8949 4.40315L50.794 18.631C50.4582 18.7498 50.1584 18.8804 49.8705 19.0467C48.0115 20.1155 48.0115 21.8614 49.8945 22.9302C50.1824 23.0965 50.5062 23.2271 50.842 23.3459L40.4914 29.2841ZM0.659948 18.1441C1.47553 17.7284 2.73488 17.7878 3.51447 18.2391L36.9292 37.3362L54.9919 26.9326C55.7715 26.4813 57.0548 26.4813 57.8464 26.9326C58.638 27.3839 58.638 28.1202 57.8584 28.5715L38.6563 39.6165C37.7208 40.1628 36.1856 40.1628 35.2381 39.6165L34.5664 39.2364L34.0987 38.9633L0.599979 19.8186C-0.215599 19.3555 -0.203605 18.5835 0.659948 18.1441ZM57.8824 34.5453L38.6803 45.5903C37.7448 46.1366 36.2096 46.1366 35.2621 45.5903L34.6024 45.2102L34.1227 44.9371L0.623967 25.7924C-0.191612 25.3292 -0.167624 24.5573 0.69593 24.1179C1.49951 23.7022 2.77086 23.7616 3.55045 24.2129L36.9532 43.31L55.0159 32.9182C55.8075 32.4669 57.0788 32.4669 57.8704 32.9182C58.662 33.3576 58.674 34.094 57.8824 34.5453Z"
+                                    fill="#7366FF" />
                             </svg>
                         </div>
                         <div class="progress-widget">
@@ -169,8 +173,10 @@
                     <div class="card-body">
                         <div class="media static-top-widget">
                             <div class="media-body">
-                                <h6 class="font-roboto">Member</h6>
-                                <h4 class="mb-0 counter">45631</h4>
+                                <h6 class="font-roboto">Status Keanggotaan</h6>
+                                <h4 class="mb-0 counter"><span
+                                        class="badge badge-{{ $data['membership_status'] == 'Aktif' ? 'primary' : 'danger' }}">{{ $data['membership_status'] }}</span>
+                                </h4>
                             </div>
                             <svg class="fill-danger" width="41" height="46" viewBox="0 0 41 46"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -195,255 +201,37 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 xl-50 chart_data_right box-col-12">
+            <div class="col-xl-3 xl-100 box-col-12">
                 <div class="card">
+                    <div class="card-header">
+                        <h5>Para Pengguna Freepik</h5><span>List Para Pengguna Freepik.</span>
+                    </div>
                     <div class="card-body">
-                        <div class="media align-items-center">
-                            <div class="media-body right-chart-content">
-                                <h4>$95,900<span class="new-box">Hot</span></h4><span>Purchase Order
-                                    Value</span>
-                            </div>
-                            <div class="knob-block text-center">
-                                <input class="knob1" data-width="10" data-height="70" data-thickness=".3"
-                                    data-angleoffset="0" data-linecap="round" data-fgcolor="#7366ff"
-                                    data-bgcolor="#eef5fb" value="60">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 xl-50 chart_data_right second d-none">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media align-items-center">
-                            <div class="media-body right-chart-content">
-                                <h4>$95,000<span class="new-box">New</span></h4><span>Product Order
-                                    Value</span>
-                            </div>
-                            <div class="knob-block text-center">
-                                <input class="knob1" data-width="50" data-height="70" data-thickness=".3"
-                                    data-fgcolor="#7366ff" data-linecap="round" data-angleoffset="0" value="60">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-md-12 box-col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Bar Chart</h5>
-                    </div>
-                    <div class="card-body chart-block">
-                        <canvas id="myBarGraph"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 xl-50 news box-col-6">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-top">
-                            <h5 class="m-0">News &amp; Update</h5>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="news-update media"><img class="img-fluid me-3 b-r-10"
-                                src="{{ asset('admin-panel/assets/images/dashboard/update/1.jpg') }}" alt="">
-                            <div class="media-body">
-                                <h6>36% off For pixel Couslations Types.</h6><span>Lorem Ipsum is simply
-                                    dummy...</span><span class="time-detail d-block"><i data-feather="clock"></i>10
-                                    Minutes Ago</span>
-                            </div>
-                        </div>
-                        <div class="news-update media"><img class="img-fluid me-3 b-r-10"
-                                src="{{ asset('admin-panel/assets/images/dashboard/update/2.jpg') }}" alt="">
-                            <div class="media-body">
-                                <h6>We are produce new product this</h6><span> Lorem Ipsum is simply text of
-                                    the printing... </span><span class="time-detail d-block"><i data-feather="clock"></i>1
-                                    Hour Ago</span>
-                            </div>
-                        </div>
-                        <div class="news-update media"><img class="img-fluid me-3 b-r-10"
-                                src="{{ asset('admin-panel/assets/images/dashboard/update/3.jpg') }}" alt="">
-                            <div class="media-body">
-                                <h6>50% off For COVID Couslations Types.</h6><span>Lorem Ipsum is simply
-                                    dummy...</span><span class="time-detail d-block"><i data-feather="clock"></i>8
-                                    Hours Ago</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="bottom-btn"><a href="#">See all</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 xl-50 appointment-sec box-col-6">
-                <div class="row">
-                    <div class="col-xl-12 appointment">
-                        <div class="card">
-                            <div class="card-header card-no-border">
-                                <div class="header-top">
-                                    <h5 class="m-0">appointment</h5>
-                                </div>
-                            </div>
-                            <div class="card-body pt-0">
-                                <div class="appointment-table table-responsive">
-                                    <table class="table table-bordernone">
-                                        <tbody>
-                                            <tr>
-                                                <td><img class="img-fluid img-40 rounded-circle mb-3"
-                                                        src="{{ asset('admin-panel/assets/images/appointment/app-ent.jpg') }}"
-                                                        alt="Image description">
-                                                    <div class="status-circle bg-primary"></div>
-                                                </td>
-                                                <td class="img-content-box"><span class="d-block">Venter
-                                                        Loren</span><span class="font-roboto">Now</span>
-                                                </td>
-                                                <td>
-                                                    <p class="m-0 font-primary">28 Sept</p>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="button btn btn-primary">Done</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img class="img-fluid img-40 rounded-circle mb-3"
-                                                        src="{{ asset('admin-panel/assets/images/appointment/app-ent.jpg') }}"
-                                                        alt="Image description">
-                                                    <div class="status-circle bg-primary"></div>
-                                                </td>
-                                                <td class="img-content-box"><span class="d-block">John
-                                                        Loren</span><span class="font-roboto">11:00</span>
-                                                </td>
-                                                <td>
-                                                    <p class="m-0 font-primary">22 Sept</p>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="button btn btn-warning">Pending</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img class="img-fluid img-40 rounded-circle mb-3"
-                                                        src="{{ asset('admin-panel/assets/images/appointment/app-ent.jpg') }}"
-                                                        alt="Image description">
-                                                    <div class="status-circle bg-primary"></div>
-                                                </td>
-                                                <td class="img-content-box"><span class="d-block">John
-                                                        Loren</span><span class="font-roboto">11:00</span>
-                                                </td>
-                                                <td>
-                                                    <p class="m-0 font-primary">22 Sept</p>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="button btn btn-warning">Pending</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img class="img-fluid img-40 rounded-circle mb-3"
-                                                        src="{{ asset('admin-panel/assets/images/appointment/app-ent.jpg') }}"
-                                                        alt="Image description">
-                                                    <div class="status-circle bg-primary"></div>
-                                                </td>
-                                                <td class="img-content-box"><span class="d-block">John
-                                                        Loren</span><span class="font-roboto">11:00</span>
-                                                </td>
-                                                <td>
-                                                    <p class="m-0 font-primary">22 Sept</p>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="button btn btn-warning">Pending</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img class="img-fluid img-40 rounded-circle mb-3"
-                                                        src="{{ asset('admin-panel/assets/images/appointment/app-ent.jpg') }}"
-                                                        alt="Image description">
-                                                    <div class="status-circle bg-primary"></div>
-                                                </td>
-                                                <td class="img-content-box"><span class="d-block">John
-                                                        Loren</span><span class="font-roboto">11:00</span>
-                                                </td>
-                                                <td>
-                                                    <p class="m-0 font-primary">22 Sept</p>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="button btn btn-warning">Pending</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img class="img-fluid img-40 rounded-circle mb-3"
-                                                        src="{{ asset('admin-panel/assets/images/appointment/app-ent.jpg') }}"
-                                                        alt="Image description">
-                                                    <div class="status-circle bg-primary"></div>
-                                                </td>
-                                                <td class="img-content-box"><span class="d-block">John
-                                                        Loren</span><span class="font-roboto">11:00</span>
-                                                </td>
-                                                <td>
-                                                    <p class="m-0 font-primary">22 Sept</p>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="button btn btn-warning">Pending</div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 xl-50 notification box-col-6">
-                <div class="card">
-                    <div class="card-header card-no-border">
-                        <div class="header-top">
-                            <h5 class="m-0">notification</h5>
-                        </div>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="media">
-                            <div class="media-body">
-                                <p>20-04-2020 <span>10:10</span></p>
-                                <h6>Updated Product<span class="dot-notification"></span></h6>
-                                <span>Quisque a consequat ante sit amet magna...</span>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-body">
-                                <p>20-04-2020<span class="ps-1">Today</span><span
-                                        class="badge badge-secondary">New</span></p>
-                                <h6>Tello just like your product<span class="dot-notification"></span>
-                                </h6><span>Quisque a consequat ante sit amet magna... </span>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-body">
-                                <div class="d-flex mb-3">
-                                    <div class="inner-img"><img class="img-fluid"
-                                            src="{{ asset('admin-panel/assets/images/notification/1.jpg') }}"
-                                            alt="Product-1">
-                                    </div>
-                                    <div class="inner-img"><img class="img-fluid"
-                                            src="{{ asset('admin-panel/assets/images/notification/2.jpg') }}"
-                                            alt="Product-2">
-                                    </div>
-                                </div><span class="mt-3">Quisque a consequat ante sit amet
-                                    magna...</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 xl-50 appointment box-col-6">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-top">
-                            <h5 class="m-0">Market Value</h5>
-                        </div>
-                    </div>
-                    <div class="card-Body">
-                        <div class="radar-chart">
-                            <div id="marketchart"> </div>
+                        <div class="table-responsive">
+                            <table class="stripe hover freepik_table" id="freepik_table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama</th>
+                                        <th>NIM</th>
+                                        <th>Prodi</th>
+                                        <th>Fakultas</th>
+                                        <th>Jumlah Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data['freepik_leaderboard'] as $item)
+                                        <tr>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $item['name'] }}</td>
+                                            <td>{{ $item['student_id'] }}</td>
+                                            <td>{{ $item['program_study'] }}</td>
+                                            <td>{{ $item['faculty'] }}</td>
+                                            <td>{{ $item['freepik_count'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

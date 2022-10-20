@@ -6,6 +6,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,7 +39,7 @@ class LoginController extends Controller
             $userdata = [
                 'name' => $user->name,
                 'email' => $user->email,
-                'password' => $user->email,
+                'password' => $user->email . $user->id . Str::uuid()->toString(),
                 'role' => 'student',
                 'provider' => 'google',
                 'provider_id' => $user->id,
@@ -69,7 +70,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('landing');
+        return redirect()->route('landing')->with('success', 'Logout Berhasil');
     }
 
     /**
@@ -109,9 +110,7 @@ class LoginController extends Controller
             }
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return back()->with('error', 'Data yang kamu kirim ga cocok sama database kita nih.')->onlyInput('email');
     }
 
     /**

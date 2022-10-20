@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ReregistrationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,8 +56,12 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
 });
 
 Route::prefix('student')->name('student.')->middleware(['role:student', 'verified'])->group(function () {
-    // Route::get('/', [DashboardController::class, 'studentDashboard'])->name('dashboard');
-    Route::get('/', function () {
-        return view('errors.503');
-    })->name('dashboard');
+    Route::get('/', [DashboardController::class, 'studentDashboard'])->name('dashboard');
+    Route::get('coming-soon', function () {
+        return redirect()->back()->with('error', 'Coming Soon!');
+    })->name('coming-soon');
+    Route::resource('re-registration', ReregistrationController::class)->only(['index', 'store']);
+    // Route::get('/', function () {
+    //     return view('errors.503');
+    // })->name('dashboard');
 });

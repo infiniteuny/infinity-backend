@@ -45,8 +45,8 @@ class LeaderboardController extends Controller
                 ->whereRelation('teams.achievements', 'date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
                 ->whereRelation('teams.achievements', 'date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'))
                 ->with([
-                    'teams' => function ($query) use ($request) {
-                        $query->whereHas('achievements', function ($query) use ($request) {
+                    'teams' => function ($query) {
+                        $query->whereHas('achievements', function ($query) {
                             $query->where('date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
                                 ->where('date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'));
                         });
@@ -59,7 +59,7 @@ class LeaderboardController extends Controller
                     'teams.achievements.competitionTypes',
                     'programStudies',
                 ])
-                ->withCount(['teams' => function ($query) use ($request) {
+                ->withCount(['teams' => function ($query) {
                     $query->whereRelation('achievements', 'date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
                         ->whereRelation('achievements', 'date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'));
                 }])
@@ -81,7 +81,7 @@ class LeaderboardController extends Controller
             })->sum('point');
             array_push($anggota, $member);
         });
-        $anggota = collect($anggota)->sortByDesc('achievement_count')->sortByDesc('points')->values()->toArray();
+        $anggota = collect($anggota)->sortBy('name')->sortByDesc('achievement_count')->sortByDesc('points')->values()->toArray();
 
         $yearSelect = Achievement::selectRaw('YEAR(date) as year')->distinct()->get()->toArray();
         $yearSelect = collect($yearSelect)->flatten()->toArray();

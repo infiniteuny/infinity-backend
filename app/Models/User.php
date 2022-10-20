@@ -47,4 +47,19 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function freepikDownloads()
+    {
+        return $this->hasOne(FreepikDownload::class, 'user_id', 'id');
+    }
+
+    public function fundApplications()
+    {
+        return $this->hasMany(FundApplication::class, 'user_id', 'id');
+    }
+
+    public function members()
+    {
+        return $this->hasOne(Member::class, 'student_id', 'student_id');
+    }
 }
