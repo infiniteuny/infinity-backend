@@ -36,7 +36,7 @@ class MemberController extends Controller
                 $data['tanggal_aktif'] = $member->start_date;
                 $data['tanggal_selesai'] = $member->end_date ? $member->end_date : '-';
                 $data['alb'] = $member->is_extraordinary ? 'Ya' : 'Tidak';
-                $data['status'] = $member->status;
+                $data['status'] = $member->status ? true : false;
                 return $data;
             });
             return DataTables::of($data)->addIndexColumn()

@@ -7,6 +7,8 @@ use Analytics;
 use App\Models\Achievement;
 use App\Models\Config;
 use App\Models\Faculty;
+use App\Models\Freepik;
+use App\Models\FundApplication;
 use App\Models\Member;
 use App\Models\User;
 use Carbon\Carbon;
@@ -69,6 +71,29 @@ class DashboardController extends Controller
 
     public function studentDashboard()
     {
-        return view('student.dashboard');
+        $data['achievements'] = Achievement::whereRelation('teams.members', 'student_id', Auth::user()->student_id)->count();
+        $data['freepik']['used'] = Freepik::whereRelation('freepikDownloads.users', 'student_id', Auth::user()->student_id)->whereDate('created_at', Carbon::today())->count();
+        $data['freepik']['quota'] = Auth::user()->freepikDownloads ? Auth::user()->freepikDownloads->limit : 3;
+        $data['fund_applications'] = FundApplication::where('user_id', Auth::id())->where(function ($query) {
+            $query->where('status', 'waiting')
+                ->orwhere('status', 'accepted');
+        })->count();
+        $data['membership_status'] = Member::where('student_id', Auth::user()->student_id)->first()->status ? 'Aktif' : 'Tidak Aktif';
+        $data['freepik_leaderboard'] = User::whereHas('freepikDownloads')
+            ->with(['freepikDownloads' => function ($query) {
+                $query->withCount('freepiks');
+            }, 'members.programStudies.faculties'])->get()
+            ->map(function ($user) {
+                return [
+                    'name' => $user->name,
+                    'student_id' => $user->student_id,
+                    'program_study' => $user->members->programStudies->name,
+                    'faculty' => $user->members->programStudies->faculties->name,
+                    'freepik_count' => $user->freepikDownloads->freepiks_count,
+                ];
+            })->sortByDesc('freepik_count')->take(10);
+        return view('student.dashboard')->with([
+            'data' => $data,
+        ]);
     }
 }

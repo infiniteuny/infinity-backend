@@ -56,7 +56,8 @@ class RegisterController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $error = $validator->errors()->all(':message');
+            return redirect()->back()->with('error', implode(' ', $error))->withInput();
         }
 
         try {

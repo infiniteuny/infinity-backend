@@ -80,7 +80,7 @@
                         data: null,
                         name: 'status',
                         render: function(data) {
-                            if (data.status) {
+                            if (data.status == true) {
                                 return '<span class="badge badge-success">Aktif</span>';
                             } else {
                                 return '<span class="badge badge-danger">Tidak Aktif</span>';

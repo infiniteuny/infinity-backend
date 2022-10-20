@@ -54,6 +54,14 @@
                     }
                 })
         });
+
+        function check(id) {
+            if ($('#' + id).prop('checked') == true) {
+                $('#' + id + '_hidden').val('true');
+            } else {
+                $('#' + id + '_hidden').val('false');
+            }
+        }
     </script>
 @endsection
 
@@ -68,25 +76,44 @@
                     <form action="{{ route('admin.config.update') }}" method="POST">
                         @csrf
                         @method('PUT')
-                        @foreach ($data['configs'] as $config => $value)
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for=""
-                                    style="text-transform: capitalize">{{ str_replace('_', ' ', $config) }}</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="text" name="{{ $config }}"
-                                        value="{{ $value }}">
+                        @foreach ($data['configs'] as $config => $item)
+                            @if ($item['type'] == 'string')
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label"
+                                        style="text-transform: capitalize">{{ str_replace('_', ' ', $config) }}</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" placeholder="Pengaturan"
+                                            data-bs-original-title="" title="" name="{{ $config }}"
+                                            value="{{ $item['value'] }}">
+                                    </div>
                                 </div>
-                            </div>
+                            @elseif ($item['type'] == 'integer')
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label"
+                                        style="text-transform: capitalize">{{ str_replace('_', ' ', $config) }}</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="number" placeholder="Pengaturan"
+                                            data-bs-original-title="" title="" name="{{ $config }}"
+                                            value="{{ $item['value'] }}">
+                                    </div>
+                                </div>
+                            @elseif ($item['type'] == 'boolean')
+                                <div class="media mb-2">
+                                    <label class="col-form-label m-r-10"
+                                        style="text-transform: capitalize">{{ str_replace('_', ' ', $config) }}</label>
+                                    <div class="media-body text-end icon-state switch-outline">
+                                        <label class="switch">
+                                            <input type="checkbox" data-bs-original-title="" title=""
+                                                id="{{ $config }}" onclick="check(this.id)"
+                                                {{ $item['value'] == 'true' ? 'checked' : '' }} value="true"><span
+                                                class="switch-state bg-primary"></span>
+                                            <input type="hidden" name="{{ $config }}"
+                                                id="{{ $config . '_hidden' }}" value="{{ $item['value'] }}">
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
                         @endforeach
-                        {{-- <div class="media mb-2">
-                            <label class="col-form-label m-r-10">Primary Color</label>
-                            <div class="media-body text-end icon-state switch-outline">
-                                <label class="switch">
-                                    <input type="checkbox" checked="" data-bs-original-title="" title=""><span
-                                        class="switch-state bg-primary"></span>
-                                </label>
-                            </div>
-                        </div> --}}
                 </div>
                 <div class="card-footer text-end">
                     <button class="btn btn-primary" type="submit">Update</button>

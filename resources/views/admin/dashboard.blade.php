@@ -384,14 +384,15 @@
                     <div class="card-body">
                         <div class="media align-items-center">
                             <div class="media-body right-chart-content">
-                                <h4>{{ $data['achievements'] }}/{{ $data['configs']['competition_target'] }}</h4>
+                                <h4>{{ $data['achievements'] }}/{{ isset($data['configs']['competition_target']) ? $data['configs']['competition_target'] : 25 }}
+                                </h4>
                                 <span>Target Prestasi Tahun Ini</span>
                             </div>
                             <div class="knob-block text-center">
                                 <input class="knob1" data-width="10" data-height="70" data-thickness=".3"
                                     data-angleoffset="0" data-linecap="round" data-fgcolor="#7366ff"
                                     data-bgcolor="#eef5fb"
-                                    value="{{ ($data['achievements'] / (int) $data['configs']['competition_target']) * 100 }}">
+                                    value="{{ ($data['achievements'] / (int) (isset($data['configs']['competition_target']) ? $data['configs']['competition_target'] : 25)) * 100 }}">
                             </div>
                         </div>
                     </div>
