@@ -42,11 +42,18 @@ Route::get('/leaderboard/{member_id}', [LeaderboardController::class, 'detail'])
 
 Route::post('/contact-us', [LandingController::class, 'contactUs'])->name('contact-us');
 
+
+// ---------------- Admin Route ----------------
+
 Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->group(function () {
     Route::get('/', [DashboardController::class, 'adminDashboard'])->name('dashboard');
     Route::prefix('config')->name('config.')->group(function () {
         Route::get('/', [ConfigController::class, 'index'])->name('index');
         Route::put('/', [ConfigController::class, 'update'])->name('update');
+    });
+    Route::prefix('achievement')->name('achievement.')->group(function () {
+        Route::get('/{achievement}/accept', [AchievementController::class, 'accept'])->name('accept');
+        Route::get('/{achievement}/reject', [AchievementController::class, 'reject'])->name('reject');
     });
     Route::resources([
         'member' => MemberController::class,
@@ -55,13 +62,17 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
     ]);
 });
 
+
+// ---------------- Student Route ----------------
+
 Route::prefix('student')->name('student.')->middleware(['role:student', 'verified'])->group(function () {
     Route::get('/', [DashboardController::class, 'studentDashboard'])->name('dashboard');
     Route::get('coming-soon', function () {
         return redirect()->back()->with('error', 'Coming Soon!');
     })->name('coming-soon');
     Route::resource('re-registration', ReregistrationController::class)->only(['index', 'store']);
-    // Route::get('/', function () {
-    //     return view('errors.503');
-    // })->name('dashboard');
+
+    Route::get('achievement', [AchievementController::class, 'studentIndex'])->name('achievement.index');
+    Route::get('achievement/{achievement}/edit', [AchievementController::class, 'studentEdit'])->name('achievement.edit');
+    Route::resource('achievement', AchievementController::class)->only('store', 'update', 'destroy');
 });

@@ -14,7 +14,7 @@
             </div>
         </form>
         <div class="header-logo-wrapper col-auto p-0">
-            <div class="logo-wrapper"><a href="index.html"><img class="img-fluid"
+            <div class="logo-wrapper"><a href="{{ route('student.dashboard') }}"><img class="img-fluid"
                         src="{{ asset('landing/assets/images/logo_infinite_dark.svg') }}" alt=""></a>
             </div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>
