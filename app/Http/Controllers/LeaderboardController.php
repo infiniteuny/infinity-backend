@@ -19,11 +19,13 @@ class LeaderboardController extends Controller
             $members = Member::has('teams')
                 ->whereRelation('teams.achievements', 'date', '>=', Carbon::parse($request->year . '-01-01'))
                 ->whereRelation('teams.achievements', 'date', '<=', Carbon::parse($request->year . '-12-31'))
+                ->whereRelation('teams.achievements', 'status', '=', 'accepted')
                 ->with([
                     'teams' => function ($query) use ($request) {
                         $query->whereHas('achievements', function ($query) use ($request) {
                             $query->where('date', '>=', Carbon::parse($request->year . '-01-01'))
-                                ->where('date', '<=', Carbon::parse($request->year . '-12-31'));
+                                ->where('date', '<=', Carbon::parse($request->year . '-12-31'))
+                                ->where('status', '=', 'accepted');
                         });
                     },
                     'teams.achievements.competitionScales',
@@ -36,7 +38,8 @@ class LeaderboardController extends Controller
                 ])
                 ->withCount(['teams' => function ($query) use ($request) {
                     $query->whereRelation('achievements', 'date', '>=', Carbon::parse($request->year . '-01-01'))
-                        ->whereRelation('achievements', 'date', '<=', Carbon::parse($request->year . '-12-31'));
+                        ->whereRelation('achievements', 'date', '<=', Carbon::parse($request->year . '-12-31'))
+                        ->whereRelation('achievements', 'status', '=', 'accepted');
                 }])
                 ->get()->toArray();
             $year = $request->year;
@@ -44,11 +47,13 @@ class LeaderboardController extends Controller
             $members = Member::has('teams')
                 ->whereRelation('teams.achievements', 'date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
                 ->whereRelation('teams.achievements', 'date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'))
+                ->whereRelation('teams.achievements', 'status', '=', 'accepted')
                 ->with([
                     'teams' => function ($query) {
                         $query->whereHas('achievements', function ($query) {
                             $query->where('date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
-                                ->where('date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'));
+                                ->where('date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'))
+                                ->where('status', '=', 'accepted');
                         });
                     },
                     'teams.achievements.competitionScales',
@@ -61,7 +66,8 @@ class LeaderboardController extends Controller
                 ])
                 ->withCount(['teams' => function ($query) {
                     $query->whereRelation('achievements', 'date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
-                        ->whereRelation('achievements', 'date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'));
+                        ->whereRelation('achievements', 'date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'))
+                        ->whereRelation('achievements', 'status', '=', 'accepted');
                 }])
                 ->get()->toArray();
             $year = Carbon::now()->year;
@@ -96,8 +102,18 @@ class LeaderboardController extends Controller
 
     public function detail($member_id)
     {
-        $member = Member::with('teams.achievements')->find(Crypt::decryptString($member_id));
-        foreach ($member->teams as $team) {
+        $member = Member::with([
+            'teams' => function ($query) {
+                $query->whereRelation('achievements', 'status', '=', 'accepted');
+            },
+            'teams.achievements.competitionScales',
+            'teams.achievements.competitionLevels',
+            'teams.achievements.competitionRanks',
+            'teams.achievements.competitionOutputs',
+            'teams.achievements.competitionTimeRanges',
+            'teams.achievements.competitionTypes',
+        ])->find(Crypt::decryptString($member_id));
+        foreach ($member['teams'] as $team) {
             $team->points =
                 $team->achievements->competitionScales->weight *
                 $team->achievements->competitionLevels->weight *

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,12 @@ class ReregistrationController extends Controller
      */
     public function index()
     {
-        return view('student.registration.index');
+        $config = Config::where('key', 're_registration')->first()->value;
+        if ($config == 'true') {
+            return view('student.registration.index');
+        } else {
+            return redirect()->back()->with('error', 'Wahhh, pendaftaran ulang belum dibuka nih ');
+        }
     }
 
     /**

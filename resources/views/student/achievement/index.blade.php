@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('student.layouts.app')
 
 @section('title', 'Prestasi')
 
@@ -7,11 +7,11 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Admin Panel</h3>
+                    <h3>Member Panel</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"> <i data-feather="home"></i></a>
+                        <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}"> <i data-feather="home"></i></a>
                         </li>
                         <li class="breadcrumb-item active">Prestasi</li>
                     </ol>
@@ -91,7 +91,7 @@
                 ],
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.achievement.index') }}",
+                ajax: "{{ route('student.achievement.index') }}",
                 columns: [{
                         "className": 'details-control',
                         "orderable": false,
@@ -157,28 +157,17 @@
                         render: function(data) {
                             if (data.status == 'waiting') {
                                 return `
-                                <form action="{{ url('admin/achievement') }}/${data.id}" method="POST">
+                                <form action="{{ url('student/achievement') }}/${data.id}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <div class="btn-group btn-group-pill" role="group" aria-label="Manage Button">
                                         <button type="button" onclick="goTo('${data.id}')" class="btn btn-primary btn-sm btn-edit-achievement"><i class="fa fa-edit"></i></button>
-                                        <button type="button" onclick="accept('${data.id}')" class="btn btn-success btn-sm btn-accept-achievement"><i class="fa fa-check"></i></button>
-                                        <button type="button" onclick="reject('${data.id}')" class="btn btn-secondary btn-sm btn-reject-achievement"><i class="fa fa-times"></i></button>
                                         <button type="submit" class="btn btn-danger btn-sm btn-detele-achievement"><i class="fa fa-trash"></i></button>
                                     </div>
                                 </form>
                                 `;
                             } else {
-                                return `
-                                <form action="{{ url('admin/achievement') }}/${data.id}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <div class="btn-group btn-group-pill" role="group" aria-label="Manage Button">
-                                        <button type="button" onclick="goTo('${data.id}')" class="btn btn-primary btn-sm btn-edit-achievement"><i class="fa fa-edit"></i></button>
-                                        <button type="submit" class="btn btn-danger btn-sm btn-detele-achievement"><i class="fa fa-trash"></i></button>
-                                    </div>
-                                </form>
-                                `;
+                                return ``;
                             }
                         },
                         orderable: false,
@@ -204,21 +193,7 @@
     <script>
         function goTo(id) {
             var id = id;
-            var url = '{{ route('admin.achievement.edit', ':id') }}';
-            url = url.replace(':id', id);
-            window.location.href = url;
-        }
-
-        function accept(id) {
-            var id = id;
-            var url = '{{ route('admin.achievement.accept', ':id') }}';
-            url = url.replace(':id', id);
-            window.location.href = url;
-        }
-
-        function reject(id) {
-            var id = id;
-            var url = '{{ route('admin.achievement.reject', ':id') }}';
+            var url = '{{ route('student.achievement.edit', ':id') }}';
             url = url.replace(':id', id);
             window.location.href = url;
         }
@@ -323,6 +298,7 @@
             });
         });
     </script>
+
 @endsection
 
 @section('content')
@@ -330,12 +306,11 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Data Prestasi Anggota INFINITE UNY</h5><span>Data prestasi anggota INFINITE UNY dari tahun ke
-                        tahun.</span>
+                    <h5>Data Prestasi {{ auth()->user()->name }}</h5><span>Data prestasi {{ auth()->user()->name }} dari
+                        tahun ke tahun.</span>
                     <div class="card-header-right">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-original-title="addAchievement"
-                            data-bs-target="#addAchievementModal">Tambah
-                            Prestasi</button>
+                            data-bs-target="#addAchievementModal">Ajukan Prestasi</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -375,7 +350,7 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('admin.achievement.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('student.achievement.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="row">
@@ -429,11 +404,16 @@
                                 <label for="fakultas">Ketua</label>
                                 <select class="select-leader col-sm-12 btn-square" name="leader" required>
                                 </select>
+                                <small class="text-danger">*Ketua harus anggota INFINITE, jika bukan pilih diri sendiri
+                                    sebagai ketua</small>
+
                             </div>
                             <div class="col-md-6">
                                 <label for="member">Anggota</label>
                                 <select class="select-member col-sm-12 btn-square" name="member[]" multiple="multiple">
                                 </select>
+                                <small class="text-danger">*Pilih anggota INFINITE lain yang terlibat dalam tim, jika tidak
+                                    ada kosongkan</small>
                             </div>
                         </div>
                         <div class="row g-3" style="margin-bottom: 1rem !important;">
@@ -492,18 +472,6 @@
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="date">Status</label>
-                                    <select name="status" id="status" class="form-select digits">
-                                        <option value="accepted">Accepted</option>
-                                        <option value="waiting">Waiting</option>
-                                        <option value="rejected">Rejected</option>
-                                    </select>
-                                </div>
                             </div>
                         </div>
                         <div class="row">

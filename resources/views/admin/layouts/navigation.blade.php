@@ -2,7 +2,7 @@
     <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
     <div id="sidebar-menu">
         <ul class="sidebar-links" id="simple-bar">
-            <li class="back-btn"><a href="index.html"><img class="img-fluid"
+            <li class="back-btn"><a href="{{ route('admin.dashboard') }}"><img class="img-fluid"
                         src="{{ asset('landing/assets/images/logo_infinite_dark.svg') }}" alt=""></a>
                 <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
                         aria-hidden="true"></i></div>

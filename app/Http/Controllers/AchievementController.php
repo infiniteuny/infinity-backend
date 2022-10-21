@@ -15,6 +15,8 @@ use App\Models\Team;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -59,6 +61,7 @@ class AchievementController extends Controller
                     'competition_time_range' => $achievement->competitionTimeRanges->name,
                     'competition_rank' => $achievement->competitionRanks->name,
                     'competition_level' => $achievement->competitionLevels->name,
+                    'status' => $achievement->status,
                     'point' => $achievement->competitionTypes->weight *
                         $achievement->competitionScales->weight *
                         $achievement->competitionOutputs->weight *
@@ -78,6 +81,63 @@ class AchievementController extends Controller
         $data['competition_ranks'] = CompetitionRank::all();
         $data['competition_levels'] = CompetitionLevel::all();
         return view('admin.achievement.index')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function studentIndex(Request $request)
+    {
+        if ($request->ajax()) {
+            $achievement = Achievement::whereRelation('teams.members', 'student_id', auth()->user()->student_id)
+                ->with([
+                    'teams.members',
+                    'competitionTypes',
+                    'competitionScales',
+                    'competitionOutputs',
+                    'competitionTimeRanges',
+                    'competitionRanks',
+                    'competitionLevels'
+                ])->orderBy('date', 'desc')->get();
+            $data = $achievement->map(function ($achievement) {
+                return [
+                    'id' => Crypt::encryptString($achievement->id),
+                    'team_name' => $achievement->teams->name,
+                    'competition_name' => $achievement->competition_name,
+                    'organizer' => $achievement->organizer,
+                    'description' => $achievement->description,
+                    'date' => Carbon::parse($achievement->date)->format('d M Y'),
+                    'member' => $achievement->teams->members->map(function ($member) {
+                        return [
+                            'name' => $member->name,
+                            'role' => $member->pivot->role,
+                        ];
+                    }),
+                    'competition_type' => $achievement->competitionTypes->name,
+                    'competition_scale' => $achievement->competitionScales->name,
+                    'competition_output' => $achievement->competitionOutputs->name,
+                    'competition_time_range' => $achievement->competitionTimeRanges->name,
+                    'competition_rank' => $achievement->competitionRanks->name,
+                    'competition_level' => $achievement->competitionLevels->name,
+                    'status' => $achievement->status,
+                    'point' => $achievement->competitionTypes->weight *
+                        $achievement->competitionScales->weight *
+                        $achievement->competitionOutputs->weight *
+                        $achievement->competitionTimeRanges->weight *
+                        $achievement->competitionRanks->weight *
+                        $achievement->competitionLevels->weight . ' pts'
+                ];
+            });
+            return DataTables::of($data)->addIndexColumn()
+                ->addIndexColumn()
+                ->make(true);
+        }
+        $data['competition_types'] = CompetitionType::all();
+        $data['competition_scales'] = CompetitionScale::all();
+        $data['competition_outputs'] = CompetitionOutput::all();
+        $data['competition_time_ranges'] = CompetitionTimeRange::all();
+        $data['competition_ranks'] = CompetitionRank::all();
+        $data['competition_levels'] = CompetitionLevel::all();
+        return view('student.achievement.index')->with([
             'data' => $data
         ]);
     }
@@ -114,6 +174,7 @@ class AchievementController extends Controller
             'competition_outputs' => 'required|string',
             'competition_time_range' => 'required|string',
             'competition_level' => 'required|string',
+            'status' => 'string|in:waiting,accepted,rejected',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -134,6 +195,17 @@ class AchievementController extends Controller
             $request->merge([
                 'member' => $members
             ]);
+        }
+
+        if (Auth::user()->hasRole('student')) {
+            $checkId = collect([]);
+            $checkId->push($request->leader);
+            foreach ($request->member as $item => $value) {
+                $checkId->push($value);
+            }
+            if (!$checkId->contains(auth()->user()->members->id)) {
+                return redirect()->back()->with('error', 'Kamu hukumnya wajib masuk ditim yang diajukan yak!')->withInput();
+            }
         }
 
         try {
@@ -161,6 +233,7 @@ class AchievementController extends Controller
                     'competition_time_range_id' => $request->competition_time_range,
                     'competition_rank_id' => $request->competition_rank,
                     'competition_level_id' => $request->competition_level,
+                    'status' => $request->has('status') ? $request->status : 'waiting',
                     'image' => $request->file('image')->store('public/images/achievement'),
                 ]);
             });
@@ -220,6 +293,7 @@ class AchievementController extends Controller
             'competition_time_range_id' => $achievement->competitionTimeRanges->id,
             'competition_rank_id' => $achievement->competitionRanks->id,
             'competition_level_id' => $achievement->competitionLevels->id,
+            'status' => $achievement->status,
             'point' => $achievement->competitionTypes->weight *
                 $achievement->competitionScales->weight *
                 $achievement->competitionOutputs->weight *
@@ -236,6 +310,57 @@ class AchievementController extends Controller
         $data['competition_levels'] = CompetitionLevel::all();
 
         return view('admin.achievement.edit')->with('data', $data);
+    }
+
+    public function studentEdit($achievement)
+    {
+        $achievement = Achievement::where('id', Crypt::decryptString($achievement))->with([
+            'teams.members',
+            'competitionTypes',
+            'competitionScales',
+            'competitionOutputs',
+            'competitionTimeRanges',
+            'competitionRanks',
+            'competitionLevels'
+        ])->first();
+
+        $data['achievement'] = (object) [
+            'id' => Crypt::encryptString($achievement->id),
+            'team_name' => $achievement->teams->name,
+            'competition_name' => $achievement->competition_name,
+            'organizer' => $achievement->organizer,
+            'description' => $achievement->description,
+            'date' => $achievement->date,
+            'image' => Storage::url($achievement->image),
+            'competition_type' => $achievement->competitionTypes->name,
+            'competition_scale' => $achievement->competitionScales->name,
+            'competition_output' => $achievement->competitionOutputs->name,
+            'competition_time_range' => $achievement->competitionTimeRanges->name,
+            'competition_rank' => $achievement->competitionRanks->name,
+            'competition_level' => $achievement->competitionLevels->name,
+            'competition_type_id' => $achievement->competitionTypes->id,
+            'competition_scale_id' => $achievement->competitionScales->id,
+            'competition_output_id' => $achievement->competitionOutputs->id,
+            'competition_time_range_id' => $achievement->competitionTimeRanges->id,
+            'competition_rank_id' => $achievement->competitionRanks->id,
+            'competition_level_id' => $achievement->competitionLevels->id,
+            'status' => $achievement->status,
+            'point' => $achievement->competitionTypes->weight *
+                $achievement->competitionScales->weight *
+                $achievement->competitionOutputs->weight *
+                $achievement->competitionTimeRanges->weight *
+                $achievement->competitionRanks->weight *
+                $achievement->competitionLevels->weight . ' pts'
+        ];
+
+        $data['competition_types'] = CompetitionType::all();
+        $data['competition_scales'] = CompetitionScale::all();
+        $data['competition_outputs'] = CompetitionOutput::all();
+        $data['competition_time_ranges'] = CompetitionTimeRange::all();
+        $data['competition_ranks'] = CompetitionRank::all();
+        $data['competition_levels'] = CompetitionLevel::all();
+
+        return view('student.achievement.edit')->with('data', $data);
     }
 
     /**
@@ -261,6 +386,7 @@ class AchievementController extends Controller
             'competition_outputs' => 'required|integer',
             'competition_time_range' => 'required|integer',
             'competition_level' => 'required|integer',
+            'status' => 'string|in:waiting,accepted,rejected',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -268,7 +394,18 @@ class AchievementController extends Controller
             $error = $validate->errors()->all(':message');
             return redirect()->back()->with('error', implode(' ', $error));
         }
-
+        if ($request->has('leader') || $request->has('member')) {
+            if (Auth::user()->hasRole('student')) {
+                $checkId = collect([]);
+                $checkId->push($request->leader);
+                foreach ($request->member as $item => $value) {
+                    $checkId->push($value);
+                }
+                if (!$checkId->contains(auth()->user()->members->id)) {
+                    return redirect()->back()->with('error', 'Kamu hukumnya wajib masuk ditim yang diajukan yak!')->withInput();
+                }
+            }
+        }
 
         try {
             DB::transaction(function () use ($request, $achievement) {
@@ -304,6 +441,7 @@ class AchievementController extends Controller
                     $achievement->competition_time_range_id = $request->competition_time_range;
                     $achievement->competition_rank_id = $request->competition_rank;
                     $achievement->competition_level_id = $request->competition_level;
+                    $achievement->status = $request->has('status') ? $request->status : 'waiting';
                     $achievement->image = $request->file('image')->store('public/images/achievement');
                     $achievement->save();
                 } else {
@@ -317,6 +455,7 @@ class AchievementController extends Controller
                     $achievement->competition_time_range_id = $request->competition_time_range;
                     $achievement->competition_rank_id = $request->competition_rank;
                     $achievement->competition_level_id = $request->competition_level;
+                    $achievement->status = $request->has('status') ? $request->status : 'waiting';
                     $achievement->save();
                 }
             });
@@ -340,6 +479,34 @@ class AchievementController extends Controller
             Storage::delete($achievement->image);
             $achievement->teams()->delete();
             return redirect()->back()->with('success', 'Data berhasil dihapus');
+        } else {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+    }
+
+    public function accept($achievement)
+    {
+        $achievement = Achievement::find(Crypt::decryptString($achievement));
+        if ($achievement) {
+            DB::transaction(function () use ($achievement) {
+                $achievement->status = 'accepted';
+                $achievement->save();
+            });
+            return redirect()->back()->with('success', 'Data berhasil diubah');
+        } else {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+    }
+
+    public function reject($achievement)
+    {
+        $achievement = Achievement::find(Crypt::decryptString($achievement));
+        if ($achievement) {
+            DB::transaction(function () use ($achievement) {
+                $achievement->status = 'rejected';
+                $achievement->save();
+            });
+            return redirect()->back()->with('success', 'Data berhasil diubah');
         } else {
             return redirect()->back()->with('error', 'Data tidak ditemukan');
         }

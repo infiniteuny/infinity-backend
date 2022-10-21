@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('student.layouts.app')
 
 @section('title', 'Prestasi')
 
@@ -7,11 +7,11 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Admin Panel</h3>
+                    <h3>Member Panel</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"> <i data-feather="home"></i></a>
+                        <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}"> <i data-feather="home"></i></a>
                         </li>
                         <li class="breadcrumb-item"><a href="{{ url()->previous() }}">Prestasi</a></li>
                         <li class="breadcrumb-item active">Edit</li>
@@ -112,7 +112,7 @@
         <div class="edit-profile">
             <div class="row">
                 <div class="col-xl-12">
-                    <form class="card" action="{{ route('admin.achievement.update', $data['achievement']->id) }}"
+                    <form class="card" action="{{ route('student.achievement.update', $data['achievement']->id) }}"
                         method="POST" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
@@ -178,11 +178,16 @@
                                     <label for="fakultas">Ketua</label>
                                     <select class="select-leader col-sm-12 btn-square" name="leader">
                                     </select>
+                                    <small class="text-danger">*Ketua harus anggota INFINITE, jika bukan pilih diri sendiri
+                                        sebagai ketua</small>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="member">Anggota</label>
                                     <select class="select-member col-sm-12 btn-square" name="member[]" multiple="multiple">
                                     </select>
+                                    <small class="text-danger">*Pilih anggota INFINITE lain yang terlibat dalam tim, jika
+                                        tidak
+                                        ada kosongkan</small>
                                 </div>
                             </div>
                             <div class="row g-3" style="margin-bottom: 1rem !important;">

@@ -78,7 +78,7 @@
                         <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid">
                             </i></div>
                     </div>
-                    <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid"
+                    <div class="logo-icon-wrapper"><a href="{{ route('admin.dashboard') }}"><img class="img-fluid"
                                 src="{{ asset('landing/assets/images/logo_infinite_dark.svg') }}" alt=""></a>
                     </div>
                     @include('admin.layouts.navigation')

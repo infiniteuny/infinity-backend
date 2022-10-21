@@ -50,7 +50,7 @@
             <div class="col-12 p-0">
                 <div class="login-card">
                     <div>
-                        <div><a class="logo" href="index.html"><img class="img-fluid for-light"
+                        <div><a class="logo" href="{{ route('landing') }}"><img class="img-fluid for-light"
                                     src="{{ asset('landing/assets/images/logo_infinite_green.svg') }}" alt="looginpage"><img
                                     class="img-fluid for-dark"
                                     src="{{ asset('landing/assets/images/logo_infinite_green.svg') }}" alt="looginpage"></a>
