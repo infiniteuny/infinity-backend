@@ -20,7 +20,7 @@ class ReregistrationController extends Controller
         if ($config == 'true') {
             return view('student.registration.index');
         } else {
-            return redirect()->back()->with('error', 'Wahhh, pendaftaran ulang belum dibuka nih ');
+            return redirect()->back()->with('error', 'Wahhh, pendaftaran ulang belum dibuka nih');
         }
     }
 

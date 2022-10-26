@@ -3,6 +3,8 @@
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FreepikDownloadController;
+use App\Http\Controllers\FundApplicationController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\MemberController;
@@ -42,6 +44,9 @@ Route::get('/leaderboard/{member_id}', [LeaderboardController::class, 'detail'])
 
 Route::post('/contact-us', [LandingController::class, 'contactUs'])->name('contact-us');
 
+Route::get('coming-soon', function () {
+    return redirect()->back()->with('error', 'Coming Soon!');
+})->name('coming-soon');
 
 // ---------------- Admin Route ----------------
 
@@ -67,12 +72,18 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
 
 Route::prefix('student')->name('student.')->middleware(['role:student', 'verified'])->group(function () {
     Route::get('/', [DashboardController::class, 'studentDashboard'])->name('dashboard');
-    Route::get('coming-soon', function () {
-        return redirect()->back()->with('error', 'Coming Soon!');
-    })->name('coming-soon');
     Route::resource('re-registration', ReregistrationController::class)->only(['index', 'store']);
 
     Route::get('achievement', [AchievementController::class, 'studentIndex'])->name('achievement.index');
     Route::get('achievement/{achievement}/edit', [AchievementController::class, 'studentEdit'])->name('achievement.edit');
     Route::resource('achievement', AchievementController::class)->only('store', 'update', 'destroy');
+
+    Route::prefix('fund-application/{fund_application}/download')->name('fund-application.download.')->group(function () {
+        Route::post('student-id-card', [FundApplicationController::class, 'downloadStudentIdCard'])->name('student-id-card');
+        Route::post('letter-of-acceptance', [FundApplicationController::class, 'downloadLetterOfAcceptance'])->name('letter-of-acceptance');
+        Route::post('budget-plan', [FundApplicationController::class, 'downloadBudgetPlan'])->name('budget-plan');
+    });
+    Route::resource('fund-application', FundApplicationController::class);
+    Route::resource('freepik', FreepikDownloadController::class)->except('create', 'show', 'edit', 'update', 'destroy');
+    Route::post('freepik/{freepik}/download', [FreepikDownloadController::class, 'download'])->name('freepik.download');
 });

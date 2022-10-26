@@ -69,7 +69,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row second-chart-list third-news-update">
-            <div class="col-xl-4 col-lg-12 xl-100 morning-sec box-col-12">
+            <div class="col-xl-12 col-lg-12 xl-100 morning-sec box-col-12">
                 <div class="card profile-greeting">
                     <div class="card-body pb-0">
                         <div class="media">
@@ -201,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 xl-100 box-col-12">
+            <div class="col-xl-12 xl-100 box-col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5>Para Pengguna Freepik</h5><span>List Para Pengguna Freepik.</span>
