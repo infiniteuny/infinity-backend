@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="#"><i data-feather="user"></i><span>Akun </span></a></li>
+                        <li><a href="{{ route('coming-soon') }}"><i data-feather="user"></i><span>Akun </span></a></li>
                         <li><a href="{{ route('logout') }}"><i data-feather="log-in"> </i><span>Keluar</span></a></li>
                     </ul>
                 </li>

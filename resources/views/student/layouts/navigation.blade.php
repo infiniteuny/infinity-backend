@@ -23,9 +23,8 @@
                     </span></a>
             </li>
             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
-                    href="{{ route('student.coming-soon') }}"><i data-feather="dollar-sign"></i><span
-                        class="lan-6">Pengajuan
-                        Dana
+                    href="{{ route('student.fund-application.index') }}"><i data-feather="dollar-sign"></i><span
+                        class="lan-6">Pengajuan Dana
                     </span></a>
             </li>
             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
@@ -33,7 +32,7 @@
                         class="lan-7">Daftar Ulang </span></a>
             </li>
             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
-                    href="{{ route('student.coming-soon') }}"><i data-feather="download"></i><span
+                    href="{{ route('student.freepik.index') }}"><i data-feather="download"></i><span
                         class="lan-7">Freepik
                         Downloader
                     </span></a>

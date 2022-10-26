@@ -58,7 +58,7 @@ return [
 
     'api_url' => env('API_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL'),
+    'api_freepik_url' => env('API_FREEPIK_URL'),
 
     /*
     |--------------------------------------------------------------------------

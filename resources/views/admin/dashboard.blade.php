@@ -235,7 +235,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row second-chart-list third-news-update">
-            <div class="col-xl-4 col-lg-12 xl-100 morning-sec box-col-12">
+            <div class="col-xl-12 col-lg-12 xl-100 morning-sec box-col-12">
                 <div class="card profile-greeting">
                     <div class="card-body pb-0">
                         <div class="media">
@@ -379,7 +379,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 xl-100 chart_data_right box-col-12">
+            <div class="col-xl-12 xl-100 chart_data_right box-col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="media align-items-center">
@@ -440,7 +440,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 xl-50 appointment-sec box-col-6">
+            <div class="col-xl-6 xl-50 appointment-sec box-col-6">
                 <div class="row">
                     <div class="col-xl-12 appointment">
                         <div class="card">
@@ -482,7 +482,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 xl-50 appointment box-col-6">
+            <div class="col-xl-6 xl-50 appointment box-col-6">
                 <div class="card">
                     <div class="card-header">
                         <div class="header-top">
