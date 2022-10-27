@@ -49,7 +49,7 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|max:255|confirmed',
             'student_id' => 'required|integer|unique:users,student_id',
@@ -62,7 +62,8 @@ class RegisterController extends Controller
 
         try {
             if (explode("@", $request->email)[1] != "student.uny.ac.id") {
-                return redirect()->back()->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
+                // return redirect()->back()->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
+                return redirect()->route('login')->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
             }
 
             $user = User::create([

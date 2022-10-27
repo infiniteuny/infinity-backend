@@ -20,12 +20,12 @@
                             <li class="tm-navigation-dropdown"><a href="#tm-area-contact">Tools</a>
                                 <ul>
                                     <li><a href="member">Cek Keanggotaan</a></li>
-                                    <li><a href="login">Login</a></li>
                                     <li><a target="_blank" href="https://unyku.id/">Unyku.id Shortlink</a></li>
                                     <li><a target="_blank" href="https://infisibill.infiniteuny.id/">Infinite
                                             Splitbill</a></li>
                                 </ul>
                             </li>
+                            <li><a href="login">Login</a></li>
                         @else
                             <li class="current"><a href="{{ url('') }}#tm-area-heroslider">Home</a></li>
                             <li><a href="{{ url('') }}#tm-area-about">Tentang</a></li>
@@ -36,12 +36,12 @@
                             <li class="tm-navigation-dropdown"><a href="#">Tools</a>
                                 <ul>
                                     <li><a href="{{ route('member') }}">Cek Keanggotaan</a></li>
-                                    <li><a href="{{ route('login') }}">Login</a></li>
                                     <li><a target="_blank" href="https://unyku.id/">Unyku.id Shortlink</a></li>
                                     <li><a target="_blank" href="https://infisibill.infiniteuny.id/">Infinite
                                             Splitbill</a></li>
                                 </ul>
                             </li>
+                            <li><a href="{{ route('login') }}">Login</a></li>
                         @endif
                     </ul>
                 </nav>

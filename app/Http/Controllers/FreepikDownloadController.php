@@ -31,8 +31,9 @@ class FreepikDownloadController extends Controller
             ->whereDate('created_at', Carbon::today())
             ->count();
         $data['freepik']['quota'] = $user->freepikDownloads ? $user->freepikDownloads->limit : 3;
-        $data['freepik']['total'] = Freepik::whereRelation('freepikDownloads.users', 'student_id', $user->student_id)->count();
-        // dd($user->freepikDownloads()->exists());
+        $data['freepik']['total'] = Freepik::whereRelation('freepikDownloads.users', 'student_id', $user->student_id)
+            ->whereRelation('freepikDownloads.users', 'status', 'completed')
+            ->count();
         if ($request->ajax()) {
             if ($user->freepikDownloads()->exists()) {
                 $freepikList = $user->freepikDownloads()->first()->freepiks()->latest()->get()->map(function ($data) {
@@ -45,7 +46,6 @@ class FreepikDownloadController extends Controller
             } else {
                 $freepikList = [];
             }
-            // dd($data);
             return DataTables::of($freepikList)
                 ->addIndexColumn()
                 ->make(true);
@@ -111,6 +111,7 @@ class FreepikDownloadController extends Controller
             }
             $download = $user->freepikDownloads()->first()->freepiks()->create([
                 'url' => $request->freepik_url,
+                'file_name' => $request->freepik_url,
                 'status' => 'waiting',
             ]);
 
