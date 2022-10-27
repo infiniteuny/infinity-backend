@@ -22,7 +22,7 @@
         </div>
         <div class="left-header col horizontal-wrapper ps-0">
             <ul class="horizontal-menu">
-                <li class="mega-menu outside"><a class="nav-link" href="#!"><i
+                <li class="mega-menu outside"><a class="nav-link" href="{{ route('landing') }}"><i
                             data-feather="home"></i><span>Landing</span></a>
                 </li>
             </ul>

@@ -71,14 +71,18 @@ class DashboardController extends Controller
 
     public function studentDashboard()
     {
-        $data['achievements'] = Achievement::whereRelation('teams.members', 'student_id', Auth::user()->student_id)->count();
-        $data['freepik']['used'] = Freepik::whereRelation('freepikDownloads.users', 'student_id', Auth::user()->student_id)->whereDate('created_at', Carbon::today())->count();
-        $data['freepik']['quota'] = Auth::user()->freepikDownloads ? Auth::user()->freepikDownloads->limit : 3;
+        $user = Auth::user();
+        $data['achievements'] = Achievement::whereRelation('teams.members', 'student_id', $user->student_id)->count();
+        $data['freepik']['used'] = Freepik::whereRelation('freepikDownloads.users', 'student_id', $user->student_id)
+            ->whereRelation('freepikDownloads.users', 'status', 'completed')
+            ->whereDate('created_at', Carbon::today())
+            ->count();
+        $data['freepik']['quota'] = $user->freepikDownloads ? $user->freepikDownloads->limit : 3;
         $data['fund_applications'] = FundApplication::where('user_id', Auth::id())->where(function ($query) {
             $query->where('status', 'waiting')
                 ->orwhere('status', 'accepted');
         })->count();
-        $data['membership_status'] = Member::where('student_id', Auth::user()->student_id)->first()->status ? 'Aktif' : 'Tidak Aktif';
+        $data['membership_status'] = Member::where('student_id', $user->student_id)->first()->status ? 'Aktif' : 'Tidak Aktif';
         $data['freepik_leaderboard'] = User::whereHas('freepikDownloads')
             ->with(['freepikDownloads' => function ($query) {
                 $query->withCount('freepiks');
