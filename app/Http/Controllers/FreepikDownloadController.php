@@ -30,16 +30,18 @@ class FreepikDownloadController extends Controller
             ->whereRelation('freepikDownloads.users', 'status', 'completed')
             ->whereDate('created_at', Carbon::today())
             ->count();
-        $data['freepik']['quota'] = $user->freepikDownloads ? $user->freepikDownloads->limit : 3;
+        $data['freepik']['quota'] = $user->freepikDownloads ? ($user->freepikDownloads->limit + $user->freepikDownloads->limit_addons) : 3;
         $data['freepik']['total'] = Freepik::whereRelation('freepikDownloads.users', 'student_id', $user->student_id)
             ->whereRelation('freepikDownloads.users', 'status', 'completed')
             ->count();
+        $data['freepik']['is_can_download'] = $data['freepik']['used'] < $data['freepik']['quota'];
         if ($request->ajax()) {
             if ($user->freepikDownloads()->exists()) {
                 $freepikList = $user->freepikDownloads()->first()->freepiks()->latest()->get()->map(function ($data) {
                     return [
                         'id' => Crypt::encryptString($data->id),
                         'file_name' => $data->file_name,
+                        'file_size' => $data->file_size ? number_format($data->file_size / 1048576, 2) . ' MB' : '0 MB',
                         'status' => $data->status,
                     ];
                 });

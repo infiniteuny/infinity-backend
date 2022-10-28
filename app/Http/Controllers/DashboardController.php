@@ -77,7 +77,7 @@ class DashboardController extends Controller
             ->whereRelation('freepikDownloads.users', 'status', 'completed')
             ->whereDate('created_at', Carbon::today())
             ->count();
-        $data['freepik']['quota'] = $user->freepikDownloads ? $user->freepikDownloads->limit : 3;
+        $data['freepik']['quota'] = $user->freepikDownloads ? ($user->freepikDownloads->limit + $user->freepikDownloads->limit_addons) : 3;
         $data['fund_applications'] = FundApplication::where('user_id', Auth::id())->where(function ($query) {
             $query->where('status', 'waiting')
                 ->orwhere('status', 'accepted');
