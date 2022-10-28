@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class ProcessFreepikDownload implements ShouldQueue
@@ -39,7 +40,6 @@ class ProcessFreepikDownload implements ShouldQueue
         try {
             $reqFreepik = new \GuzzleHttp\Client();
             $resFreepik = $reqFreepik->get(config('app.api_freepik_url') . $data->url, ['timeout' => 180]);
-            // $resFreepik = $reqFreepik->get('https://fpk.niwabi.my.id/download?url=' . $data->url, ['timeout' => 180]);
             $fileSize = $resFreepik->getHeaders()['Content-Length'][0];
             $fileName = explode(";", $resFreepik->getHeaders()['Content-Disposition'][0]);
             preg_match_all('`"([^"]*)"`', $fileName[1], $resultName);
@@ -52,6 +52,9 @@ class ProcessFreepikDownload implements ShouldQueue
             $data->status = 'completed';
             $data->save();
         } catch (\Throwable $th) {
+            $response = Http::post('https://info.infinite.niwabi.my.id/freepik-error', [
+                'apiKey' => 'fKKrOUFUt5MnQQKVVRxuhXvs7euccsfTaZKZbEyXMPQC2tFqJlM6ZIL02aIrUaKI',
+            ]);
             $data->status = 'failed';
             $data->save();
         }

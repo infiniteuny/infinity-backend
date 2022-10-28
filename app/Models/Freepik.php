@@ -13,6 +13,7 @@ class Freepik extends Model
         'url',
         'file_name',
         'file_path',
+        'file_size',
         'status',
     ];
 

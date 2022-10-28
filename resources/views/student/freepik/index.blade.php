@@ -70,6 +70,10 @@
                         }
                     },
                     {
+                        data: 'file_size',
+                        name: 'file_size'
+                    },
+                    {
                         data: null,
                         name: 'status',
                         render: function(data) {
@@ -158,13 +162,20 @@
                     <div class="card-header">
                         <h5>Infinite Freepik Downloader </h5><span>Masukkan URL file freepik yang akan di download.</span>
                         <hr>
-                        <form action="{{ route('student.freepik.store') }}" method="POST">
-                            @csrf
+                        @if ($data['freepik']['is_can_download'])
+                            <form action="{{ route('student.freepik.store') }}" method="POST">
+                                @csrf
+                                <label class="form-label" for="freepik_url">Url Download</label>
+                                <input type="text" class="form-control" name="freepik_url" id="freepik_url">
+
+                                <button type="submit" class="btn btn-primary mt-3" id="download">Download</button>
+                            </form>
+                        @else
                             <label class="form-label" for="freepik_url">Url Download</label>
                             <input type="text" class="form-control" name="freepik_url" id="freepik_url">
-
-                            <button type="submit" class="btn btn-primary mt-3" id="download">Download</button>
-                        </form>
+                            <button data-bs-toggle="modal" data-original-title="addQuota" data-bs-target="#addQuotaModal"
+                                class="btn btn-primary mt-3" id="download">Download</button>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -174,6 +185,7 @@
                                         <th>#</th>
                                         <th>Nama File</th>
                                         <th>Status</th>
+                                        <th>Ukuran File</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -187,4 +199,48 @@
         </div>
     </div>
 
+    <!-- Modal add quota -->
+    <div class="modal fade" id="addQuotaModal" tabindex="-1" role="dialog" aria-labelledby="addQuotaModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addQuotaModalLabel">Kuota Download Hari Ini Habis</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Yahh kuota downloadmu untuk hari ini sudah habis, kamu bisa meningkatkan kuota download
+                                    kamu dengan mengumpulkan poin prestasi infinite atau memberi donasi dibawah.</h6>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="img-fluid" style="max-width: 100%; width: 300px;"
+                                    src="{{ asset('landing/assets/images/logo_infinite_green.svg') }}" alt="">
+                                <br>
+                                <p>Lebih berprestasi bersama Infinite!</p>
+                            </div>
+                            <div class="col-6">
+                                <p>Bantu Infinite Beli Galon</p>
+                                <img src="{{ asset('admin-panel/assets/images/saweria/saweriaqrcode.png') }}"
+                                    alt="">
+                                <br>
+                                <br>
+                                <p>Donasi minimum Rp5.000,00 untuk mendapatkan kuota tambahan sebanyak 8. (Wajib pake
+                                    email
+                                    @student.uny.ac.id)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

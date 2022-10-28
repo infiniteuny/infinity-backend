@@ -22,6 +22,7 @@ class Achievement extends Model
         'date',
         'description',
         'image',
+        'status',
     ];
 
     public function teams()

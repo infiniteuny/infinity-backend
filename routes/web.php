@@ -9,6 +9,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReregistrationController;
+use App\Http\Controllers\SaweriaWebhookController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,8 @@ Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leade
 Route::get('/leaderboard/{member_id}', [LeaderboardController::class, 'detail'])->name('leaderboard.detail');
 
 Route::post('/contact-us', [LandingController::class, 'contactUs'])->name('contact-us');
+
+Route::post('webhook', [SaweriaWebhookController::class, 'webhook'])->name('webhook');
 
 Route::get('coming-soon', function () {
     return redirect()->back()->with('error', 'Coming Soon!');

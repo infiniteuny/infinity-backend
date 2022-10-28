@@ -11,6 +11,7 @@ class FreepikDownload extends Model
 
     protected $fillable = [
         'limit',
+        'limit_addons',
     ];
 
     public function users()
