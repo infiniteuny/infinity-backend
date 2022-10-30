@@ -47,6 +47,8 @@ Route::post('/contact-us', [LandingController::class, 'contactUs'])->name('conta
 
 Route::post('webhook', [SaweriaWebhookController::class, 'webhook'])->name('webhook');
 
+Route::post('reset-password', [UserController::class, 'resetPassword'])->name('reset-password');
+
 Route::get('coming-soon', function () {
     return redirect()->back()->with('error', 'Coming Soon!');
 })->name('coming-soon');
@@ -63,10 +65,20 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
         Route::get('/{achievement}/accept', [AchievementController::class, 'accept'])->name('accept');
         Route::get('/{achievement}/reject', [AchievementController::class, 'reject'])->name('reject');
     });
+    Route::prefix('fund-application')->name('fund-application.')->group(function () {
+        Route::prefix('{fund_application}/download')->name('download.')->group(function () {
+            Route::post('student-id-card', [FundApplicationController::class, 'downloadStudentIdCard'])->name('student-id-card');
+            Route::post('letter-of-acceptance', [FundApplicationController::class, 'downloadLetterOfAcceptance'])->name('letter-of-acceptance');
+            Route::post('budget-plan', [FundApplicationController::class, 'downloadBudgetPlan'])->name('budget-plan');
+        });
+        Route::get('/{fund_application}/accept', [FundApplicationController::class, 'accept'])->name('accept');
+        Route::get('/{fund_application}/reject', [FundApplicationController::class, 'reject'])->name('reject');
+    });
     Route::resources([
         'member' => MemberController::class,
         'achievement' => AchievementController::class,
         'user' => UserController::class,
+        'fund-application' => FundApplicationController::class,
     ]);
 });
 

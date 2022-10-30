@@ -117,7 +117,8 @@ class FreepikDownloadController extends Controller
                 'status' => 'waiting',
             ]);
 
-            dispatch(new ProcessFreepikDownload($download->id));
+            // dispatch(new ProcessFreepikDownload($download->id));
+            ProcessFreepikDownload::dispatch($download->id);
 
             return redirect()->route('student.freepik.index')->with('success', 'File dalam antrian untuk di download');
         } catch (\Throwable $th) {

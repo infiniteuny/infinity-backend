@@ -26,6 +26,15 @@
                         class="lan-7">Prestasi </span></a>
             </li>
             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                    href="{{ route('admin.fund-application.index') }}"><i data-feather="dollar-sign"></i><span
+                        class="lan-7">Pengajuan Dana
+                    </span></a>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('coming-soon') }}"><i
+                        data-feather="download"></i><span class="lan-7">Freepik Downloader
+                    </span></a>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
                     href="{{ route('admin.user.index') }}"><i data-feather="user"></i><span class="lan-7">Akun
                     </span></a>
             </li>
