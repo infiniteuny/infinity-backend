@@ -66,7 +66,7 @@
 
     <!-- google analytic -->
     <!-- Google tag (gtag.js) -->
-    {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6EQGGKXPV"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6EQGGKXPV"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -76,7 +76,7 @@
         gtag('js', new Date());
 
         gtag('config', 'G-S6EQGGKXPV');
-    </script> --}}
+    </script>
 </body>
 
 </html>
