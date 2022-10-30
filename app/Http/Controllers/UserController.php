@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
@@ -155,6 +156,29 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'Data berhasil dihapus.');
         } else {
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'password' => 'required|confirmed',
+        ]);
+
+        if ($validate->fails()) {
+            $error = $validate->errors()->all(':message');
+            return redirect()->back()->with('error', implode(' ', $error));
+        }
+
+        try {
+            DB::transaction(function () use ($request) {
+                $user = Auth::user();
+                $user->password = bcrypt($request->password);
+                $user->save();
+            });
+            return redirect()->back()->with('success', 'Berhasil mengganti password');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Gagal mengganti password');
         }
     }
 }

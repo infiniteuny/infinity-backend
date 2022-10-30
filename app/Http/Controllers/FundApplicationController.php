@@ -23,7 +23,13 @@ class FundApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $fund = FundApplication::where('user_id', auth()->user()->id)->orderBy('updated_at', 'desc')->get();
+
+        if (Auth::user()->hasRole('admin')) {
+            $fund = FundApplication::orderBy('updated_at', 'desc')->get();
+        } else {
+            $fund = FundApplication::where('user_id', auth()->user()->id)->orderBy('updated_at', 'desc')->get();
+        }
+
         $data = $fund->map(function ($fund) {
 
             $leader = json_decode($fund->team_leader);
@@ -59,7 +65,11 @@ class FundApplicationController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('student.fund_application.index');
+        if (Auth::user()->hasRole('admin')) {
+            return view('admin.fund_application.index');
+        } else {
+            return view('student.fund_application.index');
+        }
     }
 
     /**
@@ -154,7 +164,11 @@ class FundApplicationController extends Controller
         $data['fund']->student_id_card = Storage::url($data['fund']->student_id_card);
         $data['fund']->letter_of_acceptance = Storage::url($data['fund']->letter_of_acceptance);
         $data['fund']->budget_plan = Storage::url($data['fund']->budget_plan);
-        return view('student.fund_application.edit')->with(['data' => $data]);
+        if (Auth::user()->hasRole('admin')) {
+            return view('admin.fund_application.edit')->with(['data' => $data]);
+        } else {
+            return view('student.fund_application.edit')->with(['data' => $data]);
+        }
     }
 
     /**
@@ -177,6 +191,7 @@ class FundApplicationController extends Controller
             'student_id_card' => 'file|mimes:pdf|max:2048',
             'loa' => 'file|mimes:pdf|max:2048',
             'budget_plan' => 'file|mimes:pdf|max:2048',
+            'status' => 'in:waiting,accepted,rejected',
         ]);
 
         if ($validate->fails()) {
@@ -211,6 +226,9 @@ class FundApplicationController extends Controller
                 if ($request->hasFile('budget_plan')) {
                     Storage::delete($fund->budget_plan);
                     $fund->budget_plan = $request->file('budget_plan')->store('public/documents/fund_application/budget_plan');
+                }
+                if ($request->has('status')) {
+                    $fund->status = $request->status;
                 }
                 $fund->save();
             });
@@ -251,8 +269,9 @@ class FundApplicationController extends Controller
     {
         $id = Crypt::decryptString($id);
         $fund = FundApplication::findOrFail($id);
+        $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->student_id_card)) {
-            return Storage::download($fund->student_id_card, Auth::user()->name . '_' . $fund->competition_name . '_student_id_card.pdf');
+            return Storage::download($fund->student_id_card, $member . ' - ' . $fund->competition_name . ' - scan_kta.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
@@ -262,8 +281,9 @@ class FundApplicationController extends Controller
     {
         $id = Crypt::decryptString($id);
         $fund = FundApplication::findOrFail($id);
+        $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->letter_of_acceptance)) {
-            return Storage::download($fund->letter_of_acceptance, Auth::user()->name . '_' . $fund->competition_name . '_letter_of_acceptance.pdf');
+            return Storage::download($fund->letter_of_acceptance, $member . ' - ' . $fund->competition_name . ' - letter_of_acceptance.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
@@ -273,11 +293,30 @@ class FundApplicationController extends Controller
     {
         $id = Crypt::decryptString($id);
         $fund = FundApplication::findOrFail($id);
+        $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->budget_plan)) {
-            return Storage::download($fund->budget_plan, Auth::user()->name . '_' . $fund->competition_name . '_budget_plan.pdf');
+            return Storage::download($fund->budget_plan, $member . ' - ' . $fund->competition_name . ' - rencana_anggaran_biaya.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
+    }
+
+    public function accept($id)
+    {
+        $id = Crypt::decryptString($id);
+        $fund = FundApplication::findOrFail($id);
+        $fund->status = 'accepted';
+        $fund->save();
+        return redirect()->back()->with('success', 'Yeyy! pengajuan berhasil diterima');
+    }
+
+    public function reject($id)
+    {
+        $id = Crypt::decryptString($id);
+        $fund = FundApplication::findOrFail($id);
+        $fund->status = 'rejected';
+        $fund->save();
+        return redirect()->back()->with('success', 'Yeyy! pengajuan berhasil ditolak');
     }
 
     function indonesianPhoneFormat($phone)

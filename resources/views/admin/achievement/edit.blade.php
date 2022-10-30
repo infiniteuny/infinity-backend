@@ -258,6 +258,24 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="mb-3">
+                                        <label for="status">Status</label>
+                                        <select name="status" id="status" class="form-select digits">
+                                            <option value="waiting"
+                                                {{ $data['achievement']->status == 'waiting' ? 'selected' : '' }}>
+                                                Waiting</option>
+                                            <option value="accepted"
+                                                {{ $data['achievement']->status == 'accepted' ? 'selected' : '' }}>
+                                                Accepted</option>
+                                            <option value="rejected"
+                                                {{ $data['achievement']->status == 'rejected' ? 'selected' : '' }}>
+                                                Rejected</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
                                         <label for="date">Dokumentasi</label>
                                         <div style="max-width: 350px" class="pb-3">
                                             <img class="img-fluid" src="{{ $data['achievement']->image }}"
