@@ -53,9 +53,15 @@ class FreepikDownloadController extends Controller
                 ->make(true);
         }
 
-        return view('student.freepik.index')->with([
-            'data' => $data
-        ]);
+        if (Auth::user()->hasRole('admin')) {
+            return view('admin.freepik.index')->with([
+                'data' => $data
+            ]);
+        } else {
+            return view('student.freepik.index')->with([
+                'data' => $data
+            ]);
+        }
     }
 
     /**
@@ -102,22 +108,21 @@ class FreepikDownloadController extends Controller
                 ]);
             }
 
-            if (
-                $user->freepikDownloads()->first()->freepiks()
-                ->where(function ($query) {
-                    $query->where('status', 'completed')->orWhere('status', 'waiting');
-                })
-                ->whereDate('created_at', Carbon::today())->count() >= $user->freepikDownloads()->first()->limit
-            ) {
-                return redirect()->back()->with('error', 'Kuota download freepik kamu sudah habis, coba lagi besok');
-            }
+            // if (
+            //     $user->freepikDownloads()->first()->freepiks()
+            //     ->where(function ($query) {
+            //         $query->where('status', 'completed')->orWhere('status', 'waiting');
+            //     })
+            //     ->whereDate('created_at', Carbon::today())->count() >= $user->freepikDownloads()->first()->limit
+            // ) {
+            //     return redirect()->back()->with('error', 'Kuota download freepik kamu sudah habis, coba lagi besok');
+            // }
             $download = $user->freepikDownloads()->first()->freepiks()->create([
                 'url' => $request->freepik_url,
                 'file_name' => $request->freepik_url,
                 'status' => 'waiting',
             ]);
 
-            // dispatch(new ProcessFreepikDownload($download->id));
             ProcessFreepikDownload::dispatch($download->id);
 
             return redirect()->route('student.freepik.index')->with('success', 'File dalam antrian untuk di download');

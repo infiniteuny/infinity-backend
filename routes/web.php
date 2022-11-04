@@ -47,7 +47,7 @@ Route::post('/contact-us', [LandingController::class, 'contactUs'])->name('conta
 
 Route::post('webhook', [SaweriaWebhookController::class, 'webhook'])->name('webhook');
 
-Route::post('reset-password', [UserController::class, 'resetPassword'])->name('reset-password');
+Route::post('change-password', [UserController::class, 'changePassword'])->name('change-password')->middleware('auth', 'verified');
 
 Route::get('coming-soon', function () {
     return redirect()->back()->with('error', 'Coming Soon!');
@@ -74,6 +74,8 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
         Route::get('/{fund_application}/accept', [FundApplicationController::class, 'accept'])->name('accept');
         Route::get('/{fund_application}/reject', [FundApplicationController::class, 'reject'])->name('reject');
     });
+    Route::post('freepik/{freepik}/download', [FreepikDownloadController::class, 'download'])->name('freepik.download');
+    Route::resource('freepik', FreepikDownloadController::class)->except('create', 'show', 'edit', 'update', 'destroy');
     Route::resources([
         'member' => MemberController::class,
         'achievement' => AchievementController::class,

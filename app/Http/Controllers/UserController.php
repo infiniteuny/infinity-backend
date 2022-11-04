@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
@@ -159,10 +160,10 @@ class UserController extends Controller
         }
     }
 
-    public function resetPassword(Request $request)
+    public function changePassword(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'password' => 'required|confirmed',
+            'password' => 'required|confirmed|min:8',
         ]);
 
         if ($validate->fails()) {
@@ -170,15 +171,22 @@ class UserController extends Controller
             return redirect()->back()->with('error', implode(' ', $error));
         }
 
+        $user = Auth::user();
+
+        if ($request->has('password_old')) {
+            if (!Hash::check($request->password_old, $user->password)) {
+                return redirect()->back()->with('error', 'Password lama ga sama.');
+            }
+        }
+
         try {
-            DB::transaction(function () use ($request) {
-                $user = Auth::user();
+            DB::transaction(function () use ($request, $user) {
                 $user->password = bcrypt($request->password);
                 $user->save();
             });
-            return redirect()->back()->with('success', 'Berhasil mengganti password');
+            return redirect()->back()->with('success', 'Yey! Berhasil ganti password');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Gagal mengganti password');
+            return redirect()->back()->with('error', 'Yahh! Gagal ganti password');
         }
     }
 }

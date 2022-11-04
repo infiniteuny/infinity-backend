@@ -44,11 +44,66 @@
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="{{ route('coming-soon') }}"><i data-feather="user"></i><span>Akun </span></a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-original-title="changePassword"
+                                data-bs-target="#changePasswordModal"><i data-feather="user"></i><span>Ganti Password
+                                </span></a></li>
                         <li><a href="{{ route('logout') }}"><i data-feather="log-in"> </i><span>Keluar</span></a></li>
                     </ul>
                 </li>
             </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+    aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Ubah Password</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('change-password') }}" method="POST"
+                    enctype="application/x-www-form-urlencoded">
+                    @csrf
+                    @if (!auth()->user()->provider == 'google')
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="password_old">Password Lama</label>
+                                    <input type="password" class="form-control" id="password_old" name="password_old"
+                                        placeholder="Masukkan password lama" value="" required>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="password">Password Baru</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Masukkan password baru" value="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="password_confirmation">Ulangi Password</label>
+                                <input type="password" class="form-control" id="password_confirmation"
+                                    name="password_confirmation" placeholder="Ulangi password baru" value=""
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Tutup</button>
+                <button class="btn btn-primary" type="submit">Ubah</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
