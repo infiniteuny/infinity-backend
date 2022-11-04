@@ -200,8 +200,10 @@ class AchievementController extends Controller
         if (Auth::user()->hasRole('student')) {
             $checkId = collect([]);
             $checkId->push($request->leader);
-            foreach ($request->member as $item => $value) {
-                $checkId->push($value);
+            if ($request->has('member')) {
+                foreach ($request->member as $item => $value) {
+                    $checkId->push($value);
+                }
             }
             if (!$checkId->contains(auth()->user()->members->id)) {
                 return redirect()->back()->with('error', 'Kamu hukumnya wajib masuk ditim yang diajukan yak!')->withInput();
