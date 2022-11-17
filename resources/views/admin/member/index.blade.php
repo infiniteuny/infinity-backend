@@ -34,6 +34,8 @@
     <script src="{{ asset('admin-panel/assets/js/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/select2/select2-custom.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/sweet-alert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/xlsx.full.min.js') }}"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
     <script type="text/javascript">
         $(function() {
             var table = $('.member_table').DataTable({
@@ -236,6 +238,99 @@
             });
         });
     </script>
+    <script>
+        $('#importMemberModal form').submit(function(e) {
+            e.preventDefault();
+
+            const file = $(this).find('#upload-members')[0];
+            if (!file.files.length) {
+                return
+            }
+
+            button = $(this).find('button[type="submit"]')
+            spinner = $(button).find('.spinner-border')
+            button.attr('disabled', true)
+            spinner.removeClass('d-none')
+
+            function enableButton() {
+                button.removeAttr('disabled')
+                spinner.addClass('d-none')
+            }
+
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(file.files[0]);
+            reader.onload = function (e) {
+                try {
+                    const data = new Uint8Array(reader.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]]
+
+                    // source https://github.com/SheetJS/sheetjs/issues/270
+                    const result = [];
+                    let rowNum = 0;
+                    let colNum = 0;
+                    const range = XLSX.utils.decode_range(sheet['!ref']);
+                    for(rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+                        const row = []
+                        for(colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                            const nextCell = sheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+                            if (typeof nextCell === 'undefined') {
+                                row.push(void 0)
+                            } else {
+                                row.push(nextCell.w)
+                            }
+                        }
+                        if ([0, 1].every((v) => Boolean(row[v]))) {
+                            result.push(row)
+                        }
+                    }
+
+                    if ((result[0][0] || '').toLowerCase() == 'nama') {
+                        result.shift()
+                    }
+
+                    const members = []
+                    result.forEach((item, i) => {
+                        members.push({
+                            name: item[0],
+                            student_id: item[1],
+                            start_date: moment(new Date(item[2])).format('YYYY-MM-DD'),
+                            end_date: moment(new Date(item[3])).format('YYYY-MM-DD'),
+                            status: item[4] === 'Aktif' ? 1 : 0,
+                            is_extraordinary: item[5] === 'Ya' ? 1 : 0,
+                        })
+                    })
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('admin.member.storeBulk') }}',
+                        data: JSON.stringify({
+                            members
+                        }),
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(res) {
+                            enableButton()
+                            flasher.success(res.message)
+                            $('#importMemberModal').modal('hide')
+                            setTimeout(() => {
+                                location.reload()
+                            }, 1000)
+                        },
+                        error: function(err) {
+                            enableButton()
+                            flasher.error(err.responseJSON.message)
+                        }
+                    })
+                } catch (e) {
+                    enableButton()
+                }
+            }
+        })
+    </script>
 @endsection
 
 @section('content')
@@ -248,7 +343,10 @@
                         tahun.</span>
                     <div class="card-header-right">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-original-title="addMember"
-                            data-bs-target="#addMemberModal">Tambah
+                                data-bs-target="#addMemberModal">Tambah
+                            Anggota</button>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-original-title="addMember"
+                                data-bs-target="#importMemberModal">Impor
                             Anggota</button>
                     </div>
                 </div>
@@ -281,23 +379,23 @@
 
     <!-- Modal -->
     <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addMemberModalLabel">Tambah Member</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ route('admin.member.store') }}" method="POST">
-                        @csrf
-                        @method('POST')
+                <form action="{{ route('admin.member.store') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="nama">Nama</label>
                                     <input type="text" class="form-control" id="nama" name="name"
-                                        placeholder="Masukkan nama" required>
+                                           placeholder="Masukkan nama" required>
                                 </div>
                             </div>
                         </div>
@@ -306,7 +404,7 @@
                                 <div class="mb-3">
                                     <label for="nim">NIM</label>
                                     <input type="number" class="form-control" id="nim" name="student_id"
-                                        placeholder="Masukkan NIM" required>
+                                           placeholder="Masukkan NIM" required>
                                 </div>
                             </div>
                         </div>
@@ -327,7 +425,7 @@
                                 <div class="mb-3">
                                     <label for="tanggal_aktif">Tanggal Aktif</label>
                                     <input type="date" class="form-control" id="tanggal_aktif" name="date_start"
-                                        placeholder="Masukkan Tanggal Aktif" required>
+                                           placeholder="Masukkan Tanggal Aktif" required>
                                 </div>
                             </div>
                         </div>
@@ -336,7 +434,7 @@
                                 <div class="mb-3">
                                     <label for="tanggal_selesai">Tanggal Selesai</label>
                                     <input type="date" class="form-control" id="tanggal_selesai" name="date_end"
-                                        placeholder="Masukkan Tanggal Selesai" required>
+                                           placeholder="Masukkan Tanggal Selesai" required>
                                 </div>
                             </div>
                         </div>
@@ -345,7 +443,7 @@
                                 <div class="mb-3">
                                     <label for="anggota_luar_biasa">Anggota Luar Biasa</label>
                                     <select class="form-select digits" id="anggota_luar_biasa" name="is_extraordinary"
-                                        required>
+                                            required>
                                         <option value="0">Tidak</option>
                                         <option value="1">Ya</option>
                                     </select>
@@ -363,12 +461,93 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary" type="submit">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Impor -->
+    <div class="modal fade" id="importMemberModal" tabindex="-1" role="dialog" aria-labelledby="importMemberModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importMemberModalLabel">Impor Member</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Tutup</button>
-                    <button class="btn btn-primary" type="submit">Tambah</button>
-                    </form>
-                </div>
+                <form>
+                    @csrf
+                    @method('POST')
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label>1. Unduh Template</label>
+                                    <div>
+                                        <a href="/" class="btn btn-primary">Unduh</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label>2. Isi Data</label>
+                                    <div class="table-responsive">
+                                        <table class="stripe hover">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Nama</td>
+                                                    <td>Wahyudi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>NIM</td>
+                                                    <td>20537144011</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tanggal Mulai</td>
+                                                    <td><span class="font-weight-bold">YYYY-MM-DD</span> atau <span class="font-weight-bold">DD/MM/YYYY</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tanggal Selesai</td>
+                                                    <td><span class="font-weight-bold">YYYY-MM-DD</span> atau <span class="font-weight-bold">DD/MM/YYYY</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td><span class="font-weight-bold">Aktif</span> atau <span class="font-weight-bold">Tidak Aktif</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Anggota Luar Biasa</td>
+                                                    <td><span class="font-weight-bold">Ya</span> atau kosong</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="upload-members">3. Unggah File</label>
+                                    <input class="form-control" id="upload-members" type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary" type="submit">
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            Impor
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
