@@ -82,6 +82,7 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
         'user' => UserController::class,
         'fund-application' => FundApplicationController::class,
     ]);
+    Route::post('/member/bulk', [MemberController::class, 'storeBulk'])->name('member.storeBulk');
 });
 
 
