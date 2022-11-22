@@ -2,7 +2,7 @@
     "name": "infinite/company-profile",
     "type": "project",
     "description": "Hello Infinite",
-    "keywords": ["infinite", "uny", "laravel", "restek", "profile"],
+    "keywords": ["infinite", "uny", "laravel", "restek"],
     "license": "MIT",
     "version": "2.6.6",
     "require": {
