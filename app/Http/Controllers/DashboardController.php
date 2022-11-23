@@ -21,6 +21,7 @@ class DashboardController extends Controller
     public function adminDashboard()
     {
         $most_visited_data = Analytics::fetchMostVisitedPages(Period::days(7))->take(8);
+        dd($most_visited_data);
         $visitors_and_page_data = Analytics::fetchVisitorsAndPageViews(Period::days(7))->take(10);
         $top_referrers = Analytics::fetchTopReferrers(Period::days(7))->take(5);
         $user_types = Analytics::fetchUserTypes(Period::days(7))->take(10);
