@@ -135,6 +135,20 @@
     <!-- Plugin used-->
     <!-- Custom js -->
     @yield('js')
+
+    <!-- google analytic -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-241494944-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-241494944-1');
+    </script>
 </body>
 
 </html>
