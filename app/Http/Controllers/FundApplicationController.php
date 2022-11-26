@@ -125,9 +125,9 @@ class FundApplicationController extends Controller
                 $fund->team_name = $request->team_name;
                 $fund->team_leader = $team_leader;
                 $fund->team_members = $request->has('team_member') ? json_encode($this->parseMember($request->team_member)) : '[{}]';
-                $fund->student_id_card = $request->file('student_id_card')->store('public/documents/fund_application/student_id_card');
-                $fund->letter_of_acceptance = $request->file('loa')->store('public/documents/fund_application/letter_of_acceptance');
-                $fund->budget_plan = $request->file('budget_plan')->store('public/documents/fund_application/budget_plan');
+                $fund->student_id_card = $request->file('student_id_card')->store('public/documents/fund_application/student_id_card', 'public');
+                $fund->letter_of_acceptance = $request->file('loa')->store('public/documents/fund_application/letter_of_acceptance', 'public');
+                $fund->budget_plan = $request->file('budget_plan')->store('public/documents/fund_application/budget_plan', 'public');
                 $fund->save();
             });
             return redirect()->back()->with('success', 'Yeyy! pengajuan berhasil dibuat');
@@ -217,15 +217,15 @@ class FundApplicationController extends Controller
                 $fund->team_members = $request->has('team_member') ? json_encode($this->parseMember($request->team_member)) : '[{}]';
                 if ($request->hasFile('student_id_card')) {
                     Storage::delete($fund->student_id_card);
-                    $fund->student_id_card = $request->file('student_id_card')->store('public/documents/fund_application/student_id_card');
+                    $fund->student_id_card = $request->file('student_id_card')->store('public/documents/fund_application/student_id_card', 'public');
                 }
                 if ($request->hasFile('loa')) {
                     Storage::delete($fund->letter_of_acceptance);
-                    $fund->letter_of_acceptance = $request->file('loa')->store('public/documents/fund_application/letter_of_acceptance');
+                    $fund->letter_of_acceptance = $request->file('loa')->store('public/documents/fund_application/letter_of_acceptance', 'public');
                 }
                 if ($request->hasFile('budget_plan')) {
                     Storage::delete($fund->budget_plan);
-                    $fund->budget_plan = $request->file('budget_plan')->store('public/documents/fund_application/budget_plan');
+                    $fund->budget_plan = $request->file('budget_plan')->store('public/documents/fund_application/budget_plan', 'public');
                 }
                 if ($request->has('status')) {
                     $fund->status = $request->status;
