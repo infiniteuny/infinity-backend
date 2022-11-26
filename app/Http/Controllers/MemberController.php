@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMemberBulkRequest;
 use App\Models\Member;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
@@ -93,6 +94,46 @@ class MemberController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal menambahkan anggota');
         }
+    }
+
+    public function storeBulk(StoreMemberBulkRequest $request) {
+        $validate = Validator::make($request->all(), [
+            'members' => ['array'],
+            'members.*.name' => ['string', 'required'],
+            'members.*.student_id' => ['string', 'numeric', 'required'],
+            'members.*.start_date' => ['date'],
+            'members.*.end_date' => ['date'],
+            'members.*.status' => ['integer'],
+            'members.*.is_extraordinary' => ['integer']
+        ]);
+
+        if ($validate->fails()) {
+            $error = $validate->errors()->all(':message');
+            return response(['error' => implode(' ', $error)], 400);
+        }
+
+        $successCount = 0;
+        foreach ($request->members as $item) {
+            try {
+                $member = new Member();
+                $member->name = $item['name'];
+                $member->student_id = $item['student_id'];
+                $member->program_study_id = 1;
+                $member->status = $item['status'];
+                $member->is_extraordinary = $item['is_extraordinary'];
+                $member->start_date = $item['start_date'];
+                $member->end_date = $item['end_date'];
+                $member->save();
+                $successCount++;
+            } catch (\Throwable $th) {
+//                error_log($th);
+            }
+        }
+
+        if ($successCount > 0) {
+            return response(['message' => 'Berhasil menambahkan anggota', 'successCount' => $successCount], 201);
+        }
+        return response(['message' => 'Gagal menambahkan anggota', 'successCount' => $successCount], 500);
     }
 
     /**
