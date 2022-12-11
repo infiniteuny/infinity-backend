@@ -47,7 +47,7 @@ class AchievementController extends Controller
                     'team_name' => $achievement->teams->name,
                     'competition_name' => $achievement->competition_name,
                     'organizer' => $achievement->organizer,
-                    'description' => $achievement->description,
+                    'description' => substr($achievement->description,0,150).'...',
                     'date' => Carbon::parse($achievement->date)->format('d M Y'),
                     'member' => $achievement->teams->members->map(function ($member) {
                         return [
