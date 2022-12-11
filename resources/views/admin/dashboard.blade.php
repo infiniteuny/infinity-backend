@@ -392,7 +392,7 @@
                                 <input class="knob1" data-width="10" data-height="70" data-thickness=".3"
                                     data-angleoffset="0" data-linecap="round" data-fgcolor="#7366ff"
                                     data-bgcolor="#eef5fb"
-                                    value="{{ ($data['achievements'] > (isset($data['configs']['competition_target']) ? $data['configs']['competition_target'] : 25) ? (isset($data['configs']['competition_target']) ? $data['configs']['competition_target'] : 25) : $data['achievements'] / (int) (isset($data['configs']['competition_target']) ? $data['configs']['competition_target'] : 25)) * 100 }}">
+                                    value="{{ (($data['achievements'] > (int) (isset($data['configs']['competition_target']) ? $data['configs']['competition_target'] : 25) ? (int) (isset($data['configs']['competition_target']) ? $data['configs']['competition_target'] : 25) : $data['achievements']) / (int) (isset($data['configs']['competition_target']) ? $data['configs']['competition_target'] : 25)) * 100 }}">
                             </div>
                         </div>
                     </div>
