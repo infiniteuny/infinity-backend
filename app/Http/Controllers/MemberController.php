@@ -96,7 +96,8 @@ class MemberController extends Controller
         }
     }
 
-    public function storeBulk(StoreMemberBulkRequest $request) {
+    public function storeBulk(StoreMemberBulkRequest $request)
+    {
         $validate = Validator::make($request->all(), [
             'members' => ['array'],
             'members.*.name' => ['string', 'required'],
@@ -126,7 +127,7 @@ class MemberController extends Controller
                 $member->save();
                 $successCount++;
             } catch (\Throwable $th) {
-//                error_log($th);
+                //                error_log($th);
             }
         }
 
@@ -234,11 +235,13 @@ class MemberController extends Controller
 
     public function membersList(Request $request)
     {
-        $members = Member::where('name', 'LIKE', '%' . $request->input('q') . '%')->take(10)->get();
+        $members = Member::where('name', 'LIKE', '%' . $request->input('q') . '%')->orWhere('student_id', 'LIKE', '%' . $request->input('q') . '%')
+            ->take(10)->get();
         $members = $members->map(function ($member) {
             return [
                 'id' => Crypt::encryptString($member->id),
                 'name' => $member->name,
+                'student_id' => $member->student_id,
             ];
         });
 
