@@ -21,10 +21,27 @@
     </div>
 @endsection
 
+@section('plugins')
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin-panel/assets/css/vendors/datatables.css') }}">
+@endsection
+
 @section('js')
+    <script src="{{ asset('admin-panel/assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin-panel/assets/js/datatable/datatables/datatable.custom.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/morris-chart/raphael.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/morris-chart/morris.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/morris-chart/prettify.min.js') }}"></script>
+    <script>
+        $('#freepik_table').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    </script>
     @if (session()->has('success'))
         <script>
             $(document).ready(function() {
@@ -492,6 +509,41 @@
                     <div class="card-Body">
                         <div class="radar-chart">
                             <div id="memberchart"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 xl-100 box-col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Para Pengguna Freepik</h5><span>List Para Pengguna Freepik.</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="stripe hover freepik_table" id="freepik_table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama</th>
+                                        <th>NIM</th>
+                                        <th>Prodi</th>
+                                        <th>Fakultas</th>
+                                        <th>Jumlah Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data['freepik_leaderboard'] as $item)
+                                        <tr>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $item['name'] }}</td>
+                                            <td>{{ $item['student_id'] }}</td>
+                                            <td>{{ $item['program_study'] }}</td>
+                                            <td>{{ $item['faculty'] }}</td>
+                                            <td>{{ $item['freepik_count'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

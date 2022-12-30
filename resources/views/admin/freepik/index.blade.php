@@ -1,4 +1,4 @@
-@extends('student.layouts.app')
+@extends('admin.layouts.app')
 
 @section('title', 'Freepik Downloader')
 
@@ -7,11 +7,11 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Member Panel</h3>
+                    <h3>Admin Panel</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}"> <i data-feather="home"></i></a>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"> <i data-feather="home"></i></a>
                         </li>
                         <li class="breadcrumb-item active">Freepik Downloader</li>
                     </ol>
@@ -47,7 +47,7 @@
             var table = $('.freepik_table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('student.freepik.index') }}",
+                ajax: "{{ route('admin.freepik.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
@@ -79,7 +79,7 @@
                         render: function(data) {
                             if (data.status == 'completed') {
                                 return `
-                                    <form action="{{ url('student/freepik') }}/${data.id}/download" method="POST">
+                                    <form action="{{ url('admin/freepik') }}/${data.id}/download" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-success btn-xs"><i class="fa fa-download"></i> </button>
                                     </form>
@@ -163,7 +163,7 @@
                         <h5>Infinite Freepik Downloader </h5><span>Masukkan URL file freepik yang akan di download.</span>
                         <hr>
                         @if ($data['freepik']['is_can_download'])
-                            <form action="{{ route('student.freepik.store') }}" method="POST">
+                            <form action="{{ route('admin.freepik.store') }}" method="POST">
                                 @csrf
                                 <label class="form-label" for="freepik_url">Url Download</label>
                                 <input type="text" class="form-control" name="freepik_url" id="freepik_url">
