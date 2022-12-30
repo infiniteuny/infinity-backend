@@ -236,7 +236,7 @@ class AchievementController extends Controller
                     'competition_rank_id' => $request->competition_rank,
                     'competition_level_id' => $request->competition_level,
                     'status' => $request->has('status') ? $request->status : 'waiting',
-                    'image' => $request->file('image')->store('public/images/achievement', 'public'),
+                    'image' => $request->file('image')->store('images/achievement', 'public'),
                 ]);
             });
 
@@ -444,7 +444,7 @@ class AchievementController extends Controller
                     $achievement->competition_rank_id = $request->competition_rank;
                     $achievement->competition_level_id = $request->competition_level;
                     $achievement->status = $request->has('status') ? $request->status : 'waiting';
-                    $achievement->image = $request->file('image')->store('public/images/achievement', 'public');
+                    $achievement->image = $request->file('image')->store('images/achievement', 'public');
                     $achievement->save();
                 } else {
                     $achievement->competition_name = $request->competition_name;
