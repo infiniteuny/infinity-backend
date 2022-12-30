@@ -92,6 +92,16 @@ class FreepikDownloadController extends Controller
             return redirect()->back()->with('error', implode(' ', $error))->withInput();
         }
 
+        if (strpos($request->freepik_url, '?query')) {
+            $request->freepik_url = strstr($request->freepik_url, '?query', true);
+        } elseif (strpos($request->freepik_url, '#query')) {
+            $request->freepik_url = strstr($request->freepik_url, '#query', true);
+        } elseif (strpos($request->freepik_url, '#&')) {
+            $request->freepik_url = strstr($request->freepik_url, '#&', true);
+        } else {
+            return redirect()->back()->with('error', 'URL freepiknya ga valid nih bos');
+        }
+
         if (Freepik::where('url', $request->freepik_url)->where('status', 'completed')->exists()) {
             $this->download(Crypt::encryptString(Freepik::where('url', $request->freepik_url)->first()->id));
         }
