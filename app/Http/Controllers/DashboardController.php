@@ -59,6 +59,20 @@ class DashboardController extends Controller
             ];
         });
 
+        $data['freepik_leaderboard'] = User::whereHas('freepikDownloads')
+            ->with(['freepikDownloads' => function ($query) {
+                $query->withCount('freepiks');
+            }, 'members.programStudies.faculties'])->get()
+            ->map(function ($user) {
+                return [
+                    'name' => $user->name,
+                    'student_id' => $user->student_id,
+                    'program_study' => $user->members->programStudies->name,
+                    'faculty' => $user->members->programStudies->faculties->name,
+                    'freepik_count' => $user->freepikDownloads->freepiks_count,
+                ];
+            })->sortByDesc('freepik_count')->take(10);
+
         $data['configs'] = Config::all()->mapWithKeys(function ($item) {
             return [$item['key'] => $item['value']];
         });

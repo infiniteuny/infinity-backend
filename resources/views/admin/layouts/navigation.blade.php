@@ -30,9 +30,12 @@
                         class="lan-7">Pengajuan Dana
                     </span></a>
             </li>
-            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('coming-soon') }}"><i
-                        data-feather="download"></i><span class="lan-7">Freepik Downloader
-                    </span></a>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
+                        data-feather="airplay"></i><span class="lan-6">Freepiks</span></a>
+                <ul class="sidebar-submenu">
+                    <li><a href="{{ route('admin.freepik.index') }}">Downloader</a></li>
+                    <li><a href="#">Log</a></li>
+                </ul>
             </li>
             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
                     href="{{ route('admin.user.index') }}"><i data-feather="user"></i><span class="lan-7">Akun
