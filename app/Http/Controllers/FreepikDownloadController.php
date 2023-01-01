@@ -104,7 +104,7 @@ class FreepikDownloadController extends Controller
         //}
 
         if (Freepik::where('url', $request->freepik_url)->where('status', 'completed')->exists()) {
-            $this->download(Crypt::encryptString(Freepik::where('url', $request->freepik_url)->first()->id));
+            return $this->download(Crypt::encryptString(Freepik::where('url', $request->freepik_url)->first()->id));
         }
 
         if (Freepik::where('url', $request->freepik_url)->where('status', 'waiting')->exists()) {
