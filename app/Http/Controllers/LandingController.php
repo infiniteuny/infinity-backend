@@ -17,12 +17,14 @@ class LandingController extends Controller
 {
     public function index()
     {
-        $response = Http::get(config('app.api_url') . '/api/cabinets?populate=commitees.photo,commitees.division&filters[year][$eq]=' . Carbon::now()->year);
+        $commitees = Http::get(config('app.api_url') . '/api/cabinets?populate=commitees.photo,commitees.division&filters[year][$eq]=' . Carbon::now()->year);
         $events = Http::get(config('app.api_url') . '/api/events?populate=media&pagination[page]=1&pagination[pageSize]=5&sort[0]=event_date:desc');
         $products = Http::get(config('app.api_url') . '/api/galleries?populate=photo&sort[0]=type&sort[1]=updatedAt');
         $testimonials = Http::get(config('app.api_url') . '/api/testimonials?populate=photo');
 
-        $data = collect(json_decode($response->body())->data)->map(function ($item) {
+        $data = count(json_decode($commitees->body())->data) > 0 ? json_decode($commitees->body())->data : json_decode(Http::get(config('app.api_url') . '/api/cabinets?populate=commitees.photo,commitees.division&filters[year][$eq]=' . Carbon::now()->subYear()->year)->body())->data;
+
+        $data = collect($data)->map(function ($item) {
             $commitees = collect($item->attributes->commitees->data)->map(function ($commitee) use ($item) {
                 return (object)[
                     'name' => $commitee->attributes->name,
@@ -32,7 +34,7 @@ class LandingController extends Controller
                     'instagram' => $commitee->attributes->instagram,
                     'division' => $commitee->attributes->division->data->attributes->name,
                     'priority' => $commitee->attributes->division->data->attributes->priority,
-                    'photo' => config('app.api_url') . $commitee->attributes->photo->data->attributes->url,
+                    'photo' => config('app.api_url') . $commitee->attributes->photo->data->attributes->formats->small->url,
                 ];
             });
             return $commitees;
@@ -59,7 +61,7 @@ class LandingController extends Controller
                 'description' => $item->attributes->description,
                 'url' => $item->attributes->url,
                 'type' => $item->attributes->type,
-                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->formats->medium->url,
                 'caption' => $item->attributes->photo->data->attributes->caption,
             ];
         });
@@ -69,7 +71,7 @@ class LandingController extends Controller
                 'name' => $item->attributes->name,
                 'position' => $item->attributes->position,
                 'testimonial' => $item->attributes->testimonial,
-                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+                'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->formats->thumbnail->url,
             ];
         });
 
@@ -157,8 +159,8 @@ class LandingController extends Controller
     public function team(Request $request)
     {
         if ($request->has('year')) {
-            $response = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . $request->year . '&sort[1]=division.priority');
-            $data['commitees'] = collect(json_decode($response->body())->data)->map(function ($item) {
+            $commitees = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . $request->year . '&sort[1]=division.priority');
+            $data['commitees'] = collect(json_decode($commitees->body())->data)->map(function ($item) {
                 return (object)[
                     'name' => $item->attributes->name,
                     'study_program' => $item->attributes->study_program,
@@ -167,12 +169,17 @@ class LandingController extends Controller
                     'instagram' => $item->attributes->instagram,
                     'division' => $item->attributes->division->data->attributes->name,
                     'priority' => $item->attributes->division->data->attributes->priority,
-                    'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+                    'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->formats->small->url,
                 ];
             });
         } else {
-            $response = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->year . '&sort[1]=division.priority');
-            $data['commitees'] = collect(json_decode($response->body())->data)->map(function ($item) {
+            $commitees = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->year . '&sort[1]=division.priority');
+
+            $commitees = count(json_decode($commitees->body())->data) > 0 ? json_decode($commitees->body())->data : json_decode(Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->subYear()->year . '&sort[1]=division.priority')->body())->data;
+
+            // dd($commitees);
+
+            $data['commitees'] = collect($commitees)->map(function ($item) {
                 return (object)[
                     'name' => $item->attributes->name,
                     'study_program' => $item->attributes->study_program,
@@ -181,7 +188,7 @@ class LandingController extends Controller
                     'instagram' => $item->attributes->instagram,
                     'division' => $item->attributes->division->data->attributes->name,
                     'priority' => $item->attributes->division->data->attributes->priority,
-                    'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->url,
+                    'photo' => config('app.api_url') . $item->attributes->photo->data->attributes->formats->small->url,
                 ];
             });
         }

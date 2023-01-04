@@ -13,6 +13,7 @@ use App\Models\Member;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Spatie\Analytics\Period;
 
@@ -46,6 +47,20 @@ class DashboardController extends Controller
         $faculties = Faculty::withCount('members')->having('members_count', '>', 0)->get();
         $data['faculty_name'] = json_encode($faculties->pluck('name'));
         $data['faculty_member_count'] = json_encode($faculties->pluck('members_count'));
+
+        $data['achievements_graph'] = Achievement::selectRaw('count(*) as count, year(date) as year')
+            ->groupBy(DB::raw('year(date)'))
+            ->orderBy('date')
+            ->limit(5)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'year' => $item->year,
+                    'count' => $item->count,
+                ];
+            });
+        $data['achievements_graph_year'] = json_encode($data['achievements_graph']->pluck('year'));
+        $data['achievements_graph_count'] = json_encode($data['achievements_graph']->pluck('count'));
 
         $data['users'] = User::orderBy('created_at', 'desc')->take(6)->get();
         $data['users'] = $data['users']->map(function ($user) {

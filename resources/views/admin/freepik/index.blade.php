@@ -70,8 +70,11 @@
                         }
                     },
                     {
-                        data: 'file_size',
-                        name: 'file_size'
+                        data: null,
+                        name: 'file_size',
+                        render: function(data) {
+                            return `${data.file_size} MB`;
+                        }
                     },
                     {
                         data: null,

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Config;
 use App\Models\Freepik;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -40,17 +41,21 @@ class ProcessFreepikDownload implements ShouldQueue
         try {
             $reqFreepik = new \GuzzleHttp\Client();
             $resFreepik = $reqFreepik->get(config('app.api_freepik_url') . $data->url, ['timeout' => 180]);
-            $fileSize = $resFreepik->getHeaders()['Content-Length'][0];
-            $fileName = explode(";", $resFreepik->getHeaders()['Content-Disposition'][0]);
-            preg_match_all('`"([^"]*)"`', $fileName[1], $resultName);
-            $fileName = $resultName[1][0];
-            Storage::disk('local')->put('freepik/' . $fileName, $resFreepik->getBody()->getContents());
 
-            $data->file_name = $fileName;
-            $data->file_path = 'freepik/' . $fileName;
-            $data->file_size = $fileSize;
+            $resFreepik = json_decode($resFreepik->getBody()->getContents());
+            Storage::disk('local')->put('freepik/' . $resFreepik->filename, base64_decode($resFreepik->file));
+
+            $data->file_name = $resFreepik->filename;
+            $data->file_path = 'freepik/' . $resFreepik->filename;
+            $data->file_size = $resFreepik->size;
             $data->status = 'completed';
+            $data->thumbnail = $resFreepik->thumbnail;
             $data->save();
+
+            $quota = Config::where('key', 'freepik_limit')->first();
+            dd($quota);
+            $quota->value = $resFreepik->count;
+            $quota->save();
         } catch (\Throwable $th) {
             $response = Http::post('https://info.infinite.niwabi.my.id/freepik-error', [
                 'apiKey' => 'fKKrOUFUt5MnQQKVVRxuhXvs7euccsfTaZKZbEyXMPQC2tFqJlM6ZIL02aIrUaKI',

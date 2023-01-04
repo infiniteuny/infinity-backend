@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -41,7 +40,7 @@ class FreepikDownloadController extends Controller
                     return [
                         'id' => Crypt::encryptString($data->id),
                         'file_name' => $data->file_name,
-                        'file_size' => $data->file_size ? number_format($data->file_size / 1048576, 2) . ' MB' : '0 MB',
+                        'file_size' => $data->file_size ? number_format($data->file_size / 1048576, 2) : 0,
                         'status' => $data->status,
                     ];
                 });
@@ -62,6 +61,32 @@ class FreepikDownloadController extends Controller
                 'data' => $data
             ]);
         }
+    }
+
+    public function asset(Request $request)
+    {
+        $data['freepik'] = Freepik::where('status', 'completed')
+            ->paginate(16)
+            ->through(function ($freepik, $key) {
+                unset($freepik['freepik_download_id']);
+                unset($freepik['url']);
+                unset($freepik['file_path']);
+                unset($freepik['status']);
+                unset($freepik['created_at']);
+                unset($freepik['created_at']);
+                // $freepik['encrypted_id'] = Crypt::encryptString($freepik->id);
+                $freepik['file_name'] = ucwords(str_replace("-", " ", explode(".", $freepik->file_name)[0]));
+                $freepik['file_size'] = $freepik->file_size ? number_format($freepik->file_size / 1048576, 2) : 0;
+                $freepik['updated_at'] = $freepik->updated_at->format('d M Y');
+                $freepik['thumbnail'] = $freepik->thumbnail ?: asset('admin-panel/assets/images/no_thumbnail_default.png');
+                $freepik['thumbnail_small'] = $freepik->thumbnail ?: asset('admin-panel/assets/images/no_thumbnail_default_small.png');
+
+                return $freepik;
+            });
+
+        return view('admin.freepik.asset')->with([
+            'data' => $data
+        ]);
     }
 
     /**
@@ -128,6 +153,7 @@ class FreepikDownloadController extends Controller
             // ) {
             //     return redirect()->back()->with('error', 'Kuota download freepik kamu sudah habis, coba lagi besok');
             // }
+
             $download = $user->freepikDownloads()->first()->freepiks()->create([
                 'url' => $request->freepik_url,
                 'file_name' => $request->freepik_url,

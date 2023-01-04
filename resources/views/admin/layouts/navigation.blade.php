@@ -31,10 +31,10 @@
                     </span></a>
             </li>
             <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
-                        data-feather="airplay"></i><span class="lan-6">Freepiks</span></a>
+                        data-feather="airplay"></i><span>Freepiks</span></a>
                 <ul class="sidebar-submenu">
                     <li><a href="{{ route('admin.freepik.index') }}">Downloader</a></li>
-                    <li><a href="#">Log</a></li>
+                    <li><a href="{{ route('admin.freepik.asset') }}">Asset</a></li>
                 </ul>
             </li>
             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
