@@ -84,6 +84,9 @@
         var user_type_label = JSON.parse(@json($analitics['user_type']));
         var user_type_data = JSON.parse(@json($analitics['user_type_sessions']));
 
+        var achievement_type_label = JSON.parse(@json($data['achievements_graph_year']));
+        var achievement_type_data = JSON.parse(@json($data['achievements_graph_count']));
+
         var most_visited_barData = {
             labels: most_visited_label,
             datasets: [{
@@ -129,6 +132,18 @@
             }]
         };
 
+        var achievement_barData = {
+            labels: achievement_type_label,
+            datasets: [{
+                label: "Achievement",
+                fillColor: "rgba(145, 46, 252, 0.4)",
+                strokeColor: CubaAdminConfig.primary,
+                highlightFill: "rgba(145, 46, 252, 0.6)",
+                highlightStroke: CubaAdminConfig.primary,
+                data: achievement_type_data
+            }]
+        };
+
         var barOptions = {
             scaleBeginAtZero: true,
             scaleShowGridLines: true,
@@ -149,6 +164,9 @@
 
         var referrersCtx = document.getElementById("topReferrers").getContext("2d");
         var referrersChart = new Chart(referrersCtx).Bar(referrers_barData, barOptions);
+
+        var achievementCtx = document.getElementById("achivementGraph").getContext("2d");
+        var achievementChart = new Chart(achievementCtx).Bar(achievement_barData, barOptions);
     </script>
 
     {{-- user type chart --}}
@@ -183,69 +201,57 @@
         var faculty_label = JSON.parse(@json($data['faculty_name']));
         var faculty_member_data = JSON.parse(@json($data['faculty_member_count']));
 
-        var options1 = {
-            chart: {
-                height: 380,
-                type: 'radar',
-                toolbar: {
-                    show: false
-                },
+        var pieData = [{
+                value: faculty_member_data[0],
+                color: "#F8D62B",
+                highlight: "#F8D62B",
+                label: faculty_label[0]
             },
-            series: [{
-                name: 'Persebaran Fakultas Anggota',
-                data: faculty_member_data,
-            }],
-            stroke: {
-                width: 3,
-                curve: 'smooth',
+            {
+                value: faculty_member_data[1],
+                color: "#262699",
+                highlight: "#262699",
+                label: faculty_label[1]
             },
-            labels: faculty_label,
-            plotOptions: {
-                radar: {
-                    size: 140,
-                    polygons: {
-                        fill: {
-                            colors: ['#fcf8ff', '#f7eeff']
-                        },
-
-                    }
-                }
+            {
+                value: faculty_member_data[2],
+                color: "#F73164",
+                highlight: "#F73164",
+                label: faculty_label[2]
             },
-            colors: [CubaAdminConfig.primary],
-
-            markers: {
-                size: 6,
-                colors: ['#fff'],
-                strokeColor: CubaAdminConfig.primary,
-                strokeWidth: 3,
+            {
+                value: faculty_member_data[3],
+                color: "#51BB25",
+                highlight: "#51BB25",
+                label: faculty_label[3]
             },
-            tooltip: {
-                y: {
-                    formatter: function(val) {
-                        return val
-                    }
-                }
+            {
+                value: faculty_member_data[4],
+                color: "#7366FF",
+                highlight: "#7366FF",
+                label: faculty_label[4]
             },
-            yaxis: {
-                tickAmount: 7,
-                labels: {
-                    formatter: function(val, i) {
-                        if (i % 2 === 0) {
-                            return val
-                        } else {
-                            return ''
-                        }
-                    }
-                }
+            {
+                value: faculty_member_data[5],
+                color: "#F9B384",
+                highlight: "#F9B384",
+                label: faculty_label[5]
             }
-        }
+        ];
+        var pieOptions = {
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            percentageInnerCutout: 0,
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: false,
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+        };
 
-        var chart1 = new ApexCharts(
-            document.querySelector("#memberchart"),
-            options1
-        );
-
-        chart1.render();
+        var memberCtx = document.getElementById("memberchart").getContext("2d");
+        var memberChart = new Chart(memberCtx).Pie(pieData, pieOptions);
     </script>
 @endsection
 
@@ -457,6 +463,30 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-sm-12 box-col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Prestasi</h5>
+                    </div>
+                    <div class="card-body chart-block">
+                        <div class="flot-chart-container">
+                            <canvas id="achivementGraph"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 xl-50 appointment box-col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="header-top">
+                            <h5 class="m-0">Persebaran Fakultas Anggota</h5>
+                        </div>
+                    </div>
+                    <div class="card-Body">
+                        <canvas id="memberchart"></canvas>
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-6 xl-50 appointment-sec box-col-6">
                 <div class="row">
                     <div class="col-xl-12 appointment">
@@ -495,20 +525,6 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 xl-50 appointment box-col-6">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-top">
-                            <h5 class="m-0">Persebaran Fakultas Anggota</h5>
-                        </div>
-                    </div>
-                    <div class="card-Body">
-                        <div class="radar-chart">
-                            <div id="memberchart"> </div>
                         </div>
                     </div>
                 </div>
