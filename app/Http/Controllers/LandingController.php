@@ -177,8 +177,6 @@ class LandingController extends Controller
 
             $commitees = count(json_decode($commitees->body())->data) > 0 ? json_decode($commitees->body())->data : json_decode(Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->subYear()->year . '&sort[1]=division.priority')->body())->data;
 
-            // dd($commitees);
-
             $data['commitees'] = collect($commitees)->map(function ($item) {
                 return (object)[
                     'name' => $item->attributes->name,
