@@ -53,7 +53,6 @@ class ProcessFreepikDownload implements ShouldQueue
             $data->save();
 
             $quota = Config::where('key', 'freepik_limit')->first();
-            dd($quota);
             $quota->value = $resFreepik->count;
             $quota->save();
         } catch (\Throwable $th) {
