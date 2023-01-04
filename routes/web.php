@@ -57,14 +57,17 @@ Route::get('coming-soon', function () {
 
 Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->group(function () {
     Route::get('/', [DashboardController::class, 'adminDashboard'])->name('dashboard');
+
     Route::prefix('config')->name('config.')->group(function () {
         Route::get('/', [ConfigController::class, 'index'])->name('index');
         Route::put('/', [ConfigController::class, 'update'])->name('update');
     });
+
     Route::prefix('achievement')->name('achievement.')->group(function () {
         Route::get('/{achievement}/accept', [AchievementController::class, 'accept'])->name('accept');
         Route::get('/{achievement}/reject', [AchievementController::class, 'reject'])->name('reject');
     });
+
     Route::prefix('fund-application')->name('fund-application.')->group(function () {
         Route::prefix('{fund_application}/download')->name('download.')->group(function () {
             Route::post('student-id-card', [FundApplicationController::class, 'downloadStudentIdCard'])->name('student-id-card');
@@ -74,14 +77,21 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
         Route::get('/{fund_application}/accept', [FundApplicationController::class, 'accept'])->name('accept');
         Route::get('/{fund_application}/reject', [FundApplicationController::class, 'reject'])->name('reject');
     });
-    Route::post('freepik/{freepik}/download', [FreepikDownloadController::class, 'download'])->name('freepik.download');
+
+    Route::prefix('freepik')->name('freepik.')->group(function () {
+        Route::post('{freepik}/download', [FreepikDownloadController::class, 'download'])->name('download');
+        Route::get('asset', [FreepikDownloadController::class, 'asset'])->name('asset');
+    });
+
     Route::resource('freepik', FreepikDownloadController::class)->except('create', 'show', 'edit', 'update', 'destroy');
+
     Route::resources([
         'member' => MemberController::class,
         'achievement' => AchievementController::class,
         'user' => UserController::class,
         'fund-application' => FundApplicationController::class,
     ]);
+
     Route::post('/member/bulk', [MemberController::class, 'storeBulk'])->name('member.storeBulk');
 });
 

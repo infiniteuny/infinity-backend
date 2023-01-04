@@ -483,7 +483,8 @@
                         </div>
                     </div>
                     <div class="card-Body">
-                        <canvas id="memberchart"></canvas>
+                        <canvas id="memberchart"
+                            style=" width: 581px; height: 290px; margin: 30px 0px 30px 0px;"></canvas>
                     </div>
                 </div>
             </div>
