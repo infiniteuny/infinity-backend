@@ -2,9 +2,9 @@
     "name": "infinite/company-profile",
     "type": "project",
     "description": "Hello Infinite",
-    "keywords": ["infinite", "uny", "laravel", "restek"],
+    "keywords": ["infinite", "uny", "laravel", "restek", "profile"],
     "license": "MIT",
-    "version": "2.6.6",
+    "version": "2.8.8",
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
