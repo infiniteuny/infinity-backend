@@ -152,6 +152,7 @@ class FreepikDownloadController extends Controller
             // ) {
             //     return redirect()->back()->with('error', 'Kuota download freepik kamu sudah habis, coba lagi besok');
             // }
+
             $download = $user->freepikDownloads()->first()->freepiks()->create([
                 'url' => $request->freepik_url,
                 'file_name' => $request->freepik_url,
