@@ -62,7 +62,6 @@ class RegisterController extends Controller
 
         try {
             if (explode("@", $request->email)[1] != "student.uny.ac.id") {
-                // return redirect()->back()->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
                 return redirect()->route('login')->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
             }
 
@@ -77,9 +76,7 @@ class RegisterController extends Controller
                 'student_id' => $request->student_id,
             ]);
 
-            // if (!$user->hasRole(['student', 'admin'])) {
             $user->assignRole('student');
-            // }
 
             event(new Registered($user));
 
