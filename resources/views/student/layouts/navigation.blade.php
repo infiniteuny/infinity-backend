@@ -31,11 +31,12 @@
                     href="{{ route('student.re-registration.index') }}"><i data-feather="repeat"></i><span
                         class="lan-7">Daftar Ulang </span></a>
             </li>
-            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
-                    href="{{ route('student.freepik.index') }}"><i data-feather="download"></i><span
-                        class="lan-7">Freepik
-                        Downloader
-                    </span></a>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
+                        data-feather="airplay"></i><span>Freepiks</span></a>
+                <ul class="sidebar-submenu">
+                    <li><a href="{{ route('student.freepik.index') }}">Downloader</a></li>
+                    <li><a href="{{ route('student.freepik.asset') }}">Asset</a></li>
+                </ul>
             </li>
         </ul>
     </div>

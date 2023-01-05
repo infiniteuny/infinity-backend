@@ -66,6 +66,7 @@ class FreepikDownloadController extends Controller
     public function asset(Request $request)
     {
         $data['freepik'] = Freepik::where('status', 'completed')
+            ->orderBy('updated_at', 'desc')
             ->paginate(16)
             ->through(function ($freepik, $key) {
                 unset($freepik['freepik_download_id']);
@@ -73,8 +74,6 @@ class FreepikDownloadController extends Controller
                 unset($freepik['file_path']);
                 unset($freepik['status']);
                 unset($freepik['created_at']);
-                unset($freepik['created_at']);
-                // $freepik['encrypted_id'] = Crypt::encryptString($freepik->id);
                 $freepik['file_name'] = ucwords(str_replace("-", " ", explode(".", $freepik->file_name)[0]));
                 $freepik['file_size'] = $freepik->file_size ? number_format($freepik->file_size / 1048576, 2) : 0;
                 $freepik['updated_at'] = $freepik->updated_at->format('d M Y');
@@ -84,9 +83,15 @@ class FreepikDownloadController extends Controller
                 return $freepik;
             });
 
-        return view('admin.freepik.asset')->with([
-            'data' => $data
-        ]);
+        if (Auth::user()->hasRole('admin')) {
+            return view('admin.freepik.asset')->with([
+                'data' => $data
+            ]);
+        } else {
+            return view('student.freepik.asset')->with([
+                'data' => $data
+            ]);
+        }
     }
 
     /**
@@ -124,9 +129,6 @@ class FreepikDownloadController extends Controller
         } elseif (strpos($request->freepik_url, '#&')) {
             $request->freepik_url = strstr($request->freepik_url, '#&', true);
         }
-        //else {
-        //    return redirect()->back()->with('error', 'URL freepiknya ga valid nih bos');
-        //}
 
         if (Freepik::where('url', $request->freepik_url)->where('status', 'completed')->exists()) {
             return $this->download(Crypt::encryptString(Freepik::where('url', $request->freepik_url)->first()->id));
@@ -144,16 +146,6 @@ class FreepikDownloadController extends Controller
                 ]);
             }
 
-            // if (
-            //     $user->freepikDownloads()->first()->freepiks()
-            //     ->where(function ($query) {
-            //         $query->where('status', 'completed')->orWhere('status', 'waiting');
-            //     })
-            //     ->whereDate('created_at', Carbon::today())->count() >= $user->freepikDownloads()->first()->limit
-            // ) {
-            //     return redirect()->back()->with('error', 'Kuota download freepik kamu sudah habis, coba lagi besok');
-            // }
-
             $download = $user->freepikDownloads()->first()->freepiks()->create([
                 'url' => $request->freepik_url,
                 'file_name' => $request->freepik_url,
@@ -162,9 +154,17 @@ class FreepikDownloadController extends Controller
 
             ProcessFreepikDownload::dispatch($download->id);
 
-            return redirect()->route('student.freepik.index')->with('success', 'File dalam antrian untuk di download');
+            if (Auth::user()->hasRole('admin')) {
+                return redirect()->route('admin.freepik.index')->with('success', 'File dalam antrian untuk di download');
+            } else {
+                return redirect()->route('student.freepik.index')->with('success', 'File dalam antrian untuk di download');
+            }
         } catch (\Throwable $th) {
-            return redirect()->route('student.freepik.index')->with('error', 'Gagal mengunduh file');
+            if (Auth::user()->hasRole('admin')) {
+                return redirect()->route('admin.freepik.index')->with('error', 'Gagal mengunduh file');
+            } else {
+                return redirect()->route('student.freepik.index')->with('error', 'Gagal mengunduh file');
+            }
         }
     }
 
@@ -219,7 +219,11 @@ class FreepikDownloadController extends Controller
         if (Storage::disk('local')->exists($freepik->file_path)) {
             return Storage::disk('local')->download($freepik->file_path, $freepik->file_name);
         } else {
-            return redirect()->route('student.freepik.index')->with('error', 'Yahh filenya ga ada');
+            if (Auth::user()->hasRole('admin')) {
+                return redirect()->route('admin.freepik.index')->with('error', 'Yahh filenya ga ada');
+            } else {
+                return redirect()->route('student.freepik.index')->with('error', 'Yahh filenya ga ada');
+            }
         }
     }
 }

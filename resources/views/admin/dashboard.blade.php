@@ -466,7 +466,7 @@
             <div class="col-lg-6 col-sm-12 box-col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Prestasi</h5>
+                        <h5>Grafik Prestasi Pertahun</h5>
                     </div>
                     <div class="card-body chart-block">
                         <div class="flot-chart-container">

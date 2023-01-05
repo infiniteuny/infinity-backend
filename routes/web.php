@@ -112,6 +112,10 @@ Route::prefix('student')->name('student.')->middleware(['role:student', 'verifie
         Route::post('budget-plan', [FundApplicationController::class, 'downloadBudgetPlan'])->name('budget-plan');
     });
     Route::resource('fund-application', FundApplicationController::class);
+
+    Route::prefix('freepik')->name('freepik.')->group(function () {
+        Route::post('{freepik}/download', [FreepikDownloadController::class, 'download'])->name('download');
+        Route::get('asset', [FreepikDownloadController::class, 'asset'])->name('asset');
+    });
     Route::resource('freepik', FreepikDownloadController::class)->except('create', 'show', 'edit', 'update', 'destroy');
-    Route::post('freepik/{freepik}/download', [FreepikDownloadController::class, 'download'])->name('freepik.download');
 });
