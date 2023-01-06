@@ -53,6 +53,12 @@ class LoginController extends Controller
                     $userLogin->avatar = $user->avatar;
                     $userLogin->save();
                 }
+
+                if (Auth::user()->members->status == 0) {
+                    Auth::logout();
+                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? gabisa login deh');
+                }
+
                 Auth::login($userLogin);
 
                 if ($userLogin->getRoleNames()->first() == "admin") {
@@ -103,6 +109,11 @@ class LoginController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->has('remember'))) {
             $request->session()->regenerate();
+
+            if (Auth::user()->members->status == 0) {
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? gabisa login deh');
+            }
 
             if (Auth::user()->getRoleNames()->first() == "admin") {
                 return redirect()->intended('admin')->with('success', 'Login Berhasil');

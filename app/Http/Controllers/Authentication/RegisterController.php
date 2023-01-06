@@ -80,6 +80,11 @@ class RegisterController extends Controller
 
             event(new Registered($user));
 
+            if (Auth::user()->members->status == 0) {
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? gabisa login deh');
+            }
+
             Auth::login($user);
 
             if ($user->getRoleNames()->first() == 'admin') {

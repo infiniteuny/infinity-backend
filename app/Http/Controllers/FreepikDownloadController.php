@@ -42,6 +42,7 @@ class FreepikDownloadController extends Controller
                         'file_name' => $data->file_name,
                         'file_size' => $data->file_size ? number_format($data->file_size / 1048576, 2) : 0,
                         'status' => $data->status,
+                        'thumbnail' => $data->thumbnail,
                     ];
                 });
             } else {

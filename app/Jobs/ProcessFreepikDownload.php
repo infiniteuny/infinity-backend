@@ -48,8 +48,8 @@ class ProcessFreepikDownload implements ShouldQueue
             $data->file_name = $resFreepik->filename;
             $data->file_path = 'freepik/' . $resFreepik->filename;
             $data->file_size = $resFreepik->size;
-            $data->status = 'completed';
             $data->thumbnail = $resFreepik->thumbnail;
+            $data->status = 'completed';
             $data->save();
 
             $quota = Config::where('key', 'freepik_limit')->first();
