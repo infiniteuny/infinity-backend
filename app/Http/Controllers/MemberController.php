@@ -247,4 +247,23 @@ class MemberController extends Controller
 
         return response()->json($members);
     }
+
+    public function uid(Request $request)
+    {
+        $member = Member::where('uid', $request->uid)->where('status', 1)->first();
+        $uid_list = Member::wherenotnull('uid')->get()->map(function ($member) {
+            return $member->uid;
+        });
+        if ($member) {
+            return response()->json([
+                'allowed' => true,
+                'allowedUids' => $uid_list,
+            ]);
+        } else {
+            return response()->json([
+                'allowed' => false,
+                'allowedUids' => $uid_list,
+            ]);
+        }
+    }
 }
