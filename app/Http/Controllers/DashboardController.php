@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Analytics;
 use App\Models\Achievement;
+use App\Models\CompetitionLevel;
+use App\Models\CompetitionRank;
+use App\Models\CompetitionScale;
 use App\Models\Config;
 use App\Models\Faculty;
 use App\Models\Freepik;
@@ -21,6 +24,28 @@ class DashboardController extends Controller
 {
     public function adminDashboard()
     {
+
+        $data['competition_scales'] = CompetitionScale::select('competition_scales.name', DB::raw('COUNT(achievements.competition_scale_id) as count'))
+            ->leftJoin('achievements', 'competition_scales.id', '=', 'achievements.competition_scale_id')
+            ->whereYear('achievements.date', '=', 2022)
+            ->groupBy('competition_scales.name')
+            ->orderBy('count', 'desc')
+            ->get();
+
+        $data['competition_ranks'] = CompetitionRank::select('competition_ranks.name', DB::raw('COUNT(achievements.competition_rank_id) as count'))
+            ->leftJoin('achievements', 'competition_ranks.id', '=', 'achievements.competition_rank_id')
+            ->whereYear('achievements.date', '=', 2022)
+            ->groupBy('competition_ranks.name')
+            ->orderBy('count', 'desc')
+            ->get();
+
+        $data['competition_levels'] = CompetitionLevel::select('competition_levels.name', DB::raw('COUNT(achievements.competition_level_id) as count'))
+            ->leftJoin('achievements', 'competition_levels.id', '=', 'achievements.competition_level_id')
+            ->whereYear('achievements.date', '=', 2022)
+            ->groupBy('competition_levels.name')
+            ->orderBy('count', 'desc')
+            ->get();
+
         $most_visited_data = Analytics::fetchMostVisitedPages(Period::days(7))->take(8);
         $visitors_and_page_data = Analytics::fetchVisitorsAndPageViews(Period::days(7))->take(10);
         $top_referrers = Analytics::fetchTopReferrers(Period::days(7))->take(5);
@@ -44,8 +69,16 @@ class DashboardController extends Controller
         $data['events'] = count(json_decode(Http::get(config('app.api_url') . '/api/events')->body())->data);
         $data['members'] = Member::where('status', true)->count() . ' / ' . Member::count();
 
-        $faculties = Faculty::withCount('members')->having('members_count', '>', 0)->get();
-        $data['faculty_name'] = json_encode($faculties->pluck('name'));
+        $faculties = Faculty::withCount('members')->having('members_count', '>', 0)->orderBy('members_count', 'desc')->get();
+        $data['faculty_name'] = collect(json_decode($faculties->pluck('name')))->map(function ($name) {
+            $name = str_replace(' dan', '', $name);
+            $faculty = explode(' ', $name);
+            $first_letters = array_map(function ($word) {
+                return $word[0];
+            }, $faculty);
+            return 'F' . implode('', $first_letters);
+        });
+        $data['faculty_name'] = json_encode($data['faculty_name']);
         $data['faculty_member_count'] = json_encode($faculties->pluck('members_count'));
 
         $data['achievements_graph'] = Achievement::selectRaw('count(*) as count, year(date) as year')

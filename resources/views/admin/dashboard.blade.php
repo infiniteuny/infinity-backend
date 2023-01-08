@@ -31,6 +31,9 @@
     <script src="{{ asset('admin-panel/assets/js/chart/morris-chart/raphael.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/morris-chart/morris.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/morris-chart/prettify.min.js') }}"></script>
+    <script src="{{ asset('admin-panel/assets/js/chart/apex-chart/apex-chart.js') }}"></script>
+    <script src="{{ asset('admin-panel/assets/js/chart/apex-chart/stock-prices.js') }}"></script>
+    <script src="{{ asset('admin-panel/assets/js/chart/apex-chart/chart-custom.js') }}"></script>
     <script>
         $('#freepik_table').DataTable({
             "paging": false,
@@ -201,57 +204,33 @@
         var faculty_label = JSON.parse(@json($data['faculty_name']));
         var faculty_member_data = JSON.parse(@json($data['faculty_member_count']));
 
-        var pieData = [{
-                value: faculty_member_data[0],
-                color: "#F8D62B",
-                highlight: "#F8D62B",
-                label: faculty_label[0]
+        var facultyChartOptions = {
+            chart: {
+                width: 380,
+                type: 'pie',
             },
-            {
-                value: faculty_member_data[1],
-                color: "#262699",
-                highlight: "#262699",
-                label: faculty_label[1]
-            },
-            {
-                value: faculty_member_data[2],
-                color: "#F73164",
-                highlight: "#F73164",
-                label: faculty_label[2]
-            },
-            {
-                value: faculty_member_data[3],
-                color: "#51BB25",
-                highlight: "#51BB25",
-                label: faculty_label[3]
-            },
-            {
-                value: faculty_member_data[4],
-                color: "#7366FF",
-                highlight: "#7366FF",
-                label: faculty_label[4]
-            },
-            {
-                value: faculty_member_data[5],
-                color: "#F9B384",
-                highlight: "#F9B384",
-                label: faculty_label[5]
-            }
-        ];
-        var pieOptions = {
-            segmentShowStroke: true,
-            segmentStrokeColor: "#fff",
-            segmentStrokeWidth: 2,
-            percentageInnerCutout: 0,
-            animationSteps: 100,
-            animationEasing: "easeOutBounce",
-            animateRotate: true,
-            animateScale: false,
-            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-        };
+            labels: faculty_label,
+            series: faculty_member_data,
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }],
+            colors: [CubaAdminConfig.primary, CubaAdminConfig.secondary, '#51bb25', '#a927f9', '#f8d62b', '#a35t2b']
+        }
 
-        var memberCtx = document.getElementById("memberchart").getContext("2d");
-        var memberChart = new Chart(memberCtx).Pie(pieData, pieOptions);
+        var facultyChart = new ApexCharts(
+            document.querySelector("#memberchart"),
+            facultyChartOptions
+        );
+
+        facultyChart.render();
     </script>
 @endsection
 
@@ -482,9 +461,8 @@
                             <h5 class="m-0">Persebaran Fakultas Anggota</h5>
                         </div>
                     </div>
-                    <div class="card-Body">
-                        <canvas id="memberchart"
-                            style=" width: 581px; height: 290px; margin: 30px 0px 30px 0px;"></canvas>
+                    <div class="card-body apex-chart">
+                        <div id="memberchart"></div>
                     </div>
                 </div>
             </div>

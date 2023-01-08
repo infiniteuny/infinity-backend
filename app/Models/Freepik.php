@@ -15,6 +15,7 @@ class Freepik extends Model
         'file_path',
         'file_size',
         'status',
+        'thumbnail',
     ];
 
     public function freepikDownloads()
