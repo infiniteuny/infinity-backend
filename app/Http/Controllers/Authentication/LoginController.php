@@ -54,7 +54,7 @@ class LoginController extends Controller
                     $userLogin->save();
                 }
 
-                if (Auth::user()->members->status == 0) {
+                if ($userLogin->members->status == 0) {
                     Auth::logout();
                     return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? gabisa login deh');
                 }
