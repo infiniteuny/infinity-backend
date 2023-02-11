@@ -119,3 +119,7 @@ Route::prefix('student')->name('student.')->middleware(['role:student', 'verifie
     });
     Route::resource('freepik', FreepikDownloadController::class)->except('create', 'show', 'edit', 'update', 'destroy');
 });
+
+
+// ---------------- Web Hook Route ---------------
+Route::post('webhook/freepik/downloaded', [FreepikDownloadController::class, 'webhookDownloaded'])->name('webhook.freepik.download');

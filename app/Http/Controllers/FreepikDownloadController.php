@@ -6,11 +6,13 @@ use App\Models\FreepikDownload;
 use App\Http\Requests\StoreFreepikDownloadRequest;
 use App\Http\Requests\UpdateFreepikDownloadRequest;
 use App\Jobs\ProcessFreepikDownload;
+use GuzzleHttp\Client as GuzzleClient;
 use App\Models\Freepik;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -108,7 +110,7 @@ class FreepikDownloadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreFreepikDownloadRequest  $request
+     * @param \App\Http\Requests\StoreFreepikDownloadRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreFreepikDownloadRequest $request)
@@ -153,7 +155,7 @@ class FreepikDownloadController extends Controller
                 'status' => 'waiting',
             ]);
 
-            ProcessFreepikDownload::dispatch($download->id);
+            $this->queue($download);
 
             if (Auth::user()->hasRole('admin')) {
                 return redirect()->route('admin.freepik.index')->with('success', 'File dalam antrian untuk di download');
@@ -169,10 +171,62 @@ class FreepikDownloadController extends Controller
         }
     }
 
+    public function queue($item)
+    {
+        $token = Crypt::encryptString($item->id);
+        $webhook_url = url('/webhook/freepik/downloaded');
+        $download_url = $item->url;
+
+        $client = new GuzzleClient();
+        $payload = [
+            'form_params' => [
+                'webhook_url' => $webhook_url,
+                'download_url' => $download_url,
+            ]
+        ];
+        $response = $client->post(config('app.api_freepik_url'), $payload);
+        $body = json_decode($response->getBody());
+        $status = $response->getStatusCode();
+        if ($status == 200) {
+            $item->remote_id = $body->id;
+            $item->save();
+        }
+    }
+
+    public function webhookDownloaded(Request $request)
+    {
+        $remote_id = $request->id;
+
+        $item = Freepik::where('remote_id', $remote_id)->first();
+        error_log(json_encode($item));
+
+        if (!$item) {
+            return false;
+        }
+
+        if ($request->status == 'completed') {
+            Storage::disk('local')->put('freepik/' . $request->filename, base64_decode($request->file));
+
+            $item->file_name = $request->filename;
+            $item->file_path = 'freepik/' . $request->filename;
+            $item->file_size = $request->size;
+            $item->thumbnail = $request->thumbnail;
+            $item->status = 'completed';
+            $item->save();
+        } else if ($request->status == 'token expired') {
+            Http::post(config('app.api_freepik_error_notif_url'));
+        } else {
+            $item->status = 'failed';
+            $item->save();
+        }
+
+        return true;
+    }
+
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FreepikDownload  $freepikDownload
+     * @param \App\Models\FreepikDownload $freepikDownload
      * @return \Illuminate\Http\Response
      */
     public function show(FreepikDownload $freepikDownload)
@@ -183,7 +237,7 @@ class FreepikDownloadController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\FreepikDownload  $freepikDownload
+     * @param \App\Models\FreepikDownload $freepikDownload
      * @return \Illuminate\Http\Response
      */
     public function edit(FreepikDownload $freepikDownload)
@@ -194,8 +248,8 @@ class FreepikDownloadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateFreepikDownloadRequest  $request
-     * @param  \App\Models\FreepikDownload  $freepikDownload
+     * @param \App\Http\Requests\UpdateFreepikDownloadRequest $request
+     * @param \App\Models\FreepikDownload $freepikDownload
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateFreepikDownloadRequest $request, FreepikDownload $freepikDownload)
@@ -206,7 +260,7 @@ class FreepikDownloadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\FreepikDownload  $freepikDownload
+     * @param \App\Models\FreepikDownload $freepikDownload
      * @return \Illuminate\Http\Response
      */
     public function destroy(FreepikDownload $freepikDownload)
