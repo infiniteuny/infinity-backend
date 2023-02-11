@@ -60,6 +60,8 @@ return [
 
     'api_freepik_url' => env('API_FREEPIK_URL'),
 
+    'api_freepik_error_notif_url' => env('API_FREEPIK_ERROR_NOTIF_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
