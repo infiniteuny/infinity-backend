@@ -4,7 +4,7 @@
     "description": "Hello Infinite",
     "keywords": ["infinite", "uny", "laravel", "restek", "profile"],
     "license": "MIT",
-    "version": "2.9.7",
+    "version": "2.9.8",
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
