@@ -56,9 +56,7 @@ class ProcessFreepikDownload implements ShouldQueue
             $quota->value = $resFreepik->count;
             $quota->save();
         } catch (\Throwable $th) {
-            $response = Http::post('https://info.infinite.niwabi.my.id/freepik-error', [
-                'apiKey' => 'fKKrOUFUt5MnQQKVVRxuhXvs7euccsfTaZKZbEyXMPQC2tFqJlM6ZIL02aIrUaKI',
-            ]);
+            Http::post(config('app.api_freepik_error_notif_url'));
             $data->status = 'failed';
             $data->save();
         }
