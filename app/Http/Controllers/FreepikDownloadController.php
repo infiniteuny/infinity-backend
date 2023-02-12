@@ -184,7 +184,7 @@ class FreepikDownloadController extends Controller
                 'download_url' => $download_url,
             ]
         ];
-        $response = $client->post(config('app.api_freepik_url'), $payload);
+        $response = $client->post(config('app.api_freepik_url').'/v2/queue', $payload);
         $body = json_decode($response->getBody());
         $status = $response->getStatusCode();
         if ($status == 200) {
@@ -198,14 +198,15 @@ class FreepikDownloadController extends Controller
         $remote_id = $request->id;
 
         $item = Freepik::where('remote_id', $remote_id)->first();
-        error_log(json_encode($item));
 
         if (!$item) {
             return false;
         }
 
         if ($request->status == 'completed') {
-            Storage::disk('local')->put('freepik/' . $request->filename, base64_decode($request->file));
+            $res = new GuzzleClient();
+            $res = $res->get(config('app.api_freepik_url').'/v2/queue/download?id='.$remote_id, ['timeout' => 180]);
+            Storage::disk('local')->put('freepik/' . $request->filename, $res->getBody()->getContents());
 
             $item->file_name = $request->filename;
             $item->file_path = 'freepik/' . $request->filename;
