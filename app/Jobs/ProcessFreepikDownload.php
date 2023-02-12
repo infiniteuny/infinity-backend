@@ -40,7 +40,7 @@ class ProcessFreepikDownload implements ShouldQueue
         $data = Freepik::find($id);
         try {
             $reqFreepik = new \GuzzleHttp\Client();
-            $resFreepik = $reqFreepik->get(config('app.api_freepik_url') . $data->url, ['timeout' => 180]);
+            $resFreepik = $reqFreepik->get(config('app.api_freepik_url') . $data->url, ['timeout' => 600]);
 
             $resFreepik = json_decode($resFreepik->getBody()->getContents());
             Storage::disk('local')->put('freepik/' . $resFreepik->filename, base64_decode($resFreepik->file));
