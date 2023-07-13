@@ -159,7 +159,7 @@ class LandingController extends Controller
     public function team(Request $request)
     {
         if ($request->has('year')) {
-            $commitees = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . $request->year . '&sort[1]=division.priority');
+            $commitees = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . $request->year . '&sort[1]=division.priority&pagination[page]=1&pagination[pageSize]=40');
             $data['commitees'] = collect(json_decode($commitees->body())->data)->map(function ($item) {
                 return (object)[
                     'name' => $item->attributes->name,
@@ -173,9 +173,9 @@ class LandingController extends Controller
                 ];
             });
         } else {
-            $commitees = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->year . '&sort[1]=division.priority');
+            $commitees = Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->year . '&sort[1]=division.priority&pagination[page]=1&pagination[pageSize]=40');
 
-            $commitees = count(json_decode($commitees->body())->data) > 0 ? json_decode($commitees->body())->data : json_decode(Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->subYear()->year . '&sort[1]=division.priority')->body())->data;
+            $commitees = count(json_decode($commitees->body())->data) > 0 ? json_decode($commitees->body())->data : json_decode(Http::get(config('app.api_url') . '/api/commitees?populate=photo,cabinet,division&filters[cabinet][year][$eq]=' . Carbon::now()->subYear()->year . '&sort[1]=division.priority&pagination[page]=1&pagination[pageSize]=40')->body())->data;
 
             $data['commitees'] = collect($commitees)->map(function ($item) {
                 return (object)[
