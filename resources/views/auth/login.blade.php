@@ -47,7 +47,7 @@
                                 <h6 class="text-muted mt-4 or">Atau masuk dengan</h6>
                                 <div class="social mt-4">
                                     <div class="btn-showcase">
-                                        <a class="btn btn-light" href="{{ route('login.google') }}" target="_blank"><i
+                                        <a class="btn btn-light" href="{{ route('login.google') }}"><i
                                                 class="fa fa-google-plus"></i>
                                             Google</a>
                                     </div>
