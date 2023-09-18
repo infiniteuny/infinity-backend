@@ -1001,9 +1001,6 @@
                                     <p><a
                                             href="mailto:{{ strip_tags($config['EMAIL_1']) }}">{{ strip_tags($config['EMAIL_1']) }}</a>
                                     </p>
-                                    <p><a
-                                            href="mailto:{{ strip_tags($config['EMAIL_2']) }}">{{ strip_tags($config['EMAIL_2']) }}</a>
-                                    </p>
                                 </div>
                             </div>
                         </div>
