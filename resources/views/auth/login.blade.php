@@ -51,7 +51,7 @@
                                                 class="fa fa-google"></i>
                                             Google</a>
                                         <a class="btn btn-light" href="{{ route('login.infinite-sso') }}"><i
-                                                class="fa fa-right-to-bracket"></i>
+                                                class="fa fa-sign-in"></i>
                                             INFINITE SSO</a>
                                     </div>
                                 </div>
