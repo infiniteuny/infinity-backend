@@ -54,8 +54,8 @@ class LoginController extends Controller
                     $userLogin->save();
                 }
 
-                if ($userLogin->provider != 'google' || $userLogin->name != $user->id) {
-                    $userLogin->name = $user->id;
+                if ($userLogin->provider != 'google' || $userLogin->provider_id != $user->id) {
+                    $userLogin->provider_id = $user->id;
                     $userLogin->provider = 'google';
                     $userLogin->save();
                 }
@@ -113,8 +113,8 @@ class LoginController extends Controller
                     $userLogin->save();
                 }
 
-                if ($userLogin->provider != 'authentik' || $userLogin->name != $user->id) {
-                    $userLogin->name = $user->id;
+                if ($userLogin->provider != 'authentik' || $userLogin->provider_id != $user->id) {
+                    $userLogin->provider_id = $user->id;
                     $userLogin->provider = 'authentik';
                     $userLogin->save();
                 }
