@@ -16,8 +16,8 @@ Route::middleware('guest')->group(
         Route::post('login', [LoginController::class, 'store']);
         Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
         Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
-        Route::get('login/infinite-sso', [LoginController::class, 'redirectToGoogle'])->name('login.infinite-sso');
-        Route::get('login/infinite-sso/callback', [LoginController::class, 'handleGoogleCallback']);
+        Route::get('login/infinite-sso', [LoginController::class, 'redirectToAuthentik'])->name('login.infinite-sso');
+        Route::get('login/infinite-sso/callback', [LoginController::class, 'handleAuthentikCallback']);
     }
 );
 
