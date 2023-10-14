@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(
     function () {
@@ -16,6 +16,8 @@ Route::middleware('guest')->group(
         Route::post('login', [LoginController::class, 'store']);
         Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
         Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+        Route::get('login/infinite-sso', [LoginController::class, 'redirectToGoogle'])->name('login.infinite-sso');
+        Route::get('login/infinite-sso/callback', [LoginController::class, 'handleGoogleCallback']);
     }
 );
 

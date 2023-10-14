@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -32,14 +32,14 @@ class LoginController extends Controller
         try {
             $user = Socialite::driver('google')->user();
 
-            if (explode("@", $user->email)[1] != "student.uny.ac.id") {
+            if (explode('@', $user->email)[1] != 'student.uny.ac.id') {
                 return redirect()->back()->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
             }
 
             $userdata = [
                 'name' => $user->name,
                 'email' => $user->email,
-                'password' => $user->email . $user->id . Str::uuid()->toString(),
+                'password' => $user->email.$user->id.Str::uuid()->toString(),
                 'role' => 'student',
                 'provider' => 'google',
                 'provider_id' => $user->id,
@@ -54,14 +54,80 @@ class LoginController extends Controller
                     $userLogin->save();
                 }
 
+                if ($userLogin->provider != 'google' || $userLogin->name != $user->id) {
+                    $userLogin->name = $user->id;
+                    $userLogin->provider = 'google';
+                    $userLogin->save();
+                }
+
                 if ($userLogin->members->status == 0) {
                     Auth::logout();
-                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? gabisa login deh');
+
+                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Gabisa login deh.');
                 }
 
                 Auth::login($userLogin);
 
-                if ($userLogin->getRoleNames()->first() == "admin") {
+                if ($userLogin->getRoleNames()->first() == 'admin') {
+                    return redirect()->route('admin.dashboard')->with('success', 'Login Berhasil');
+                } else {
+                    return redirect()->route('student.dashboard')->with('success', 'Login Berhasil');
+                }
+            } else {
+                return redirect()->route('register.student-id')->with(['userdata' => $userdata]);
+            }
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
+    public function redirectToAuthentik()
+    {
+        return Socialite::driver('authentik')->redirect();
+    }
+
+    public function handleAuthentikCallback()
+    {
+        try {
+            $user = Socialite::driver('authentik')->user();
+
+            if (explode('@', $user->email)[1] != 'student.uny.ac.id') {
+                return redirect()->back()->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
+            }
+
+            $userdata = [
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => $user->email.$user->id.Str::uuid()->toString(),
+                'role' => 'student',
+                'provider' => 'authentik',
+                'provider_id' => $user->id,
+                'avatar' => $user->avatar,
+            ];
+
+            if (User::where('email', $user->email)->exists()) {
+                $userLogin = User::where('email', $user->email)->first();
+                if ($userLogin->avatar != $user->avatar || $userLogin->name != $user->name) {
+                    $userLogin->name = $user->name;
+                    $userLogin->avatar = $user->avatar;
+                    $userLogin->save();
+                }
+
+                if ($userLogin->provider != 'authentik' || $userLogin->name != $user->id) {
+                    $userLogin->name = $user->id;
+                    $userLogin->provider = 'authentik';
+                    $userLogin->save();
+                }
+
+                if ($userLogin->members->status == 0) {
+                    Auth::logout();
+
+                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Gabisa login deh.');
+                }
+
+                Auth::login($userLogin);
+
+                if ($userLogin->getRoleNames()->first() == 'admin') {
                     return redirect()->route('admin.dashboard')->with('success', 'Login Berhasil');
                 } else {
                     return redirect()->route('student.dashboard')->with('success', 'Login Berhasil');
@@ -77,6 +143,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('landing')->with('success', 'Logout Berhasil');
     }
 
@@ -93,7 +160,6 @@ class LoginController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -112,10 +178,11 @@ class LoginController extends Controller
 
             if (Auth::user()->members->status == 0) {
                 Auth::logout();
-                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? gabisa login deh');
+
+                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Gabisa login deh.');
             }
 
-            if (Auth::user()->getRoleNames()->first() == "admin") {
+            if (Auth::user()->getRoleNames()->first() == 'admin') {
                 return redirect()->intended('admin')->with('success', 'Login Berhasil');
             } else {
                 return redirect()->intended('student')->with('success', 'Login Berhasil');
@@ -150,7 +217,6 @@ class LoginController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

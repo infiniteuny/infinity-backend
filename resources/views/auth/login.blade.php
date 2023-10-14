@@ -48,8 +48,11 @@
                                 <div class="social mt-4">
                                     <div class="btn-showcase">
                                         <a class="btn btn-light" href="{{ route('login.google') }}"><i
-                                                class="fa fa-google-plus"></i>
+                                                class="fa fa-google"></i>
                                             Google</a>
+                                        <a class="btn btn-light" href="{{ route('login.infinite-sso') }}"><i
+                                                class="fa fa-right-to-bracket"></i>
+                                            INFINITE SSO</a>
                                     </div>
                                 </div>
                                 <p class="mt-4 mb-0 text-center">Belum punya akun?<a class="ms-2"
