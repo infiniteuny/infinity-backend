@@ -61,6 +61,9 @@
                                         <a class="btn btn-light" href="{{ route('login.google') }}"><i
                                                 class="fa fa-google-plus"></i>
                                             Google</a>
+                                        <a class="btn btn-light" href="{{ route('login.infinite-sso') }}"><i
+                                                class="fa fa-sign-in"></i>
+                                            INFINITE SSO</a>
                                     </div>
                                 </div>
                                 <p class="mt-4 mb-0">Sudah punya akun?<a class="ms-2"
