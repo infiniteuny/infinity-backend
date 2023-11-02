@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class RegisterController extends Controller
         if (Session::get('userdata') == null) {
             return redirect()->route('login');
         }
+
         return view('auth.check-student-id')->with('userdata', Session::get('userdata'));
     }
 
@@ -43,7 +45,6 @@ class RegisterController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -57,12 +58,17 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             $error = $validator->errors()->all(':message');
+
             return redirect()->back()->with('error', implode(' ', $error))->withInput();
         }
 
         try {
-            if (explode("@", $request->email)[1] != "student.uny.ac.id") {
-                return redirect()->route('login')->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
+            if (explode('@', $request->email)[1] != 'student.uny.ac.id') {
+                return redirect()->route('register')->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta!');
+            }
+
+            if (Member::where('student_id', $request->student_id)->doesntExist()) {
+                return redirect()->route('register')->with('error', 'NIM kamu tidak terdaftar di database member kami nih.');
             }
 
             $user = User::create([
@@ -70,9 +76,9 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'role' => $request->role ?: 'student',
-                'provider' => $request->provider ?: NULL,
-                'provider_id' => $request->provider_id ?: NULL,
-                'avatar' => $request->avatar ?: 'https://ui-avatars.com/api/?name=' . $request->name . '&background=0D8ABC&color=fff',
+                'provider' => $request->provider ?: null,
+                'provider_id' => $request->provider_id ?: null,
+                'avatar' => $request->avatar ?: 'https://ui-avatars.com/api/?name='.$request->name.'&background=0D8ABC&color=fff',
                 'student_id' => $request->student_id,
             ]);
 
@@ -82,7 +88,8 @@ class RegisterController extends Controller
 
             if (Auth::user()->members->status == 0) {
                 Auth::logout();
-                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? gabisa login deh');
+
+                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
             }
 
             Auth::login($user);
@@ -122,7 +129,6 @@ class RegisterController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
