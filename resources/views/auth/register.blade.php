@@ -58,9 +58,6 @@
                                 <h6 class="text-muted mt-4 or">Atau daftar dengan</h6>
                                 <div class="social mt-4">
                                     <div class="btn-showcase">
-                                        <a class="btn btn-light" href="{{ route('login.google') }}"><i
-                                                class="fa fa-google-plus"></i>
-                                            Google</a>
                                         <a class="btn btn-light" href="{{ route('login.infinite-sso') }}"><i
                                                 class="fa fa-sign-in"></i>
                                             INFINITE SSO</a>
