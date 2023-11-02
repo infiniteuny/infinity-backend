@@ -107,9 +107,10 @@ class LoginController extends Controller
 
             if (User::where('email', $user->email)->exists()) {
                 $userLogin = User::where('email', $user->email)->first();
-                if ($userLogin->avatar != $user->avatar || $userLogin->name != $user->name) {
+                $userAvatar = $user->avatar ?: 'https://ui-avatars.com/api/?name='.$user->name.'&background=0D8ABC&color=fff';
+                if ($userLogin->avatar != $userAvatar || $userLogin->name != $user->name) {
                     $userLogin->name = $user->name;
-                    $userLogin->avatar = $user->avatar;
+                    $userLogin->avatar = $userAvatar;
                     $userLogin->save();
                 }
 
