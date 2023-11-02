@@ -63,7 +63,7 @@ class LoginController extends Controller
                 if ($userLogin->members->status == 0) {
                     Auth::logout();
 
-                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
+                    return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
                 }
 
                 Auth::login($userLogin);
@@ -123,7 +123,7 @@ class LoginController extends Controller
                 if ($userLogin->members->status == 0) {
                     Auth::logout();
 
-                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
+                    return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
                 }
 
                 Auth::login($userLogin);
@@ -180,7 +180,7 @@ class LoginController extends Controller
             if (Auth::user()->members->status == 0) {
                 Auth::logout();
 
-                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
+                return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
             }
 
             if (Auth::user()->getRoleNames()->first() == 'admin') {

@@ -12,10 +12,13 @@ Route::middleware('guest')->group(
         Route::get('register', [RegisterController::class, 'create'])->name('register');
         Route::get('register/student-id', [RegisterController::class, 'studentId'])->name('register.student-id');
         Route::post('register', [RegisterController::class, 'store']);
-        Route::get('login', [LoginController::class, 'create'])->name('login');
-        Route::post('login', [LoginController::class, 'store']);
-        Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
-        Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+        // Uncomment code bellow to enable credentials (email and password) login
+        // Route::get('login', [LoginController::class, 'create'])->name('login');
+        // Route::post('login', [LoginController::class, 'store']);
+        // Uncomment code bellow to enable Google login
+        // Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+        // Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+        Route::get('login', [LoginController::class, 'redirectToAuthentik'])->name('login');
         Route::get('login/infinite-sso', [LoginController::class, 'redirectToAuthentik'])->name('login.infinite-sso');
         Route::get('login/infinite-sso/callback', [LoginController::class, 'handleAuthentikCallback']);
     }
