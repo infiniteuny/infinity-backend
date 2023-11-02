@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Achievement;
 use App\Http\Requests\StoreAchievementRequest;
 use App\Http\Requests\UpdateAchievementRequest;
+use App\Models\Achievement;
 use App\Models\CompetitionLevel;
 use App\Models\CompetitionOutput;
 use App\Models\CompetitionRank;
@@ -13,14 +13,13 @@ use App\Models\CompetitionTimeRange;
 use App\Models\CompetitionType;
 use App\Models\Team;
 use Carbon\Carbon;
-use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 
 class AchievementController extends Controller
 {
@@ -39,7 +38,7 @@ class AchievementController extends Controller
                 'competitionOutputs',
                 'competitionTimeRanges',
                 'competitionRanks',
-                'competitionLevels'
+                'competitionLevels',
             ])->orderBy('date', 'desc')->get();
             $data = $achievement->map(function ($achievement) {
                 return [
@@ -47,7 +46,7 @@ class AchievementController extends Controller
                     'team_name' => $achievement->teams->name,
                     'competition_name' => $achievement->competition_name,
                     'organizer' => $achievement->organizer,
-                    'description' => strlen($achievement->description) > 150 ? substr($achievement->description,0,150).'...' : $achievement->description,
+                    'description' => strlen($achievement->description) > 150 ? substr($achievement->description, 0, 150).'...' : $achievement->description,
                     'date' => Carbon::parse($achievement->date)->format('d M Y'),
                     'member' => $achievement->teams->members->map(function ($member) {
                         return [
@@ -67,9 +66,10 @@ class AchievementController extends Controller
                         $achievement->competitionOutputs->weight *
                         $achievement->competitionTimeRanges->weight *
                         $achievement->competitionRanks->weight *
-                        $achievement->competitionLevels->weight . ' pts'
+                        $achievement->competitionLevels->weight.' pts',
                 ];
             });
+
             return DataTables::of($data)->addIndexColumn()
                 ->addIndexColumn()
                 ->make(true);
@@ -80,8 +80,9 @@ class AchievementController extends Controller
         $data['competition_time_ranges'] = CompetitionTimeRange::all();
         $data['competition_ranks'] = CompetitionRank::all();
         $data['competition_levels'] = CompetitionLevel::all();
+
         return view('admin.achievement.index')->with([
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -96,7 +97,7 @@ class AchievementController extends Controller
                     'competitionOutputs',
                     'competitionTimeRanges',
                     'competitionRanks',
-                    'competitionLevels'
+                    'competitionLevels',
                 ])->orderBy('date', 'desc')->get();
             $data = $achievement->map(function ($achievement) {
                 return [
@@ -124,9 +125,10 @@ class AchievementController extends Controller
                         $achievement->competitionOutputs->weight *
                         $achievement->competitionTimeRanges->weight *
                         $achievement->competitionRanks->weight *
-                        $achievement->competitionLevels->weight . ' pts'
+                        $achievement->competitionLevels->weight.' pts',
                 ];
             });
+
             return DataTables::of($data)->addIndexColumn()
                 ->addIndexColumn()
                 ->make(true);
@@ -137,8 +139,9 @@ class AchievementController extends Controller
         $data['competition_time_ranges'] = CompetitionTimeRange::all();
         $data['competition_ranks'] = CompetitionRank::all();
         $data['competition_levels'] = CompetitionLevel::all();
+
         return view('student.achievement.index')->with([
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -155,7 +158,6 @@ class AchievementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreAchievementRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreAchievementRequest $request)
@@ -180,6 +182,7 @@ class AchievementController extends Controller
 
         if ($validate->fails()) {
             $error = $validate->errors()->all(':message');
+
             return redirect()->back()->with('error', implode(' ', $error))->withInput();
         }
 
@@ -193,7 +196,7 @@ class AchievementController extends Controller
                 $members[$item] = Crypt::decryptString($value);
             }
             $request->merge([
-                'member' => $members
+                'member' => $members,
             ]);
         }
 
@@ -205,7 +208,7 @@ class AchievementController extends Controller
                     $checkId->push($value);
                 }
             }
-            if (!$checkId->contains(auth()->user()->members->id)) {
+            if (! $checkId->contains(auth()->user()->members->id)) {
                 return redirect()->back()->with('error', 'Kamu hukumnya wajib masuk ditim yang diajukan yak!')->withInput();
             }
         }
@@ -249,7 +252,6 @@ class AchievementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Http\Response
      */
     public function show(Achievement $achievement)
@@ -272,7 +274,7 @@ class AchievementController extends Controller
             'competitionOutputs',
             'competitionTimeRanges',
             'competitionRanks',
-            'competitionLevels'
+            'competitionLevels',
         ])->first();
 
         $data['achievement'] = (object) [
@@ -301,7 +303,7 @@ class AchievementController extends Controller
                 $achievement->competitionOutputs->weight *
                 $achievement->competitionTimeRanges->weight *
                 $achievement->competitionRanks->weight *
-                $achievement->competitionLevels->weight . ' pts'
+                $achievement->competitionLevels->weight.' pts',
         ];
 
         $data['competition_types'] = CompetitionType::all();
@@ -323,7 +325,7 @@ class AchievementController extends Controller
             'competitionOutputs',
             'competitionTimeRanges',
             'competitionRanks',
-            'competitionLevels'
+            'competitionLevels',
         ])->first();
 
         $data['achievement'] = (object) [
@@ -352,7 +354,7 @@ class AchievementController extends Controller
                 $achievement->competitionOutputs->weight *
                 $achievement->competitionTimeRanges->weight *
                 $achievement->competitionRanks->weight *
-                $achievement->competitionLevels->weight . ' pts'
+                $achievement->competitionLevels->weight.' pts',
         ];
 
         $data['competition_types'] = CompetitionType::all();
@@ -368,7 +370,6 @@ class AchievementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateAchievementRequest  $request
      * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Http\Response
      */
@@ -394,6 +395,7 @@ class AchievementController extends Controller
 
         if ($validate->fails()) {
             $error = $validate->errors()->all(':message');
+
             return redirect()->back()->with('error', implode(' ', $error));
         }
         if ($request->has('leader') || $request->has('member')) {
@@ -403,7 +405,7 @@ class AchievementController extends Controller
                 foreach ($request->member as $item => $value) {
                     $checkId->push($value);
                 }
-                if (!$checkId->contains(auth()->user()->members->id)) {
+                if (! $checkId->contains(auth()->user()->members->id)) {
                     return redirect()->back()->with('error', 'Kamu hukumnya wajib masuk ditim yang diajukan yak!')->withInput();
                 }
             }
@@ -480,6 +482,7 @@ class AchievementController extends Controller
         if ($achievement) {
             Storage::delete($achievement->image);
             $achievement->teams()->delete();
+
             return redirect()->back()->with('success', 'Data berhasil dihapus');
         } else {
             return redirect()->back()->with('error', 'Data tidak ditemukan');
@@ -494,6 +497,7 @@ class AchievementController extends Controller
                 $achievement->status = 'accepted';
                 $achievement->save();
             });
+
             return redirect()->back()->with('success', 'Data berhasil diubah');
         } else {
             return redirect()->back()->with('error', 'Data tidak ditemukan');
@@ -508,6 +512,7 @@ class AchievementController extends Controller
                 $achievement->status = 'rejected';
                 $achievement->save();
             });
+
             return redirect()->back()->with('success', 'Data berhasil diubah');
         } else {
             return redirect()->back()->with('error', 'Data tidak ditemukan');

@@ -6,10 +6,8 @@ use App\Models\Achievement;
 use App\Models\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
-use Nette\Utils\Arrays;
 
 class LeaderboardController extends Controller
 {
@@ -17,14 +15,14 @@ class LeaderboardController extends Controller
     {
         if ($request->has('year')) {
             $members = Member::has('teams')
-                ->whereRelation('teams.achievements', 'date', '>=', Carbon::parse($request->year . '-01-01'))
-                ->whereRelation('teams.achievements', 'date', '<=', Carbon::parse($request->year . '-12-31'))
+                ->whereRelation('teams.achievements', 'date', '>=', Carbon::parse($request->year.'-01-01'))
+                ->whereRelation('teams.achievements', 'date', '<=', Carbon::parse($request->year.'-12-31'))
                 ->whereRelation('teams.achievements', 'status', '=', 'accepted')
                 ->with([
                     'teams' => function ($query) use ($request) {
                         $query->whereHas('achievements', function ($query) use ($request) {
-                            $query->where('date', '>=', Carbon::parse($request->year . '-01-01'))
-                                ->where('date', '<=', Carbon::parse($request->year . '-12-31'))
+                            $query->where('date', '>=', Carbon::parse($request->year.'-01-01'))
+                                ->where('date', '<=', Carbon::parse($request->year.'-12-31'))
                                 ->where('status', '=', 'accepted');
                         });
                     },
@@ -37,22 +35,22 @@ class LeaderboardController extends Controller
                     'programStudies',
                 ])
                 ->withCount(['teams' => function ($query) use ($request) {
-                    $query->whereRelation('achievements', 'date', '>=', Carbon::parse($request->year . '-01-01'))
-                        ->whereRelation('achievements', 'date', '<=', Carbon::parse($request->year . '-12-31'))
+                    $query->whereRelation('achievements', 'date', '>=', Carbon::parse($request->year.'-01-01'))
+                        ->whereRelation('achievements', 'date', '<=', Carbon::parse($request->year.'-12-31'))
                         ->whereRelation('achievements', 'status', '=', 'accepted');
                 }])
                 ->get()->toArray();
             $year = $request->year;
         } else {
             $members = Member::has('teams')
-                ->whereRelation('teams.achievements', 'date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
-                ->whereRelation('teams.achievements', 'date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'))
+                ->whereRelation('teams.achievements', 'date', '>=', Carbon::parse(Carbon::now()->year.'-01-01'))
+                ->whereRelation('teams.achievements', 'date', '<=', Carbon::parse(Carbon::now()->year.'-12-31'))
                 ->whereRelation('teams.achievements', 'status', '=', 'accepted')
                 ->with([
                     'teams' => function ($query) {
                         $query->whereHas('achievements', function ($query) {
-                            $query->where('date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
-                                ->where('date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'))
+                            $query->where('date', '>=', Carbon::parse(Carbon::now()->year.'-01-01'))
+                                ->where('date', '<=', Carbon::parse(Carbon::now()->year.'-12-31'))
                                 ->where('status', '=', 'accepted');
                         });
                     },
@@ -65,8 +63,8 @@ class LeaderboardController extends Controller
                     'programStudies',
                 ])
                 ->withCount(['teams' => function ($query) {
-                    $query->whereRelation('achievements', 'date', '>=', Carbon::parse(Carbon::now()->year . '-01-01'))
-                        ->whereRelation('achievements', 'date', '<=', Carbon::parse(Carbon::now()->year . '-12-31'))
+                    $query->whereRelation('achievements', 'date', '>=', Carbon::parse(Carbon::now()->year.'-01-01'))
+                        ->whereRelation('achievements', 'date', '<=', Carbon::parse(Carbon::now()->year.'-12-31'))
                         ->whereRelation('achievements', 'status', '=', 'accepted');
                 }])
                 ->get()->toArray();
@@ -83,6 +81,7 @@ class LeaderboardController extends Controller
                     $team['achievements']['competition_time_ranges']['weight'] *
                     $team['achievements']['competition_outputs']['weight'] *
                     $team['achievements']['competition_types']['weight'];
+
                 return $team;
             })->sum('point');
             array_push($anggota, $member);
@@ -137,11 +136,12 @@ class LeaderboardController extends Controller
 
     public static function config()
     {
-        $response = Http::get(config('app.api_url') . '/api/configs');
+        $response = Http::get(config('app.api_url').'/api/configs');
         $config = [];
         foreach (json_decode($response)->data as $item) {
             $config[$item->attributes->name] = $item->attributes->value;
         }
+
         return $config;
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompetitionScale;
 use App\Http\Requests\StoreCompetitionScaleRequest;
 use App\Http\Requests\UpdateCompetitionScaleRequest;
+use App\Models\CompetitionScale;
 
 class CompetitionScaleController extends Controller
 {
@@ -31,7 +31,6 @@ class CompetitionScaleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCompetitionScaleRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCompetitionScaleRequest $request)
@@ -42,7 +41,6 @@ class CompetitionScaleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompetitionScale  $competitionScale
      * @return \Illuminate\Http\Response
      */
     public function show(CompetitionScale $competitionScale)
@@ -53,7 +51,6 @@ class CompetitionScaleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompetitionScale  $competitionScale
      * @return \Illuminate\Http\Response
      */
     public function edit(CompetitionScale $competitionScale)
@@ -64,8 +61,6 @@ class CompetitionScaleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCompetitionScaleRequest  $request
-     * @param  \App\Models\CompetitionScale  $competitionScale
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompetitionScaleRequest $request, CompetitionScale $competitionScale)
@@ -76,7 +71,6 @@ class CompetitionScaleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompetitionScale  $competitionScale
      * @return \Illuminate\Http\Response
      */
     public function destroy(CompetitionScale $competitionScale)

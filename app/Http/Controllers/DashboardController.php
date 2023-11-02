@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Analytics;
 use App\Models\Achievement;
 use App\Models\CompetitionLevel;
@@ -65,9 +64,9 @@ class DashboardController extends Controller
         $analitics['user_type_sessions'] = json_encode($user_types->pluck('sessions'));
 
         $data['achievements'] = Achievement::whereYear('date', Carbon::now()->year)->orderBy('date')->count();
-        $data['products'] = count(json_decode(Http::get(config('app.api_url') . '/api/galleries')->body())->data);
-        $data['events'] = count(json_decode(Http::get(config('app.api_url') . '/api/events')->body())->data);
-        $data['members'] = Member::where('status', true)->count() . ' / ' . Member::count();
+        $data['products'] = count(json_decode(Http::get(config('app.api_url').'/api/galleries')->body())->data);
+        $data['events'] = count(json_decode(Http::get(config('app.api_url').'/api/events')->body())->data);
+        $data['members'] = Member::where('status', true)->count().' / '.Member::count();
 
         $faculties = Faculty::withCount('members')->having('members_count', '>', 0)->orderBy('members_count', 'desc')->get();
         $data['faculty_name'] = collect(json_decode($faculties->pluck('name')))->map(function ($name) {
@@ -76,7 +75,8 @@ class DashboardController extends Controller
             $first_letters = array_map(function ($word) {
                 return $word[0];
             }, $faculty);
-            return 'F' . implode('', $first_letters);
+
+            return 'F'.implode('', $first_letters);
         });
         $data['faculty_name'] = json_encode($data['faculty_name']);
         $data['faculty_member_count'] = json_encode($faculties->pluck('members_count'));
@@ -158,6 +158,7 @@ class DashboardController extends Controller
                     'freepik_count' => $user->freepikDownloads->freepiks_count,
                 ];
             })->sortByDesc('freepik_count')->take(10);
+
         return view('student.dashboard')->with([
             'data' => $data,
         ]);

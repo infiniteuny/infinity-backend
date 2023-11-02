@@ -33,7 +33,7 @@ class LoginController extends Controller
             $user = Socialite::driver('google')->user();
 
             if (explode('@', $user->email)[1] != 'student.uny.ac.id') {
-                return redirect()->back()->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
+                return redirect()->back()->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta');
             }
 
             $userdata = [
@@ -63,15 +63,15 @@ class LoginController extends Controller
                 if ($userLogin->members->status == 0) {
                     Auth::logout();
 
-                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Gabisa login deh.');
+                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
                 }
 
                 Auth::login($userLogin);
 
                 if ($userLogin->getRoleNames()->first() == 'admin') {
-                    return redirect()->route('admin.dashboard')->with('success', 'Login Berhasil');
+                    return redirect()->route('admin.dashboard')->with('success', 'Login berhasil!');
                 } else {
-                    return redirect()->route('student.dashboard')->with('success', 'Login Berhasil');
+                    return redirect()->route('student.dashboard')->with('success', 'Login berhasil!');
                 }
             } else {
                 return redirect()->route('register.student-id')->with(['userdata' => $userdata]);
@@ -92,7 +92,7 @@ class LoginController extends Controller
             $user = Socialite::driver('authentik')->user();
 
             if (explode('@', $user->email)[1] != 'student.uny.ac.id') {
-                return redirect()->back()->with('error', 'Email anda tidak terdaftar di Universitas Negeri Yogyakarta');
+                return redirect()->back()->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta!');
             }
 
             $userdata = [
@@ -123,15 +123,15 @@ class LoginController extends Controller
                 if ($userLogin->members->status == 0) {
                     Auth::logout();
 
-                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Gabisa login deh.');
+                    return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
                 }
 
                 Auth::login($userLogin);
 
                 if ($userLogin->getRoleNames()->first() == 'admin') {
-                    return redirect()->route('admin.dashboard')->with('success', 'Login Berhasil');
+                    return redirect()->route('admin.dashboard')->with('success', 'Login berhasil!');
                 } else {
-                    return redirect()->route('student.dashboard')->with('success', 'Login Berhasil');
+                    return redirect()->route('student.dashboard')->with('success', 'Login berhasil!');
                 }
             } else {
                 return redirect()->route('register.student-id')->with(['userdata' => $userdata]);
@@ -145,7 +145,7 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('landing')->with('success', 'Logout Berhasil');
+        return redirect()->route('landing')->with('success', 'Logout berhasil!');
     }
 
     /**
@@ -180,13 +180,13 @@ class LoginController extends Controller
             if (Auth::user()->members->status == 0) {
                 Auth::logout();
 
-                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Gabisa login deh.');
+                return redirect()->route('login')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
             }
 
             if (Auth::user()->getRoleNames()->first() == 'admin') {
-                return redirect()->intended('admin')->with('success', 'Login Berhasil');
+                return redirect()->intended('admin')->with('success', 'Login berhasil!');
             } else {
-                return redirect()->intended('student')->with('success', 'Login Berhasil');
+                return redirect()->intended('student')->with('success', 'Login berhasil!');
             }
         }
 

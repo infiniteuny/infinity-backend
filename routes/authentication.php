@@ -33,10 +33,10 @@ Route::middleware('auth')->group(
             $request->fulfill();
             switch (Auth::user()->getRoleNames()->first()) {
                 case 'admin':
-                    return redirect('/admin')->with('success', 'Login Berhasil');
+                    return redirect('/admin')->with('success', 'Login berhasil!');
                     break;
                 case 'student':
-                    return redirect('/student')->with('success', 'Login Berhasil');
+                    return redirect('/student')->with('success', 'Login berhasil!');
                     break;
                 default:
                     return redirect('/');

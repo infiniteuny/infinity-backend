@@ -37,7 +37,6 @@ class ReregistrationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,9 +50,10 @@ class ReregistrationController extends Controller
                     $user->members->status = true;
                     $user->members->save();
                 });
+
                 return redirect()->route('student.re-registration.index')->with('success', 'Berhasil melakukan perpanjangan');
             } else {
-                return redirect()->route('student.re-registration.index')->with('error', 'Anda sudah melakukan perpanjangan');
+                return redirect()->route('student.re-registration.index')->with('error', 'Kamu sudah melakukan perpanjangan');
             }
         } catch (\Throwable $th) {
             return redirect()->route('student.re-registration.index')->with('error', 'Gagal melakukan perpanjangan');
@@ -85,7 +85,6 @@ class ReregistrationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

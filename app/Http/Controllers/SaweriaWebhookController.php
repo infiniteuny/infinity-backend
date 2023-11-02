@@ -19,14 +19,15 @@ class SaweriaWebhookController extends Controller
                 $user->freepikDownloads()->update([
                     'limit_addons' => $user->freepikDownloads->limit_addons + 8,
                 ]);
+
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Berhasil menambahkan kuota download freepik'
+                    'message' => 'Berhasil menambahkan kuota download freepik',
                 ], 200);
             } else {
                 return response()->json([
                     'status' => 'failed',
-                    'message' => 'Donasi minimal Rp. 5.000'
+                    'message' => 'Donasi minimal Rp. 5.000',
                 ], 400);
             }
         } catch (\Exception $th) {

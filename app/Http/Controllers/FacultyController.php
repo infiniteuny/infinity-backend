@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faculty;
 use App\Http\Requests\StoreFacultyRequest;
 use App\Http\Requests\UpdateFacultyRequest;
+use App\Models\Faculty;
 use App\Models\ProgramStudy;
 use Illuminate\Http\Request;
 
@@ -22,23 +22,24 @@ class FacultyController extends Controller
 
     public function facultiesList(Request $request)
     {
-        $faculties = Faculty::where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $faculties = Faculty::where('name', 'like', '%'.$request->input('q').'%')->get();
         $faculties = $faculties->map(function ($faculty) {
             return [
                 'id' => $faculty->id,
                 'name' => $faculty->name,
             ];
         });
+
         return response()->json($faculties);
     }
 
     public function programStudiesList(Request $request, $faculty)
     {
-        $programStudies = ProgramStudy::where('faculty_id', $faculty)->where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $programStudies = ProgramStudy::where('faculty_id', $faculty)->where('name', 'like', '%'.$request->input('q').'%')->get();
         $programStudies = $programStudies->map(function ($programStudy) {
             return [
                 'id' => $programStudy->id,
-                'name' => $programStudy->grades->name . " - " . $programStudy->name,
+                'name' => $programStudy->grades->name.' - '.$programStudy->name,
             ];
         });
 
@@ -58,7 +59,6 @@ class FacultyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreFacultyRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreFacultyRequest $request)
@@ -69,7 +69,6 @@ class FacultyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Faculty  $faculty
      * @return \Illuminate\Http\Response
      */
     public function show(Faculty $faculty)
@@ -80,7 +79,6 @@ class FacultyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Faculty  $faculty
      * @return \Illuminate\Http\Response
      */
     public function edit(Faculty $faculty)
@@ -91,8 +89,6 @@ class FacultyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateFacultyRequest  $request
-     * @param  \App\Models\Faculty  $faculty
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateFacultyRequest $request, Faculty $faculty)
@@ -103,7 +99,6 @@ class FacultyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Faculty  $faculty
      * @return \Illuminate\Http\Response
      */
     public function destroy(Faculty $faculty)

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grade;
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
+use App\Models\Grade;
 
 class GradeController extends Controller
 {
@@ -31,7 +31,6 @@ class GradeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreGradeRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreGradeRequest $request)
@@ -42,7 +41,6 @@ class GradeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Grade  $grade
      * @return \Illuminate\Http\Response
      */
     public function show(Grade $grade)
@@ -53,7 +51,6 @@ class GradeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Grade  $grade
      * @return \Illuminate\Http\Response
      */
     public function edit(Grade $grade)
@@ -64,8 +61,6 @@ class GradeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateGradeRequest  $request
-     * @param  \App\Models\Grade  $grade
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateGradeRequest $request, Grade $grade)
@@ -76,7 +71,6 @@ class GradeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Grade  $grade
      * @return \Illuminate\Http\Response
      */
     public function destroy(Grade $grade)

@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-require __DIR__ . '/authentication.php';
+require __DIR__.'/authentication.php';
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -95,7 +95,6 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
     Route::post('/member/bulk', [MemberController::class, 'storeBulk'])->name('member.storeBulk');
 });
 
-
 // ---------------- Student Route ----------------
 
 Route::prefix('student')->name('student.')->middleware(['role:student', 'verified'])->group(function () {
@@ -119,7 +118,6 @@ Route::prefix('student')->name('student.')->middleware(['role:student', 'verifie
     });
     Route::resource('freepik', FreepikDownloadController::class)->except('create', 'show', 'edit', 'update', 'destroy');
 });
-
 
 // ---------------- Web Hook Route ---------------
 Route::post('webhook/freepik/downloaded', [FreepikDownloadController::class, 'webhookDownloaded'])->name('webhook.freepik.download');

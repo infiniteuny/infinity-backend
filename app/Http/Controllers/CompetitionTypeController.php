@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompetitionType;
 use App\Http\Requests\StoreCompetitionTypeRequest;
 use App\Http\Requests\UpdateCompetitionTypeRequest;
+use App\Models\CompetitionType;
 
 class CompetitionTypeController extends Controller
 {
@@ -31,7 +31,6 @@ class CompetitionTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCompetitionTypeRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCompetitionTypeRequest $request)
@@ -42,7 +41,6 @@ class CompetitionTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompetitionType  $competitionType
      * @return \Illuminate\Http\Response
      */
     public function show(CompetitionType $competitionType)
@@ -53,7 +51,6 @@ class CompetitionTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompetitionType  $competitionType
      * @return \Illuminate\Http\Response
      */
     public function edit(CompetitionType $competitionType)
@@ -64,8 +61,6 @@ class CompetitionTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCompetitionTypeRequest  $request
-     * @param  \App\Models\CompetitionType  $competitionType
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompetitionTypeRequest $request, CompetitionType $competitionType)
@@ -76,7 +71,6 @@ class CompetitionTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompetitionType  $competitionType
      * @return \Illuminate\Http\Response
      */
     public function destroy(CompetitionType $competitionType)

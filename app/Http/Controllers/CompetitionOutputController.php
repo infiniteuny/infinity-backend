@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompetitionOutput;
 use App\Http\Requests\StoreCompetitionOutputRequest;
 use App\Http\Requests\UpdateCompetitionOutputRequest;
+use App\Models\CompetitionOutput;
 
 class CompetitionOutputController extends Controller
 {
@@ -31,7 +31,6 @@ class CompetitionOutputController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCompetitionOutputRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCompetitionOutputRequest $request)
@@ -42,7 +41,6 @@ class CompetitionOutputController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompetitionOutput  $competitionOutput
      * @return \Illuminate\Http\Response
      */
     public function show(CompetitionOutput $competitionOutput)
@@ -53,7 +51,6 @@ class CompetitionOutputController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompetitionOutput  $competitionOutput
      * @return \Illuminate\Http\Response
      */
     public function edit(CompetitionOutput $competitionOutput)
@@ -64,8 +61,6 @@ class CompetitionOutputController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCompetitionOutputRequest  $request
-     * @param  \App\Models\CompetitionOutput  $competitionOutput
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompetitionOutputRequest $request, CompetitionOutput $competitionOutput)
@@ -76,7 +71,6 @@ class CompetitionOutputController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompetitionOutput  $competitionOutput
      * @return \Illuminate\Http\Response
      */
     public function destroy(CompetitionOutput $competitionOutput)

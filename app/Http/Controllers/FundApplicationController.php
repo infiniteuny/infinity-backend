@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FundApplication;
 use App\Http\Requests\StoreFundApplicationRequest;
 use App\Http\Requests\UpdateFundApplicationRequest;
+use App\Models\FundApplication;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +37,7 @@ class FundApplicationController extends Controller
             if (collect(json_decode($fund->team_members))->count() > 1) {
                 $member = collect(json_decode($fund->team_members))->map(function ($member) {
                     $member->role = 'member';
+
                     return $member;
                 });
                 $member->push($leader);
@@ -85,7 +86,6 @@ class FundApplicationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreFundApplicationRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreFundApplicationRequest $request)
@@ -105,6 +105,7 @@ class FundApplicationController extends Controller
 
         if ($validate->fails()) {
             $error = $validate->errors()->all(':message');
+
             return redirect()->back()->with('error', implode(' ', $error))->withInput();
         }
 
@@ -130,6 +131,7 @@ class FundApplicationController extends Controller
                 $fund->budget_plan = $request->file('budget_plan')->store('public/documents/fund_application/budget_plan', 'public');
                 $fund->save();
             });
+
             return redirect()->back()->with('success', 'Yeyy! pengajuan berhasil dibuat');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Waduh gagal, coba lagi nanti ya!')->withInput();
@@ -139,7 +141,6 @@ class FundApplicationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FundApplication  $fundApplication
      * @return \Illuminate\Http\Response
      */
     public function show(FundApplication $fundApplication)
@@ -174,7 +175,6 @@ class FundApplicationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateFundApplicationRequest  $request
      * @param  \App\Models\FundApplication  $fundApplication
      * @return \Illuminate\Http\Response
      */
@@ -196,6 +196,7 @@ class FundApplicationController extends Controller
 
         if ($validate->fails()) {
             $error = $validate->errors()->all(':message');
+
             return redirect()->back()->with('error', implode(' ', $error))->withInput();
         }
 
@@ -232,9 +233,11 @@ class FundApplicationController extends Controller
                 }
                 $fund->save();
             });
+
             return redirect()->back()->with('success', 'Yeyy! pengajuan berhasil diubah');
         } catch (\Throwable $th) {
             return $th;
+
             return redirect()->back()->with('error', 'Waduh gagal, coba lagi nanti ya!')->withInput();
         }
     }
@@ -259,6 +262,7 @@ class FundApplicationController extends Controller
                 Storage::delete($fund->budget_plan);
             }
             $fund->delete();
+
             return redirect()->back()->with('success', 'Yeyy! pengajuan berhasil dihapus');
         } else {
             return redirect()->back()->with('error', 'Waduh gagal, coba lagi nanti ya!');
@@ -271,7 +275,7 @@ class FundApplicationController extends Controller
         $fund = FundApplication::findOrFail($id);
         $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->student_id_card)) {
-            return Storage::download($fund->student_id_card, $member . ' - ' . $fund->competition_name . ' - scan_kta.pdf');
+            return Storage::download($fund->student_id_card, $member.' - '.$fund->competition_name.' - scan_kta.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
@@ -283,7 +287,7 @@ class FundApplicationController extends Controller
         $fund = FundApplication::findOrFail($id);
         $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->letter_of_acceptance)) {
-            return Storage::download($fund->letter_of_acceptance, $member . ' - ' . $fund->competition_name . ' - letter_of_acceptance.pdf');
+            return Storage::download($fund->letter_of_acceptance, $member.' - '.$fund->competition_name.' - letter_of_acceptance.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
@@ -295,7 +299,7 @@ class FundApplicationController extends Controller
         $fund = FundApplication::findOrFail($id);
         $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->budget_plan)) {
-            return Storage::download($fund->budget_plan, $member . ' - ' . $fund->competition_name . ' - rencana_anggaran_biaya.pdf');
+            return Storage::download($fund->budget_plan, $member.' - '.$fund->competition_name.' - rencana_anggaran_biaya.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
@@ -307,6 +311,7 @@ class FundApplicationController extends Controller
         $fund = FundApplication::findOrFail($id);
         $fund->status = 'accepted';
         $fund->save();
+
         return redirect()->back()->with('success', 'Yeyy! pengajuan berhasil diterima');
     }
 
@@ -316,18 +321,19 @@ class FundApplicationController extends Controller
         $fund = FundApplication::findOrFail($id);
         $fund->status = 'rejected';
         $fund->save();
+
         return redirect()->back()->with('success', 'Yeyy! pengajuan berhasil ditolak');
     }
 
-    function indonesianPhoneFormat($phone)
+    public function indonesianPhoneFormat($phone)
     {
         $phone = trim($phone);
         $phone = strip_tags($phone);
-        $phone = str_replace(" ", "", $phone);
-        $phone = str_replace("(", "", $phone);
-        $phone = str_replace(".", "", $phone);
+        $phone = str_replace(' ', '', $phone);
+        $phone = str_replace('(', '', $phone);
+        $phone = str_replace('.', '', $phone);
 
-        if (!preg_match('/[^+0-9]/', trim($phone))) {
+        if (! preg_match('/[^+0-9]/', trim($phone))) {
             if (substr(trim($phone), 0, 3) == '+62') {
                 $phone = trim($phone);
             } elseif (substr($phone, 0, 2) == '62') {
@@ -336,10 +342,11 @@ class FundApplicationController extends Controller
                 $phone = substr($phone, 1);
             }
         }
+
         return $phone;
     }
 
-    function parseMember($members)
+    public function parseMember($members)
     {
         $team_member_raw = collect($members);
         $team_member = [];

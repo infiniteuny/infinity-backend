@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\Config;
 use App\Models\Freepik;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -40,13 +39,13 @@ class ProcessFreepikDownload implements ShouldQueue
         $data = Freepik::find($id);
         try {
             $reqFreepik = new \GuzzleHttp\Client();
-            $resFreepik = $reqFreepik->get(config('app.api_freepik_url') . $data->url, ['timeout' => 600]);
+            $resFreepik = $reqFreepik->get(config('app.api_freepik_url').$data->url, ['timeout' => 600]);
 
             $resFreepik = json_decode($resFreepik->getBody()->getContents());
-            Storage::disk('local')->put('freepik/' . $resFreepik->filename, base64_decode($resFreepik->file));
+            Storage::disk('local')->put('freepik/'.$resFreepik->filename, base64_decode($resFreepik->file));
 
             $data->file_name = $resFreepik->filename;
-            $data->file_path = 'freepik/' . $resFreepik->filename;
+            $data->file_path = 'freepik/'.$resFreepik->filename;
             $data->file_size = $resFreepik->size;
             $data->thumbnail = $resFreepik->thumbnail;
             $data->status = 'completed';

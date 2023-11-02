@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompetitionRank;
 use App\Http\Requests\StoreCompetitionRankRequest;
 use App\Http\Requests\UpdateCompetitionRankRequest;
+use App\Models\CompetitionRank;
 
 class CompetitionRankController extends Controller
 {
@@ -31,7 +31,6 @@ class CompetitionRankController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCompetitionRankRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCompetitionRankRequest $request)
@@ -42,7 +41,6 @@ class CompetitionRankController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompetitionRank  $competitionRank
      * @return \Illuminate\Http\Response
      */
     public function show(CompetitionRank $competitionRank)
@@ -53,7 +51,6 @@ class CompetitionRankController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompetitionRank  $competitionRank
      * @return \Illuminate\Http\Response
      */
     public function edit(CompetitionRank $competitionRank)
@@ -64,8 +61,6 @@ class CompetitionRankController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCompetitionRankRequest  $request
-     * @param  \App\Models\CompetitionRank  $competitionRank
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompetitionRankRequest $request, CompetitionRank $competitionRank)
@@ -76,7 +71,6 @@ class CompetitionRankController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompetitionRank  $competitionRank
      * @return \Illuminate\Http\Response
      */
     public function destroy(CompetitionRank $competitionRank)

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProgramStudy;
 use App\Http\Requests\StoreProgramStudyRequest;
 use App\Http\Requests\UpdateProgramStudyRequest;
+use App\Models\ProgramStudy;
 
 class ProgramStudyController extends Controller
 {
@@ -31,7 +31,6 @@ class ProgramStudyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProgramStudyRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreProgramStudyRequest $request)
@@ -42,7 +41,6 @@ class ProgramStudyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProgramStudy  $programStudy
      * @return \Illuminate\Http\Response
      */
     public function show(ProgramStudy $programStudy)
@@ -53,7 +51,6 @@ class ProgramStudyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProgramStudy  $programStudy
      * @return \Illuminate\Http\Response
      */
     public function edit(ProgramStudy $programStudy)
@@ -64,8 +61,6 @@ class ProgramStudyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProgramStudyRequest  $request
-     * @param  \App\Models\ProgramStudy  $programStudy
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateProgramStudyRequest $request, ProgramStudy $programStudy)
@@ -76,7 +71,6 @@ class ProgramStudyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProgramStudy  $programStudy
      * @return \Illuminate\Http\Response
      */
     public function destroy(ProgramStudy $programStudy)

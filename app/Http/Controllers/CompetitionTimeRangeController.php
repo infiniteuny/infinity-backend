@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompetitionTimeRange;
 use App\Http\Requests\StoreCompetitionTimeRangeRequest;
 use App\Http\Requests\UpdateCompetitionTimeRangeRequest;
+use App\Models\CompetitionTimeRange;
 
 class CompetitionTimeRangeController extends Controller
 {
@@ -31,7 +31,6 @@ class CompetitionTimeRangeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCompetitionTimeRangeRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCompetitionTimeRangeRequest $request)
@@ -42,7 +41,6 @@ class CompetitionTimeRangeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompetitionTimeRange  $competitionTimeRange
      * @return \Illuminate\Http\Response
      */
     public function show(CompetitionTimeRange $competitionTimeRange)
@@ -53,7 +51,6 @@ class CompetitionTimeRangeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompetitionTimeRange  $competitionTimeRange
      * @return \Illuminate\Http\Response
      */
     public function edit(CompetitionTimeRange $competitionTimeRange)
@@ -64,8 +61,6 @@ class CompetitionTimeRangeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCompetitionTimeRangeRequest  $request
-     * @param  \App\Models\CompetitionTimeRange  $competitionTimeRange
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompetitionTimeRangeRequest $request, CompetitionTimeRange $competitionTimeRange)
@@ -76,7 +71,6 @@ class CompetitionTimeRangeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompetitionTimeRange  $competitionTimeRange
      * @return \Illuminate\Http\Response
      */
     public function destroy(CompetitionTimeRange $competitionTimeRange)

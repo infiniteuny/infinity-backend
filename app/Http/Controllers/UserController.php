@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -38,10 +38,12 @@ class UserController extends Controller
                     'avatar' => $user->avatar,
                 ];
             });
+
             return DataTables::of($data)->addIndexColumn()
                 ->addIndexColumn()
                 ->make(true);
         }
+
         return view('admin.user.index');
     }
 
@@ -58,7 +60,6 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUserRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUserRequest $request)
@@ -69,7 +70,6 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
@@ -95,6 +95,7 @@ class UserController extends Controller
         if ($user) {
             $user->roles = $user->getRoleNames()->first();
         }
+
         return view('admin.user.edit')->with([
             'user' => $user,
             'roles' => $roles,
@@ -104,7 +105,6 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateUserRequest  $request
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
@@ -118,6 +118,7 @@ class UserController extends Controller
 
         if ($validate->fails()) {
             $error = $validate->errors()->all(':message');
+
             return redirect()->back()->with('error', implode(' ', $error));
         }
 
@@ -132,11 +133,12 @@ class UserController extends Controller
 
                 $user->role = $request->role;
                 $user->email = $request->email;
-                $user->password = $request->password == "" ? $user->password : bcrypt($request->password);
+                $user->password = $request->password == '' ? $user->password : bcrypt($request->password);
                 $user->save();
 
                 $user->assignRole($request->role);
             });
+
             return redirect()->back()->with('success', 'Berhasil mengubah data user');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal mengubah data user');
@@ -154,6 +156,7 @@ class UserController extends Controller
         $result = User::find(Crypt::decryptString($user));
         if ($result) {
             $result->delete();
+
             return redirect()->back()->with('success', 'Data berhasil dihapus.');
         } else {
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
@@ -168,13 +171,14 @@ class UserController extends Controller
 
         if ($validate->fails()) {
             $error = $validate->errors()->all(':message');
+
             return redirect()->back()->with('error', implode(' ', $error));
         }
 
         $user = Auth::user();
 
         if ($request->has('password_old')) {
-            if (!Hash::check($request->password_old, $user->password)) {
+            if (! Hash::check($request->password_old, $user->password)) {
                 return redirect()->back()->with('error', 'Password lama ga sama.');
             }
         }
@@ -184,6 +188,7 @@ class UserController extends Controller
                 $user->password = bcrypt($request->password);
                 $user->save();
             });
+
             return redirect()->back()->with('success', 'Yey! Berhasil ganti password');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Yahh! Gagal ganti password');

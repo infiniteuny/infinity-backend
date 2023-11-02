@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompetitionRelevance;
 use App\Http\Requests\StoreCompetitionRelevanceRequest;
 use App\Http\Requests\UpdateCompetitionRelevanceRequest;
+use App\Models\CompetitionRelevance;
 
 class CompetitionRelevanceController extends Controller
 {
@@ -31,7 +31,6 @@ class CompetitionRelevanceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCompetitionRelevanceRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCompetitionRelevanceRequest $request)
@@ -42,7 +41,6 @@ class CompetitionRelevanceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompetitionRelevance  $competitionRelevance
      * @return \Illuminate\Http\Response
      */
     public function show(CompetitionRelevance $competitionRelevance)
@@ -53,7 +51,6 @@ class CompetitionRelevanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompetitionRelevance  $competitionRelevance
      * @return \Illuminate\Http\Response
      */
     public function edit(CompetitionRelevance $competitionRelevance)
@@ -64,8 +61,6 @@ class CompetitionRelevanceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCompetitionRelevanceRequest  $request
-     * @param  \App\Models\CompetitionRelevance  $competitionRelevance
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompetitionRelevanceRequest $request, CompetitionRelevance $competitionRelevance)
@@ -76,7 +71,6 @@ class CompetitionRelevanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompetitionRelevance  $competitionRelevance
      * @return \Illuminate\Http\Response
      */
     public function destroy(CompetitionRelevance $competitionRelevance)

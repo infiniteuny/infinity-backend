@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Freepik;
 use App\Http\Requests\StoreFreepikRequest;
 use App\Http\Requests\UpdateFreepikRequest;
+use App\Models\Freepik;
 
 class FreepikController extends Controller
 {
@@ -31,7 +31,6 @@ class FreepikController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreFreepikRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreFreepikRequest $request)
@@ -42,7 +41,6 @@ class FreepikController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Freepik  $freepik
      * @return \Illuminate\Http\Response
      */
     public function show(Freepik $freepik)
@@ -53,7 +51,6 @@ class FreepikController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Freepik  $freepik
      * @return \Illuminate\Http\Response
      */
     public function edit(Freepik $freepik)
@@ -64,8 +61,6 @@ class FreepikController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateFreepikRequest  $request
-     * @param  \App\Models\Freepik  $freepik
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateFreepikRequest $request, Freepik $freepik)
@@ -76,7 +71,6 @@ class FreepikController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Freepik  $freepik
      * @return \Illuminate\Http\Response
      */
     public function destroy(Freepik $freepik)

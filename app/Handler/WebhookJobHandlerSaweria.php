@@ -18,6 +18,6 @@ class WebhookJobHandlerSaweria extends ProcessWebhookJob
         //You can perform an heavy logic here
         logger($this->webhookCall);
         sleep(10);
-        logger("I am done");
+        logger('I am done');
     }
 }
