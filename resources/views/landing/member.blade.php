@@ -36,7 +36,11 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="tm-sectiontitle text-center">
-                        <h2>Masukkan NIM</h2>
+                        @if (isset($member))
+                            <h2>Status Keanggotaan</h2>
+                        @else
+                            <h2>Masukkan NIM</h2>
+                        @endif
                         <span class="tm-sectiontitle-divider"><i class="zmdi zmdi-fullscreen"></i></span>
                         @if (isset($member))
                             @if (isset($member->is_extraordinary))
@@ -63,26 +67,26 @@
                                     </div>
                                     <div class="tm-form-field tm-form-fieldhalf">
                                         <input type="text" name="name" placeholder="Nama (Terisi Otomatis)"
-                                            value="{{ isset($member->name) ? $member->name : 'Bukan Anggota Infinite' }}"
+                                            value="{{ isset($member->name) ? $member->name : 'Bukan Anggota INFINITE' }}"
                                             readonly>
                                         <span class="tm-form-animatedline"></span>
                                     </div>
                                     <div class="tm-form-field tm-form-fieldhalf">
                                         <input type="text" name="year" placeholder="Angkatan (Terisi Otomatis)"
-                                            value="{{ isset($member->programStudies) ? $member->programStudies->name . ' ' . $member->year : 'Bukan Anggota Infinite' }}"
+                                            value="{{ isset($member->programStudies) ? $member->programStudies->name . ' ' . $member->year : 'Bukan Anggota INFINITE' }}"
                                             readonly>
                                         <span class="tm-form-animatedline"></span>
                                     </div>
                                     <div class="tm-form-field">
                                         <input type="text" name="period" placeholder="Periode Anggota (Terisi Otomatis)"
-                                            value="{{ isset($member->start_date) ? 'Anggota infinite' . ($member->status ? ' sejak ' : ' dari ') . Carbon\Carbon::parse($member->start_date)->format('d/m/Y') . ' - ' . (isset($member->end_date) ? $member->end_date : '') : 'Bukan Anggota Infinite' }}"
+                                            value="{{ isset($member->start_date) ? 'Anggota INFINITE' . ($member->status ? ' sejak ' : ' dari ') . Carbon\Carbon::parse($member->start_date)->format('d/m/Y') . ' - ' . (isset($member->end_date) ? $member->end_date : '') : 'Bukan Anggota INFINITE' }}"
                                             readonly>
                                         <span class="tm-form-animatedline"></span>
                                     </div>
                                     <div class="tm-form-field">
                                         <input type="text" name="status"
                                             placeholder="Status Keanggotaan (Terisi Otomatis)"
-                                            value="{{ isset($member->status) ? ($member->status ? 'Aktif' : 'Non-aktif') : 'Bukan Anggota Infinite' }}"
+                                            value="{{ isset($member->status) ? ($member->status ? 'Aktif' : 'Non-aktif') : 'Bukan Anggota INFINITE' }}"
                                             readonly>
                                         <span class="tm-form-animatedline"></span>
                                     </div>
