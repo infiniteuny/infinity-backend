@@ -66,7 +66,7 @@ class MemberController extends Controller
     public function store(StoreMemberRequest $request)
     {
         $validate = Validator::make($request->all(), [
-            'name' => 'required|string|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
+            'name' => 'required|string|max:255',
             'student_id' => 'required|integer',
             'programStudy' => 'required|string',
             'status' => 'required|boolean',
@@ -189,7 +189,7 @@ class MemberController extends Controller
     public function update(UpdateMemberRequest $request, $member)
     {
         $validate = Validator::make($request->all(), [
-            'name' => 'required|string|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
+            'name' => 'required|string|max:255',
             'student_id' => 'required|integer',
             'programStudy' => 'required|string',
             'status' => 'required|boolean',
