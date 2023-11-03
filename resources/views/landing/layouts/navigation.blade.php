@@ -17,7 +17,7 @@
                             <li><a href="#tm-area-blog">Event</a></li>
                             <li><a href="#tm-area-contact">Kontak</a></li>
                             <li><a href="leaderboard">Leaderboard</a></li>
-                            <li class="tm-navigation-dropdown"><a href="#tm-area-contact">Tools</a>
+                            <li class="tm-navigation-dropdown"><a href="#">Tools</a>
                                 <ul>
                                     <li><a href="member">Cek Keanggotaan</a></li>
                                     <li><a target="_blank" href="https://unyku.id/">Unyku.id Shortlink</a></li>
@@ -26,11 +26,19 @@
                                 </ul>
                             </li>
                             @if (Auth::user()->role == 'admin')
-                                <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                <li class="tm-navigation-dropdown"><a href="{{ route('admin.dashboard') }}">Dasbor</a>
+                                    <ul>
+                                        <li><a href="{{ route('logout') }}">Keluar</a></li>
+                                    </ul>
+                                </li>
                             @elseif (Auth::user()->role == 'student')
-                                <li><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+                                <li class="tm-navigation-dropdown"><a href="{{ route('student.dashboard') }}">Dasbor</a>
+                                    <ul>
+                                        <li><a href="{{ route('logout') }}">Keluar</a></li>
+                                    </ul>
+                                </li>
                             @else
-                                <li><a href="login">Login</a></li>
+                                <li><a href="{{ route('login') }}">Masuk</a></li>
                             @endif
                         @else
                             <li class="current"><a href="{{ url('') }}#tm-area-heroslider">Home</a></li>
