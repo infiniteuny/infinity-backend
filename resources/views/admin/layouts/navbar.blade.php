@@ -29,6 +29,29 @@
         </div>
         <div class="nav-right col-8 pull-right right-header p-0">
             <ul class="nav-menus">
+            <li class="onhover-dropdown">
+                    <div class="notification-box"><i data-feather="bell"> </i><span
+                            class="badge rounded-pill badge-secondary">3</span></div>
+                    <div class="onhover-show-div notification-dropdown">
+                        <h6 class="f-18 mb-0 dropdown-title">Link Grub </h6>
+                        <ul>
+                            <li class="b-l-success border-4">
+                                <p>Join Server Discord<b><a
+                                            href="https://discord.gg/AQqRfgErA8">INFINITE UNY</a></b>
+                                </p>
+                            </li>
+                            <li class="b-l-success border-4">
+                                <p>Join Grub WhatsApp<b><a
+                                            href="https://chat.whatsapp.com/EnM9v1r8Fdv8EkJK38gPf6">INFINITE UNY</a></b>
+                                </p>
+                            </li>
+                            <li class="b-l-info border-4">
+                                <p>Join Grub Telegram<b><a href="https://t.me/+7qXyyGquWFAxN2I1">GDSC UNY</a></b></p>
+                            </li>
+                            {{-- <li><a class="f-w-700" href="#">Check all</a></li> --}}
+                        </ul>
+                    </div>
+                </li>
                 <li>
                     <div class="mode"><i class="fa fa-moon-o"></i></div>
                 </li>
