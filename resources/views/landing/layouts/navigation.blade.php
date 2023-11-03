@@ -25,7 +25,13 @@
                                             Splitbill</a></li>
                                 </ul>
                             </li>
-                            <li><a href="login">Login</a></li>
+                            @if (Auth::user()->role == 'admin')
+                                <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                            @elseif (Auth::user()->role == 'student')
+                                <li><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+                            @else
+                                <li><a href="login">Login</a></li>
+                            @endif
                         @else
                             <li class="current"><a href="{{ url('') }}#tm-area-heroslider">Home</a></li>
                             <li><a href="{{ url('') }}#tm-area-about">Tentang</a></li>
