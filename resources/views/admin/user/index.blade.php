@@ -36,6 +36,7 @@
             var table = $('.user_table').DataTable({
                 processing: true,
                 serverSide: true,
+                pageLength: 100,
                 ajax: "{{ route('admin.user.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',

@@ -25,7 +25,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $users = User::latest()->get();
+            $users = User::orderBy('name', 'asc')->get();
             $data = $users->map(function ($user) {
                 return [
                     'id' => Crypt::encryptString($user->id),
