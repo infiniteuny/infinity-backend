@@ -25,21 +25,24 @@
                                             Splitbill</a></li>
                                 </ul>
                             </li>
-                            @if (Auth::user()->role == 'admin')
-                                <li class="tm-navigation-dropdown"><a href="{{ route('admin.dashboard') }}">Dasbor</a>
-                                    <ul>
-                                        <li><a href="{{ route('logout') }}">Keluar</a></li>
-                                    </ul>
-                                </li>
-                            @elseif (Auth::user()->role == 'student')
-                                <li class="tm-navigation-dropdown"><a href="{{ route('student.dashboard') }}">Dasbor</a>
-                                    <ul>
-                                        <li><a href="{{ route('logout') }}">Keluar</a></li>
-                                    </ul>
-                                </li>
-                            @else
+                            @auth
+                                @if (Auth::user()->role == 'admin')
+                                    <li class="tm-navigation-dropdown"><a href="{{ route('admin.dashboard') }}">Dasbor</a>
+                                        <ul>
+                                            <li><a href="{{ route('logout') }}">Keluar</a></li>
+                                        </ul>
+                                    </li>
+                                @else
+                                    <li class="tm-navigation-dropdown"><a href="{{ route('student.dashboard') }}">Dasbor</a>
+                                        <ul>
+                                            <li><a href="{{ route('logout') }}">Keluar</a></li>
+                                        </ul>
+                                    </li>
+                                @endif
+                            @endauth
+                            @guest
                                 <li><a href="{{ route('login') }}">Masuk</a></li>
-                            @endif
+                            @endguest
                         @else
                             <li class="current"><a href="{{ url('') }}#tm-area-heroslider">Home</a></li>
                             <li><a href="{{ url('') }}#tm-area-about">Tentang</a></li>
