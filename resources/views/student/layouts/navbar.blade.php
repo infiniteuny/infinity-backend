@@ -67,9 +67,7 @@
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="#" data-bs-toggle="modal" data-original-title="changePassword"
-                                data-bs-target="#changePasswordModal"><i data-feather="user"></i><span>Ganti Password
-                                </span></a></li>
+                        <li><a href="https://auth.infiniteuny.id/if/user/#/" target="_blank"><i data-feather="user"></i><span>Pengaturan Akun</span></a></li>
                         <li><a href="{{ route('logout') }}"><i data-feather="log-in"> </i><span>Keluar</span></a></li>
                     </ul>
                 </li>
