@@ -23,7 +23,7 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $members = Member::with('programStudies.faculties', 'teams')->latest()->get();
+            $members = Member::with('programStudies.faculties', 'teams')->orderBy('name', 'asc')->get();
             $data = $members->map(function ($member) {
                 $data = [];
                 $data['id'] = Crypt::encryptString($member->id);

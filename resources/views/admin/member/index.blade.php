@@ -41,6 +41,7 @@
             var table = $('.member_table').DataTable({
                 processing: true,
                 serverSide: true,
+                pageLength: 100,
                 ajax: "{{ route('admin.member.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
@@ -114,7 +115,7 @@
     <script>
         function goTo(id) {
             var id = id;
-            var url = '{{ route('admin.member.edit', ':id') }}';
+            var url = "{{ route('admin.member.edit', ':id') }}";
             url = url.replace(':id', id);
             window.location.href = url;
         }
@@ -188,10 +189,10 @@
             $('.select-faculty').on('change', function(e) {
                 let selectedFacultyId = $(this).select2('data')[0]['id'];
 
-                // // Re - initialize select2 with empty value
+                // Re-initialize select2 with empty value
                 $('.select-program-study').val(null).trigger('change');
 
-                // // Majors List Select2
+                // Majors List Select2
                 let endpointUrl =
                     `{{ url('api/faculties') }}/${selectedFacultyId}/program-studies`;
                 if (selectedFacultyId) {
@@ -303,7 +304,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: '{{ route('admin.member.storeBulk') }}',
+                        url: "{{ route('admin.member.storeBulk') }}",
                         data: JSON.stringify({
                             members
                         }),
