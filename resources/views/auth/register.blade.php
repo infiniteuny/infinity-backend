@@ -18,7 +18,7 @@
                         <div class="login-main">
                             <form class="theme-form" action="{{ url('/register') }}" method="POST"
                                 enctype="application/x-www-form-urlencoded">
-                                <h4>Buat akun mu!</h4>
+                                <h4>Buat akunmu!</h4>
                                 <p>Masukkan beberapa informasi berikut untuk membuat akun</p>
                                 @csrf
                                 <div class="form-group">

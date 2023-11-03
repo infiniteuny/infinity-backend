@@ -18,7 +18,7 @@
                         <div class="login-main">
                             <form class="theme-form" action="{{ url('/register') }}" method="POST"
                                 enctype="application/x-www-form-urlencoded">
-                                <h4>Buat akun mu!</h4>
+                                <h4>Verifikasi datamu!</h4>
                                 <p>Masukkan informasi berikut untuk melanjutkan pembuatan akun</p>
                                 <div class="form-group">
                                     @csrf
@@ -37,7 +37,7 @@
                                         placeholder="20999999999">
                                 </div>
                                 <div class="form-group mb-0">
-                                    <button class="btn btn-primary btn-block w-100" type="submit">Buat Akun</button>
+                                    <button class="btn btn-primary btn-block w-100" type="submit">Lanjut</button>
                                 </div>
                             </form>
                         </div>
