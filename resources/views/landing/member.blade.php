@@ -92,26 +92,6 @@
                                             required="required">
                                         <span class="tm-form-animatedline"></span>
                                     </div>
-                                    <div class="tm-form-field tm-form-fieldhalf">
-                                        <input type="text" name="name" placeholder="Nama (Terisi Otomatis)"
-                                            value="" readonly>
-                                        <span class="tm-form-animatedline"></span>
-                                    </div>
-                                    <div class="tm-form-field tm-form-fieldhalf">
-                                        <input type="text" name="year" placeholder="Angkatan (Terisi Otomatis)"
-                                            value="" readonly>
-                                        <span class="tm-form-animatedline"></span>
-                                    </div>
-                                    <div class="tm-form-field">
-                                        <input type="text" name="period" placeholder="Periode Anggota (Terisi Otomatis)"
-                                            value="" readonly>
-                                        <span class="tm-form-animatedline"></span>
-                                    </div>
-                                    <div class="tm-form-field">
-                                        <input type="text" name="status"
-                                            placeholder="Status Keanggotaan (Terisi Otomatis)" value="" readonly>
-                                        <span class="tm-form-animatedline"></span>
-                                    </div>
                                 @endif
                                 <div class="tm-form-field">
                                     <button type="submit" class="tm-button"><span>Cek</span></button>
