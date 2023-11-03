@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h3>Haloo mimin, ada email masuk dari website hello.infiniteuny.id nih!</h3>
+    <h3>Haloo mimin, ada email masuk dari dashboard INFINITE nih!</h3>
 
     <p>Dari {{ $name }} ({{ $email }}) mengirimkan :</p>
 

@@ -70,7 +70,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Pengaturan</h5><span>Pengaturan sistem Infinite.</span>
+                    <h5>Pengaturan</h5><span>Pengaturan sistem dashboard.</span>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('admin.config.update') }}" method="POST">

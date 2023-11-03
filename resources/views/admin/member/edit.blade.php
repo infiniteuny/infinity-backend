@@ -75,10 +75,10 @@
             $('.select-faculty').on('change', function(e) {
                 let selectedFacultyId = $(this).select2('data')[0]['id'];
 
-                // // Re - initialize select2 with empty value
+                // Re-initialize select2 with empty value
                 $('.select-program-study').val(null).trigger('change');
 
-                // // Majors List Select2
+                // Majors List Select2
                 let endpointUrl =
                     `{{ url('api/faculties') }}/${selectedFacultyId}/program-studies`;
                 if (selectedFacultyId) {

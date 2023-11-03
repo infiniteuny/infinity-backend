@@ -64,7 +64,7 @@
         <div class="tm-footer-bottomarea">
             <div class="row align-items-center">
                 <div class="col-md-7">
-                    <p class="tm-footer-copyright">Made with &#9829; by <a href="https://hello.infiniteuny.id/"> INFINITE
+                    <p class="tm-footer-copyright">Made with &#9829; by <a href="https://www.infiniteuny.id/"> INFINITE
                             UNY </a> | Universitas Negeri Yogyakarta © {{ date('Y') }}</p>
                 </div>
                 <div class="col-md-5">
