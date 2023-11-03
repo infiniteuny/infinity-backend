@@ -7,12 +7,6 @@
                 <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
                         aria-hidden="true"></i></div>
             </li>
-            <li class="sidebar-main-title">
-                <div>
-                    <h6 class="lan-1">General</h6>
-                    <p class="lan-2">Dashboards, Member, Akun, Prestasi.</p>
-                </div>
-            </li>
             <li class="sidebar-list">
                 <a class="sidebar-link sidebar-title link-nav active" href="{{ route('admin.dashboard') }}"><i
                         data-feather="home"></i><span class="lan-3">Dashboards </span></a>
@@ -29,13 +23,6 @@
                     href="{{ route('admin.fund-application.index') }}"><i data-feather="dollar-sign"></i><span
                         class="lan-7">Pengajuan Dana
                     </span></a>
-            </li>
-            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
-                        data-feather="airplay"></i><span>Freepiks</span></a>
-                <ul class="sidebar-submenu">
-                    <li><a href="{{ route('admin.freepik.index') }}">Downloader</a></li>
-                    <li><a href="{{ route('admin.freepik.asset') }}">Asset</a></li>
-                </ul>
             </li>
             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
                     href="{{ route('admin.user.index') }}"><i data-feather="user"></i><span class="lan-7">Akun

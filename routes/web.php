@@ -78,13 +78,6 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'verified'])->
         Route::get('/{fund_application}/reject', [FundApplicationController::class, 'reject'])->name('reject');
     });
 
-    Route::prefix('freepik')->name('freepik.')->group(function () {
-        Route::post('{freepik}/download', [FreepikDownloadController::class, 'download'])->name('download');
-        Route::get('asset', [FreepikDownloadController::class, 'asset'])->name('asset');
-    });
-
-    Route::resource('freepik', FreepikDownloadController::class)->except('create', 'show', 'edit', 'update', 'destroy');
-
     Route::resources([
         'member' => MemberController::class,
         'achievement' => AchievementController::class,
@@ -111,13 +104,4 @@ Route::prefix('student')->name('student.')->middleware(['role:student', 'verifie
         Route::post('budget-plan', [FundApplicationController::class, 'downloadBudgetPlan'])->name('budget-plan');
     });
     Route::resource('fund-application', FundApplicationController::class);
-
-    Route::prefix('freepik')->name('freepik.')->group(function () {
-        Route::post('{freepik}/download', [FreepikDownloadController::class, 'download'])->name('download');
-        Route::get('asset', [FreepikDownloadController::class, 'asset'])->name('asset');
-    });
-    Route::resource('freepik', FreepikDownloadController::class)->except('create', 'show', 'edit', 'update', 'destroy');
 });
-
-// ---------------- Web Hook Route ---------------
-Route::post('webhook/freepik/downloaded', [FreepikDownloadController::class, 'webhookDownloaded'])->name('webhook.freepik.download');
