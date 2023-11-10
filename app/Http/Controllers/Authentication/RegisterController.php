@@ -59,16 +59,16 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             $error = $validator->errors()->all(':message');
 
-            return redirect()->back()->with('error', implode(' ', $error))->withInput();
+            return redirect()->route('landing')->with('error', implode(' ', $error))->withInput();
         }
 
         try {
             if (explode('@', $request->email)[1] != 'student.uny.ac.id') {
-                return redirect()->route('register')->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta!');
+                return redirect()->route('landing')->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta!');
             }
 
             if (Member::where('student_id', $request->student_id)->doesntExist()) {
-                return redirect()->route('register')->with('error', 'NIM kamu tidak terdaftar di database member kami nih.');
+                return redirect()->route('landing')->with('error', 'NIM kamu tidak terdaftar di database member kami nih.');
             }
 
             $user = User::create([

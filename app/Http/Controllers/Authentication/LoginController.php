@@ -33,7 +33,7 @@ class LoginController extends Controller
             $user = Socialite::driver('google')->user();
 
             if (explode('@', $user->email)[1] != 'student.uny.ac.id') {
-                return redirect()->back()->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta');
+                return redirect()->route('landing')->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta');
             }
 
             $userdata = [
@@ -92,7 +92,7 @@ class LoginController extends Controller
             $user = Socialite::driver('authentik')->user();
 
             if (explode('@', $user->email)[1] != 'student.uny.ac.id') {
-                return redirect()->back()->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta!');
+                return redirect()->route('landing')->with('error', 'Email kamu tidak terdaftar di Universitas Negeri Yogyakarta!');
             }
 
             $userdata = [
