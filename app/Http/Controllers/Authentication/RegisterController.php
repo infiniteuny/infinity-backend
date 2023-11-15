@@ -78,10 +78,13 @@ class RegisterController extends Controller
                 'role' => 'student',
                 'provider' => $request->provider ?: null,
                 'provider_id' => $request->provider_id ?: null,
-                'email_verified_at' => $request->provider ? now() : null,
                 'avatar' => $request->avatar ?: 'https://ui-avatars.com/api/?name='.$request->name.'&background=0D8ABC&color=fff',
                 'student_id' => $request->student_id,
             ]);
+
+            if ($request->provider == 'authentik' || $request->provider == 'google') {
+                $user->markEmailAsVerified();
+            }
 
             $user->assignRole('student');
 
