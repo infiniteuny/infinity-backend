@@ -75,7 +75,7 @@ class RegisterController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'role' => $request->role ?: 'student',
+                'role' => 'student',
                 'provider' => $request->provider ?: null,
                 'provider_id' => $request->provider_id ?: null,
                 'email_verified_at' => $request->provider ? now() : null,

@@ -28,7 +28,6 @@
                                     <input type="hidden" name="password" value="{{ $userdata['password'] }}" required>
                                     <input type="hidden" name="password_confirmation" value="{{ $userdata['password'] }}"
                                         required>
-                                    <input type="hidden" name="role" value="{{ $userdata['role'] }}" required>
                                     <input type="hidden" name="provider" value="{{ $userdata['provider'] }}" required>
                                     <input type="hidden" name="provider_id" value="{{ $userdata['provider_id'] }}"
                                         required>
