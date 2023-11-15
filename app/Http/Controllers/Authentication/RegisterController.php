@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -90,13 +91,14 @@ class RegisterController extends Controller
 
             event(new Registered($user));
 
-            if (Auth::user()->members->status == 0) {
+            Auth::login($user);
+
+            $config = Config::where('key', 're_registration')->first()->value;
+            if (Auth::user()->members->status == 0 && $config == 'false') {
                 Auth::logout();
 
                 return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
             }
-
-            Auth::login($user);
 
             if ($user->getRoleNames()->first() == 'admin') {
                 return redirect()->route('admin.dashboard')->with('success', 'Akun berhasil dibuat!');

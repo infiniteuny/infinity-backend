@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,8 @@ class LoginController extends Controller
                     $userLogin->save();
                 }
 
-                if ($userLogin->members->status == 0) {
+                $config = Config::where('key', 're_registration')->first()->value;
+                if ($userLogin()->members->status == 0 && $config == 'false') {
                     Auth::logout();
 
                     return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
@@ -118,7 +120,8 @@ class LoginController extends Controller
                     $userLogin->save();
                 }
 
-                if ($userLogin->members->status == 0) {
+                $config = Config::where('key', 're_registration')->first()->value;
+                if ($userLogin()->members->status == 0 && $config == 'false') {
                     Auth::logout();
 
                     return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
@@ -175,7 +178,8 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->has('remember'))) {
             $request->session()->regenerate();
 
-            if (Auth::user()->members->status == 0) {
+            $config = Config::where('key', 're_registration')->first()->value;
+            if (Auth::user()->members->status == 0 && $config == 'false') {
                 Auth::logout();
 
                 return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
