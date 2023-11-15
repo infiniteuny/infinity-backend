@@ -61,7 +61,7 @@ class LoginController extends Controller
                 }
 
                 $config = Config::where('key', 're_registration')->first()->value;
-                if ($userLogin()->members->status == 0 && $config == 'false') {
+                if ($userLogin->members->status == 0 && $config == 'false') {
                     Auth::logout();
 
                     return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
@@ -121,7 +121,7 @@ class LoginController extends Controller
                 }
 
                 $config = Config::where('key', 're_registration')->first()->value;
-                if ($userLogin()->members->status == 0 && $config == 'false') {
+                if ($userLogin->members->status == 0 && $config == 'false') {
                     Auth::logout();
 
                     return redirect()->route('landing')->with('error', 'Yahh, kemarin gaikut daftar ulang ya? Ga bisa login deh!');
