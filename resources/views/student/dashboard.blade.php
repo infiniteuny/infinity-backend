@@ -29,7 +29,7 @@
     <script src="{{ asset('admin-panel/assets/js/dashboard/default.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/datatable/datatables/datatable.custom.js') }}"></script>
-    <script>
+    <!-- <script>
         $('#freepik_table').DataTable({
             "paging": false,
             "lengthChange": false,
@@ -39,7 +39,7 @@
             "autoWidth": false,
             "responsive": true,
         });
-    </script>
+    </script> -->
     @if (session()->has('success'))
         <script>
             $(document).ready(function() {
@@ -117,7 +117,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xl-3 col-lg-6">
+            <!-- <div class="col-sm-6 col-xl-3 col-lg-6">
                 <div class="card o-hidden static-top-widget-card">
                     <div class="card-body">
                         <div class="media static-top-widget">
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-sm-6 col-xl-3 col-lg-6">
                 <div class="card o-hidden">
                     <div class="card-body">
@@ -201,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-12 xl-100 box-col-12">
+            <!-- <div class="col-xl-12 xl-100 box-col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5>Para Pengguna Freepik</h5><span>List Para Pengguna Freepik.</span>
@@ -235,7 +235,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 @endsection
