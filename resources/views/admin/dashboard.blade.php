@@ -34,7 +34,7 @@
     <script src="{{ asset('admin-panel/assets/js/chart/apex-chart/apex-chart.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/apex-chart/stock-prices.js') }}"></script>
     <script src="{{ asset('admin-panel/assets/js/chart/apex-chart/chart-custom.js') }}"></script>
-    <script>
+    <!-- <script>
         $('#freepik_table').DataTable({
             "paging": false,
             "lengthChange": false,
@@ -44,7 +44,7 @@
             "autoWidth": false,
             "responsive": true,
         });
-    </script>
+    </script> -->
     @if (session()->has('success'))
         <script>
             $(document).ready(function() {
@@ -508,7 +508,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-12 xl-100 box-col-12">
+            <!-- <div class="col-xl-12 xl-100 box-col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5>Para Pengguna Freepik</h5><span>List Para Pengguna Freepik.</span>
@@ -542,7 +542,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 @endsection
