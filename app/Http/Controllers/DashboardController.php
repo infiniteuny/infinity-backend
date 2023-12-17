@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Analytics;
 use App\Models\Achievement;
 use App\Models\CompetitionLevel;
 use App\Models\CompetitionRank;
@@ -17,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
 
 class DashboardController extends Controller
@@ -46,20 +46,20 @@ class DashboardController extends Controller
             ->get();
 
         $most_visited_data = Analytics::fetchMostVisitedPages(Period::days(7))->take(8);
-        $visitors_and_page_data = Analytics::fetchVisitorsAndPageViews(Period::days(7))->take(10);
+        $visitors_and_page_data = Analytics::fetchVisitorsAndPageViewsByDate(Period::days(7))->take(10);
         $top_referrers = Analytics::fetchTopReferrers(Period::days(7))->take(5);
         $user_types = Analytics::fetchUserTypes(Period::days(7))->take(10);
-        $analitics['most_visited_url'] = json_encode($most_visited_data->pluck('url')->map(function ($url) {
-            return substr($url, 0, 20);
+        $analitics['most_visited_url'] = json_encode($most_visited_data->pluck('fullPageUrl')->map(function ($url) {
+            return substr($url, 18, 38);
         }));
-        $analitics['most_visited_pageViews'] = json_encode($most_visited_data->pluck('pageViews'));
+        $analitics['most_visited_pageViews'] = json_encode($most_visited_data->pluck('screenPageViews'));
         $analitics['visitors_and_page_date'] = json_encode($visitors_and_page_data->map(function ($date) {
             return Carbon::parse($date['date'])->format('d M Y');
         }));
-        $analitics['visitors_and_page_visitors'] = json_encode($visitors_and_page_data->pluck('visitors'));
-        $analitics['visitors_and_page_pageViews'] = json_encode($visitors_and_page_data->pluck('pageViews'));
+        $analitics['visitors_and_page_visitors'] = json_encode($visitors_and_page_data->pluck('activeUsers'));
+        $analitics['visitors_and_page_pageViews'] = json_encode($visitors_and_page_data->pluck('screenPageViews'));
         $analitics['top_referrers_url'] = json_encode($top_referrers->pluck('url'));
-        $analitics['top_referrers_page_view'] = json_encode($top_referrers->pluck('pageViews'));
+        $analitics['top_referrers_page_view'] = json_encode($top_referrers->pluck('screenPageViews'));
         $analitics['user_type'] = json_encode($user_types->pluck('type'));
         $analitics['user_type_sessions'] = json_encode($user_types->pluck('sessions'));
 
