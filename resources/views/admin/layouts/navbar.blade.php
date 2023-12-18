@@ -37,7 +37,7 @@
                         <ul>
                             <li class="b-l-success border-4">
                                 <p>Join Server Discord<b><a
-                                            href="https://discord.gg/AQqRfgErA8">INFINITE UNY</a></b>
+                                            href="https://unyku.id/DiscordINFINITE">INFINITE UNY</a></b>
                                 </p>
                             </li>
                             <li class="b-l-success border-4">
