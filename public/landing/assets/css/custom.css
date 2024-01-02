@@ -1,7 +1,7 @@
 /*
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  *
- * Template Name: Appmyil - App Landing Template   
+ * Template Name: Appmyil - App Landing Template
  * Template URI: https://thememarch.com/demo/html/appmyil/
  * Description: Appmyil is an app landing HTML template which comes with unique and clean design. It helps you to create a beautiful app landing HTML website. It is designed with Bootstrap v4.2.1 the latest bootstrap version. Appmyil is well organized and very easy to customize.
  * Author: Thememarch
@@ -14,7 +14,7 @@
  /*
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  *
- * Template Name: Appmyil - App Landing Template   
+ * Template Name: Appmyil - App Landing Template
  * Template URI: https://thememarch.com/demo/html/appmyil/
  * Description: Appmyil is an app landing HTML template which comes with unique and clean design. It helps you to create a beautiful app landing HTML website. It is designed with Bootstrap v4.2.1 the latest bootstrap version. Appmyil is well organized and very easy to customize.
  * Author: Thememarch
@@ -383,14 +383,8 @@ button.tm-button::after {
 }
 
 .tm-team-image {
-  background: -webkit-linear-gradient(0deg, #3c7c60 0%, #27835d 100%);
-  background: -moz-linear-gradient(0deg, #3c7c60 0%, #27835d 100%);
-  background: -ms-linear-gradient(0deg, #3c7c60 0%, #27835d 100%);
-  background: -o-linear-gradient(0deg, #3c7c60 0%, #27835d 100%);
-  background: -webkit-gradient(linear, left bottom, left top, from(#3c7c60), to(#27835d));
-  background: -webkit-linear-gradient(bottom, #3c7c60 0%, #27835d 100%);
-  background: -o-linear-gradient(bottom, #3c7c60 0%, #27835d 100%);
-  background: linear-gradient(0deg, #3c7c60 0%, #27835d 100%);
+    background: url('../images/core-team-bg.png');
+    background-size: cover;
 }
 
 .tm-team-imageinner::before {
@@ -623,11 +617,11 @@ button.tm-button::after {
   transform: scaleX(0);
   -webkit-transform: scaleX(0);
   -ms-transform: scaleX(0);
-  
+
   transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
   -o-transition: all 0.4s ease-in-out;
-  
+
   z-index: -1;
 }
 
