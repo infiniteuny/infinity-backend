@@ -6,6 +6,15 @@
         .tm-sectiontitle-divider::after {
             background-image: url({{ asset('landing/assets/images/title-shape.png') }});
         }
+        .tm-team-imageinner img.hidden-image {
+        display: none;
+        }
+        .tm-team:hover .tm-team-imageinner img.hidden-image {
+            display: block;
+        }
+        .tm-team:hover .tm-team-imageinner img.default-image {
+            display: none;
+        }
     </style>
 @endsection
 
@@ -289,13 +298,22 @@
                                 <div class="tm-team-top">
                                     <div class="tm-team-image">
                                         <div class="tm-team-imageinner">
+                                            @if ($item->gif !== "")
+                                            {{-- If Not Hovered --}}
+                                            <img class="default-image" src="{{ $item->photo }}" alt="{{ $item->name }}">
+                                            {{-- If Hovered --}}
+                                            <img class="hidden-image" src="{{ $item->gif }}" alt="{{ $item->name }}">
+                                            @else
                                             <img src="{{ $item->photo }}" alt="{{ $item->name }}">
+                                            @endif
                                         </div>
                                     </div>
-                                    <button class="tm-team-socialtrigger"><i class="zmdi zmdi-share"></i></button>
-                                    <ul class="tm-team-socialicons">
+                                    <button class="tm-team-socialtrigger"><a href="https://instagram.com/{{ $item->instagram ?: 'infinite.uny' }}"
+                                        target="_blank"><i class="zmdi zmdi-instagram"></i></a></button>
+                                    {{-- <ul class="tm-team-socialicons">
                                         <li><a href="https://instagram.com/{{ $item->instagram ?: 'infinite.uny' }}"
                                                 target="_blank"><i class="zmdi zmdi-instagram"></i></a></li>
+                                    </ul> --}}
                                     </ul>
                                 </div>
                                 <div class="tm-team-content">
