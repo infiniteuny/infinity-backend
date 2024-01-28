@@ -273,7 +273,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Tanggal Masuk Infinite</label>
+                                        <label class="form-label">Tanggal Masuk INFINITE</label>
                                         <input class="form-control digits" type="date"
                                             value="{{ $member->start_date }}" name="date_start"
                                             data-bs-original-title="" title="">

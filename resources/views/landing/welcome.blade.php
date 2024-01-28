@@ -178,7 +178,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="tm-sectiontitle text-center">
-                            <h2>Infinite Roles</h2>
+                            <h2>INFINITE Roles</h2>
                             <span class="tm-sectiontitle-divider"><i class="zmdi zmdi-fullscreen"></i></span>
                         </div>
                     </div>
@@ -993,7 +993,7 @@
                                     <i class="zmdi zmdi-pin"></i>
                                 </span>
                                 <div class="tm-contact-block-content">
-                                    <h6>Basecamp Infinite UNY</h6>
+                                    <h6>Basecamp INFINITE UNY</h6>
                                     <p>
                                         <a href="{{ $config['ADDRESS_URL'] }}">
                                             {!! $config['ADDRESS_NAME'] !!}

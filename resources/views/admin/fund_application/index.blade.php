@@ -263,7 +263,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Data Pengajuan Dana Lomba </h5><span>Data Pengajuan Dana Anggota Infinite.</span>
+                    <h5>Data Pengajuan Dana Lomba </h5><span>Data Pengajuan Dana Anggota INFINITE.</span>
                     <div class="card-header-right">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-original-title="addFund"
                             data-bs-target="#addFundModal">Ajukan Dana</button>

@@ -20,8 +20,8 @@
                             <li class="tm-navigation-dropdown"><a href="#">Tools</a>
                                 <ul>
                                     <li><a href="member">Cek Keanggotaan</a></li>
-                                    <li><a target="_blank" href="https://unyku.id/">Unyku.id Shortlink</a></li>
-                                    <li><a target="_blank" href="https://infisibill.infiniteuny.id/">Infinite
+                                    <li><a target="_blank" href="https://unyku.id/">UNYKU.ID Shortlink</a></li>
+                                    <li><a target="_blank" href="https://infisibill.infiniteuny.id/">INFINITE
                                             Splitbill</a></li>
                                 </ul>
                             </li>
@@ -53,8 +53,8 @@
                             <li class="tm-navigation-dropdown"><a href="#">Tools</a>
                                 <ul>
                                     <li><a href="{{ route('member') }}">Cek Keanggotaan</a></li>
-                                    <li><a target="_blank" href="https://unyku.id/">Unyku.id Shortlink</a></li>
-                                    <li><a target="_blank" href="https://infisibill.infiniteuny.id/">Infinite
+                                    <li><a target="_blank" href="https://unyku.id/">UNYKU.ID Shortlink</a></li>
+                                    <li><a target="_blank" href="https://infisibill.infiniteuny.id/">INFINITE
                                             Splitbill</a></li>
                                 </ul>
                             </li>

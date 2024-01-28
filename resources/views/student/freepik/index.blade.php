@@ -163,7 +163,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Infinite Freepik Downloader </h5><span>Masukkan URL file freepik yang akan di download.</span>
+                        <h5>INFINITE Freepik Downloader </h5><span>Masukkan URL file freepik yang akan di download.</span>
                         <hr>
                         @if ($data['freepik']['is_can_download'])
                             <form action="{{ route('student.freepik.store') }}" method="POST">
@@ -225,10 +225,10 @@
                                 <img class="img-fluid" style="max-width: 100%; width: 300px;"
                                     src="{{ asset('landing/assets/images/logo_infinite_green.svg') }}" alt="">
                                 <br>
-                                <p>Lebih berprestasi bersama Infinite!</p>
+                                <p>Lebih berprestasi bersama INFINITE!</p>
                             </div>
                             <div class="col-6">
-                                <p>Bantu Infinite Beli Galon</p>
+                                <p>Bantu INFINITE Beli Galon</p>
                                 <img src="{{ asset('admin-panel/assets/images/saweria/saweriaqrcode.png') }}"
                                     alt="">
                                 <br>

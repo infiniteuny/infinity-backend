@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <label class="col-form-label pt-0">Nama Kamu</label>
                                     <input class="form-control" type="text" name="name" required
-                                        value="{{ old('name') }}" placeholder="Infinite">
+                                        value="{{ old('name') }}" placeholder="INFINITE">
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Alamat Email</label>

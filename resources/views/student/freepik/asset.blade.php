@@ -39,7 +39,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Infinite Freepik Asset </h5>
+                    <h5>INFINITE Freepik Asset </h5>
                 </div>
                 <div class="my-gallery card-body row gallery-with-description" itemscope="">
                     @foreach ($data['freepik'] as $item)

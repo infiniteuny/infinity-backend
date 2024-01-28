@@ -30,7 +30,7 @@
         </div>
         <div class="container">
             <div class="tm-breadcrumb text-center">
-                <h2>Infinite Competition Leaderboard {{ $year }}</h2>
+                <h2>INFINITE Competition Leaderboard {{ $year }}</h2>
             </div>
             <div class="container">
                 <div class="row">
