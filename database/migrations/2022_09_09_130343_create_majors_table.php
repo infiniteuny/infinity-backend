@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('freepiks', function (Blueprint $table) {
+        Schema::create('majors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('freepik_download_id')->constrained()->onDelete('cascade');
-            $table->string('url');
-            $table->string('file_name')->nullable();
-            $table->string('file_path')->nullable()->unique();
-            $table->enum('status', ['waiting', 'failed', 'completed'])->default('waiting');
+            $table->foreignId('degree_id')->constrained('degrees')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('faculty_id')->constrained('faculties')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('code')->unique();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('freepiks');
+        Schema::dropIfExists('majors');
     }
 };

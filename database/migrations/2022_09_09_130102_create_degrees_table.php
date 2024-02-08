@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('competition_levels', function (Blueprint $table) {
+        Schema::create('degrees', function (Blueprint $table) {
             $table->id();
+            $table->integer('code')->unique();
             $table->string('name');
-            $table->integer('weight');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competition_levels');
+        Schema::dropIfExists('degrees');
     }
 };

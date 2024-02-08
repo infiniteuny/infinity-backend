@@ -8,26 +8,21 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('grades', function (Blueprint $table) {
+        Schema::create('core_teams', function (Blueprint $table) {
             $table->id();
-            $table->integer('code')->unique();
-            $table->string('name');
+            $table->year('year');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('grades');
+        Schema::dropIfExists('core_teams');
     }
 };

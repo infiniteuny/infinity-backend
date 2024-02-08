@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('competition_relevances', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('weight');
+            $table->foreignId('leader_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('personal')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competition_relevances');
+        Schema::dropIfExists('teams');
     }
 };

@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('freepik_downloads', function (Blueprint $table) {
-            $table->integer('limit_addons')->default(0)->after('limit');
+        Schema::create('configs', function (Blueprint $table) {
+            $table->id();
+            $table->string('key');
+            $table->string('value');
+            $table->enum('type', ['string', 'integer', 'boolean'])->default('string');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('freepik_downloads', function (Blueprint $table) {
-            $table->dropColumn('limit_addons');
-        });
+        Schema::dropIfExists('configs');
     }
 };

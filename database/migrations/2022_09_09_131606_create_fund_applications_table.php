@@ -15,18 +15,15 @@ return new class extends Migration
     {
         Schema::create('fund_applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('competition_name');
-            $table->string('competition_url');
-            $table->date('competition_date');
+            $table->foreignId('team_id')->constrained('teams')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('competition_id')->constrained('competitions')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('competition_team_type_id')->constrained('competition_team_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('competition_scale_id')->constrained('competition_scales')->onUpdate('cascade')->onDelete('cascade');
             $table->string('competition_branch');
-            $table->string('team_name');
-            $table->json('team_leader')->comment('name, student_id, phone');
-            $table->json('team_members')->comment('name, student_id, phone');
-            $table->string('student_id_card');
+            $table->date('competition_date');
             $table->string('letter_of_acceptance');
-            $table->string('budget_plan');
-            $table->enum('status', ['waiting', 'rejected', 'accepted'])->default('waiting');
+            $table->string('proposal');
+            $table->enum('status', ['pending', 'rejected', 'accepted'])->default('pending');
             $table->timestamps();
         });
     }

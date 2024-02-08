@@ -13,7 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('competition_relevances');
+        Schema::create('competition_team_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('weight');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,11 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::create('competition_relevances', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('weight');
-            $table->timestamps();
-        });
+        Schema::dropIfExists('competition_team_types');
     }
 };

@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('configs', function (Blueprint $table) {
-            $table->enum('type', ['string', 'integer', 'boolean'])->default('string')->after('value');
+        Schema::create('competition_organizer_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('weight');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('configs', function (Blueprint $table) {
-            $table->dropColumn('type');
-        });
+        Schema::dropIfExists('competition_organizer_types');
     }
 };

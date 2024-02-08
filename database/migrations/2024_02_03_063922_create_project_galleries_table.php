@@ -8,26 +8,24 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('competition_types', function (Blueprint $table) {
+        Schema::create('project_galleries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('weight');
+            $table->string('title');
+            $table->text('description');
+            $table->string('url');
+            $table->string('image');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('competition_types');
+        Schema::dropIfExists('project_galleries');
     }
 };
