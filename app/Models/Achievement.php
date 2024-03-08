@@ -11,15 +11,14 @@ class Achievement extends Model
 
     protected $fillable = [
         'team_id',
-        'competition_type_id',
+        'competition_id',
+        'competition_team_type_id',
         'competition_scale_id',
-        'competition_output_id',
         'competition_time_range_id',
+        'competition_output_id',
         'competition_rank_id',
-        'competition_level_id',
-        'competition_name',
-        'organizer',
-        'date',
+        'competition_branch',
+        'competition_date',
         'description',
         'image',
         'status',
@@ -35,11 +34,6 @@ class Achievement extends Model
         return $this->belongsTo(CompetitionScale::class, 'competition_scale_id', 'id');
     }
 
-    public function competitionLevels()
-    {
-        return $this->belongsTo(CompetitionLevel::class, 'competition_level_id', 'id');
-    }
-
     public function competitionRanks()
     {
         return $this->belongsTo(CompetitionRank::class, 'competition_rank_id', 'id');
@@ -53,10 +47,5 @@ class Achievement extends Model
     public function competitionTimeRanges()
     {
         return $this->belongsTo(CompetitionTimeRange::class, 'competition_time_range_id', 'id');
-    }
-
-    public function competitionTypes()
-    {
-        return $this->belongsTo(CompetitionType::class, 'competition_type_id', 'id');
     }
 }

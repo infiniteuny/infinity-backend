@@ -10,17 +10,15 @@ class FundApplication extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'competition_name',
-        'competition_url',
-        'competition_date',
+        'team_id',
+        'competition_id',
+        'competition_team_type_id',
+        'competition_scale_id',
         'competition_branch',
-        'team_name',
-        'team_leader',
-        'team_members',
-        'student_id_card',
+        'competition_date',
         'letter_of_acceptance',
-        'budget_plan',
+        'proposal',
+        'status'
     ];
 
     public function users()

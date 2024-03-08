@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,13 +10,25 @@ class Faculty extends Model
 {
     use HasFactory;
 
-    public function programStudies()
+    protected $fillable = [
+        'code',
+        'name',
+    ];
+
+    protected $dateFormat = DATE_ATOM;
+
+    protected function serializeDate(DateTimeInterface $date): string
     {
-        return $this->hasMany(ProgramStudy::class, 'faculty_id', 'id');
+        return $date->format(DATE_ATOM);
     }
 
-    public function members()
+    public function majors()
     {
-        return $this->hasManyThrough(Member::class, ProgramStudy::class, 'faculty_id', 'program_study_id', 'id', 'id');
+        return $this->hasMany(Major::class);
+    }
+
+    public function users()
+    {
+        return $this->hasManyThrough(User::class, Major::class, 'faculty_id', 'major_id', 'id', 'id');
     }
 }

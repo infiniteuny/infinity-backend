@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,15 +12,19 @@ class Team extends Model
 
     protected $fillable = [
         'name',
+        'leader_id',
+        'is_personal',
     ];
 
-    public function members()
+    protected $dateFormat = DATE_ATOM;
+
+    protected function serializeDate(DateTimeInterface $date): string
     {
-        return $this->belongsToMany(Member::class)->withPivot('role')->withTimestamps();
+        return $date->format(DATE_ATOM);
     }
 
-    public function achievements()
+    public function leader()
     {
-        return $this->hasOne(Achievement::class);
+        return $this->belongsTo(User::class, 'leader_id');
     }
 }
