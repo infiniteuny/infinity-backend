@@ -6,13 +6,15 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CompetitionRank extends Model
+class Testimonial extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'weight',
+        'user_id',
+        'position',
+        'photo',
+        'content',
     ];
 
     protected $dateFormat = DATE_ATOM;
@@ -20,5 +22,10 @@ class CompetitionRank extends Model
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format(DATE_ATOM);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

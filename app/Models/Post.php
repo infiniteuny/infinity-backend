@@ -6,13 +6,15 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CompetitionRank extends Model
+class Post extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'weight',
+        'title',
+        'content',
+        'time',
+        'cover_image',
     ];
 
     protected $dateFormat = DATE_ATOM;

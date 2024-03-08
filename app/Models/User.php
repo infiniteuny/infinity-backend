@@ -6,60 +6,33 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+    use HasFactory, HasRoles, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
-        'email',
+        'email_address',
+        'phone_number',
         'student_id',
-        'password',
+        'major_id',
+        'links',
         'role',
-        'provider',
-        'provider_id',
-        'avatar',
+        'start_date',
+        'end_date',
+        'is_member',
+        'is_extraordinary',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function freepikDownloads()
-    {
-        return $this->hasOne(FreepikDownload::class, 'user_id', 'id');
-    }
 
     public function fundApplications()
     {
         return $this->hasMany(FundApplication::class, 'user_id', 'id');
     }
 
-    public function members()
+    public function testimonials()
     {
-        return $this->hasOne(Member::class, 'student_id', 'student_id');
+        return $this->hasMany(Testimonial::class, 'user_id', 'id');
     }
 }

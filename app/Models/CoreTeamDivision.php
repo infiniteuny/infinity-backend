@@ -6,13 +6,13 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CompetitionRank extends Model
+class CoreTeamDivision extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'weight',
+        'priority',
     ];
 
     protected $dateFormat = DATE_ATOM;
