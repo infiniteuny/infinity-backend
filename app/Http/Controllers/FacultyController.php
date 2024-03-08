@@ -12,10 +12,8 @@ class FacultyController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         //
     }
@@ -48,60 +46,48 @@ class FacultyController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreFacultyRequest $request)
+    public function store(StoreFacultyRequest $request): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Faculty $faculty)
+    public function show(Faculty $faculty): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Faculty $faculty)
+    public function edit(Faculty $faculty): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFacultyRequest $request, Faculty $faculty)
+    public function update(UpdateFacultyRequest $request, Faculty $faculty): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Faculty $faculty)
+    public function destroy(Faculty $faculty): \Illuminate\Http\Response
     {
         //
     }

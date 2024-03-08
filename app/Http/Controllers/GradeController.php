@@ -10,70 +10,56 @@ class GradeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreGradeRequest $request)
+    public function store(StoreGradeRequest $request): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Grade $grade)
+    public function show(Grade $grade): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Grade $grade)
+    public function edit(Grade $grade): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGradeRequest $request, Grade $grade)
+    public function update(UpdateGradeRequest $request, Grade $grade): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Grade $grade)
+    public function destroy(Grade $grade): \Illuminate\Http\Response
     {
         //
     }

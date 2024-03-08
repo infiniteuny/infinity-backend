@@ -30,10 +30,8 @@ class ProcessFreepikDownload implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $id = $this->data;
         $data = Freepik::find($id);

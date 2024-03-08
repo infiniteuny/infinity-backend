@@ -10,70 +10,56 @@ class CompetitionRelevanceController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompetitionRelevanceRequest $request)
+    public function store(StoreCompetitionRelevanceRequest $request): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(CompetitionRelevance $competitionRelevance)
+    public function show(CompetitionRelevance $competitionRelevance): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function edit(CompetitionRelevance $competitionRelevance)
+    public function edit(CompetitionRelevance $competitionRelevance): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompetitionRelevanceRequest $request, CompetitionRelevance $competitionRelevance)
+    public function update(UpdateCompetitionRelevanceRequest $request, CompetitionRelevance $competitionRelevance): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(CompetitionRelevance $competitionRelevance)
+    public function destroy(CompetitionRelevance $competitionRelevance): \Illuminate\Http\Response
     {
         //
     }

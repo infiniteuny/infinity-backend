@@ -10,70 +10,56 @@ class CompetitionOutputController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompetitionOutputRequest $request)
+    public function store(StoreCompetitionOutputRequest $request): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(CompetitionOutput $competitionOutput)
+    public function show(CompetitionOutput $competitionOutput): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function edit(CompetitionOutput $competitionOutput)
+    public function edit(CompetitionOutput $competitionOutput): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompetitionOutputRequest $request, CompetitionOutput $competitionOutput)
+    public function update(UpdateCompetitionOutputRequest $request, CompetitionOutput $competitionOutput): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(CompetitionOutput $competitionOutput)
+    public function destroy(CompetitionOutput $competitionOutput): \Illuminate\Http\Response
     {
         //
     }

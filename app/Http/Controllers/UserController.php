@@ -19,10 +19,8 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Http\Response
     {
         if ($request->ajax()) {
             $users = User::orderBy('name', 'asc')->get();
@@ -49,41 +47,32 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function edit($user)
+    public function edit(User $user): \Illuminate\Http\Response
     {
         $user = User::find(Crypt::decryptString($user));
         $roles = Role::all()->map(function ($role) {
@@ -104,11 +93,8 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, $user)
+    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\Response
     {
         $validate = Validator::make($request->all(), [
             'role' => 'required|exists:roles,name',
@@ -147,11 +133,8 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($user)
+    public function destroy(User $user): \Illuminate\Http\Response
     {
         $result = User::find(Crypt::decryptString($user));
         if ($result) {

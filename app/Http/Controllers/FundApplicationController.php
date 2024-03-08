@@ -18,10 +18,8 @@ class FundApplicationController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Http\Response
     {
 
         if (Auth::user()->hasRole('admin')) {
@@ -75,20 +73,16 @@ class FundApplicationController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreFundApplicationRequest $request)
+    public function store(StoreFundApplicationRequest $request): \Illuminate\Http\Response
     {
         $validate = Validator::make($request->all(), [
             'competition_name' => 'required|string|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
@@ -140,21 +134,16 @@ class FundApplicationController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(FundApplication $fundApplication)
+    public function show(FundApplication $fundApplication): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\FundApplication  $fundApplication
-     * @return \Illuminate\Http\Response
      */
-    public function edit($fundApplication)
+    public function edit(FundApplication $fundApplication): \Illuminate\Http\Response
     {
         $data['fund'] = FundApplication::find(Crypt::decryptString($fundApplication));
         $data['fund']->id = $data['fund']->id;
@@ -174,11 +163,8 @@ class FundApplicationController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Models\FundApplication  $fundApplication
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFundApplicationRequest $request, $fundApplication)
+    public function update(UpdateFundApplicationRequest $request, FundApplication $fundApplication): \Illuminate\Http\Response
     {
         $validate = Validator::make($request->all(), [
             'competition_name' => 'required|string|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
@@ -244,11 +230,8 @@ class FundApplicationController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\FundApplication  $fundApplication
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($fundApplication)
+    public function destroy(FundApplication $fundApplication): \Illuminate\Http\Response
     {
         $fund = FundApplication::find(Crypt::decryptString($fundApplication));
         if ($fund->exists()) {

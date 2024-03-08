@@ -10,70 +10,56 @@ class CompetitionLevelController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompetitionLevelRequest $request)
+    public function store(StoreCompetitionLevelRequest $request): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(CompetitionLevel $competitionLevel)
+    public function show(CompetitionLevel $competitionLevel): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function edit(CompetitionLevel $competitionLevel)
+    public function edit(CompetitionLevel $competitionLevel): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompetitionLevelRequest $request, CompetitionLevel $competitionLevel)
+    public function update(UpdateCompetitionLevelRequest $request, CompetitionLevel $competitionLevel): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(CompetitionLevel $competitionLevel)
+    public function destroy(CompetitionLevel $competitionLevel): \Illuminate\Http\Response
     {
         //
     }

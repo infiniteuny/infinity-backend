@@ -18,10 +18,8 @@ class LogVerifiedUser
 
     /**
      * Handle the event.
-     *
-     * @return void
      */
-    public function handle(Verified $event)
+    public function handle(Verified $event): void
     {
         //
     }

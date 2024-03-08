@@ -10,70 +10,56 @@ class CompetitionScaleController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompetitionScaleRequest $request)
+    public function store(StoreCompetitionScaleRequest $request): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(CompetitionScale $competitionScale)
+    public function show(CompetitionScale $competitionScale): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function edit(CompetitionScale $competitionScale)
+    public function edit(CompetitionScale $competitionScale): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompetitionScaleRequest $request, CompetitionScale $competitionScale)
+    public function update(UpdateCompetitionScaleRequest $request, CompetitionScale $competitionScale): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(CompetitionScale $competitionScale)
+    public function destroy(CompetitionScale $competitionScale): \Illuminate\Http\Response
     {
         //
     }

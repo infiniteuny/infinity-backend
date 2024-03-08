@@ -8,27 +8,23 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('majors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('degree_id')->constrained('degrees')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('faculty_id')->constrained('faculties')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('code')->unique();
             $table->string('name');
+            $table->foreignId('degree_id')->constrained('degrees')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('faculty_id')->constrained('faculties')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('majors');
     }

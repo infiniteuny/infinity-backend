@@ -25,10 +25,8 @@ class AchievementController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Http\Response
     {
         if ($request->ajax()) {
             $achievement = Achievement::with([
@@ -147,20 +145,16 @@ class AchievementController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreAchievementRequest $request)
+    public function store(StoreAchievementRequest $request): \Illuminate\Http\Response
     {
         $validate = Validator::make($request->all(), [
             'team_name' => 'required|string|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
@@ -251,21 +245,16 @@ class AchievementController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Achievement $achievement)
+    public function show(Achievement $achievement): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Achievement  $achievement
-     * @return \Illuminate\Http\Response
      */
-    public function edit($achievement)
+    public function edit(Achievement $achievement): \Illuminate\Http\Response
     {
         $achievement = Achievement::where('id', Crypt::decryptString($achievement))->with([
             'teams.members',
@@ -369,11 +358,8 @@ class AchievementController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Models\Achievement  $achievement
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAchievementRequest $request, $achievement)
+    public function update(UpdateAchievementRequest $request, Achievement $achievement): \Illuminate\Http\Response
     {
         $validate = Validator::make($request->all(), [
             'team_name' => 'required|string|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
@@ -472,11 +458,8 @@ class AchievementController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Achievement  $achievement
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($achievement)
+    public function destroy(Achievement $achievement): \Illuminate\Http\Response
     {
         $achievement = Achievement::find(Crypt::decryptString($achievement));
         if ($achievement) {

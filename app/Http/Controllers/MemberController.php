@@ -17,10 +17,8 @@ class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Http\Response
     {
         if ($request->ajax()) {
             $members = Member::with('programStudies.faculties', 'teams')->orderBy('name', 'asc')->get();
@@ -50,20 +48,16 @@ class MemberController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreMemberRequest $request)
+    public function store(StoreMemberRequest $request): \Illuminate\Http\Response
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -143,21 +137,16 @@ class MemberController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Member $member)
+    public function show(Member $member): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Member  $member
-     * @return \Illuminate\Http\Response
      */
-    public function edit($member)
+    public function edit(Member $member): \Illuminate\Http\Response
     {
         $member = Member::find(Crypt::decryptString($member));
         $roles = Role::all()->map(function ($role) {
@@ -182,11 +171,8 @@ class MemberController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Models\Member  $member
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMemberRequest $request, $member)
+    public function update(UpdateMemberRequest $request, Member $member): \Illuminate\Http\Response
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -223,11 +209,8 @@ class MemberController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Member  $member
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($member)
+    public function destroy(Member $member): \Illuminate\Http\Response
     {
         $result = Member::find(Crypt::decryptString($member));
         if ($result) {

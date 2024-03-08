@@ -20,10 +20,8 @@ class FreepikDownloadController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Http\Response
     {
         $user = Auth::user();
         $data['freepik']['used'] = Freepik::whereRelation('freepikDownloads.users', 'student_id', $user->student_id)
@@ -99,20 +97,16 @@ class FreepikDownloadController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreFreepikDownloadRequest $request)
+    public function store(StoreFreepikDownloadRequest $request): \Illuminate\Http\Response
     {
 
         $validate = Validator::make($request->all(), [
@@ -226,40 +220,32 @@ class FreepikDownloadController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(FreepikDownload $freepikDownload)
+    public function show(FreepikDownload $freepikDownload): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function edit(FreepikDownload $freepikDownload)
+    public function edit(FreepikDownload $freepikDownload): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFreepikDownloadRequest $request, FreepikDownload $freepikDownload)
+    public function update(UpdateFreepikDownloadRequest $request, FreepikDownload $freepikDownload): \Illuminate\Http\Response
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(FreepikDownload $freepikDownload)
+    public function destroy(FreepikDownload $freepikDownload): \Illuminate\Http\Response
     {
         //
     }
