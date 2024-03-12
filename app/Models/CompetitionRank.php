@@ -21,4 +21,9 @@ class CompetitionRank extends Model
     {
         return $date->format(DATE_ATOM);
     }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class);
+    }
 }

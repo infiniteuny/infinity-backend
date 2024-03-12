@@ -21,4 +21,14 @@ class TeamMember extends Model
     {
         return $date->format(DATE_ATOM);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'member_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }

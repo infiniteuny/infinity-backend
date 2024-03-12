@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,9 +27,31 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_extraordinary',
     ];
 
-    public function fundApplications()
+    protected $dateFormat = DATE_ATOM;
+
+    protected function serializeDate(DateTimeInterface $date): string
     {
-        return $this->hasMany(FundApplication::class, 'user_id', 'id');
+        return $date->format(DATE_ATOM);
+    }
+
+    public function major()
+    {
+        return $this->belongsTo(Major::class);
+    }
+
+    public function ledTeams()
+    {
+        return $this->hasMany(Team::class, 'leader_id');
+    }
+
+    public function teams()
+    {
+        return $this->hasMany(TeamMember::class);
+    }
+
+    public function coreTeams()
+    {
+        return $this->hasMany(CoreTeamMember::class);
     }
 
     public function testimonials()

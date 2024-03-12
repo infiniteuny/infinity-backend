@@ -27,4 +27,19 @@ class Team extends Model
     {
         return $this->belongsTo(User::class, 'leader_id');
     }
+
+    public function teamMembers()
+    {
+        return $this->hasMany(TeamMember::class);
+    }
+
+    public function fundApplications()
+    {
+        return $this->hasMany(FundApplication::class);
+    }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class);
+    }
 }

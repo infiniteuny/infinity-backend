@@ -21,4 +21,9 @@ class CoreTeamDivision extends Model
     {
         return $date->format(DATE_ATOM);
     }
+
+    public function coreTeamMembers()
+    {
+        return $this->hasMany(CoreTeamMember::class);
+    }
 }

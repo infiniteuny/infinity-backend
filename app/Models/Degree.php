@@ -26,4 +26,9 @@ class Degree extends Model
     {
         return $this->hasMany(Major::class);
     }
+
+    public function users()
+    {
+        return $this->hasManyThrough(User::class, Major::class, 'degree_id', 'major_id', 'id', 'id');
+    }
 }

@@ -22,8 +22,8 @@ class CompetitionOrganizerType extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function achievements()
+    public function competitions()
     {
-        return $this->hasMany(Achievement::class);
+        return $this->hasMany(Competition::class);
     }
 }
