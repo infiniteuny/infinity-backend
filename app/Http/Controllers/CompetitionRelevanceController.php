@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompetitionRelevanceRequest;
-use App\Http\Requests\UpdateCompetitionRelevanceRequest;
+use App\Http\Requests\CompetitionRelevance\StoreCompetitionRelevanceRequest;
+use App\Http\Requests\CompetitionRelevance\UpdateCompetitionRelevanceRequest;
 use App\Models\CompetitionRelevance;
 
 class CompetitionRelevanceController extends Controller

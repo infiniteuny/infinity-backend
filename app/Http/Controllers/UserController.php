@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -161,7 +161,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if ($request->has('password_old')) {
-            if (! Hash::check($request->password_old, $user->password)) {
+            if (!Hash::check($request->password_old, $user->password)) {
                 return redirect()->back()->with('error', 'Password lama ga sama.');
             }
         }

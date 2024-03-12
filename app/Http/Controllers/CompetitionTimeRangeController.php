@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompetitionTimeRangeRequest;
-use App\Http\Requests\UpdateCompetitionTimeRangeRequest;
+use App\Http\Requests\CompetitionTimeRange\StoreCompetitionTimeRangeRequest;
+use App\Http\Requests\CompetitionTimeRange\UpdateCompetitionTimeRangeRequest;
 use App\Models\CompetitionTimeRange;
 
 class CompetitionTimeRangeController extends Controller

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAchievementRequest;
-use App\Http\Requests\UpdateAchievementRequest;
+use App\Http\Requests\Achievement\StoreAchievementRequest;
+use App\Http\Requests\Achievement\UpdateAchievementRequest;
 use App\Models\Achievement;
 use App\Models\CompetitionLevel;
 use App\Models\CompetitionOutput;
@@ -44,7 +44,7 @@ class AchievementController extends Controller
                     'team_name' => $achievement->teams->name,
                     'competition_name' => $achievement->competition_name,
                     'organizer' => $achievement->organizer,
-                    'description' => strlen($achievement->description) > 150 ? substr($achievement->description, 0, 150).'...' : $achievement->description,
+                    'description' => strlen($achievement->description) > 150 ? substr($achievement->description, 0, 150) . '...' : $achievement->description,
                     'date' => Carbon::parse($achievement->date)->format('d M Y'),
                     'member' => $achievement->teams->members->map(function ($member) {
                         return [
@@ -64,7 +64,7 @@ class AchievementController extends Controller
                         $achievement->competitionOutputs->weight *
                         $achievement->competitionTimeRanges->weight *
                         $achievement->competitionRanks->weight *
-                        $achievement->competitionLevels->weight.' pts',
+                        $achievement->competitionLevels->weight . ' pts',
                 ];
             });
 
@@ -123,7 +123,7 @@ class AchievementController extends Controller
                         $achievement->competitionOutputs->weight *
                         $achievement->competitionTimeRanges->weight *
                         $achievement->competitionRanks->weight *
-                        $achievement->competitionLevels->weight.' pts',
+                        $achievement->competitionLevels->weight . ' pts',
                 ];
             });
 
@@ -202,7 +202,7 @@ class AchievementController extends Controller
                     $checkId->push($value);
                 }
             }
-            if (! $checkId->contains(auth()->user()->members->id)) {
+            if (!$checkId->contains(auth()->user()->members->id)) {
                 return redirect()->back()->with('error', 'Kamu hukumnya wajib masuk ditim yang diajukan yak!')->withInput();
             }
         }
@@ -292,7 +292,7 @@ class AchievementController extends Controller
                 $achievement->competitionOutputs->weight *
                 $achievement->competitionTimeRanges->weight *
                 $achievement->competitionRanks->weight *
-                $achievement->competitionLevels->weight.' pts',
+                $achievement->competitionLevels->weight . ' pts',
         ];
 
         $data['competition_types'] = CompetitionType::all();
@@ -343,7 +343,7 @@ class AchievementController extends Controller
                 $achievement->competitionOutputs->weight *
                 $achievement->competitionTimeRanges->weight *
                 $achievement->competitionRanks->weight *
-                $achievement->competitionLevels->weight.' pts',
+                $achievement->competitionLevels->weight . ' pts',
         ];
 
         $data['competition_types'] = CompetitionType::all();
@@ -391,7 +391,7 @@ class AchievementController extends Controller
                 foreach ($request->member as $item => $value) {
                     $checkId->push($value);
                 }
-                if (! $checkId->contains(auth()->user()->members->id)) {
+                if (!$checkId->contains(auth()->user()->members->id)) {
                     return redirect()->back()->with('error', 'Kamu hukumnya wajib masuk ditim yang diajukan yak!')->withInput();
                 }
             }
