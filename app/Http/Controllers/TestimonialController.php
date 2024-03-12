@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTestimonialRequest;
+use App\Http\Requests\UpdateTestimonialRequest;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -30,21 +32,8 @@ class TestimonialController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTestimonialRequest $request)
     {
-        $rules = [
-            'user_id' => 'required|exists:users,id',
-            'position' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
-            'photo' => 'required|mimes:jpg,png,jpeg|max:2048',
-            'content' => 'required|string',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response(['error' => $validator->errors()->first()], 422);
-        }
-
         try {
             Testimonial::create([
                 'user_id' => $request->user_id,
@@ -78,21 +67,8 @@ class TestimonialController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Testimonial $testimonial)
+    public function update(UpdateTestimonialRequest $request, Testimonial $testimonial)
     {
-        $rules = [
-            'user_id' => 'required|exists:users,id',
-            'position' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
-            'photo' => 'required|mimes:jpg,png,jpeg|max:2048',
-            'content' => 'required|string',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response(['error' => $validator->errors()->first()], 422);
-        }
-
         try {
             $testimonial->user_id = $request->user_id;
             $testimonial->postion = $request->position;

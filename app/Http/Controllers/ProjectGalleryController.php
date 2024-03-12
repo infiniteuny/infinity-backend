@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProjectGalleryRequest;
+use App\Http\Requests\UpdateProjectGalleryRequest;
 use App\Models\ProjectGallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -30,21 +32,8 @@ class ProjectGalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectGalleryRequest $request)
     {
-        $rules = [
-            'title' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
-            'description' => 'required|string',
-            'url' => 'required|url',
-            'image' => 'required|mimes:jpg,png,jpeg|max:2048',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response(['error' => $validator->errors()->first()], 422);
-        }
-
         try {
             ProjectGallery::create([
                 'title' => $request->title,
@@ -78,21 +67,8 @@ class ProjectGalleryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProjectGallery $projectGallery)
+    public function update(UpdateProjectGalleryRequest $request, ProjectGallery $projectGallery)
     {
-        $rules = [
-            'title' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
-            'description' => 'required|string',
-            'url' => 'required|url',
-            'image' => 'mimes:jpg,png,jpeg|max:2048',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response(['error' => $validator->errors()->first()], 422);
-        }
-
         try {
             $projectGallery->title = $request->title;
             $projectGallery->description = $request->description;

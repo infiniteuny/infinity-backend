@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -30,21 +32,8 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $rules = [
-            'title' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
-            'content' => 'required|string',
-            'time' => 'required|date_format:H:i:s',
-            'cover_image' => 'required|mimes:jpg,png,jpeg|max:2048',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response(['error' => $validator->errors()->first()], 422);
-        }
-
         try {
             Post::create([
                 'title' => $request->title,
@@ -78,21 +67,8 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $rules = [
-            'title' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
-            'content' => 'required|string',
-            'time' => 'required|date_format:H:i:s',
-            'cover_image' => 'image|mimes:jpg,png,jpeg|max:2048',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response(['error' => $validator->errors()->first()], 422);
-        }
-
         try {
             $post->title = $request->title;
             $post->content = $request->content;
