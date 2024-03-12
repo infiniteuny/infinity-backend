@@ -11,7 +11,7 @@ class Testimonial extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'name',
         'position',
         'photo',
         'content',
@@ -22,10 +22,5 @@ class Testimonial extends Model
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format(DATE_ATOM);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
