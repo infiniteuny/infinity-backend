@@ -7,7 +7,6 @@ use App\Http\Requests\StoreTestimonialRequest;
 use App\Http\Requests\UpdateTestimonialRequest;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class TestimonialController extends Controller
 {
