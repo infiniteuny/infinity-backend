@@ -20,7 +20,7 @@ class TestimonialController extends Controller
         $testimonials = $testimonials->map(function ($testimonial) {
             return [
                 'id' => $testimonial->id,
-                'user' => $testimonial->load('user'),
+                'user' => $testimonial->load('user')->user,
                 'position' => $testimonial->position,
                 'photo' => $testimonial->photo,
                 'content' => $testimonial->content
@@ -56,7 +56,7 @@ class TestimonialController extends Controller
     {
         $testimonial = [
             'id' => $testimonial->id,
-            'user' => $testimonial->load('user'),
+            'user' => $testimonial->load('user')->user,
             'position' => $testimonial->position,
             'photo' => $testimonial->photo,
             'content' => $testimonial->content
