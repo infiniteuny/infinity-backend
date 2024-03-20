@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompetitionLevelRequest;
-use App\Http\Requests\UpdateCompetitionLevelRequest;
+use App\Http\Requests\CompetitionLevel\StoreCompetitionLevelRequest;
+use App\Http\Requests\CompetitionLevel\UpdateCompetitionLevelRequest;
 use App\Models\CompetitionLevel;
 
 class CompetitionLevelController extends Controller
