@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Grade;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFreepikDownloadRequest extends FormRequest
+class StoreGradeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
