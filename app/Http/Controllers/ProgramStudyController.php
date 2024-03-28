@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProgramStudyRequest;
-use App\Http\Requests\UpdateProgramStudyRequest;
+use App\Http\Requests\Major\StoreMajorRequest;
+use App\Http\Requests\Major\UpdateMajorRequest;
 use App\Models\ProgramStudy;
 
 class ProgramStudyController extends Controller
@@ -27,7 +27,7 @@ class ProgramStudyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProgramStudyRequest $request): \Illuminate\Http\Response
+    public function store(StoreMajorRequest $request): \Illuminate\Http\Response
     {
         //
     }
@@ -51,7 +51,7 @@ class ProgramStudyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProgramStudyRequest $request, ProgramStudy $programStudy): \Illuminate\Http\Response
+    public function update(UpdateMajorRequest $request, ProgramStudy $programStudy): \Illuminate\Http\Response
     {
         //
     }

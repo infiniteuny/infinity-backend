@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompetitionTypeRequest;
-use App\Http\Requests\UpdateCompetitionTypeRequest;
+use App\Http\Requests\CompetitionType\StoreCompetitionTypeRequest;
+use App\Http\Requests\CompetitionType\UpdateCompetitionTypeRequest;
 use App\Models\CompetitionType;
 
 class CompetitionTypeController extends Controller

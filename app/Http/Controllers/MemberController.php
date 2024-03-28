@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMemberBulkRequest;
-use App\Http\Requests\StoreMemberRequest;
-use App\Http\Requests\UpdateMemberRequest;
+use App\Http\Requests\Member\StoreMemberBulkRequest;
+use App\Http\Requests\Member\StoreMemberRequest;
+use App\Http\Requests\Member\UpdateMemberRequest;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -159,7 +159,7 @@ class MemberController extends Controller
         if ($user) {
             $user->roles = $user->getRoleNames()->first();
         }
-        $member->avatar = $user ? $user->avatar : 'https://ui-avatars.com/api/?name='.$member->name.'&background=0D8ABC&color=fff';
+        $member->avatar = $user ? $user->avatar : 'https://ui-avatars.com/api/?name=' . $member->name . '&background=0D8ABC&color=fff';
         $member->email = $user ? $user->email : 'Belum buat akun';
 
         return view('admin.member.edit')->with([
@@ -224,7 +224,7 @@ class MemberController extends Controller
 
     public function membersList(Request $request)
     {
-        $members = Member::where('name', 'LIKE', '%'.$request->input('q').'%')->orWhere('student_id', 'LIKE', '%'.$request->input('q').'%')
+        $members = Member::where('name', 'LIKE', '%' . $request->input('q') . '%')->orWhere('student_id', 'LIKE', '%' . $request->input('q') . '%')
             ->take(10)->get();
         $members = $members->map(function ($member) {
             return [

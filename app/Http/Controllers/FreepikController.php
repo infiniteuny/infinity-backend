@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreFreepikRequest;
-use App\Http\Requests\UpdateFreepikRequest;
+use App\Http\Requests\Freepik\StoreFreepikRequest;
+use App\Http\Requests\Freepik\UpdateFreepikRequest;
 use App\Models\Freepik;
 
 class FreepikController extends Controller
