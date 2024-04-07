@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class CompetitionOutputController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(CompetitionOutput::class, 'competitionOutput');
+    }
     /**
      * Display a listing of the resource.
      */

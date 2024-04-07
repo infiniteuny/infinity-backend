@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class CoreTeamDivisionController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(CoreTeamDivision::class, 'coreTeamDivision');
+    }
     /**
      * Display a listing of the resource.
      */

@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class FundApplicationController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(FundApplication::class, 'fundApplication');
+    }
     /**
      * Display a listing of the resource.
      */

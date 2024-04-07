@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class ConfigController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Config::class, 'Config');
+    }
     /**
      * Display a listing of the resource.
      */

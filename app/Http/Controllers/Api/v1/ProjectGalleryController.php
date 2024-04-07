@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class ProjectGalleryController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(ProjectGallery::class, 'projectGallery');
+    }
     /**
      * Display a listing of the resource.
      */
