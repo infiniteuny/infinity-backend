@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class TestimonialController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Testimonial::class, 'testimonial');
+    }
     /**
      * Display a listing of the resource.
      */

@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class CompetitionTimeRangeController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(CompetitionTimeRange::class, 'competitionTimeRange');
+    }
     /**
      * Display a listing of the resource.
      */
