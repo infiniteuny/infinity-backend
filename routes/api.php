@@ -49,25 +49,27 @@ Route::get('/members', [MemberController::class, 'membersList'])->name('members.
 Route::middleware('auth:sanctum')->post('/uid', [MemberController::class, 'uid'])->name('members.uid');
 
 // NEW DASHBOARD
-Route::resource('achievement', AchievementController::class);
-Route::resource('competition', CompetitionController::class);
-Route::resource('competition-organizer-type', CompetitionOrganizerTypeController::class);
-Route::resource('competition-output', CompetitionOutputController::class);
-Route::resource('competition-rank', CompetitionRankController::class);
-Route::resource('competition-scale', CompetitionScaleController::class);
-Route::resource('competition-team-type', CompetitionTeamTypeController::class);
-Route::resource('competition-time-range', CompetitionTimeRangeController::class);
-Route::resource('config', ConfigController::class);
-Route::resource('core-team', CoreTeamController::class);
-Route::resource('core-team-division', CoreTeamDivisionController::class);
-Route::resource('core-team-member', CoreTeamMemberController::class);
-Route::resource('degree', DegreeController::class);
-Route::resource('faculty', FacultyController::class);
-Route::resource('fund-application', FundApplicationController::class);
-Route::resource('major', MajorController::class);
-Route::resource('post', PostController::class);
-Route::resource('project-gallery', ProjectGalleryController::class);
-Route::resource('team', TeamController::class);
-Route::resource('team-member', TeamMemberController::class);
-Route::resource('testimonial', TestimonialController::class);
-Route::resource('user', UserController::class);
+Route::apiResource([
+    'achievement' => AchievementController::class,
+    'competition' => CompetitionController::class,
+    'competition-organizer-type' => CompetitionOrganizerTypeController::class,
+    'competition-output' => CompetitionOutputController::class,
+    'competition-rank' => CompetitionRankController::class,
+    'competition-scale' => CompetitionScaleController::class,
+    'competition-team-type' => CompetitionTeamTypeController::class,
+    'competition-time-range' => CompetitionTimeRangeController::class,
+    'config' => ConfigController::class,
+    'core-team' => CoreTeamController::class,
+    'core-team-division' => CoreTeamDivisionController::class,
+    'core-team-member' => CoreTeamMemberController::class,
+    'degree' => DegreeController::class,
+    'faculty' => FacultyController::class,
+    'fund-application' => FundApplicationController::class,
+    'major' => MajorController::class,
+    'post' => PostController::class,
+    'project-gallery' => ProjectGalleryController::class,
+    'team' => TeamController::class,
+    'team-member' => TeamMemberController::class,
+    'testimonial' => TestimonialController::class,
+    'user' => UserController::class,
+]);
