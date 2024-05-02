@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -14,6 +13,7 @@ class UserController extends Controller
     {
         $this->authorizeResource(User::class, 'user');
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +27,6 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
     }
 
     /**

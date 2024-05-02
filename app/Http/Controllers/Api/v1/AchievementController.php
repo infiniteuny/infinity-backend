@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Achievement\StoreAchievementRequest;
 use App\Http\Requests\Achievement\UpdateAchievementRequest;
 use App\Models\Achievement;
-use Illuminate\Http\Request;
 
 class AchievementController extends Controller
 {
@@ -14,6 +13,7 @@ class AchievementController extends Controller
     {
         $this->authorizeResource(Achievement::class, 'achievement');
     }
+
     /**
      * Display a listing of the resource.
      */

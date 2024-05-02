@@ -20,7 +20,7 @@ class FacultyController extends Controller
 
     public function facultiesList(Request $request)
     {
-        $faculties = Faculty::where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $faculties = Faculty::where('name', 'like', '%'.$request->input('q').'%')->get();
         $faculties = $faculties->map(function ($faculty) {
             return [
                 'id' => $faculty->id,
@@ -33,11 +33,11 @@ class FacultyController extends Controller
 
     public function programStudiesList(Request $request, $faculty)
     {
-        $programStudies = ProgramStudy::where('faculty_id', $faculty)->where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $programStudies = ProgramStudy::where('faculty_id', $faculty)->where('name', 'like', '%'.$request->input('q').'%')->get();
         $programStudies = $programStudies->map(function ($programStudy) {
             return [
                 'id' => $programStudy->id,
-                'name' => $programStudy->grades->name . ' - ' . $programStudy->name,
+                'name' => $programStudy->grades->name.' - '.$programStudy->name,
             ];
         });
 

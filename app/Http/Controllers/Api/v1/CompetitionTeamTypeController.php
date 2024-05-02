@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionTeamType\StoreCompetitionTeamTypeRequest;
 use App\Http\Requests\CompetitionTeamType\UpdateCompetitionTeamTypeRequest;
 use App\Models\CompetitionTeamType;
-use Illuminate\Http\Request;
 
 class CompetitionTeamTypeController extends Controller
 {
@@ -14,6 +13,7 @@ class CompetitionTeamTypeController extends Controller
     {
         $this->authorizeResource(CompetitionTeamType::class, 'competitionTeamType');
     }
+
     /**
      * Display a listing of the resource.
      */

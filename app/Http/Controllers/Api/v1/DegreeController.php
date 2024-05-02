@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Degree\StoreDegreeRequest;
 use App\Http\Requests\Degree\UpdateDegreeRequest;
 use App\Models\Degree;
-use Illuminate\Http\Request;
 
 class DegreeController extends Controller
 {
@@ -14,6 +13,7 @@ class DegreeController extends Controller
     {
         $this->authorizeResource(Degree::class, 'Degree');
     }
+
     /**
      * Display a listing of the resource.
      */

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionScale\StoreCompetitionScaleRequest;
 use App\Http\Requests\CompetitionScale\UpdateCompetitionScaleRequest;
 use App\Models\CompetitionScale;
-use Illuminate\Http\Request;
 
 class CompetitionScaleController extends Controller
 {
@@ -14,6 +13,7 @@ class CompetitionScaleController extends Controller
     {
         $this->authorizeResource(CompetitionScale::class, 'competitionScale');
     }
+
     /**
      * Display a listing of the resource.
      */
