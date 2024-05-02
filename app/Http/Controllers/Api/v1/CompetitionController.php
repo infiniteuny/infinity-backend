@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Competition\StoreCompetitionRequest;
 use App\Http\Requests\Competition\UpdateCompetitionRequest;
 use App\Models\Competition;
-use Illuminate\Http\Request;
 
 class CompetitionController extends Controller
 {
@@ -14,6 +13,7 @@ class CompetitionController extends Controller
     {
         $this->authorizeResource(Competition::class, 'competition');
     }
+
     /**
      * Display a listing of the resource.
      */

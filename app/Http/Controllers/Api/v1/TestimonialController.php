@@ -14,19 +14,20 @@ class TestimonialController extends Controller
     {
         $this->authorizeResource(Testimonial::class, 'testimonial');
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $testimonials = Testimonial::where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $testimonials = Testimonial::where('name', 'like', '%'.$request->input('q').'%')->get();
         $testimonials = $testimonials->map(function ($testimonial) {
             return [
                 'id' => $testimonial->id,
                 'user' => $testimonial->user,
                 'position' => $testimonial->position,
                 'photo' => $testimonial->photo,
-                'content' => $testimonial->content
+                'content' => $testimonial->content,
             ];
         });
 
@@ -62,7 +63,7 @@ class TestimonialController extends Controller
             'user' => $testimonial->user,
             'position' => $testimonial->position,
             'photo' => $testimonial->photo,
-            'content' => $testimonial->content
+            'content' => $testimonial->content,
         ];
 
         return response()->json($testimonial);

@@ -23,7 +23,6 @@ use App\Http\Controllers\Api\v1\TestimonialController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\MemberController;
-use App\Models\CompetitionOrganizerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +47,7 @@ Route::get('/members', [MemberController::class, 'membersList'])->name('members.
 
 Route::middleware('auth:sanctum')->post('/uid', [MemberController::class, 'uid'])->name('members.uid');
 
-// NEW DASHBOARD
+// New API v1
 Route::apiResource([
     'achievement' => AchievementController::class,
     'competition' => CompetitionController::class,

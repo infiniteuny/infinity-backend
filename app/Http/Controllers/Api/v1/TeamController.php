@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Team\StoreTeamRequest;
 use App\Http\Requests\Team\UpdateTeamRequest;
 use App\Models\Team;
-use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
@@ -14,6 +13,7 @@ class TeamController extends Controller
     {
         $this->authorizeResource(Team::class, 'Team');
     }
+
     /**
      * Display a listing of the resource.
      */

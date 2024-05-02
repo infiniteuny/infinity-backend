@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CoreTeamMember\StoreCoreTeamMemberRequest;
 use App\Http\Requests\CoreTeamMember\UpdateCoreTeamMemberRequest;
 use App\Models\CoreTeamMember;
-use Illuminate\Http\Request;
 
 class CoreTeamMemberController extends Controller
 {
@@ -14,6 +13,7 @@ class CoreTeamMemberController extends Controller
     {
         $this->authorizeResource(CoreTeamMember::class, 'coreTeamMember');
     }
+
     /**
      * Display a listing of the resource.
      */

@@ -12,6 +12,7 @@ class MajorController extends Controller
     {
         $this->authorizeResource(Major::class, 'major');
     }
+
     /**
      * Display a listing of the resource.
      */
