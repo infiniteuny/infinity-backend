@@ -28,32 +28,32 @@ class DegreeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDegreeRequest $request)
+    public function store(StoreDegreeRequest $request, DegreeRepository $degreeRepository)
     {
-        return $this->degreeRepository->store($request);
+        return $degreeRepository->store($request);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Degree $degree)
+    public function show(DegreeRepository $degreeRepository, Degree $degree)
     {
-        return $this->degreeRepository->show($degree);
+        return $degreeRepository->show($degree);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDegreeRequest $request, Degree $degree)
+    public function update(UpdateDegreeRequest $request, Degree $degree, DegreeRepository $degreeRepository)
     {
-        return $this->degreeRepository->update($request, $degree);
+        return $request;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Degree $degree)
+    public function destroy(Degree $degree, DegreeRepository $degreeRepository)
     {
-        return $this->degreeRepository->destroy($degree);
+        return $degreeRepository->destroy($degree);
     }
 }

@@ -15,12 +15,12 @@ class Degree extends Model
         'name',
     ];
 
-    protected $dateFormat = DATE_ATOM;
+    // protected $dateFormat = DATE_ATOM;
 
-    protected function serializeDate(DateTimeInterface $date): string
-    {
-        return $date->format(DATE_ATOM);
-    }
+    // protected function serializeDate(DateTimeInterface $date): string
+    // {
+    //     return $date->format(DATE_ATOM);
+    // }
 
     public function majors()
     {
