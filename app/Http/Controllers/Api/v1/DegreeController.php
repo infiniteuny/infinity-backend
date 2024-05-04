@@ -11,18 +11,16 @@ use Illuminate\Http\Request;
 
 class DegreeController extends Controller
 {
-    public function __construct(private DegreeRepository $degreeRepository)
-    {
-        // $this->authorizeResource(Degree::class, 'Degree');
-        $this->degreeRepository = $degreeRepository;
-    }
-
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Degree::class, 'Degree');
+    // }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request, DegreeRepository $degreeRepository)
     {
-        return $degreeRepository->index($request);
+        return Degree::all();
     }
 
     /**
@@ -30,7 +28,8 @@ class DegreeController extends Controller
      */
     public function store(StoreDegreeRequest $request, DegreeRepository $degreeRepository)
     {
-        return $degreeRepository->store($request);
+        $degree = Degree::create($request->validated());
+        return response()->json(['message' => 'Degree berhasil ditambahkan', 'data' => $degree], 201);
     }
 
     /**
@@ -38,7 +37,7 @@ class DegreeController extends Controller
      */
     public function show(DegreeRepository $degreeRepository, Degree $degree)
     {
-        return $degreeRepository->show($degree);
+        return $degree;
     }
 
     /**
@@ -46,7 +45,8 @@ class DegreeController extends Controller
      */
     public function update(UpdateDegreeRequest $request, Degree $degree, DegreeRepository $degreeRepository)
     {
-        return $request;
+        $degree->update($request->validated());
+        return response()->json(['message' => 'Degree berhasil diubah', 'data' => $degree], 200);
     }
 
     /**
@@ -54,6 +54,7 @@ class DegreeController extends Controller
      */
     public function destroy(Degree $degree, DegreeRepository $degreeRepository)
     {
-        return $degreeRepository->destroy($degree);
+        $degree->delete();
+        return response()->json(['message' => 'Degree berhasil dihapus'], 200);
     }
 }
