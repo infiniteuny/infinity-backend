@@ -10,16 +10,16 @@ use Illuminate\Http\Request;
 
 class DegreeController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Degree::class, 'Degree');
-    }
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Degree::class, 'Degree');
+    // }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Degree::all();
     }
 
     /**
@@ -27,7 +27,8 @@ class DegreeController extends Controller
      */
     public function store(StoreDegreeRequest $request)
     {
-        //
+        $degree = Degree::create($request->validated());
+        return response()->json(['message' => 'Degree berhasil ditambahkan', 'data' => $degree], 201);
     }
 
     /**
@@ -35,7 +36,7 @@ class DegreeController extends Controller
      */
     public function show(Degree $degree)
     {
-        //
+        return $degree;
     }
 
     /**
@@ -43,7 +44,8 @@ class DegreeController extends Controller
      */
     public function update(UpdateDegreeRequest $request, Degree $degree)
     {
-        //
+        $degree->update($request->validated());
+        return response()->json(['message' => 'Degree berhasil diubah', 'data' => $degree], 200);
     }
 
     /**
@@ -51,6 +53,7 @@ class DegreeController extends Controller
      */
     public function destroy(Degree $degree)
     {
-        //
+        $degree->delete();
+        return response()->json(['message' => 'Degree berhasil dihapus'], 200);
     }
 }
