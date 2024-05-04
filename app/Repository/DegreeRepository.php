@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Http\Requests\Degree\StoreDegreeRequest;
+use App\Http\Requests\Degree\UpdateDegreeRequest;
 use App\Models\Degree;
 use illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -23,5 +25,26 @@ class DegreeRepository
             ->paginate($request->query('per_page', 10));
 
         return JsendResponseFormatter::success_paginated('degrees', $degrees);
+    }
+    public function store(StoreDegreeRequest $request): JsonResponse
+    {
+        $degree = Degree::create($request->validated());
+
+        return JsendResponseFormatter::success_singleton('degree', $degree, 201);
+    }
+    public function show(Degree $degree): JsonResponse
+    {
+        return JsendResponseFormatter::success_singleton('degree', $degree);
+    }
+    public function update(UpdateDegreeRequest $request, Degree $degree): JsonResponse
+    {
+        $degree->update($request->validated());
+
+        return JsendResponseFormatter::success_singleton('degree', $degree);
+    }
+    public function destroy(Degree $degree): JsonResponse
+    {
+        $degree->delete();
+        return JsendResponseFormatter::success_singleton('degree', $degree);
     }
 }

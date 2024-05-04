@@ -26,35 +26,32 @@ class DegreeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDegreeRequest $request)
+    public function store(StoreDegreeRequest $request, DegreeRepository $degreeRepository)
     {
-        $degree = Degree::create($request->validated());
-        return response()->json(['message' => 'Degree berhasil ditambahkan', 'data' => $degree], 201);
+        return $degreeRepository->store($request);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Degree $degree)
+    public function show(DegreeRepository $degreeRepository, Degree $degree)
     {
-        return $degree;
+        return $degreeRepository->show($degree);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDegreeRequest $request, Degree $degree)
+    public function update(UpdateDegreeRequest $request, Degree $degree, DegreeRepository $degreeRepository)
     {
-        $degree->update($request->validated());
-        return response()->json(['message' => 'Degree berhasil diubah', 'data' => $degree], 200);
+        return $request;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Degree $degree)
+    public function destroy(Degree $degree, DegreeRepository $degreeRepository)
     {
-        $degree->delete();
-        return response()->json(['message' => 'Degree berhasil dihapus'], 200);
+        return $degreeRepository->destroy($degree);
     }
 }
