@@ -21,6 +21,7 @@
         "socialiteproviders/authentik": "5.2.0",
         "spatie/laravel-analytics": "5.1.0",
         "spatie/laravel-permission": "6.2.0",
+        "spatie/laravel-query-builder": "^5.8",
         "yajra/laravel-datatables-oracle": "10.11.2",
         "yoeunes/toastr": "2.3.0"
     },

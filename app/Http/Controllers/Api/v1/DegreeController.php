@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Degree\StoreDegreeRequest;
 use App\Http\Requests\Degree\UpdateDegreeRequest;
 use App\Models\Degree;
+use App\Repository\DegreeRepository;
 use Illuminate\Http\Request;
 
 class DegreeController extends Controller
@@ -17,9 +18,9 @@ class DegreeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, DegreeRepository $degreeRepository)
     {
-        return Degree::all();
+        return $degreeRepository->index($request);
     }
 
     /**
