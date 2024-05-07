@@ -19,7 +19,7 @@ class FacultyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, FacultyRepository $facultyRepository)
     {
         return Faculty::all();
     }
