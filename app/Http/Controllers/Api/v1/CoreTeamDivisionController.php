@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CoreTeamDivision\StoreCoreTeamDivisionRequest;
 use App\Http\Requests\CoreTeamDivision\UpdateCoreTeamDivisionRequest;
 use App\Models\CoreTeamDivision;
-use Illuminate\Http\Request;
 
 class CoreTeamDivisionController extends Controller
 {
@@ -14,6 +13,7 @@ class CoreTeamDivisionController extends Controller
     {
         $this->authorizeResource(CoreTeamDivision::class, 'coreTeamDivision');
     }
+
     /**
      * Display a listing of the resource.
      */

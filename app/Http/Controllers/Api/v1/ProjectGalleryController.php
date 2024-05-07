@@ -14,19 +14,20 @@ class ProjectGalleryController extends Controller
     {
         $this->authorizeResource(ProjectGallery::class, 'projectGallery');
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $projectGalleries = ProjectGallery::where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $projectGalleries = ProjectGallery::where('name', 'like', '%'.$request->input('q').'%')->get();
         $projectGalleries = $projectGalleries->map(function ($projectGallery) {
             return [
                 'id' => $projectGallery->id,
                 'title' => $projectGallery->title,
                 'description' => $projectGallery->description,
                 'url' => $projectGallery->url,
-                'image' => $projectGallery->image
+                'image' => $projectGallery->image,
             ];
         });
 
@@ -57,12 +58,12 @@ class ProjectGalleryController extends Controller
      */
     public function show(ProjectGallery $projectGallery)
     {
-        $projectGallery =  [
+        $projectGallery = [
             'id' => $projectGallery->id,
             'title' => $projectGallery->title,
             'description' => $projectGallery->description,
             'url' => $projectGallery->url,
-            'image' => $projectGallery->image
+            'image' => $projectGallery->image,
         ];
 
         return response()->json($projectGallery);

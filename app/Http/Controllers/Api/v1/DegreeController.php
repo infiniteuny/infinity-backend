@@ -9,6 +9,7 @@ use App\Models\Degree;
 use App\Repository\DegreeRepository;
 use Illuminate\Http\Request;
 
+
 class DegreeController extends Controller
 {
     public function __construct(private DegreeRepository $degreeRepository)
@@ -16,6 +17,7 @@ class DegreeController extends Controller
         // $this->authorizeResource(Degree::class, 'Degree');
         $this->degreeRepository = $degreeRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
