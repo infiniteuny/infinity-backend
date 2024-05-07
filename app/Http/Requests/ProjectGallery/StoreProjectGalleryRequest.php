@@ -21,7 +21,7 @@ class StoreProjectGalleryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return  [
+        return [
             'title' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
             'description' => 'required|string',
             'url' => 'required|url',

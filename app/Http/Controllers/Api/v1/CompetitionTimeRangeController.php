@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionTimeRange\StoreCompetitionTimeRangeRequest;
 use App\Http\Requests\CompetitionTimeRange\UpdateCompetitionTimeRangeRequest;
 use App\Models\CompetitionTimeRange;
-use Illuminate\Http\Request;
 
 class CompetitionTimeRangeController extends Controller
 {
@@ -14,6 +13,7 @@ class CompetitionTimeRangeController extends Controller
     {
         $this->authorizeResource(CompetitionTimeRange::class, 'competitionTimeRange');
     }
+
     /**
      * Display a listing of the resource.
      */

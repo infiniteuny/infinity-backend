@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CompetitionOutput\StoreCompetitionOutputRequest;
 use App\Http\Requests\CompetitionOutput\UpdateCompetitionOutputRequest;
-
 use App\Models\CompetitionOutput;
 
 class CompetitionOutputController extends Controller

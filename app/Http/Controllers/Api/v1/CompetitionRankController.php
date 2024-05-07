@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionRank\StoreCompetitionRankRequest;
 use App\Http\Requests\CompetitionRank\UpdateCompetitionRankRequest;
 use App\Models\CompetitionRank;
-use Illuminate\Http\Request;
 
 class CompetitionRankController extends Controller
 {
@@ -14,6 +13,7 @@ class CompetitionRankController extends Controller
     {
         $this->authorizeResource(CompetitionRank::class, 'competitionRank');
     }
+
     /**
      * Display a listing of the resource.
      */

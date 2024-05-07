@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Faculty\StoreFacultyRequest;
 use App\Http\Requests\Faculty\UpdateFacultyRequest;
 use App\Models\Faculty;
-use Illuminate\Http\Request;
 
 class FacultyController extends Controller
 {
@@ -14,6 +13,7 @@ class FacultyController extends Controller
     {
         $this->authorizeResource(Faculty::class, 'faculty');
     }
+
     /**
      * Display a listing of the resource.
      */

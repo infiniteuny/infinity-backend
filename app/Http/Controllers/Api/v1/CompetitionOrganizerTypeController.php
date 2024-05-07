@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionOrganizerType\StoreCompetitionOrganizerTypeRequest;
 use App\Http\Requests\CompetitionOrganizerType\UpdateCompetitionOrganizerTypeRequest;
 use App\Models\CompetitionOrganizerType;
-use Illuminate\Http\Request;
 
 class CompetitionOrganizerTypeController extends Controller
 {
@@ -14,6 +13,7 @@ class CompetitionOrganizerTypeController extends Controller
     {
         $this->authorizeResource(CompetitionOrganizerType::class, 'competitionOrganizerType');
     }
+
     /**
      * Display a listing of the resource.
      */

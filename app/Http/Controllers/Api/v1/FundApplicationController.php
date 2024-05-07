@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FundApplication\StoreFundApplicationRequest;
 use App\Http\Requests\FundApplication\UpdateFundApplicationRequest;
 use App\Models\FundApplication;
-use Illuminate\Http\Request;
 
 class FundApplicationController extends Controller
 {
@@ -14,6 +13,7 @@ class FundApplicationController extends Controller
     {
         $this->authorizeResource(FundApplication::class, 'fundApplication');
     }
+
     /**
      * Display a listing of the resource.
      */

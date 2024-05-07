@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Config\StoreConfigRequest;
 use App\Http\Requests\Config\UpdateConfigRequest;
 use App\Models\Config;
-use Illuminate\Http\Request;
 
 class ConfigController extends Controller
 {
@@ -14,6 +13,7 @@ class ConfigController extends Controller
     {
         $this->authorizeResource(Config::class, 'Config');
     }
+
     /**
      * Display a listing of the resource.
      */

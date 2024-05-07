@@ -161,7 +161,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if ($request->has('password_old')) {
-            if (!Hash::check($request->password_old, $user->password)) {
+            if (! Hash::check($request->password_old, $user->password)) {
                 return redirect()->back()->with('error', 'Password lama ga sama.');
             }
         }

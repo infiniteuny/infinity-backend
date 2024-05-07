@@ -14,19 +14,20 @@ class PostController extends Controller
     {
         $this->authorizeResource(Post::class, 'post');
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $posts = Post::where('name', 'like', '%' . $request->input('q') . '%')->get();
+        $posts = Post::where('name', 'like', '%'.$request->input('q').'%')->get();
         $posts = $posts->map(function ($post) {
             return [
                 'id' => $post->id,
                 'title' => $post->title,
                 'content' => $post->content,
                 'time' => $post->time,
-                'cover_image' => $post->cover_image
+                'cover_image' => $post->cover_image,
             ];
         });
 
@@ -62,7 +63,7 @@ class PostController extends Controller
             'title' => $post->title,
             'content' => $post->content,
             'time' => $post->time,
-            'cover_image' => $post->cover_image
+            'cover_image' => $post->cover_image,
         ];
 
         return response()->json($post);

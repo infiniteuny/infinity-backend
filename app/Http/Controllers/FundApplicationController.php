@@ -258,7 +258,7 @@ class FundApplicationController extends Controller
         $fund = FundApplication::findOrFail($id);
         $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->student_id_card)) {
-            return Storage::download($fund->student_id_card, $member . ' - ' . $fund->competition_name . ' - scan_kta.pdf');
+            return Storage::download($fund->student_id_card, $member.' - '.$fund->competition_name.' - scan_kta.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
@@ -270,7 +270,7 @@ class FundApplicationController extends Controller
         $fund = FundApplication::findOrFail($id);
         $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->letter_of_acceptance)) {
-            return Storage::download($fund->letter_of_acceptance, $member . ' - ' . $fund->competition_name . ' - letter_of_acceptance.pdf');
+            return Storage::download($fund->letter_of_acceptance, $member.' - '.$fund->competition_name.' - letter_of_acceptance.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
@@ -282,7 +282,7 @@ class FundApplicationController extends Controller
         $fund = FundApplication::findOrFail($id);
         $member = $fund->users()->first()->members->name;
         if (Storage::exists($fund->budget_plan)) {
-            return Storage::download($fund->budget_plan, $member . ' - ' . $fund->competition_name . ' - rencana_anggaran_biaya.pdf');
+            return Storage::download($fund->budget_plan, $member.' - '.$fund->competition_name.' - rencana_anggaran_biaya.pdf');
         } else {
             return redirect()->back()->with('error', 'Yah filenya ga ketemu');
         }
@@ -316,7 +316,7 @@ class FundApplicationController extends Controller
         $phone = str_replace('(', '', $phone);
         $phone = str_replace('.', '', $phone);
 
-        if (!preg_match('/[^+0-9]/', trim($phone))) {
+        if (! preg_match('/[^+0-9]/', trim($phone))) {
             if (substr(trim($phone), 0, 3) == '+62') {
                 $phone = trim($phone);
             } elseif (substr($phone, 0, 2) == '62') {
