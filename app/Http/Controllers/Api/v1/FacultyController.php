@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Faculty\StoreFacultyRequest;
 use App\Http\Requests\Faculty\UpdateFacultyRequest;
 use App\Models\Faculty;
+use App\Repository\FacultyRepository;
+use Illuminate\Http\Request;
 
 class FacultyController extends Controller
 {
@@ -19,7 +21,7 @@ class FacultyController extends Controller
      */
     public function index()
     {
-        //
+        return Faculty::all();
     }
 
     /**
@@ -27,7 +29,8 @@ class FacultyController extends Controller
      */
     public function store(StoreFacultyRequest $request)
     {
-        //
+        $faculty = Faculty::create($request->validated());
+        return response()->json(['message' => 'Faculty berhasil ditambahkan', 'data' => $faculty], 201);
     }
 
     /**
@@ -35,7 +38,7 @@ class FacultyController extends Controller
      */
     public function show(Faculty $faculty)
     {
-        //
+        return $faculty;
     }
 
     /**
@@ -43,7 +46,8 @@ class FacultyController extends Controller
      */
     public function update(UpdateFacultyRequest $request, Faculty $faculty)
     {
-        //
+        $faculty->update($request->validated());
+        return response()->json(['message' => 'Faculty berhasil diubah', 'data' => $faculty], 200);
     }
 
     /**
@@ -51,6 +55,7 @@ class FacultyController extends Controller
      */
     public function destroy(Faculty $faculty)
     {
-        //
+        $faculty->delete();
+        return response()->json(['message' => 'Faculty berhasil dihapus'], 200);
     }
 }
