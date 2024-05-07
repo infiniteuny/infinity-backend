@@ -9,17 +9,18 @@ use App\Models\Degree;
 
 class DegreeController extends Controller
 {
-    public function __construct()
+    public function __construct(private DegreeRepository $degreeRepository)
     {
-        $this->authorizeResource(Degree::class, 'Degree');
+        // $this->authorizeResource(Degree::class, 'Degree');
+        $this->degreeRepository = $degreeRepository;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return $this->degreeRepository->index($request);
     }
 
     /**
@@ -27,7 +28,7 @@ class DegreeController extends Controller
      */
     public function store(StoreDegreeRequest $request)
     {
-        //
+        return $this->degreeRepository->store($request);
     }
 
     /**
@@ -35,7 +36,7 @@ class DegreeController extends Controller
      */
     public function show(Degree $degree)
     {
-        //
+        return $this->degreeRepository->show($degree);
     }
 
     /**
@@ -43,7 +44,7 @@ class DegreeController extends Controller
      */
     public function update(UpdateDegreeRequest $request, Degree $degree)
     {
-        //
+        return $this->degreeRepository->update($request, $degree);
     }
 
     /**
@@ -51,6 +52,6 @@ class DegreeController extends Controller
      */
     public function destroy(Degree $degree)
     {
-        //
+        return $this->degreeRepository->destroy($degree);
     }
 }
