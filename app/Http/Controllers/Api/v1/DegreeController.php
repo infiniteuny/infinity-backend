@@ -11,50 +11,48 @@ use Illuminate\Http\Request;
 
 class DegreeController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->authorizeResource(Degree::class, 'Degree');
-    // }
+    public function __construct(private DegreeRepository $degreeRepository)
+    {
+        // $this->authorizeResource(Degree::class, 'Degree');
+        $this->degreeRepository = $degreeRepository;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, DegreeRepository $degreeRepository)
+    public function index(Request $request)
     {
-        return Degree::all();
+        return $this->degreeRepository->index($request);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDegreeRequest $request, DegreeRepository $degreeRepository)
+    public function store(StoreDegreeRequest $request)
     {
-        $degree = Degree::create($request->validated());
-        return response()->json(['message' => 'Degree berhasil ditambahkan', 'data' => $degree], 201);
+        return $this->degreeRepository->store($request);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(DegreeRepository $degreeRepository, Degree $degree)
+    public function show(Degree $degree)
     {
-        return $degree;
+        return $this->degreeRepository->show($degree);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDegreeRequest $request, Degree $degree, DegreeRepository $degreeRepository)
+    public function update(UpdateDegreeRequest $request, Degree $degree)
     {
-        $degree->update($request->validated());
-        return response()->json(['message' => 'Degree berhasil diubah', 'data' => $degree], 200);
+        return $this->degreeRepository->update($request, $degree);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Degree $degree, DegreeRepository $degreeRepository)
+    public function destroy(Degree $degree)
     {
-        $degree->delete();
-        return response()->json(['message' => 'Degree berhasil dihapus'], 200);
+        return $this->degreeRepository->destroy($degree);
     }
 }
