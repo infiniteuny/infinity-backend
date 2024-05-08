@@ -12,10 +12,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class MajorRepository
 {
-    // public function __construct(Major $model)
-    // {
-    //     $this->authorizeResource(Major::class, 'Major');
-    // }
     public function index(Request $request): JsonResponse
     {
         $majors = QueryBuilder::for(Major::class)

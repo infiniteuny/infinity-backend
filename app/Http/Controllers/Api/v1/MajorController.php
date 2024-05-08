@@ -6,22 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Major\StoreMajorRequest;
 use App\Http\Requests\Major\UpdateMajorRequest;
 use App\Models\Major;
-use App\Repository\DegreeRepository;
+use App\Repository\MajorRepository;
 use Illuminate\Http\Request;
 
 class MajorController extends Controller
 {
-    public function __construct()
+    public function __construct(private MajorRepository $majorRepository)
     {
-        $this->authorizeResource(Major::class, 'major');
+        // $this->authorizeResource(Major::class, 'major');
+        $this->majorRepository = $majorRepository;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Major::all();
+        return $this->majorRepository->index($request);
     }
 
     /**
@@ -29,8 +30,7 @@ class MajorController extends Controller
      */
     public function store(StoreMajorRequest $request)
     {
-        $major = Major::create($request->validated());
-        return response()->json(['message' => 'Major berhasil ditambahkan', 'data' => $major], 201);
+        return $this->majorRepository->store($request);
     }
 
     /**
@@ -38,7 +38,7 @@ class MajorController extends Controller
      */
     public function show(Major $major)
     {
-        return $major;
+        return $this->majorRepository->show($major);
     }
 
     /**
@@ -46,8 +46,7 @@ class MajorController extends Controller
      */
     public function update(UpdateMajorRequest $request, Major $major)
     {
-        $major->update($request->validated());
-        return response()->json(['message' => 'Major berhasil diubah', 'data' => $major], 200);
+        return $this->majorRepository->update($request, $major);
     }
 
     /**
@@ -55,7 +54,6 @@ class MajorController extends Controller
      */
     public function destroy(Major $major)
     {
-        $major->delete();
-        return response()->json(['message' => 'Degree berhasil dihapus'], 200);
+        return $this->majorRepository->destroy($major);
     }
 }
