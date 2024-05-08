@@ -21,7 +21,7 @@ use App\Http\Controllers\Api\v1\TeamController;
 use App\Http\Controllers\Api\v1\TeamMemberController;
 use App\Http\Controllers\Api\v1\TestimonialController;
 use App\Http\Controllers\Api\v1\UserController;
-use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\Api\v1\FacultyController;
 use App\Http\Controllers\MemberController;
 use App\Models\CompetitionOrganizerType;
 use Illuminate\Http\Request;

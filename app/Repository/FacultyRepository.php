@@ -12,10 +12,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class FacultyRepository
 {
-    // public function __construct(Faculty $model)
-    // {
-    //     $this->authorizeResource(Faculty::class, 'Faculty');
-    // }
     public function index(Request $request): JsonResponse
     {
         $faculties = QueryBuilder::for(Faculty::class)

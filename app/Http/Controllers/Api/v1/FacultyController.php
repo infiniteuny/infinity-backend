@@ -11,17 +11,18 @@ use Illuminate\Http\Request;
 
 class FacultyController extends Controller
 {
-    public function __construct()
+    public function __construct(private FacultyRepository $facultyRepository)
     {
-        $this->authorizeResource(Faculty::class, 'faculty');
+        // $this->authorizeResource(Faculty::class, 'faculty');
+        $this->facultyRepository = $facultyRepository;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Faculty::all();
+        return $this->facultyRepository->index($request);
     }
 
     /**
@@ -29,8 +30,7 @@ class FacultyController extends Controller
      */
     public function store(StoreFacultyRequest $request)
     {
-        $faculty = Faculty::create($request->validated());
-        return response()->json(['message' => 'Faculty berhasil ditambahkan', 'data' => $faculty], 201);
+        return $this->facultyRepository->store($request);
     }
 
     /**
@@ -38,7 +38,7 @@ class FacultyController extends Controller
      */
     public function show(Faculty $faculty)
     {
-        return $faculty;
+        return $this->facultyRepository->show($faculty);
     }
 
     /**
@@ -46,8 +46,7 @@ class FacultyController extends Controller
      */
     public function update(UpdateFacultyRequest $request, Faculty $faculty)
     {
-        $faculty->update($request->validated());
-        return response()->json(['message' => 'Faculty berhasil diubah', 'data' => $faculty], 200);
+        return $this->facultyRepository->update($request, $faculty);
     }
 
     /**
@@ -55,7 +54,6 @@ class FacultyController extends Controller
      */
     public function destroy(Faculty $faculty)
     {
-        $faculty->delete();
-        return response()->json(['message' => 'Faculty berhasil dihapus'], 200);
+        return $this->facultyRepository->destroy($faculty);
     }
 }
