@@ -15,9 +15,9 @@ class TeamRepository
     public function index(Request $request): JsonResponse
     {
         $teams = QueryBuilder::for(Team::class)
-            ->allowedFilters(['code', 'name'])
+            ->allowedFilters(['name', 'is_personal', 'leader_id'])
             ->defaultSorts(['-created_at', 'id'])
-            ->allowedSorts(['id', 'code', 'name', 'created_at', 'updated_at'])
+            ->allowedSorts(['id', 'name', 'is_personal', 'leader_id', 'created_at', 'updated_at'])
             ->paginate($request->query('per_page', 10));
 
         return JsendResponseFormatter::success_paginated('teams', $teams);
