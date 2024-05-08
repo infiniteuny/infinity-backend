@@ -6,20 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Team\StoreTeamRequest;
 use App\Http\Requests\Team\UpdateTeamRequest;
 use App\Models\Team;
+use App\Repository\TeamRepository;
+use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    public function __construct()
+    public function __construct(private TeamRepository $teamRepository)
     {
-        $this->authorizeResource(Team::class, 'Team');
+        // $this->authorizeResource(Team::class, 'Team');
+        $this->teamRepository = $teamRepository;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return $this->teamRepository->index($request);
     }
 
     /**
@@ -27,7 +30,7 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        //
+        return $this->teamRepository->store($request);
     }
 
     /**
@@ -35,7 +38,7 @@ class TeamController extends Controller
      */
     public function show(Team $team)
     {
-        //
+        return $this->teamRepository->show($team);
     }
 
     /**
@@ -43,7 +46,7 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, Team $team)
     {
-        //
+        return $this->teamRepository->update($request, $team);
     }
 
     /**
@@ -51,6 +54,6 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
-        //
+        return $this->teamRepository->destroy($team);
     }
 }
