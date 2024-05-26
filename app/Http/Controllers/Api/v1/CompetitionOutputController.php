@@ -6,20 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionOutput\StoreCompetitionOutputRequest;
 use App\Http\Requests\CompetitionOutput\UpdateCompetitionOutputRequest;
 use App\Models\CompetitionOutput;
+use App\Repository\CompetitionOutputRepository;
+use Illuminate\Http\Request;
 
 class CompetitionOutputController extends Controller
 {
-    public function __construct()
+    public function __construct(private CompetitionOutputRepository $competitionOutputRepository)
     {
-        $this->authorizeResource(CompetitionOutput::class, 'competitionOutput');
+        // $this->authorizeResource(CompetitionOutput::class, 'competitionOutput');
+        $this->competitionOutputRepository = $competitionOutputRepository;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, CompetitionOutputRepository $competitionOutputRepository)
     {
-        //
+        return $this->competitionOutputRepository->index($request);
     }
 
     /**
@@ -27,7 +30,7 @@ class CompetitionOutputController extends Controller
      */
     public function store(StoreCompetitionOutputRequest $request)
     {
-        //
+        return $this->competitionOutputRepository->store($request);
     }
 
     /**
@@ -35,7 +38,7 @@ class CompetitionOutputController extends Controller
      */
     public function show(CompetitionOutput $competitionOutput)
     {
-        //
+        return $this->competitionOutputRepository->show($competitionOutput);
     }
 
     /**
@@ -43,7 +46,7 @@ class CompetitionOutputController extends Controller
      */
     public function update(UpdateCompetitionOutputRequest $request, CompetitionOutput $competitionOutput)
     {
-        //
+        return $this->competitionOutputRepository->update($request, $competitionOutput);
     }
 
     /**
@@ -51,6 +54,6 @@ class CompetitionOutputController extends Controller
      */
     public function destroy(CompetitionOutput $competitionOutput)
     {
-        //
+        return $this->competitionOutputRepository->destroy($competitionOutput);
     }
 }
