@@ -15,9 +15,9 @@ class CompetitionOutputRepository
     public function index(Request $request): JsonResponse
     {
         $competitionOutputs = QueryBuilder::for(CompetitionOutput::class)
-            ->allowedFilters(['code', 'name'])
+            ->allowedFilters(['name', 'weight'])
             ->defaultSorts(['-created_at', 'id'])
-            ->allowedSorts(['id', 'code', 'name', 'created_at', 'updated_at'])
+            ->allowedSorts(['id', 'name', 'weight', 'created_at', 'updated_at'])
             ->paginate($request->query('per_page', 10));
 
         return JsendResponseFormatter::success_paginated('competitionOutputs', $competitionOutputs);
