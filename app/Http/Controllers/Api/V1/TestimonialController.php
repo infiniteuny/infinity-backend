@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Testimonial\StoreTestimonialRequest;
 use App\Http\Requests\Testimonial\UpdateTestimonialRequest;
 use App\Models\Testimonial;
+use App\Utils\ResponseFormatter;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TestimonialController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Testimonial::class, 'testimonial');
+        // $this->authorizeResource(Testimonial::class, 'testimonial');
     }
 
     /**
@@ -20,18 +22,29 @@ class TestimonialController extends Controller
      */
     public function index(Request $request)
     {
-        $testimonials = Testimonial::where('name', 'like', '%'.$request->input('q').'%')->get();
-        $testimonials = $testimonials->map(function ($testimonial) {
-            return [
-                'id' => $testimonial->id,
-                'user' => $testimonial->user,
-                'position' => $testimonial->position,
-                'photo' => $testimonial->photo,
-                'content' => $testimonial->content,
-            ];
-        });
+        $testimonials = QueryBuilder::for(Testimonial::class)
+            ->allowedFilters([
+                'code',
+                'name',
+                'degree_id',
+                'faculty_id',
+            ])
+            ->defaultSorts([
+                '-created_at',
+                'id',
+            ])
+            ->allowedSorts([
+                'id',
+                'code',
+                'name',
+                'degree_id',
+                'faculty_id',
+                'created_at',
+                'updated_at',
+            ])
+            ->paginate($request->query('per_page', 10));
 
-        return response()->json($testimonials);
+        return ResponseFormatter::collection('testimonials', $testimonials);
     }
 
     /**
@@ -39,18 +52,9 @@ class TestimonialController extends Controller
      */
     public function store(StoreTestimonialRequest $request)
     {
-        try {
-            Testimonial::create([
-                'user_id' => $request->user_id,
-                'position' => $request->position,
-                'photo' => $request->file('photo')->store('images/testimonial', 'public'),
-                'content' => $request->content,
-            ]);
+        $testimonial = Testimonial::create($request->validated());
 
-            return response()->json(['success' => 'Data berhasil disimpan'], 201);
-        } catch (\Throwable $th) {
-            return response()->json(['error' => 'Data gagal disimpan'], 401);
-        }
+        return ResponseFormatter::singleton('testimonial', $testimonial, 201);
     }
 
     /**
@@ -58,15 +62,7 @@ class TestimonialController extends Controller
      */
     public function show(Testimonial $testimonial)
     {
-        $testimonial = [
-            'id' => $testimonial->id,
-            'user' => $testimonial->user,
-            'position' => $testimonial->position,
-            'photo' => $testimonial->photo,
-            'content' => $testimonial->content,
-        ];
-
-        return response()->json($testimonial);
+        return ResponseFormatter::singleton('testimonial', $testimonial);
     }
 
     /**
@@ -74,19 +70,9 @@ class TestimonialController extends Controller
      */
     public function update(UpdateTestimonialRequest $request, Testimonial $testimonial)
     {
-        try {
-            $testimonial->user_id = $request->user_id;
-            $testimonial->postion = $request->position;
-            $testimonial->content = $request->content;
-            if ($request->has('photo')) {
-                $testimonial->photo = $request->file('photo')->store('images/testimonial', 'public');
-            }
-            $testimonial->save();
+        $testimonial->update($request->validated());
 
-            return response()->json(['success' => 'Data berhasil diubah'], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['error' => 'Data gagal diubah'], 401);
-        }
+        return ResponseFormatter::singleton('testimonial', $testimonial);
     }
 
     /**
@@ -96,6 +82,6 @@ class TestimonialController extends Controller
     {
         $testimonial->delete();
 
-        return response()->json(['success' => 'Data berhasil dihapus'], 200);
+        return ResponseFormatter::singleton('testimonial', $testimonial);
     }
 }
