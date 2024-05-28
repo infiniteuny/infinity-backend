@@ -22,7 +22,15 @@ class StoreFundApplicationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'team_id' => 'required|exists:teams,id',
+            'competition_id' => 'required|exists:competitions,id',
+            'competition_team_type_id' => 'required|exists:competition_team_types,id',
+            'competition_scale_id' => 'required|exists:competition_scales,id',
+            'competition_branch' => 'required|string|max:255',
+            'competition_date' => 'required|date',
+            'letter_of_acceptance' => 'required|string|max:255',
+            'proposal' => 'required|string|max:255',
+            'status' => 'in:pending,rejected,accepted',
         ];
     }
 }

@@ -6,20 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FundApplication\StoreFundApplicationRequest;
 use App\Http\Requests\FundApplication\UpdateFundApplicationRequest;
 use App\Models\FundApplication;
+use App\Repository\FundApplicationRepository;
+use Illuminate\Http\Request;
 
 class FundApplicationController extends Controller
 {
-    public function __construct()
+    public function __construct(private FundApplicationRepository $fundApplicationRepository)
     {
-        $this->authorizeResource(FundApplication::class, 'fundApplication');
+        // $this->authorizeResource(FundApplication::class, 'fundApplication');
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return $this->fundApplicationRepository->index($request);
     }
 
     /**
@@ -27,7 +29,7 @@ class FundApplicationController extends Controller
      */
     public function store(StoreFundApplicationRequest $request)
     {
-        //
+        return $this->fundApplicationRepository->store($request);
     }
 
     /**
@@ -35,7 +37,7 @@ class FundApplicationController extends Controller
      */
     public function show(FundApplication $fundApplication)
     {
-        //
+        return $this->fundApplicationRepository->show($fundApplication);
     }
 
     /**
@@ -43,7 +45,7 @@ class FundApplicationController extends Controller
      */
     public function update(UpdateFundApplicationRequest $request, FundApplication $fundApplication)
     {
-        //
+        return $this->fundApplicationRepository->update($request, $fundApplication);
     }
 
     /**
@@ -51,6 +53,6 @@ class FundApplicationController extends Controller
      */
     public function destroy(FundApplication $fundApplication)
     {
-        //
+        return $this->fundApplicationRepository->destroy($fundApplication);
     }
 }
