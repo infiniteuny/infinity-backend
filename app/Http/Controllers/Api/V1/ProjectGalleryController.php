@@ -6,32 +6,46 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectGallery\StoreProjectGalleryRequest;
 use App\Http\Requests\ProjectGallery\UpdateProjectGalleryRequest;
 use App\Models\ProjectGallery;
+use App\Utils\ResponseFormatter;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ProjectGalleryController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(ProjectGallery::class, 'projectGallery');
+        // $this->authorizeResource(ProjectGallery::class, 'project_gallery');
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        $projectGalleries = ProjectGallery::where('name', 'like', '%'.$request->input('q').'%')->get();
-        $projectGalleries = $projectGalleries->map(function ($projectGallery) {
-            return [
-                'id' => $projectGallery->id,
-                'title' => $projectGallery->title,
-                'description' => $projectGallery->description,
-                'url' => $projectGallery->url,
-                'image' => $projectGallery->image,
-            ];
-        });
+        $projectGalleries = QueryBuilder::for(ProjectGallery::class)
+            ->allowedFilters([
+                'title',
+                'description',
+                'url',
+                'image',
+            ])
+            ->defaultSorts([
+                '-created_at',
+                'id',
+            ])
+            ->allowedSorts([
+                'id',
+                'title',
+                'description',
+                'url',
+                'image',
+                'created_at',
+                'updated_at',
+            ])
+            ->paginate($request->query('per_page', 10));
 
-        return response()->json($projectGalleries);
+        return ResponseFormatter::collection('project_galleries', $projectGalleries);
     }
 
     /**
@@ -39,18 +53,9 @@ class ProjectGalleryController extends Controller
      */
     public function store(StoreProjectGalleryRequest $request)
     {
-        try {
-            ProjectGallery::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'url' => $request->url,
-                'image' => $request->file('image')->store('images/project-gallery', 'public'),
-            ]);
+        $projectGallery = ProjectGallery::create($request->validated());
 
-            return response()->json(['success' => 'Data berhasil disimpan'], 201);
-        } catch (\Throwable $th) {
-            return response()->json(['error' => 'Data gagal disimpan'], 401);
-        }
+        return ResponseFormatter::singleton('project_gallery', $projectGallery, 201);
     }
 
     /**
@@ -58,15 +63,7 @@ class ProjectGalleryController extends Controller
      */
     public function show(ProjectGallery $projectGallery)
     {
-        $projectGallery = [
-            'id' => $projectGallery->id,
-            'title' => $projectGallery->title,
-            'description' => $projectGallery->description,
-            'url' => $projectGallery->url,
-            'image' => $projectGallery->image,
-        ];
-
-        return response()->json($projectGallery);
+        return ResponseFormatter::singleton('project_gallery', $projectGallery);
     }
 
     /**
@@ -74,19 +71,9 @@ class ProjectGalleryController extends Controller
      */
     public function update(UpdateProjectGalleryRequest $request, ProjectGallery $projectGallery)
     {
-        try {
-            $projectGallery->title = $request->title;
-            $projectGallery->description = $request->description;
-            $projectGallery->url = $request->url;
-            if ($request->has('image')) {
-                $projectGallery->image = $request->file('image')->store('images/project-gallery', 'public');
-            }
-            $projectGallery->save();
+        $projectGallery->update($request->validated());
 
-            return response()->json(['success' => 'Data berhasil diubah'], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['error' => 'Data gagal diubah'], 401);
-        }
+        return ResponseFormatter::singleton('project_gallery', $projectGallery);
     }
 
     /**
@@ -96,6 +83,6 @@ class ProjectGalleryController extends Controller
     {
         $projectGallery->delete();
 
-        return response()->json(['success' => 'Data berhasil dihapus'], 200);
+        return ResponseFormatter::singleton('project_gallery', $projectGallery);
     }
 }
