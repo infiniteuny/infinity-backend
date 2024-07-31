@@ -35,7 +35,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// New API v1
 Route::prefix('v1')->group(function () {
     Route::apiResources([
         'achievement' => AchievementController::class,
