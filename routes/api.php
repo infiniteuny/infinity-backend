@@ -22,9 +22,6 @@ use App\Http\Controllers\Api\v1\TeamMemberController;
 use App\Http\Controllers\Api\v1\TestimonialController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\FacultyController;
-use App\Http\Controllers\MemberController;
-use App\Models\CompetitionOrganizerType;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,16 +34,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-Route::get('/faculties', [FacultyController::class, 'facultiesList'])->name('faculties.list');
-Route::get('/faculties/{faculty}/program-studies', [FacultyController::class, 'programStudiesList'])->name('faculties.program-studies.list');
-Route::get('/members', [MemberController::class, 'membersList'])->name('members.list');
-
-Route::middleware('auth:sanctum')->post('/uid', [MemberController::class, 'uid'])->name('members.uid');
 
 // New API v1
 Route::prefix('v1')->group(function () {
