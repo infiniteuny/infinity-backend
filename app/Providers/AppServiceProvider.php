@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+            return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());
         });
         Event::listen(function (SocialiteWasCalled $event) {
             $event->extendSocialite('authentik', AuthentikProvider::class);
