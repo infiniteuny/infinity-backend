@@ -12,7 +12,7 @@
     "license": "MIT",
     "version": "3.0.1",
     "require": {
-        "php": "^8.1.0",
+        "php": "^8.2.0",
         "laravel/framework": "11.19.0",
         "laravel/socialite": "5.15.1",
         "laravel/tinker": "2.9.0",
