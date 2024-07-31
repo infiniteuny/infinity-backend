@@ -23,7 +23,7 @@
     },
     "packageRules": [
         {
-            "matchPackageNames": [
+            "matchDepNames": [
                 "php"
             ],
             "enabled": false
