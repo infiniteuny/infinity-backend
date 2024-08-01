@@ -6,54 +6,83 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Major\StoreMajorRequest;
 use App\Http\Requests\Major\UpdateMajorRequest;
 use App\Models\Major;
-use App\Repository\MajorRepository;
+use App\Utils\ResponseFormatter;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class MajorController extends Controller
 {
-    public function __construct(private MajorRepository $majorRepository)
+    public function __construct()
     {
         // $this->authorizeResource(Major::class, 'major');
-        $this->majorRepository = $majorRepository;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        return $this->majorRepository->index($request);
+        $majors = QueryBuilder::for(Major::class)
+            ->allowedFilters([
+                'code',
+                'name',
+                'degree_id',
+                'faculty_id',
+            ])
+            ->defaultSorts([
+                '-created_at',
+                'id',
+            ])
+            ->allowedSorts([
+                'id',
+                'code',
+                'name',
+                'degree_id',
+                'faculty_id',
+                'created_at',
+                'updated_at',
+            ])
+            ->paginate($request->query('per_page', 10));
+
+        return ResponseFormatter::collection('majors', $majors);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMajorRequest $request)
+    public function store(StoreMajorRequest $request): JsonResponse
     {
-        return $this->majorRepository->store($request);
+        $major = Major::create($request->validated());
+
+        return ResponseFormatter::singleton('major', $major, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Major $major)
+    public function show(Major $major): JsonResponse
     {
-        return $this->majorRepository->show($major);
+        return ResponseFormatter::singleton('major', $major);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMajorRequest $request, Major $major)
+    public function update(UpdateMajorRequest $request, Major $major): JsonResponse
     {
-        return $this->majorRepository->update($request, $major);
+        $major->update($request->validated());
+
+        return ResponseFormatter::singleton('major', $major);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Major $major)
+    public function destroy(Major $major): JsonResponse
     {
-        return $this->majorRepository->destroy($major);
+        $major->delete();
+
+        return ResponseFormatter::singleton('major', $major);
     }
 }
