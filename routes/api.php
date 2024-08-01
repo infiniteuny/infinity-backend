@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AchievementController;
+use App\Http\Controllers\Api\V1\BlobController;
 use App\Http\Controllers\Api\V1\CompetitionController;
 use App\Http\Controllers\Api\V1\CompetitionOrganizerTypeController;
 use App\Http\Controllers\Api\V1\CompetitionOutputController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Api\V1\CoreTeamController;
 use App\Http\Controllers\Api\V1\CoreTeamDivisionController;
 use App\Http\Controllers\Api\V1\CoreTeamMemberController;
 use App\Http\Controllers\Api\V1\DegreeController;
+use App\Http\Controllers\Api\V1\FacultyController;
 use App\Http\Controllers\Api\V1\FundApplicationController;
 use App\Http\Controllers\Api\V1\MajorController;
 use App\Http\Controllers\Api\V1\PostController;
@@ -21,7 +23,6 @@ use App\Http\Controllers\Api\V1\TeamController;
 use App\Http\Controllers\Api\V1\TeamMemberController;
 use App\Http\Controllers\Api\V1\TestimonialController;
 use App\Http\Controllers\Api\V1\UserController;
-use App\Http\Controllers\Api\V1\FacultyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,7 +36,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->group(function () {
+Route::group([
+    'as' => 'api.v1.',
+    'prefix' => 'v1',
+], function () {
+    Route::get('blobs/{blob}', BlobController::class)
+        ->name('blobs.show');
+
     Route::apiResources([
         'achievements' => AchievementController::class,
         'competitions' => CompetitionController::class,
