@@ -1,27 +1,27 @@
 <?php
 
-use App\Http\Controllers\Api\v1\AchievementController;
-use App\Http\Controllers\Api\v1\CompetitionController;
-use App\Http\Controllers\Api\v1\CompetitionOrganizerTypeController;
-use App\Http\Controllers\Api\v1\CompetitionOutputController;
-use App\Http\Controllers\Api\v1\CompetitionRankController;
-use App\Http\Controllers\Api\v1\CompetitionScaleController;
-use App\Http\Controllers\Api\v1\CompetitionTeamTypeController;
-use App\Http\Controllers\Api\v1\CompetitionTimeRangeController;
-use App\Http\Controllers\Api\v1\ConfigController;
-use App\Http\Controllers\Api\v1\CoreTeamController;
-use App\Http\Controllers\Api\v1\CoreTeamDivisionController;
-use App\Http\Controllers\Api\v1\CoreTeamMemberController;
-use App\Http\Controllers\Api\v1\DegreeController;
-use App\Http\Controllers\Api\v1\FundApplicationController;
-use App\Http\Controllers\Api\v1\MajorController;
-use App\Http\Controllers\Api\v1\PostController;
-use App\Http\Controllers\Api\v1\ProjectGalleryController;
-use App\Http\Controllers\Api\v1\TeamController;
-use App\Http\Controllers\Api\v1\TeamMemberController;
-use App\Http\Controllers\Api\v1\TestimonialController;
-use App\Http\Controllers\Api\v1\UserController;
-use App\Http\Controllers\Api\v1\FacultyController;
+use App\Http\Controllers\Api\V1\AchievementController;
+use App\Http\Controllers\Api\V1\CompetitionController;
+use App\Http\Controllers\Api\V1\CompetitionOrganizerTypeController;
+use App\Http\Controllers\Api\V1\CompetitionOutputController;
+use App\Http\Controllers\Api\V1\CompetitionRankController;
+use App\Http\Controllers\Api\V1\CompetitionScaleController;
+use App\Http\Controllers\Api\V1\CompetitionTeamTypeController;
+use App\Http\Controllers\Api\V1\CompetitionTimeRangeController;
+use App\Http\Controllers\Api\V1\ConfigController;
+use App\Http\Controllers\Api\V1\CoreTeamController;
+use App\Http\Controllers\Api\V1\CoreTeamDivisionController;
+use App\Http\Controllers\Api\V1\CoreTeamMemberController;
+use App\Http\Controllers\Api\V1\DegreeController;
+use App\Http\Controllers\Api\V1\FundApplicationController;
+use App\Http\Controllers\Api\V1\MajorController;
+use App\Http\Controllers\Api\V1\PostController;
+use App\Http\Controllers\Api\V1\ProjectGalleryController;
+use App\Http\Controllers\Api\V1\TeamController;
+use App\Http\Controllers\Api\V1\TeamMemberController;
+use App\Http\Controllers\Api\V1\TestimonialController;
+use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\FacultyController;
 use Illuminate\Support\Facades\Route;
 
 /*
