@@ -21,7 +21,8 @@ return new class extends Migration
             $table->foreignId('competition_output_id')->constrained('competition_outputs')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('competition_rank_id')->constrained('competition_ranks')->onUpdate('cascade')->onDelete('cascade');
             $table->string('competition_branch');
-            $table->date('competition_date');
+            $table->date('competition_start_date');
+            $table->date('competition_end_date');
             $table->text('description');
             $table->string('image');
             $table->enum('status', ['PENDING', 'REJECTED', 'ACCEPTED'])->default('PENDING');
