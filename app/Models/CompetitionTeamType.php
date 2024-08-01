@@ -28,6 +28,11 @@ class CompetitionTeamType extends Model
         return $date->format(DATE_ATOM);
     }
 
+    public function fundApplications()
+    {
+        return $this->hasMany(FundApplication::class);
+    }
+
     public function achievements()
     {
         return $this->hasMany(Achievement::class);

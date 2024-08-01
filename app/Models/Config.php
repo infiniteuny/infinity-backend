@@ -19,6 +19,7 @@ class Config extends Model
         'key',
         'value',
         'type',
+        'is_private',
     ];
 
     /**

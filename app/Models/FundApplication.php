@@ -5,6 +5,7 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FundApplication extends Model
 {
@@ -28,6 +29,19 @@ class FundApplication extends Model
     ];
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'competition_start_date' => 'datetime',
+            'competition_end_date' => 'datetime',
+        ];
+    }
+
+    /**
      * Prepare a date for array / JSON serialization.
      */
     protected function serializeDate(DateTimeInterface $date): string
@@ -35,8 +49,23 @@ class FundApplication extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function users()
+    public function team(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(Team::class);
+    }
+
+    public function competition(): BelongsTo
+    {
+        return $this->belongsTo(Competition::class);
+    }
+
+    public function competitionTeamType(): BelongsTo
+    {
+        return $this->belongsTo(CompetitionTeamType::class);
+    }
+
+    public function competitionScale(): BelongsTo
+    {
+        return $this->belongsTo(CompetitionScale::class);
     }
 }

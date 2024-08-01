@@ -5,6 +5,7 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Achievement extends Model
 {
@@ -24,11 +25,25 @@ class Achievement extends Model
         'competition_output_id',
         'competition_rank_id',
         'competition_branch',
-        'competition_date',
+        'competition_start_date',
+        'competition_end_date',
         'description',
         'image',
         'status',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'competition_start_date' => 'datetime',
+            'competition_end_date' => 'datetime',
+        ];
+    }
 
     /**
      * Prepare a date for array / JSON serialization.
@@ -38,28 +53,33 @@ class Achievement extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function teams()
+    public function team(): BelongsTo
     {
-        return $this->belongsTo(Team::class, 'team_id', 'id');
+        return $this->belongsTo(Team::class);
     }
 
-    public function competitionScales()
+    public function competition(): BelongsTo
     {
-        return $this->belongsTo(CompetitionScale::class, 'competition_scale_id', 'id');
+        return $this->belongsTo(Competition::class);
     }
 
-    public function competitionRanks()
+    public function competitionScale(): BelongsTo
     {
-        return $this->belongsTo(CompetitionRank::class, 'competition_rank_id', 'id');
+        return $this->belongsTo(CompetitionScale::class);
     }
 
-    public function competitionOutputs()
+    public function competitionTimeRange(): BelongsTo
     {
-        return $this->belongsTo(CompetitionOutput::class, 'competition_output_id', 'id');
+        return $this->belongsTo(CompetitionTimeRange::class);
     }
 
-    public function competitionTimeRanges()
+    public function competitionOutput(): BelongsTo
     {
-        return $this->belongsTo(CompetitionTimeRange::class, 'competition_time_range_id', 'id');
+        return $this->belongsTo(CompetitionOutput::class);
+    }
+
+    public function competitionRank(): BelongsTo
+    {
+        return $this->belongsTo(CompetitionRank::class);
     }
 }

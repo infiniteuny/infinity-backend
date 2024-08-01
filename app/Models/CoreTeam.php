@@ -5,6 +5,7 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CoreTeam extends Model
 {
@@ -27,7 +28,7 @@ class CoreTeam extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function coreTeamMembers()
+    public function coreTeamMembers(): HasMany
     {
         return $this->hasMany(CoreTeamMember::class);
     }

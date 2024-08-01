@@ -5,6 +5,7 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CompetitionTimeRange extends Model
 {
@@ -28,7 +29,7 @@ class CompetitionTimeRange extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function achievements()
+    public function achievements(): HasMany
     {
         return $this->hasMany(Achievement::class);
     }

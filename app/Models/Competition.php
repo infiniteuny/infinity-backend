@@ -5,6 +5,8 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Competition extends Model
 {
@@ -32,12 +34,17 @@ class Competition extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function competitionOrganizerType()
+    public function competitionOrganizerType(): BelongsTo
     {
         return $this->belongsTo(CompetitionOrganizerType::class);
     }
 
-    public function achievements()
+    public function fundApplications(): HasMany
+    {
+        return $this->hasMany(FundApplication::class);
+    }
+
+    public function achievements(): HasMany
     {
         return $this->hasMany(Achievement::class);
     }

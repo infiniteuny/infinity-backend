@@ -5,6 +5,8 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Degree extends Model
 {
@@ -28,12 +30,12 @@ class Degree extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function majors()
+    public function majors(): HasMany
     {
         return $this->hasMany(Major::class);
     }
 
-    public function users()
+    public function users(): HasManyThrough
     {
         return $this->hasManyThrough(User::class, Major::class, 'degree_id', 'major_id', 'id', 'id');
     }

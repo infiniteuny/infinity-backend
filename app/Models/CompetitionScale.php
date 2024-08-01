@@ -5,6 +5,7 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CompetitionScale extends Model
 {
@@ -28,7 +29,12 @@ class CompetitionScale extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function achievements()
+    public function fundApplications(): HasMany
+    {
+        return $this->hasMany(FundApplication::class);
+    }
+
+    public function achievements(): HasMany
     {
         return $this->hasMany(Achievement::class);
     }

@@ -5,6 +5,8 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -39,22 +41,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $date->format(DATE_ATOM);
     }
 
-    public function major()
+    public function major(): BelongsTo
     {
         return $this->belongsTo(Major::class);
     }
 
-    public function ledTeams()
+    public function ledTeams(): HasMany
     {
         return $this->hasMany(Team::class, 'leader_id');
     }
 
-    public function teams()
+    public function teams(): HasMany
     {
         return $this->hasMany(TeamMember::class);
     }
 
-    public function coreTeams()
+    public function coreTeams(): HasMany
     {
         return $this->hasMany(CoreTeamMember::class);
     }
