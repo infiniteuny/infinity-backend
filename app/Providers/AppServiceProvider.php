@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\StorageFacade;
+use App\Repositories\StorageFacadeImpl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
@@ -12,6 +14,15 @@ use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * All of the container singletons that should be registered.
+     *
+     * @var array
+     */
+    public $singletons = [
+        StorageFacade::class => StorageFacadeImpl::class,
+    ];
+
     /**
      * Register any application services.
      */
