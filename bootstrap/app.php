@@ -39,7 +39,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 | Request::HEADER_X_FORWARDED_HOST
                 | Request::HEADER_X_FORWARDED_PROTO
         );
-    })->withExceptions(function (Exceptions $exceptions) {
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {
             return JsendFormatter::fail(
                 ['message' => $e->getMessage() ?: 'Unauthenticated.'],

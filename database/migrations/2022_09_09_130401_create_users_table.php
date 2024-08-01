@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('student_id')->unique();
             $table->foreignId('major_id')->constrained('majors')->onUpdate('cascade')->onDelete('cascade');
             $table->json('links');
-            $table->enum('role', ['admin', 'student'])->default('student');
+            $table->enum('role', ['ADMIN', 'STUDENT'])->default('STUDENT');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->boolean('is_member');

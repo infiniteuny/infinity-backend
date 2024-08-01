@@ -24,7 +24,7 @@ return new class extends Migration
             $table->date('competition_date');
             $table->text('description');
             $table->string('image');
-            $table->enum('status', ['pending', 'rejected', 'accepted'])->default('pending');
+            $table->enum('status', ['PENDING', 'REJECTED', 'ACCEPTED'])->default('PENDING');
             $table->timestamps();
         });
     }
