@@ -10,13 +10,19 @@ class CoreTeamDivision extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'name',
         'priority',
     ];
 
-    protected $dateFormat = DATE_ATOM;
-
+    /**
+     * Prepare a date for array / JSON serialization.
+     */
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format(DATE_ATOM);
