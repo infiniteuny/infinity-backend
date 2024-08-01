@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('key');
             $table->string('value');
             $table->enum('type', ['STRING', 'INTEGER', 'BOOLEAN'])->default('STRING');
+            $table->boolean('is_private')->default(true);
             $table->timestamps();
         });
     }
