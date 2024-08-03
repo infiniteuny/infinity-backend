@@ -14,10 +14,10 @@ class UpdateTestimonialRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'position' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
-            'photo' => 'image|mimes:jpg,png,jpeg|max:2048',
-            'content' => 'required|string',
+            'name' => ['sometimes', 'string'],
+            'position' => ['sometimes', 'string', 'max:255'],
+            'photo' => ['sometimes', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'content' => ['sometimes', 'string'],
         ];
     }
 }

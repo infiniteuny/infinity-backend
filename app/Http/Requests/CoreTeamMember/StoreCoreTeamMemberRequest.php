@@ -14,7 +14,11 @@ class StoreCoreTeamMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => ['required', 'exists:users,id'],
+            'core_team_id' => ['required', 'exists:core_teams,id'],
+            'core_team_division_id' => ['required', 'exists:core_team_divisions,id'],
+            'photo' => ['required', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'animation' => ['nullable', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }
 }

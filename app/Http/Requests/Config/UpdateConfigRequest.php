@@ -14,7 +14,10 @@ class UpdateConfigRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'key' => ['sometimes', 'string'],
+            'value' => ['sometimes', 'string'],
+            'type' => ['sometimes', 'string', 'in:STRING,INTEGER,BOOLEAN'],
+            'is_private' => ['sometimes', 'boolean'],
         ];
     }
 }

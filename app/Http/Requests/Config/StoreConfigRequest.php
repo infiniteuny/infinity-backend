@@ -14,7 +14,10 @@ class StoreConfigRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'key' => ['required', 'string'],
+            'value' => ['required', 'string'],
+            'type' => ['required', 'string', 'in:STRING,INTEGER,BOOLEAN'],
+            'is_private' => ['required', 'boolean'],
         ];
     }
 }

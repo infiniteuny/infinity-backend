@@ -14,10 +14,10 @@ class StoreProjectGalleryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|regex:/^[a-zA-Z.0-9.\s]+$/|max:255',
-            'description' => 'required|string',
-            'url' => 'required|url',
-            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'url' => ['required', 'string', 'url:http,https'],
+            'image' => ['required', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }
 }

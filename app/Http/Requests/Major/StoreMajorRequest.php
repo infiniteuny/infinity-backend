@@ -14,10 +14,10 @@ class StoreMajorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|integer|unique:majors',
-            'name' => 'required|string',
-            'degree_id' => 'required|exists:degrees,id',
-            'faculty_id' => 'required|exists:faculties,id',
+            'degree_id' => ['required', 'exists:degrees,id'],
+            'faculty_id' => ['required', 'exists:faculties,id'],
+            'code' => ['required', 'string', 'unique:majors'],
+            'name' => ['required', 'string'],
         ];
     }
 }

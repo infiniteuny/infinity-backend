@@ -14,7 +14,8 @@ class StoreCoreTeamDivisionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'priority' => ['required', 'integer'],
         ];
     }
 }

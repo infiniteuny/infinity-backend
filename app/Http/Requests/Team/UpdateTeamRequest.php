@@ -14,7 +14,9 @@ class UpdateTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'leader_id' => ['sometimes', 'exists:users,id'],
+            'name' => ['sometimes', 'string'],
+            'is_personal' => ['sometimes', 'boolean'],
         ];
     }
 }

@@ -14,7 +14,7 @@ class UpdateCoreTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'year' => ['sometimes', 'integer'],
         ];
     }
 }

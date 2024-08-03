@@ -14,7 +14,9 @@ class StoreTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'leader_id' => ['required', 'exists:users,id'],
+            'name' => ['required', 'string'],
+            'is_personal' => ['required', 'boolean'],
         ];
     }
 }

@@ -14,8 +14,8 @@ class UpdateDegreeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'max:255'],
-            'name' => ['required', 'string', 'max:255'],
+            'code' => ['sometimes', 'string', 'unique:majors'],
+            'name' => ['sometimes', 'string'],
         ];
     }
 }

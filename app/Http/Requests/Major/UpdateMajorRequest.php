@@ -14,10 +14,10 @@ class UpdateMajorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|integer|unique:majors',
-            'name' => 'required|string',
-            'degree_id' => 'required|exists:degrees,id',
-            'faculty_id' => 'required|exists:faculties,id',
+            'degree_id' => ['sometimes', 'exists:degrees,id'],
+            'faculty_id' => ['sometimes', 'exists:faculties,id'],
+            'code' => ['sometimes', 'string', 'unique:majors'],
+            'name' => ['sometimes', 'string'],
         ];
     }
 }
