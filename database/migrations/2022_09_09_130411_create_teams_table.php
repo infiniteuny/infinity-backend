@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('leader_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->boolean('is_personal')->default(false);
-            $table->foreignId('leader_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
