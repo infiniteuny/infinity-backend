@@ -60,7 +60,6 @@ Route::group([
         'faculties' => FacultyController::class,
         'fund-applications' => FundApplicationController::class,
         'majors' => MajorController::class,
-        'posts' => PostController::class,
         'project-galleries' => ProjectGalleryController::class,
         'teams' => TeamController::class,
         'team-members' => TeamMemberController::class,
