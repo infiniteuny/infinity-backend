@@ -9,6 +9,7 @@ use App\Models\CompetitionTimeRange;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CompetitionTimeRangeController extends Controller
@@ -24,9 +25,21 @@ class CompetitionTimeRangeController extends Controller
     public function index(Request $request): JsonResponse
     {
         $competitionTimeRanges = QueryBuilder::for(CompetitionTimeRange::class)
-            ->allowedFilters(['name', 'weight'])
-            ->defaultSorts(['-created_at', 'id'])
-            ->allowedSorts(['id', 'name', 'weight', 'created_at', 'updated_at'])
+            ->allowedFilters([
+                'name',
+                AllowedFilter::exact('weight'),
+            ])
+            ->defaultSorts([
+                'weight',
+                'id',
+            ])
+            ->allowedSorts([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
             ->paginate($request->query('per_page', 10));
 
         return ResponseFormatter::collection('competition_time_ranges', $competitionTimeRanges);

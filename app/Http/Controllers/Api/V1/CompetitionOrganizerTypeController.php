@@ -9,6 +9,7 @@ use App\Models\CompetitionOrganizerType;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CompetitionOrganizerTypeController extends Controller
@@ -26,10 +27,10 @@ class CompetitionOrganizerTypeController extends Controller
         $competitionOrganizerTypes = QueryBuilder::for(CompetitionOrganizerType::class)
             ->allowedFilters([
                 'name',
-                'weight',
+                AllowedFilter::exact('weight'),
             ])
             ->defaultSorts([
-                '-created_at',
+                'weight',
                 'id',
             ])
             ->allowedSorts([

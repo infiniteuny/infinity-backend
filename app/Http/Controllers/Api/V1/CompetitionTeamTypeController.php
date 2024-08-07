@@ -9,6 +9,7 @@ use App\Models\CompetitionTeamType;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CompetitionTeamTypeController extends Controller
@@ -26,10 +27,10 @@ class CompetitionTeamTypeController extends Controller
         $competitionTeamTypes = QueryBuilder::for(CompetitionTeamType::class)
             ->allowedFilters([
                 'name',
-                'weight',
+                AllowedFilter::exact('weight'),
             ])
             ->defaultSorts([
-                '-created_at',
+                'weight',
                 'id',
             ])
             ->allowedSorts([
