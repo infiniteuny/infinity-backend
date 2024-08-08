@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
-            $table->string('key');
+            $table->string('key')->unique();
             $table->string('value');
             $table->enum('type', ['STRING', 'INTEGER', 'BOOLEAN'])->default('STRING');
             $table->boolean('is_private')->default(true);

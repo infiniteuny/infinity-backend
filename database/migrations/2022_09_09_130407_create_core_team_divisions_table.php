@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('core_team_divisions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique()->fulltext();
             $table->tinyInteger('priority');
             $table->timestamps();
         });

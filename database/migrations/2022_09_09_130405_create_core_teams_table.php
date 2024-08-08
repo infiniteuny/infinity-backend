@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('core_teams', function (Blueprint $table) {
             $table->id();
-            $table->year('year');
+            $table->year('year')->unique();
             $table->timestamps();
         });
     }
