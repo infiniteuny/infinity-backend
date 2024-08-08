@@ -9,6 +9,7 @@ use App\Models\Faculty;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class FacultyController extends Controller
@@ -25,11 +26,11 @@ class FacultyController extends Controller
     {
         $faculties = QueryBuilder::for(Faculty::class)
             ->allowedFilters([
-                'code',
+                AllowedFilter::exact('code'),
                 'name',
             ])
             ->defaultSorts([
-                '-created_at',
+                'code',
                 'id',
             ])
             ->allowedSorts([

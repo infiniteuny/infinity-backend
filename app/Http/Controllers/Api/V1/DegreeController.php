@@ -9,6 +9,7 @@ use App\Models\Degree;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class DegreeController extends Controller
@@ -25,11 +26,11 @@ class DegreeController extends Controller
     {
         $degrees = QueryBuilder::for(Degree::class)
             ->allowedFilters([
-                'code',
+                AllowedFilter::exact('code'),
                 'name',
             ])
             ->defaultSorts([
-                '-created_at',
+                'code',
                 'id',
             ])
             ->allowedSorts([

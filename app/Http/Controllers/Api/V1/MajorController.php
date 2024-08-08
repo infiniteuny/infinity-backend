@@ -9,6 +9,7 @@ use App\Models\Major;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class MajorController extends Controller
@@ -25,13 +26,13 @@ class MajorController extends Controller
     {
         $majors = QueryBuilder::for(Major::class)
             ->allowedFilters([
-                'code',
+                AllowedFilter::exact('code'),
                 'name',
-                'degree_id',
-                'faculty_id',
+                AllowedFilter::exact('degree_id'),
+                AllowedFilter::exact('faculty_id'),
             ])
             ->defaultSorts([
-                '-created_at',
+                'code',
                 'id',
             ])
             ->allowedSorts([
