@@ -1,4 +1,5 @@
 {
+    "name": "@infinite/infinity-backend",
     "private": true,
     "scripts": {
         "dev": "vite",

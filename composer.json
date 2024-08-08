@@ -1,5 +1,5 @@
 {
-    "name": "infinite/infinity",
+    "name": "infinite/infinity-backend",
     "type": "project",
     "description": "INFINITE Dashboard",
     "keywords": [
@@ -19,6 +19,7 @@
         "spatie/laravel-query-builder": "6.0.1"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "3.1.0",
         "fakerphp/faker": "1.23.1",
         "laravel/pint": "1.17.0",
         "laravel/sail": "1.31.0",
@@ -45,7 +46,9 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
