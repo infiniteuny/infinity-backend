@@ -13,7 +13,7 @@ interface StorageFacade
         string $disk = 'local',
     ): string;
 
-    public static function get(string $id): string;
+    public static function get(string $manifest): string;
 
-    public static function delete(string $id): bool;
+    public static function delete(string $manifest): bool;
 }

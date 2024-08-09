@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -9,6 +10,9 @@ use Symfony\Component\Uid\Uuid;
 
 class StorageFacadeImpl implements StorageFacade
 {
+    /**
+     * @throws Exception
+     */
     public static function store(
         UploadedFile $file,
         string $path,
@@ -28,7 +32,7 @@ class StorageFacadeImpl implements StorageFacade
         ]);
 
         if (! $manifest) {
-            throw new \Exception('Failed to store file');
+            throw new Exception('Failed to store file');
         } else {
             return $manifest;
         }
@@ -55,6 +59,10 @@ class StorageFacadeImpl implements StorageFacade
         $path = $params->path;
         $name = $params->name;
 
-        return Storage::disk($disk)->delete($path.'/'.$name);
+        if (! Storage::disk($disk)->exists($path.'/'.$name)) {
+            throw new NotFoundHttpException('File not found.');
+        } else {
+            return Storage::disk($disk)->delete($path.'/'.$name);
+        }
     }
 }
