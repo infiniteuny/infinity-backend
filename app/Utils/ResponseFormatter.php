@@ -2,34 +2,53 @@
 
 namespace App\Utils;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ResponseFormatter
 {
     /**
+     * @param  string  $resourcesName  Resources name
+     * @param  mixed  $data  Response data
      * @param  int  $status  HTTP status code
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param  array  $extraHeaders  Optional extra headers
      */
-    public static function singleton(string $resourcesName, $data, int $status = 200, $extraHeaders = [])
-    {
+    public static function singleton(
+        string $resourcesName,
+        mixed $data,
+        int $status = 200,
+        array $extraHeaders = []
+    ): JsonResponse {
         return JsendFormatter::success([$resourcesName => $data], $status, $extraHeaders);
     }
 
     /**
+     * @param  string  $resourcesName  Resources name
+     * @param  mixed  $data  Response data
      * @param  int  $status  HTTP status code
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param  array  $extraHeaders  Optional extra headers
      */
-    public static function unpaginatedCollection(string $resourcesName, $data, int $status = 200, $extraHeaders = [])
-    {
+    public static function unpaginatedCollection(
+        string $resourcesName,
+        mixed $data,
+        int $status = 200,
+        array $extraHeaders = []
+    ): JsonResponse {
         return JsendFormatter::success([$resourcesName => $data], $status, $extraHeaders);
     }
 
     /**
+     * @param  string  $resourcesName  Resources name
+     * @param  LengthAwarePaginator  $data  Paginated response data
      * @param  int  $status  HTTP status code
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param  array  $extraHeaders  Optional extra headers
      */
-    public static function collection(string $resourcesName, LengthAwarePaginator $data, int $status = 200, $extraHeaders = [])
-    {
+    public static function collection(
+        string $resourcesName,
+        LengthAwarePaginator $data,
+        int $status = 200,
+        array $extraHeaders = []
+    ): JsonResponse {
         return JsendFormatter::success([
             $resourcesName => $data->items(),
             'meta' => [
