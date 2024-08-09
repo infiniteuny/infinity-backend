@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Blob\BlobRequest;
 use App\Repositories\StorageFacade;
 use App\Utils\Encoder;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class BlobController extends Controller
 {
@@ -16,7 +17,7 @@ class BlobController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(BlobRequest $request)
+    public function __invoke(BlobRequest $request): BinaryFileResponse
     {
         $manifest = Encoder::base64UrlDecode($request->blob);
         $name = $request->query('name', json_decode($manifest)->name);

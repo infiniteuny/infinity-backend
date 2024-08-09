@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectGallery\StoreProjectGalleryRequest;
 use App\Http\Requests\ProjectGallery\UpdateProjectGalleryRequest;
+use App\Jobs\DeleteBlob;
 use App\Models\ProjectGallery;
+use App\Repositories\StorageFacade;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,8 +15,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ProjectGalleryController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        protected StorageFacade $storageFacade,
+    ) {
         // $this->authorizeResource(ProjectGallery::class, 'project_gallery');
     }
 
@@ -51,9 +54,13 @@ class ProjectGalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProjectGalleryRequest $request)
+    public function store(StoreProjectGalleryRequest $request): JsonResponse
     {
-        $projectGallery = ProjectGallery::create($request->validated());
+        $manifest = $this->storageFacade->store($request->file('image'), 'images/project-galleries');
+
+        $projectGallery = ProjectGallery::create(
+            array_replace($request->validated(), ['image' => $manifest])
+        );
 
         return ResponseFormatter::singleton('project_gallery', $projectGallery, 201);
     }
@@ -61,7 +68,7 @@ class ProjectGalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ProjectGallery $projectGallery)
+    public function show(ProjectGallery $projectGallery): JsonResponse
     {
         return ResponseFormatter::singleton('project_gallery', $projectGallery);
     }
@@ -69,9 +76,23 @@ class ProjectGalleryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectGalleryRequest $request, ProjectGallery $projectGallery)
+    public function update(UpdateProjectGalleryRequest $request, ProjectGallery $projectGallery): JsonResponse
     {
-        $projectGallery->update($request->validated());
+        $hasImage = $request->has('image');
+
+        if ($hasImage) {
+            $encodedManifest = $projectGallery->getRawOriginal('image');
+
+            dispatch(new DeleteBlob($encodedManifest));
+
+            $manifest = $this->storageFacade->store($request->file('image'), 'images/project-galleries');
+        }
+
+        $projectGallery->update(
+            $hasImage
+                ? array_replace($request->validated(), ['image' => $manifest])
+                : $request->validated()
+        );
 
         return ResponseFormatter::singleton('project_gallery', $projectGallery);
     }
@@ -79,8 +100,12 @@ class ProjectGalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProjectGallery $projectGallery)
+    public function destroy(ProjectGallery $projectGallery): JsonResponse
     {
+        $encodedManifest = $projectGallery->getRawOriginal('image');
+
+        dispatch(new DeleteBlob($encodedManifest));
+
         $projectGallery->delete();
 
         return ResponseFormatter::singleton('project_gallery', $projectGallery);

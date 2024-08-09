@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CoreTeamMember\StoreCoreTeamMemberRequest;
 use App\Http\Requests\CoreTeamMember\UpdateCoreTeamMemberRequest;
+use App\Jobs\DeleteBlob;
 use App\Models\CoreTeamMember;
+use App\Repositories\StorageFacade;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,8 +15,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CoreTeamMemberController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        protected StorageFacade $storageFacade,
+    ) {
         // $this->authorizeResource(Degree::class, 'Degree');
     }
 
@@ -49,7 +52,20 @@ class CoreTeamMemberController extends Controller
      */
     public function store(StoreCoreTeamMemberRequest $request): JsonResponse
     {
-        $coreTeamMember = CoreTeamMember::create($request->validated());
+        $photoManifest = $this->storageFacade->store($request->file('photo'), 'images/core-team-members/photos');
+
+        $hasAnimation = $request->has('animation');
+
+        if ($hasAnimation) {
+            $animationManifest = $this->storageFacade->store($request->file('animation'), 'images/core-team-members/animations');
+        }
+
+        $coreTeamMember = CoreTeamMember::create(
+            array_replace($request->validated(), [
+                'photo' => $photoManifest,
+                ...($hasAnimation ? ['animation' => $animationManifest] : []),
+            ])
+        );
 
         return ResponseFormatter::singleton('core_team_member', $coreTeamMember, 201);
     }
@@ -67,7 +83,38 @@ class CoreTeamMemberController extends Controller
      */
     public function update(UpdateCoreTeamMemberRequest $request, CoreTeamMember $coreTeamMember): JsonResponse
     {
-        $coreTeamMember->update($request->validated());
+        $hasPhoto = $request->has('image');
+        $hasAnimation = $request->has('animation');
+        $hasFileAnimation = $request->hasFile('animation');
+
+        if ($hasPhoto) {
+            $photoEncodedManifest = $coreTeamMember->getRawOriginal('photo');
+
+            dispatch(new DeleteBlob($photoEncodedManifest));
+
+            $photoManifest = $this->storageFacade->store($request->file('photo'), 'images/core-team-members/photos');
+        }
+
+        if ($hasAnimation) {
+            $animationEncodedManifest = $coreTeamMember->getRawOriginal('animation');
+
+            dispatch(new DeleteBlob($animationEncodedManifest));
+
+            if ($hasFileAnimation) {
+                $animationManifest = $this->storageFacade->store($request->file('animation'), 'images/core-team-members/animations');
+            } else {
+                $animationManifest = null;
+            }
+        }
+
+        $coreTeamMember->update(
+            $hasPhoto || $hasAnimation
+                ? array_replace($request->validated(), [
+                    ...($hasPhoto ? ['photo' => $photoManifest] : []),
+                    ...($hasAnimation ? ['animation' => $animationManifest] : []),
+                ])
+                : $request->validated()
+        );
 
         return ResponseFormatter::singleton('core_team_member', $coreTeamMember);
     }
@@ -77,6 +124,12 @@ class CoreTeamMemberController extends Controller
      */
     public function destroy(CoreTeamMember $coreTeamMember): JsonResponse
     {
+        $photoEncodedManifest = $coreTeamMember->getRawOriginal('photo');
+        $animationEncodedManifest = $coreTeamMember->getRawOriginal('animation');
+
+        dispatch(new DeleteBlob($photoEncodedManifest));
+        dispatch(new DeleteBlob($animationEncodedManifest));
+
         $coreTeamMember->delete();
 
         return ResponseFormatter::singleton('core_team_member', $coreTeamMember);

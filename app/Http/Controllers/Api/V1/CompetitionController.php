@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Competition\StoreCompetitionRequest;
 use App\Http\Requests\Competition\UpdateCompetitionRequest;
+use App\Jobs\DeleteBlob;
 use App\Models\Competition;
+use App\Repositories\StorageFacade;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,8 +15,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CompetitionController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        protected StorageFacade $storageFacade,
+    ) {
         // $this->authorizeResource(Competition::class, 'competition');
     }
 
@@ -50,7 +53,11 @@ class CompetitionController extends Controller
      */
     public function store(StoreCompetitionRequest $request): JsonResponse
     {
-        $competition = Competition::create($request->validated());
+        $manifest = $this->storageFacade->store($request->file('logo'), 'images/competitions');
+
+        $competition = Competition::create(
+            array_replace($request->validated(), ['logo' => $manifest])
+        );
 
         return ResponseFormatter::singleton('competition', $competition, 201);
     }
@@ -68,7 +75,21 @@ class CompetitionController extends Controller
      */
     public function update(UpdateCompetitionRequest $request, Competition $competition): JsonResponse
     {
-        $competition->update($request->validated());
+        $hasLogo = $request->has('logo');
+
+        if ($hasLogo) {
+            $encodedManifest = $competition->getRawOriginal('logo');
+
+            dispatch(new DeleteBlob($encodedManifest));
+
+            $manifest = $this->storageFacade->store($request->file('logo'), 'images/competitions');
+        }
+
+        $competition->update(
+            $hasLogo
+                ? array_replace($request->validated(), ['logo' => $manifest])
+                : $request->validated()
+        );
 
         return ResponseFormatter::singleton('competition', $competition);
     }
@@ -78,6 +99,10 @@ class CompetitionController extends Controller
      */
     public function destroy(Competition $competition): JsonResponse
     {
+        $encodedManifest = $competition->getRawOriginal('logo');
+
+        dispatch(new DeleteBlob($encodedManifest));
+
         $competition->delete();
 
         return ResponseFormatter::singleton('competition', $competition);
