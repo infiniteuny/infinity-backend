@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Blob;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,19 @@ class CoreTeamMember extends Model
         'photo',
         'animation',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'photo' => Blob::class,
+            'animation' => Blob::class,
+        ];
+    }
 
     /**
      * Prepare a date for array / JSON serialization.

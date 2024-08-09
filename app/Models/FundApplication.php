@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Blob;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,8 @@ class FundApplication extends Model
         return [
             'competition_start_date' => 'datetime',
             'competition_end_date' => 'datetime',
+            'letter_of_acceptance' => Blob::class,
+            'proposal' => Blob::class,
         ];
     }
 

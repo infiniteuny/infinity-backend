@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Blob;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,6 +43,7 @@ class Achievement extends Model
         return [
             'competition_start_date' => 'datetime',
             'competition_end_date' => 'datetime',
+            'image' => Blob::class,
         ];
     }
 
