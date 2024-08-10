@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('team_members', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('team_id')->constrained('teams')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('member_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('team_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('member_id')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

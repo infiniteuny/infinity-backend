@@ -14,8 +14,8 @@ class StoreTeamMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_id' => ['required', 'exists:teams,id'],
-            'member_id' => ['required', 'exists:users,id'],
+            'team_id' => ['required', 'uuid', 'exists:teams,id'],
+            'member_id' => ['required', 'uuid', 'exists:users,id'],
         ];
     }
 }

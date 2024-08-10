@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('core_teams', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->year('year')->unique();
             $table->timestamps();
         });

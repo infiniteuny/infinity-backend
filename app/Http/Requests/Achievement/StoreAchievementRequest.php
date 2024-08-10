@@ -14,13 +14,13 @@ class StoreAchievementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_id' => ['required', 'exists:teams,id'],
-            'competition_id' => ['required', 'exists:competitions,id'],
-            'competition_team_type_id' => ['required', 'exists:competition_team_types,id'],
-            'competition_scale_id' => ['required', 'exists:competition_scales,id'],
-            'competition_time_range_id' => ['required', 'exists:competition_time_ranges,id'],
-            'competition_output_id' => ['required', 'exists:competition_outputs,id'],
-            'competition_rank_id' => ['required', 'exists:competition_ranks,id'],
+            'team_id' => ['required', 'uuid', 'exists:teams,id'],
+            'competition_id' => ['required', 'uuid', 'exists:competitions,id'],
+            'competition_team_type_id' => ['required', 'uuid', 'exists:competition_team_types,id'],
+            'competition_scale_id' => ['required', 'uuid', 'exists:competition_scales,id'],
+            'competition_time_range_id' => ['required', 'uuid', 'exists:competition_time_ranges,id'],
+            'competition_output_id' => ['required', 'uuid', 'exists:competition_outputs,id'],
+            'competition_rank_id' => ['required', 'uuid', 'exists:competition_ranks,id'],
             'competition_branch' => ['required', 'string'],
             'competition_start_date' => ['required', 'date', 'before_or_equal:competition_end_date'],
             'competition_end_date' => ['required', 'date', 'after_or_equal:competition_start_date'],

@@ -14,8 +14,8 @@ class StoreMajorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'degree_id' => ['required', 'exists:degrees,id'],
-            'faculty_id' => ['required', 'exists:faculties,id'],
+            'degree_id' => ['required', 'uuid', 'exists:degrees,id'],
+            'faculty_id' => ['required', 'uuid', 'exists:faculties,id'],
             'code' => ['required', 'string', 'unique:majors'],
             'name' => ['required', 'string'],
         ];

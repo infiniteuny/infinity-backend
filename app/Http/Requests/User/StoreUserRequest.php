@@ -18,7 +18,7 @@ class StoreUserRequest extends FormRequest
             'email_address' => ['required', 'email', 'unique:users,email_address'],
             'phone_number' => ['required', 'string', 'unique:users,phone_number'],
             'student_id' => ['required', 'string', 'unique:users,student_id'],
-            'major_id' => ['required', 'exists:majors,id'],
+            'major_id' => ['required', 'uuid', 'exists:majors,id'],
             'links' => ['required', 'array'],
             'links.*' => ['required', 'json'],
             'role' => ['required', 'in:ADMIN,STUDENT'],

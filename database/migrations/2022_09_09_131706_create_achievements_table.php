@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('achievements', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('team_id')->constrained('teams')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('competition_id')->constrained('competitions')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('competition_team_type_id')->constrained('competition_team_types')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('competition_scale_id')->constrained('competition_scales')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('competition_time_range_id')->constrained('competition_time_ranges')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('competition_output_id')->constrained('competition_outputs')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('competition_rank_id')->constrained('competition_ranks')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('team_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
+            $table->foreignUuid('competition_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
+            $table->foreignUuid('competition_team_type_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
+            $table->foreignUuid('competition_scale_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
+            $table->foreignUuid('competition_time_range_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
+            $table->foreignUuid('competition_output_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
+            $table->foreignUuid('competition_rank_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
             $table->string('competition_branch');
             $table->date('competition_start_date');
             $table->date('competition_end_date');

@@ -18,7 +18,7 @@ class UpdateCompetitionRequest extends FormRequest
             'description' => ['sometimes', 'string'],
             'url' => ['sometimes', 'nullable', 'string', 'url:http,https'],
             'organizer' => ['sometimes', 'string'],
-            'organizer_type_id' => ['sometimes', 'exists:competition_organizer_types,id'],
+            'organizer_type_id' => ['sometimes', 'uuid', 'exists:competition_organizer_types,id'],
             'logo' => ['sometimes', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }

@@ -18,7 +18,7 @@ class UpdateUserRequest extends FormRequest
             'email_address' => ['sometimes', 'email', 'unique:users,email_address'],
             'phone_number' => ['sometimes', 'string', 'unique:users,phone_number'],
             'student_id' => ['sometimes', 'string', 'unique:users,student_id'],
-            'major_id' => ['sometimes', 'exists:majors,id'],
+            'major_id' => ['sometimes', 'uuid', 'exists:majors,id'],
             'links' => ['sometimes', 'array'],
             'links.*' => ['sometimes', 'json'],
             'role' => ['sometimes', 'in:ADMIN,STUDENT'],

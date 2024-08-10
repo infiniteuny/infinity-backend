@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('core_team_members', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('core_team_id')->constrained('core_teams')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('core_team_division_id')->constrained('core_team_divisions')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('core_team_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('core_team_division_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
             $table->string('photo');
             $table->string('animation')->nullable();
             $table->timestamps();

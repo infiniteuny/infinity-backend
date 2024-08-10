@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('leader_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('leader_id')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
             $table->string('name')->fulltext();
             $table->boolean('is_personal')->default(false);
             $table->timestamps();

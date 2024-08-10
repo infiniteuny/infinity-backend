@@ -14,9 +14,9 @@ class UpdateCoreTeamMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['sometimes', 'exists:users,id'],
-            'core_team_id' => ['sometimes', 'exists:core_teams,id'],
-            'core_team_division_id' => ['sometimes', 'exists:core_team_divisions,id'],
+            'user_id' => ['sometimes', 'uuid', 'exists:users,id'],
+            'core_team_id' => ['sometimes', 'uuid', 'exists:core_teams,id'],
+            'core_team_division_id' => ['sometimes', 'uuid', 'exists:core_team_divisions,id'],
             'photo' => ['sometimes', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'animation' => ['sometimes', 'nullable', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];

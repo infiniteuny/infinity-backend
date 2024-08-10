@@ -14,8 +14,8 @@ class UpdateMajorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'degree_id' => ['sometimes', 'exists:degrees,id'],
-            'faculty_id' => ['sometimes', 'exists:faculties,id'],
+            'degree_id' => ['sometimes', 'uuid', 'exists:degrees,id'],
+            'faculty_id' => ['sometimes', 'uuid', 'exists:faculties,id'],
             'code' => ['sometimes', 'string', 'unique:majors'],
             'name' => ['sometimes', 'string'],
         ];

@@ -17,7 +17,6 @@ use App\Http\Controllers\Api\V1\DegreeController;
 use App\Http\Controllers\Api\V1\FacultyController;
 use App\Http\Controllers\Api\V1\FundApplicationController;
 use App\Http\Controllers\Api\V1\MajorController;
-use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\ProjectGalleryController;
 use App\Http\Controllers\Api\V1\TeamController;
 use App\Http\Controllers\Api\V1\TeamMemberController;

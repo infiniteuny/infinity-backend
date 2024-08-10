@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('competitions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->text('description');
             $table->text('url')->nullable();
             $table->string('organizer');
-            $table->foreignId('organizer_type_id')->constrained('competition_organizer_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignUuid('organizer_type_id')->constrained('competition_organizer_types')->restrictOnUpdate()->restrictOnDelete();
             $table->string('logo');
             $table->timestamps();
         });

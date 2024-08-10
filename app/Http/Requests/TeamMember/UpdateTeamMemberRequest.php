@@ -14,8 +14,8 @@ class UpdateTeamMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_id' => ['sometimes', 'exists:teams,id'],
-            'member_id' => ['sometimes', 'exists:users,id'],
+            'team_id' => ['sometimes', 'uuid', 'exists:teams,id'],
+            'member_id' => ['sometimes', 'uuid', 'exists:users,id'],
         ];
     }
 }
