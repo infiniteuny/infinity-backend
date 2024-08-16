@@ -15,7 +15,7 @@ class Blob implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return route('api.v1.blobs.show', ['blob' => $value]);
+        return $value ? route('api.v1.blobs.show', ['blob' => $value]) : null;
     }
 
     /**
