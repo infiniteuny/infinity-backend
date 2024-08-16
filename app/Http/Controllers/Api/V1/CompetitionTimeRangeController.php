@@ -42,7 +42,7 @@ class CompetitionTimeRangeController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('competition_time_ranges', $competitionTimeRanges);
+        return ResponseFormatter::paginatedCollection('competition_time_ranges', $competitionTimeRanges);
     }
 
     /**

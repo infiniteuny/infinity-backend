@@ -44,7 +44,7 @@ class CoreTeamMemberController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('core_team_members', $coreTeamMembers);
+        return ResponseFormatter::paginatedCollection('core_team_members', $coreTeamMembers);
     }
 
     /**

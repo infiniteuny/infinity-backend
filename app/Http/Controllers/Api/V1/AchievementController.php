@@ -62,9 +62,9 @@ class AchievementController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('achievements', $achievements);
+        return ResponseFormatter::paginatedCollection('achievements', $achievements);
     }
 
     /**

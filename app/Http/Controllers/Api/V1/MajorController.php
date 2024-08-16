@@ -46,7 +46,7 @@ class MajorController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('majors', $majors);
+        return ResponseFormatter::paginatedCollection('majors', $majors);
     }
 
     /**

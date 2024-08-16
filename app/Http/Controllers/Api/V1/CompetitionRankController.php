@@ -42,7 +42,7 @@ class CompetitionRankController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('competition_ranks', $competitionRanks);
+        return ResponseFormatter::paginatedCollection('competition_ranks', $competitionRanks);
     }
 
     /**

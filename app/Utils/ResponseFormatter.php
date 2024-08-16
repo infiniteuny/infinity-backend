@@ -28,7 +28,7 @@ class ResponseFormatter
      * @param  int  $status  HTTP status code
      * @param  array  $extraHeaders  Optional extra headers
      */
-    public static function unpaginatedCollection(
+    public static function collection(
         string $resourcesName,
         mixed $data,
         int $status = 200,
@@ -43,7 +43,7 @@ class ResponseFormatter
      * @param  int  $status  HTTP status code
      * @param  array  $extraHeaders  Optional extra headers
      */
-    public static function collection(
+    public static function paginatedCollection(
         string $resourcesName,
         LengthAwarePaginator $data,
         int $status = 200,

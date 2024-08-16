@@ -29,7 +29,7 @@ class TeamMemberController extends Controller
             ->allowedSorts(['id', 'team_id', 'member_id', 'created_at', 'updated_at'])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('team_members', $teamMembers);
+        return ResponseFormatter::paginatedCollection('team_members', $teamMembers);
     }
 
     /**

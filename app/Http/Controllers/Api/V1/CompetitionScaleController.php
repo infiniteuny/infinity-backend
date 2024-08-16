@@ -42,7 +42,7 @@ class CompetitionScaleController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('competition_scales', $competitionScales);
+        return ResponseFormatter::paginatedCollection('competition_scales', $competitionScales);
     }
 
     /**

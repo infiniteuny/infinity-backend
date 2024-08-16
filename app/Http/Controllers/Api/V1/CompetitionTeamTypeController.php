@@ -42,7 +42,7 @@ class CompetitionTeamTypeController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('competition_team_types', $competitionTeamTypes);
+        return ResponseFormatter::paginatedCollection('competition_team_types', $competitionTeamTypes);
     }
 
     /**

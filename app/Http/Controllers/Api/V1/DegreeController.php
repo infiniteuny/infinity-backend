@@ -42,7 +42,7 @@ class DegreeController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('degrees', $degrees);
+        return ResponseFormatter::paginatedCollection('degrees', $degrees);
     }
 
     /**

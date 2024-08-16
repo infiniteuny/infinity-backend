@@ -45,7 +45,7 @@ class CompetitionController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('competitions', $competitions);
+        return ResponseFormatter::paginatedCollection('competitions', $competitions);
     }
 
     /**

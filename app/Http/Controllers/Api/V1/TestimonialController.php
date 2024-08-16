@@ -48,7 +48,7 @@ class TestimonialController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('testimonials', $testimonials);
+        return ResponseFormatter::paginatedCollection('testimonials', $testimonials);
     }
 
     /**

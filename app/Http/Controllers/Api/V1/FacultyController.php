@@ -42,7 +42,7 @@ class FacultyController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('faculties', $faculties);
+        return ResponseFormatter::paginatedCollection('faculties', $faculties);
     }
 
     /**

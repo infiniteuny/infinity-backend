@@ -58,7 +58,7 @@ class FundApplicationController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('fund_applications', $fundApplications);
+        return ResponseFormatter::paginatedCollection('fund_applications', $fundApplications);
     }
 
     /**

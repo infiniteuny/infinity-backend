@@ -48,7 +48,7 @@ class ProjectGalleryController extends Controller
             ])
             ->paginate($request->query('per_page', 10));
 
-        return ResponseFormatter::collection('project_galleries', $projectGalleries);
+        return ResponseFormatter::paginatedCollection('project_galleries', $projectGalleries);
     }
 
     /**
