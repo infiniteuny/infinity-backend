@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
-use App\Repositories\StorageFacade;
-use App\Repositories\StorageFacadeImpl;
+use App\Repositories\StorageRepository;
+use App\Repositories\StorageRepositoryImpl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public $singletons = [
         PsrCacheRepository::class => PsrCacheRepositoryImpl::class,
-        StorageFacade::class => StorageFacadeImpl::class,
+        StorageRepository::class => StorageRepositoryImpl::class,
     ];
 
     /**

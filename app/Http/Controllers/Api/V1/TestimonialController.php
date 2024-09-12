@@ -7,7 +7,7 @@ use App\Http\Requests\Testimonial\StoreTestimonialRequest;
 use App\Http\Requests\Testimonial\UpdateTestimonialRequest;
 use App\Jobs\DeleteBlob;
 use App\Models\Testimonial;
-use App\Repositories\StorageFacade;
+use App\Repositories\StorageRepository;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class TestimonialController extends Controller
 {
     public function __construct(
-        protected StorageFacade $storageFacade,
+        protected StorageRepository $storageRepository,
     ) {
         // $this->authorizeResource(Testimonial::class, 'testimonial');
     }
@@ -56,7 +56,7 @@ class TestimonialController extends Controller
      */
     public function store(StoreTestimonialRequest $request): JsonResponse
     {
-        $manifest = $this->storageFacade->store($request->file('photo'), 'images/testimonials');
+        $manifest = $this->storageRepository->store($request->file('photo'), 'images/testimonials');
 
         $testimonial = Testimonial::create(
             array_replace($request->validated(), ['image' => $manifest])
@@ -85,7 +85,7 @@ class TestimonialController extends Controller
 
             dispatch(new DeleteBlob($encodedManifest));
 
-            $manifest = $this->storageFacade->store($request->file('photo'), 'images/testimonials');
+            $manifest = $this->storageRepository->store($request->file('photo'), 'images/testimonials');
         }
 
         $testimonial->update(

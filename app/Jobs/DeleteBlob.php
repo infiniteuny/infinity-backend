@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Repositories\StorageFacade;
+use App\Repositories\StorageRepository;
 use App\Utils\Encoder;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -42,10 +42,10 @@ class DeleteBlob implements ShouldBeUnique, ShouldQueue
      *
      * @throws Exception
      */
-    public function handle(StorageFacade $storageFacade): void
+    public function handle(StorageRepository $storageRepository): void
     {
         if (Encoder::isBase64Url($this->encodedManifest)) {
-            $storageFacade->delete(Encoder::base64UrlDecode($this->encodedManifest));
+            $storageRepository->delete(Encoder::base64UrlDecode($this->encodedManifest));
         } else {
             throw new Exception('Invalid encoded manifest');
         }

@@ -7,7 +7,7 @@ use App\Http\Requests\ProjectGallery\StoreProjectGalleryRequest;
 use App\Http\Requests\ProjectGallery\UpdateProjectGalleryRequest;
 use App\Jobs\DeleteBlob;
 use App\Models\ProjectGallery;
-use App\Repositories\StorageFacade;
+use App\Repositories\StorageRepository;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class ProjectGalleryController extends Controller
 {
     public function __construct(
-        protected StorageFacade $storageFacade,
+        protected StorageRepository $storageRepository,
     ) {
         // $this->authorizeResource(ProjectGallery::class, 'project_gallery');
     }
@@ -56,7 +56,7 @@ class ProjectGalleryController extends Controller
      */
     public function store(StoreProjectGalleryRequest $request): JsonResponse
     {
-        $manifest = $this->storageFacade->store($request->file('image'), 'images/project-galleries');
+        $manifest = $this->storageRepository->store($request->file('image'), 'images/project-galleries');
 
         $projectGallery = ProjectGallery::create(
             array_replace($request->validated(), ['image' => $manifest])
@@ -85,7 +85,7 @@ class ProjectGalleryController extends Controller
 
             dispatch(new DeleteBlob($encodedManifest));
 
-            $manifest = $this->storageFacade->store($request->file('image'), 'images/project-galleries');
+            $manifest = $this->storageRepository->store($request->file('image'), 'images/project-galleries');
         }
 
         $projectGallery->update(

@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Uid\Uuid;
 
-class StorageFacadeImpl implements StorageFacade
+class StorageRepositoryImpl implements StorageRepository
 {
     /**
      * @throws Exception
      */
-    public static function store(
+    public function store(
         UploadedFile $file,
         string $path,
         ?string $name = null,
@@ -38,7 +38,7 @@ class StorageFacadeImpl implements StorageFacade
         }
     }
 
-    public static function get(string $manifest): string
+    public function get(string $manifest): string
     {
         $params = json_decode($manifest);
         $disk = $params->disk;
@@ -52,7 +52,7 @@ class StorageFacadeImpl implements StorageFacade
         }
     }
 
-    public static function delete(string $manifest): bool
+    public function delete(string $manifest): bool
     {
         $params = json_decode($manifest);
         $disk = $params->disk;

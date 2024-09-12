@@ -7,7 +7,7 @@ use App\Http\Requests\Achievement\StoreAchievementRequest;
 use App\Http\Requests\Achievement\UpdateAchievementRequest;
 use App\Jobs\DeleteBlob;
 use App\Models\Achievement;
-use App\Repositories\StorageFacade;
+use App\Repositories\StorageRepository;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class AchievementController extends Controller
 {
     public function __construct(
-        protected StorageFacade $storageFacade,
+        protected StorageRepository $storageRepository,
     ) {
         // $this->authorizeResource(Achievement::class, 'achievement');
     }
@@ -72,7 +72,7 @@ class AchievementController extends Controller
      */
     public function store(StoreAchievementRequest $request): JsonResponse
     {
-        $manifest = $this->storageFacade->store($request->file('image'), 'images/achievements');
+        $manifest = $this->storageRepository->store($request->file('image'), 'images/achievements');
 
         $achievement = Achievement::create(
             array_replace($request->validated(), ['image' => $manifest])
@@ -101,7 +101,7 @@ class AchievementController extends Controller
 
             dispatch(new DeleteBlob($encodedManifest));
 
-            $manifest = $this->storageFacade->store($request->file('image'), 'images/achievements');
+            $manifest = $this->storageRepository->store($request->file('image'), 'images/achievements');
         }
 
         $achievement->update(

@@ -4,16 +4,16 @@ namespace App\Repositories;
 
 use Illuminate\Http\UploadedFile;
 
-interface StorageFacade
+interface StorageRepository
 {
-    public static function store(
+    public function store(
         UploadedFile $file,
         string $path,
         ?string $name = null,
         string $disk = 'local',
     ): string;
 
-    public static function get(string $manifest): string;
+    public function get(string $manifest): string;
 
-    public static function delete(string $manifest): bool;
+    public function delete(string $manifest): bool;
 }

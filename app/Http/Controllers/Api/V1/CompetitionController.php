@@ -7,7 +7,7 @@ use App\Http\Requests\Competition\StoreCompetitionRequest;
 use App\Http\Requests\Competition\UpdateCompetitionRequest;
 use App\Jobs\DeleteBlob;
 use App\Models\Competition;
-use App\Repositories\StorageFacade;
+use App\Repositories\StorageRepository;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class CompetitionController extends Controller
 {
     public function __construct(
-        protected StorageFacade $storageFacade,
+        protected StorageRepository $storageRepository,
     ) {
         // $this->authorizeResource(Competition::class, 'competition');
     }
@@ -53,7 +53,7 @@ class CompetitionController extends Controller
      */
     public function store(StoreCompetitionRequest $request): JsonResponse
     {
-        $manifest = $this->storageFacade->store($request->file('logo'), 'images/competitions');
+        $manifest = $this->storageRepository->store($request->file('logo'), 'images/competitions');
 
         $competition = Competition::create(
             array_replace($request->validated(), ['logo' => $manifest])
@@ -82,7 +82,7 @@ class CompetitionController extends Controller
 
             dispatch(new DeleteBlob($encodedManifest));
 
-            $manifest = $this->storageFacade->store($request->file('logo'), 'images/competitions');
+            $manifest = $this->storageRepository->store($request->file('logo'), 'images/competitions');
         }
 
         $competition->update(

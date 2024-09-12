@@ -7,7 +7,7 @@ use App\Http\Requests\CoreTeamMember\StoreCoreTeamMemberRequest;
 use App\Http\Requests\CoreTeamMember\UpdateCoreTeamMemberRequest;
 use App\Jobs\DeleteBlob;
 use App\Models\CoreTeamMember;
-use App\Repositories\StorageFacade;
+use App\Repositories\StorageRepository;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class CoreTeamMemberController extends Controller
 {
     public function __construct(
-        protected StorageFacade $storageFacade,
+        protected StorageRepository $storageRepository,
     ) {
         // $this->authorizeResource(Degree::class, 'Degree');
     }
@@ -52,12 +52,12 @@ class CoreTeamMemberController extends Controller
      */
     public function store(StoreCoreTeamMemberRequest $request): JsonResponse
     {
-        $photoManifest = $this->storageFacade->store($request->file('photo'), 'images/core-team-members/photos');
+        $photoManifest = $this->storageRepository->store($request->file('photo'), 'images/core-team-members/photos');
 
         $hasAnimation = $request->has('animation');
 
         if ($hasAnimation) {
-            $animationManifest = $this->storageFacade->store($request->file('animation'), 'images/core-team-members/animations');
+            $animationManifest = $this->storageRepository->store($request->file('animation'), 'images/core-team-members/animations');
         }
 
         $coreTeamMember = CoreTeamMember::create(
@@ -92,7 +92,7 @@ class CoreTeamMemberController extends Controller
 
             dispatch(new DeleteBlob($photoEncodedManifest));
 
-            $photoManifest = $this->storageFacade->store($request->file('photo'), 'images/core-team-members/photos');
+            $photoManifest = $this->storageRepository->store($request->file('photo'), 'images/core-team-members/photos');
         }
 
         if ($hasAnimation) {
@@ -101,7 +101,7 @@ class CoreTeamMemberController extends Controller
             dispatch(new DeleteBlob($animationEncodedManifest));
 
             if ($hasFileAnimation) {
-                $animationManifest = $this->storageFacade->store($request->file('animation'), 'images/core-team-members/animations');
+                $animationManifest = $this->storageRepository->store($request->file('animation'), 'images/core-team-members/animations');
             } else {
                 $animationManifest = null;
             }

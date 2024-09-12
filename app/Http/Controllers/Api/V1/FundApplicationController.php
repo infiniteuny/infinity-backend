@@ -7,7 +7,7 @@ use App\Http\Requests\FundApplication\StoreFundApplicationRequest;
 use App\Http\Requests\FundApplication\UpdateFundApplicationRequest;
 use App\Jobs\DeleteBlob;
 use App\Models\FundApplication;
-use App\Repositories\StorageFacade;
+use App\Repositories\StorageRepository;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class FundApplicationController extends Controller
 {
     public function __construct(
-        protected StorageFacade $storageFacade,
+        protected StorageRepository $storageRepository,
     ) {
         // $this->authorizeResource(FundApplication::class, 'fund_application');
     }
@@ -66,8 +66,8 @@ class FundApplicationController extends Controller
      */
     public function store(StoreFundApplicationRequest $request): JsonResponse
     {
-        $loaManifest = $this->storageFacade->store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
-        $proposalManifest = $this->storageFacade->store($request->file('proposal'), 'documents/fund-applications/proposals');
+        $loaManifest = $this->storageRepository->store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
+        $proposalManifest = $this->storageRepository->store($request->file('proposal'), 'documents/fund-applications/proposals');
 
         $fundApplication = FundApplication::create(
             array_replace($request->validated(), [
@@ -100,7 +100,7 @@ class FundApplicationController extends Controller
 
             dispatch(new DeleteBlob($loaEncodedManifest));
 
-            $loaManifest = $this->storageFacade->store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
+            $loaManifest = $this->storageRepository->store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
         }
 
         if ($hasProposal) {
@@ -108,7 +108,7 @@ class FundApplicationController extends Controller
 
             dispatch(new DeleteBlob($proposalEncodedManifest));
 
-            $proposalManifest = $this->storageFacade->store($request->file('proposal'), 'documents/fund-applications/proposals');
+            $proposalManifest = $this->storageRepository->store($request->file('proposal'), 'documents/fund-applications/proposals');
         }
 
         $fundApplication->update(
