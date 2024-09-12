@@ -2,17 +2,16 @@
 
 namespace App\Providers;
 
+use App\Repositories\OidcFacade;
+use App\Repositories\OidcFacadeImpl;
 use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
 use App\Repositories\StorageRepository;
 use App\Repositories\StorageRepositoryImpl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
-use SocialiteProviders\Authentik\Provider as AuthentikProvider;
-use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public $singletons = [
         PsrCacheRepository::class => PsrCacheRepositoryImpl::class,
         StorageRepository::class => StorageRepositoryImpl::class,
+        OidcFacade::class => OidcFacadeImpl::class,
     ];
 
     /**
@@ -41,9 +41,6 @@ class AppServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());
-        });
-        Event::listen(function (SocialiteWasCalled $event) {
-            $event->extendSocialite('authentik', AuthentikProvider::class);
         });
     }
 }
