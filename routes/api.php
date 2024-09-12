@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'as' => 'api.v1.',
     'prefix' => 'v1',
+    'middleware' => ['auth'],
 ], function () {
     Route::get('blobs/{blob}', BlobController::class)
         ->name('blobs.show');

@@ -8,8 +8,10 @@ use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
 use App\Repositories\StorageRepository;
 use App\Repositories\StorageRepositoryImpl;
+use App\Services\OidcGuard;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,6 +43,13 @@ class AppServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());
+        });
+        Auth::extend('oidc', function ($app, $name, array $config) {
+            return new OidcGuard(
+                Auth::createUserProvider($config['provider']),
+                $app->make(OidcFacade::class),
+                $app->make('request'),
+            );
         });
     }
 }
