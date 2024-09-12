@@ -35,18 +35,15 @@ class Achievement extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'competition_start_date' => 'datetime',
-            'competition_end_date' => 'datetime',
-            'image' => Blob::class,
-        ];
-    }
+    protected $casts = [
+        'competition_start_date' => 'datetime',
+        'competition_end_date' => 'datetime',
+        'image' => Blob::class,
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.

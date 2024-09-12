@@ -29,16 +29,13 @@ class Competition extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'logo' => Blob::class,
-        ];
-    }
+    protected $casts = [
+        'logo' => Blob::class,
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.

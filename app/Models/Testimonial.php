@@ -25,16 +25,13 @@ class Testimonial extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'photo' => Blob::class,
-        ];
-    }
+    protected $casts = [
+        'photo' => Blob::class,
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.

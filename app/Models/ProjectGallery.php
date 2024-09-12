@@ -25,16 +25,13 @@ class ProjectGallery extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'image' => Blob::class,
-        ];
-    }
+    protected $casts = [
+        'image' => Blob::class,
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.

@@ -20,8 +20,20 @@ class Token extends Model
     protected $fillable = [
         'external_id',
         'user_id',
+        'last_used_at',
         'created_at',
         'expires_at',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'last_used_at' => 'datetime',
+        'created_at' => 'datetime',
+        'expires_at' => 'datetime',
     ];
 
     /**

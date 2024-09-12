@@ -27,17 +27,14 @@ class CoreTeamMember extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'photo' => Blob::class,
-            'animation' => Blob::class,
-        ];
-    }
+    protected $casts = [
+        'photo' => Blob::class,
+        'animation' => Blob::class,
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.
