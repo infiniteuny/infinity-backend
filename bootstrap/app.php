@@ -43,36 +43,31 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {
             return JsendFormatter::fail(
-                ['message' => $e->getMessage() ?: 'Unauthenticated.'],
+                $e->getMessage() ?: 'Unauthenticated.',
+                null,
                 401,
             );
         });
 
         $exceptions->render(function (ValidationException $e) {
             return JsendFormatter::fail(
-                [
-                    'message' => $e->getMessage() ?: 'The given data was invalid.',
-                    'details' => $e->errors(),
-                ],
+                $e->getMessage() ?: 'The given data was invalid.',
+                ['details' => $e->errors()],
                 $e->status ?? 422,
             );
         });
 
         $exceptions->render(function (AccessDeniedHttpException $e) {
             return JsendFormatter::fail(
-                array_merge(
-                    [
-                        'message' => $e->getMessage() ?: 'Forbidden.',
-                    ],
-                    config('app.debug') ? [
-                        'exception' => get_class($e),
-                        'file' => $e->getFile(),
-                        'line' => $e->getLine(),
-                        'trace' => collect($e->getTrace())->map(function ($trace) {
-                            return Arr::except($trace, ['args']);
-                        })->all(),
-                    ] : []
-                ),
+                $e->getMessage() ?: 'Forbidden.',
+                config('app.debug') ? [
+                    'exception' => get_class($e),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                    'trace' => collect($e->getTrace())->map(function ($trace) {
+                        return Arr::except($trace, ['args']);
+                    })->all(),
+                ] : [],
                 $e->getStatusCode(),
                 $e->getHeaders() ?: [],
             );
@@ -81,17 +76,15 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (HttpException $e) {
             if ($e->getStatusCode() <= 500) {
                 return JsendFormatter::fail(
-                    array_merge(
-                        ['message' => $e->getMessage()],
-                        config('app.debug') ? [
-                            'exception' => get_class($e),
-                            'file' => $e->getFile(),
-                            'line' => $e->getLine(),
-                            'trace' => collect($e->getTrace())->map(function ($trace) {
-                                return Arr::except($trace, ['args']);
-                            })->all(),
-                        ] : []
-                    ),
+                    $e->getMessage(),
+                    config('app.debug') ? [
+                        'exception' => get_class($e),
+                        'file' => $e->getFile(),
+                        'line' => $e->getLine(),
+                        'trace' => collect($e->getTrace())->map(function ($trace) {
+                            return Arr::except($trace, ['args']);
+                        })->all(),
+                    ] : [],
                     $e->getStatusCode(),
                     $e->getHeaders() ?: [],
                 );

@@ -11,45 +11,51 @@ class ResponseFormatter
      * @param  string  $resourcesName  Resources name
      * @param  mixed  $data  Response data
      * @param  int  $status  HTTP status code
+     * @param  string  $message  Optional success message
      * @param  array  $extraHeaders  Optional extra headers
      */
     public static function singleton(
         string $resourcesName,
         mixed $data,
         int $status = 200,
+        ?string $message = null,
         array $extraHeaders = []
     ): JsonResponse {
-        return JsendFormatter::success([$resourcesName => $data], $status, $extraHeaders);
+        return JsendFormatter::success($message, [$resourcesName => $data], $status, $extraHeaders);
     }
 
     /**
      * @param  string  $resourcesName  Resources name
      * @param  mixed  $data  Response data
      * @param  int  $status  HTTP status code
+     * @param  string  $message  Optional success message
      * @param  array  $extraHeaders  Optional extra headers
      */
     public static function collection(
         string $resourcesName,
         mixed $data,
         int $status = 200,
+        ?string $message = null,
         array $extraHeaders = []
     ): JsonResponse {
-        return JsendFormatter::success([$resourcesName => $data], $status, $extraHeaders);
+        return JsendFormatter::success($message, [$resourcesName => $data], $status, $extraHeaders);
     }
 
     /**
      * @param  string  $resourcesName  Resources name
      * @param  LengthAwarePaginator  $data  Paginated response data
      * @param  int  $status  HTTP status code
+     * @param  string  $message  Optional success message
      * @param  array  $extraHeaders  Optional extra headers
      */
     public static function paginatedCollection(
         string $resourcesName,
         LengthAwarePaginator $data,
         int $status = 200,
+        ?string $message = null,
         array $extraHeaders = []
     ): JsonResponse {
-        return JsendFormatter::success([
+        return JsendFormatter::success($message, [
             $resourcesName => $data->items(),
             'meta' => [
                 'from' => $data->firstItem(),
