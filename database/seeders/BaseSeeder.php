@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CoreTeamDivision;
 use App\Models\Degree;
 use App\Models\Faculty;
 use App\Models\Major;
@@ -900,6 +901,64 @@ class BaseSeeder extends Seeder
                 'faculty_id' => $faculty->where('code', '09')->first()->id,
                 'code' => '0925',
                 'name' => 'Administrasi Perkantoran',
+            ],
+        ]);
+        CoreTeamDivision::createMany([
+            [
+                'name' => 'President',
+                'priority' => 1,
+            ],
+            [
+                'name' => 'Vice President',
+                'priority' => 2,
+            ],
+            [
+                'name' => 'Administration and Finance Leader',
+                'priority' => 11,
+            ],
+            [
+                'name' => 'Administration and Finance Staff',
+                'priority' => 12,
+            ],
+            [
+                'name' => 'Human Resources Development Leader',
+                'priority' => 21,
+            ],
+            [
+                'name' => 'Human Resources Development Staff',
+                'priority' => 22,
+            ],
+            [
+                'name' => 'Entrepreneurship and Partnership Leader',
+                'priority' => 31,
+            ],
+            [
+                'name' => 'Entrepreneurship and Partnership Staff',
+                'priority' => 32,
+            ],
+            [
+                'name' => 'Media and Information Leader',
+                'priority' => 41,
+            ],
+            [
+                'name' => 'Media and Information Staff',
+                'priority' => 42,
+            ],
+            [
+                'name' => 'Competition Leader',
+                'priority' => 51,
+            ],
+            [
+                'name' => 'Competition Staff',
+                'priority' => 52,
+            ],
+            [
+                'name' => 'Research and Development Leader',
+                'priority' => 61,
+            ],
+            [
+                'name' => 'Research and Development Staff',
+                'priority' => 62,
             ],
         ]);
     }
