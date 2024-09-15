@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasBulkCreate;
 use App\Traits\HasUuids;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CompetitionOrganizerType extends Model
 {
-    use HasFactory, HasUuids;
+    use HasBulkCreate, HasFactory, HasUuids;
 
     /**
      * The attributes that are mass assignable.

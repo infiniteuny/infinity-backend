@@ -2,6 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\CompetitionOrganizerType;
+use App\Models\CompetitionOutput;
+use App\Models\CompetitionRank;
+use App\Models\CompetitionScale;
+use App\Models\CompetitionTeamType;
+use App\Models\CompetitionTimeRange;
 use App\Models\CoreTeamDivision;
 use App\Models\Degree;
 use App\Models\Faculty;
@@ -960,6 +966,110 @@ class BaseSeeder extends Seeder
                 'name' => 'Research and Development Staff',
                 'priority' => 62,
             ],
+        ]);
+        CompetitionOrganizerType::createMany([
+            [
+                'name' => 'Kompetisi Non-Kemdikbud',
+                'weight' => 1,
+            ],
+            [
+                'name' => 'Kompetisi Kemdikbud (Puspresnas)',
+                'weight' => 3,
+            ],
+        ]);
+        CompetitionOutput::createMany([
+            [
+                'name' => 'Ide',
+                'weight' => 1,
+            ],
+            [
+                'name' => 'Pelaksanaan',
+                'weight' => 2,
+            ],
+            [
+                'name' => 'Hasil/Produk',
+                'weight' => 3,
+            ],
+        ]);
+        CompetitionRank::createMany([
+            [
+                'name' => 'Peserta',
+                'weight' => 0,
+            ],
+            [
+                'name' => 'Pendanaan',
+                'weight' => 1,
+            ],
+            [
+                'name' => 'Finalis/Juara Harapan',
+                'weight' => 2,
+            ],
+            [
+                'name' => 'Juara 3',
+                'weight' => 3,
+            ],
+            [
+                'name' => 'Juara 2',
+                'weight' => 4,
+            ],
+            [
+                'name' => 'Juara 1',
+                'weight' => 5,
+            ],
+        ]);
+        CompetitionScale::createMany([
+            [
+                'name' => 'UNY',
+                'weight' => 1,
+            ],
+            [
+                'name' => 'Kabupaten/Kota',
+                'weight' => 2,
+            ],
+            [
+                'name' => 'Daerah/Provinsi',
+                'weight' => 3,
+            ],
+            [
+                'name' => 'Wilayah',
+                'weight' => 4,
+            ],
+            [
+                'name' => 'Nasional',
+                'weight' => 5,
+            ],
+            [
+                'name' => 'Internasional',
+                'weight' => 6,
+            ],
+        ]);
+        CompetitionTimeRange::createMany([
+            [
+                'name' => '<3 Bulan',
+                'weight' => 1,
+            ],
+            [
+                'name' => '3-6 Bulan',
+                'weight' => 2,
+            ],
+            [
+                'name' => '>6 Bulan',
+                'weight' => 3,
+            ],
+        ]);
+        CompetitionTeamType::createMany([
+            [
+                'name' => 'Individual',
+                'weight' => 1,
+            ],
+            [
+                'name' => 'Beregu (2 Anggota)',
+                'weight' => 2,
+            ],
+            [
+                'name' => 'Beregu (>2 Anggota)',
+                'weight' => 3,
+            ]
         ]);
     }
 }
