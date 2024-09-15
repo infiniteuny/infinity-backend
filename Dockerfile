@@ -37,7 +37,7 @@ RUN docker-php-source delete && \
     rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
 # Install dependencies
-FROM composer:2.7.7 AS vendor
+FROM composer:2.7.9 AS vendor
 
 ENV COMPOSER_FUND=0
 
