@@ -1069,7 +1069,7 @@ class BaseSeeder extends Seeder
             [
                 'name' => 'Beregu (>2 Anggota)',
                 'weight' => 3,
-            ]
+            ],
         ]);
     }
 }
