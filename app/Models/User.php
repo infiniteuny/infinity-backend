@@ -56,6 +56,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Major::class);
     }
 
+    public function roles(): HasMany
+    {
+        return $this->hasMany(RoleMember::class);
+    }
+
+    public function communityGroups(): HasMany
+    {
+        return $this->hasMany(CommunityGroupMember::class);
+    }
+
+    public function communityGroupAdmins(): HasMany
+    {
+        return $this->hasMany(CommunityGroupAdminMember::class);
+    }
+
     public function ledTeams(): HasMany
     {
         return $this->hasMany(Team::class, 'leader_id');
