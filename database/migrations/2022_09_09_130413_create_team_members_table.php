@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('team_members', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('team_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
-            $table->foreignUuid('member_id')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

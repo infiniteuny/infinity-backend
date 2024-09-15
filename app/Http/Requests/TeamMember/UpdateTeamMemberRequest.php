@@ -15,7 +15,7 @@ class UpdateTeamMemberRequest extends FormRequest
     {
         return [
             'team_id' => ['sometimes', 'uuid', 'exists:teams,id'],
-            'member_id' => ['sometimes', 'uuid', 'exists:users,id'],
+            'user_id' => ['sometimes', 'uuid', 'exists:users,id'],
         ];
     }
 }

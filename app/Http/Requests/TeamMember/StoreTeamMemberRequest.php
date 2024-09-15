@@ -15,7 +15,7 @@ class StoreTeamMemberRequest extends FormRequest
     {
         return [
             'team_id' => ['required', 'uuid', 'exists:teams,id'],
-            'member_id' => ['required', 'uuid', 'exists:users,id'],
+            'user_id' => ['required', 'uuid', 'exists:users,id'],
         ];
     }
 }

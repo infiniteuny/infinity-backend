@@ -24,9 +24,9 @@ class TeamMemberController extends Controller
     public function index(Request $request): JsonResponse
     {
         $teamMembers = QueryBuilder::for(TeamMember::class)
-            ->allowedFilters(['team_id', 'member_id'])
+            ->allowedFilters(['team_id', 'user_id'])
             ->defaultSorts(['-created_at', 'id'])
-            ->allowedSorts(['id', 'team_id', 'member_id', 'created_at', 'updated_at'])
+            ->allowedSorts(['id', 'team_id', 'user_id', 'created_at', 'updated_at'])
             ->paginate($request->query('per_page', 10));
 
         return ResponseFormatter::paginatedCollection('team_members', $teamMembers);

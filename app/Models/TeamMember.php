@@ -19,7 +19,7 @@ class TeamMember extends Model
      */
     protected $fillable = [
         'team_id',
-        'member_id',
+        'user_id',
     ];
 
     /**
@@ -32,7 +32,7 @@ class TeamMember extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'member_id');
+        return $this->belongsTo(User::class);
     }
 
     public function team(): BelongsTo
