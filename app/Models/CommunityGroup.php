@@ -22,6 +22,7 @@ class CommunityGroup extends Model
     protected $fillable = [
         'name',
         'priority',
+        'description',
         'logo',
     ];
 

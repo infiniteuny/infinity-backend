@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->unique()->fulltext();
             $table->tinyInteger('priority');
+            $table->text('description');
             $table->string('logo');
             $table->timestamps();
         });
