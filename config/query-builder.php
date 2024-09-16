@@ -8,9 +8,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | By default the package will use the `include`, `filter`, `sort`
-    | and `fields` query parameters as described in the readme.
-    |
-    | You can customize these query string parameters here.
+    | and `fields` query parameters as described in the readme. You can
+    | customize these query string parameters here.
     |
     */
 
@@ -27,8 +26,8 @@ return [
     | Count Suffix
     |--------------------------------------------------------------------------
     |
-    | Related model counts are included using the relationship name suffixed with this string.
-    | For example: GET /users?include=postsCount
+    | Related model counts are included using the relationship name suffixed
+    | with this string. For example: GET /users?include=postsCount
     |
     */
 
@@ -39,8 +38,8 @@ return [
     | Exists Suffix
     |--------------------------------------------------------------------------
     |
-    | Related model exists are included using the relationship name suffixed with this string.
-    | For example: GET /users?include=postsExists
+    | Related model exists are included using the relationship name suffixed
+    | with this string. For example: GET /users?include=postsExists
     |
     */
 
@@ -51,8 +50,8 @@ return [
     | Invalid Filter Query Exception
     |--------------------------------------------------------------------------
     |
-    | By default the package will throw an `InvalidFilterQuery` exception when a filter in the
-    | URL is not allowed in the `allowedFilters()` method.
+    | By default the package will throw an `InvalidFilterQuery` exception when
+    | a filter in the URL is not allowed in the `allowedFilters()` method.
     |
     */
 
@@ -63,8 +62,8 @@ return [
     | Invalid Sort Query Exception
     |--------------------------------------------------------------------------
     |
-    | By default the package will throw an `InvalidSortQuery` exception when a sort in the
-    | URL is not allowed in the `allowedSorts()` method.
+    | By default the package will throw an `InvalidSortQuery` exception when
+    | a sort in the URL is not allowed in the `allowedSorts()` method.
     |
     */
 
@@ -75,8 +74,8 @@ return [
     | Invalid Include Query Exception
     |--------------------------------------------------------------------------
     |
-    | By default the package will throw an `InvalidIncludeQuery` exception when an include in the
-    | URL is not allowed in the `allowedIncludes()` method.
+    | By default the package will throw an `InvalidIncludeQuery` exception when
+    | an include in the URL is not allowed in the `allowedIncludes()` method.
     |
     */
 
@@ -87,12 +86,14 @@ return [
     | Convert Relation Names to Snake Case Plural
     |--------------------------------------------------------------------------
     |
-    | By default, the package expects relationship names to be snake case plural when using fields[relationship].
-    | For example, fetching the id and name for a userOwner relation would look like this:
+    | By default, the package expects relationship names to be snake case
+    | plural when using fields[relationship]. For example, fetching the id and
+    | name for a userOwner relation would look like this:
     | GET /users?fields[user_owner]=id,name
     |
-    | Set this to `false` if you don't want that and keep the requested relationship names as-is and allows you to
-    | request the fields using a camelCase relationship name:
+    | Set this to `false` if you don't want that and keep the requested
+    | relationship names as-is and allows you to request the fields using a
+    | camelCase relationship name:
     | GET /users?fields[userOwner]=id,name
     |
     */
