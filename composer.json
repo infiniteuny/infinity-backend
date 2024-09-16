@@ -14,6 +14,7 @@
         "php": "^8.2.0",
         "facile-it/php-openid-client": "0.3.5",
         "laravel/framework": "11.23.5",
+        "laravel/horizon": "5.28.1",
         "laravel/tinker": "2.9.0",
         "spatie/laravel-query-builder": "6.0.1",
         "spomky-labs/aes-key-wrap": "7.0.0",
