@@ -12,10 +12,13 @@ use App\Models\CoreTeamDivision;
 use App\Models\Degree;
 use App\Models\Faculty;
 use App\Models\Major;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BaseSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Seed the application's database.
      */
