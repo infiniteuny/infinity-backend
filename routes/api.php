@@ -38,32 +38,38 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'as' => 'api.v1.',
     'prefix' => 'v1',
-    'middleware' => ['auth'],
 ], function () {
     Route::get('blobs/{blob}', BlobController::class)
         ->name('blobs.show');
+    Route::apiResource('configs', ConfigController::class)
+        ->only(['index', 'show']);
 
-    Route::apiResources([
-        'achievements' => AchievementController::class,
-        'competitions' => CompetitionController::class,
-        'competition-organizer-types' => CompetitionOrganizerTypeController::class,
-        'competition-outputs' => CompetitionOutputController::class,
-        'competition-ranks' => CompetitionRankController::class,
-        'competition-scales' => CompetitionScaleController::class,
-        'competition-team-types' => CompetitionTeamTypeController::class,
-        'competition-time-ranges' => CompetitionTimeRangeController::class,
-        'configs' => ConfigController::class,
-        'core-teams' => CoreTeamController::class,
-        'core-team-divisions' => CoreTeamDivisionController::class,
-        'core-team-members' => CoreTeamMemberController::class,
-        'degrees' => DegreeController::class,
-        'faculties' => FacultyController::class,
-        'fund-applications' => FundApplicationController::class,
-        'majors' => MajorController::class,
-        'project-galleries' => ProjectGalleryController::class,
-        'teams' => TeamController::class,
-        'team-members' => TeamMemberController::class,
-        'testimonials' => TestimonialController::class,
-        'users' => UserController::class,
-    ]);
+    Route::group([
+        'middleware' => ['auth'],
+    ], function () {
+        Route::apiResource('configs', ConfigController::class)
+            ->only(['store', 'update', 'destroy']);
+        Route::apiResources([
+            'achievements' => AchievementController::class,
+            'competitions' => CompetitionController::class,
+            'competition-organizer-types' => CompetitionOrganizerTypeController::class,
+            'competition-outputs' => CompetitionOutputController::class,
+            'competition-ranks' => CompetitionRankController::class,
+            'competition-scales' => CompetitionScaleController::class,
+            'competition-team-types' => CompetitionTeamTypeController::class,
+            'competition-time-ranges' => CompetitionTimeRangeController::class,
+            'core-teams' => CoreTeamController::class,
+            'core-team-divisions' => CoreTeamDivisionController::class,
+            'core-team-members' => CoreTeamMemberController::class,
+            'degrees' => DegreeController::class,
+            'faculties' => FacultyController::class,
+            'fund-applications' => FundApplicationController::class,
+            'majors' => MajorController::class,
+            'project-galleries' => ProjectGalleryController::class,
+            'teams' => TeamController::class,
+            'team-members' => TeamMemberController::class,
+            'testimonials' => TestimonialController::class,
+            'users' => UserController::class,
+        ]);
+    });
 });
