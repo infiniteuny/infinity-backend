@@ -21,7 +21,6 @@ class StoreUserRequest extends FormRequest
             'major_id' => ['required', 'uuid', 'exists:majors,id'],
             'links' => ['required', 'array'],
             'links.*' => ['required', 'json'],
-            'role' => ['required', 'in:ADMIN,STUDENT'],
             'start_date' => ['sometimes', 'nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['sometimes', 'nullable', 'date', 'after_or_equal:start_date'],
             'is_member' => ['required', 'boolean'],

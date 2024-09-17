@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('student_id')->unique();
             $table->foreignUuid('major_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
             $table->json('links');
-            $table->enum('role', ['ADMIN', 'STUDENT'])->default('STUDENT');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->boolean('is_member');

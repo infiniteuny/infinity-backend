@@ -21,7 +21,6 @@ class UpdateUserRequest extends FormRequest
             'major_id' => ['sometimes', 'uuid', 'exists:majors,id'],
             'links' => ['sometimes', 'array'],
             'links.*' => ['sometimes', 'json'],
-            'role' => ['sometimes', 'in:ADMIN,STUDENT'],
             'start_date' => ['sometimes', 'nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['sometimes', 'nullable', 'date', 'after_or_equal:start_date'],
             'is_member' => ['sometimes', 'boolean'],
