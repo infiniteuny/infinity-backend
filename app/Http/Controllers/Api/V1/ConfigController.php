@@ -84,8 +84,8 @@ class ConfigController extends Controller
      */
     public function show(Config $config)
     {
-        if ($config->is_private && !Auth::check()) {
-            throw new AuthenticationException();
+        if ($config->is_private && ! Auth::check()) {
+            throw new AuthenticationException;
         }
 
         return ResponseFormatter::singleton('survey_result', $config);

@@ -49,6 +49,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'links' => 'array',
+        'is_member' => 'boolean',
+        'is_extraordinary' => 'boolean',
     ];
 
     /**

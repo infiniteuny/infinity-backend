@@ -54,7 +54,7 @@ return [
 
             // Include these routes even if they did not match the rules above.
             'include' => [
-                'api.*'
+                'api.*',
             ],
 
             // Exclude these routes even if they matched the rules above.
