@@ -13,6 +13,7 @@ return [
     | Scribe will infer it from config('app.name').
     |
     */
+
     'title' => null,
 
     /*
@@ -24,6 +25,7 @@ return [
     | Postman collection and OpenAPI spec.
     |
     */
+
     'description' => '',
 
     /*
@@ -37,6 +39,7 @@ return [
     | '{{ config("app.tenant_url") }}' to get a dynamic base URL.
     |
     */
+
     'base_url' => null,
 
     'routes' => [
@@ -78,6 +81,7 @@ return [
     |   you to easily use the docs with an external generator.
     |
     */
+
     'type' => 'external_laravel',
 
     /*
@@ -89,6 +93,7 @@ return [
     | supported options.
     |
     */
+
     'theme' => 'scalar',
 
     'static' => [
@@ -149,6 +154,7 @@ return [
     | displayed docs, generated examples and response calls.
     |
     */
+
     'auth' => [
         // Set this to true if ANY endpoints in your API use authentication.
         'enabled' => true,
@@ -191,6 +197,7 @@ return [
     | `description`. Markdown and HTML are supported.
     |
     */
+
     'intro_text' => <<<'INTRO'
 This documentation aims to provide all the information you need to work with our API.
 
@@ -212,6 +219,7 @@ INTRO
     | https://scribe.knuckles.wtf/laravel/advanced/example-requests
     |
     */
+
     'example_languages' => [
         'bash',
         'javascript',
@@ -228,6 +236,7 @@ INTRO
     | Setting `laravel.add_routes` to true (above) will also add a route for the collection.
     |
     */
+
     'postman' => [
         'enabled' => true,
 
@@ -247,6 +256,7 @@ INTRO
     | Setting `laravel.add_routes` to true (above) will also add a route for the spec.
     |
     */
+
     'openapi' => [
         'enabled' => true,
 
@@ -279,6 +289,7 @@ INTRO
     | - 'logo' => 'img/logo.png' // for `laravel` type
     |
     */
+
     'logo' => false,
 
     /*
@@ -295,6 +306,7 @@ INTRO
     | format you pass to `git` can be either "short" or "long".
     |
     */
+
     'last_updated' => 'Last updated: {date:F j, Y}',
 
     'examples' => [
@@ -318,6 +330,7 @@ INTRO
     | at each stage. If you create or install a custom strategy, add it here.
     |
     */
+
     'strategies' => [
         'metadata' => [
             Strategies\Metadata\GetFromDocBlocks::class,
@@ -387,6 +400,7 @@ INTRO
     | this as is.
     |
     */
+
     'database_connections_to_transact' => [config('database.default')],
 
     'fractal' => [

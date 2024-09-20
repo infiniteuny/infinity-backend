@@ -17,6 +17,7 @@
         "laravel/horizon": "5.28.1",
         "laravel/octane": "2.5.5",
         "laravel/tinker": "2.9.0",
+        "spatie/laravel-permission": "6.9.0",
         "spatie/laravel-query-builder": "6.0.1",
         "spomky-labs/aes-key-wrap": "7.0.0",
         "web-token/jwt-signature-algorithm-ecdsa": "4.0.0"

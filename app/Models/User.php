@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasGroups;
 use App\Traits\HasUuids;
 use DateTimeInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -13,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, HasUuids, Notifiable;
+    use HasFactory, HasGroups, HasUuids, Notifiable;
 
     /**
      * The attributes that are mass assignable.
