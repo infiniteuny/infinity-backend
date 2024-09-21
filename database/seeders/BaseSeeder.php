@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CommunityGroup;
 use App\Models\CompetitionOrganizerType;
 use App\Models\CompetitionOutput;
 use App\Models\CompetitionRank;
@@ -12,6 +13,7 @@ use App\Models\CoreTeamDivision;
 use App\Models\Degree;
 use App\Models\Faculty;
 use App\Models\Major;
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -910,6 +912,69 @@ class BaseSeeder extends Seeder
                 'faculty_id' => $faculty->where('code', '09')->first()->id,
                 'code' => '0925',
                 'name' => 'Administrasi Perkantoran',
+            ],
+        ]);
+        Role::createMany([
+            [
+                'name' => 'Hustler',
+                'priority' => 1,
+                'description' => 'Seseorang yang memiliki peran dalam memperkenalkan dan memasarkan produk kepada konsumen. Keahlian utama: management, negotiation, writing, critical thinking.',
+                'logo' => '',
+            ],
+            [
+                'name' => 'Hipster',
+                'priority' => 2,
+                'description' => 'Seseorang yang memiliki peran dalam menyajikan dan memastikan estetika tampilan serta pengalaman pengguna dari sebuah produk. Keahlian utama: ideation, creativity, design.',
+                'logo' => '',
+            ],
+            [
+                'name' => 'Hacker',
+                'priority' => 3,
+                'description' => 'Seseorang yang memiliki peran dalam mengembangkan teknologi yang ada dalam produk. Keahlian utama: problem solving, analysis, programming.',
+                'logo' => '',
+            ],
+        ]);
+        CommunityGroup::createMany([
+            [
+                'name' => 'IT Business',
+                'priority' => 1,
+                'description' => 'Grup yang berfokus pada pengembangan bisnis berbasis teknologi informasi.',
+                'logo' => '',
+            ],
+            [
+                'name' => 'User Interface/User Experience',
+                'priority' => 2,
+                'description' => 'Grup yang berfokus pada pengembangan tampilan dan pengalaman pengguna.',
+                'logo' => '',
+            ],
+            [
+                'name' => 'Mobile Development',
+                'priority' => 3,
+                'description' => 'Grup yang berfokus pada pengembangan aplikasi berbasis mobile.',
+                'logo' => '',
+            ],
+            [
+                'name' => 'Front End Development',
+                'priority' => 4,
+                'description' => 'Grup yang berfokus pada pengembangan tampilan aplikasi berbasis web maupun desktop.',
+                'logo' => '',
+            ],
+            [
+                'name' => 'Back End Development',
+                'priority' => 5,
+                'description' => 'Grup yang berfokus pada pengembangan sistem dan database aplikasi.',
+                'logo' => '',
+            ],
+            [
+                'name' => 'Artificial Intelligence and Data Science',
+                'priority' => 6,
+                'description' => 'Grup yang berfokus pada pengembangan kecerdasan buatan dan ilmu data.',
+                'logo' => '',
+            ],
+            [
+                'name' => 'Cyber Security',
+                'priority' => 7,
+                'description' => 'Grup yang berfokus pada pengembangan keamanan sistem, data, dan jaringan.',
             ],
         ]);
         CoreTeamDivision::createMany([
