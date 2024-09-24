@@ -12,7 +12,9 @@ use Spatie\Permission\Traits\HasRoles as TraitsHasRoles;
 
 trait HasGroups
 {
-    use HasPermissions, TraitsHasRoles;
+    use HasPermissions, TraitsHasRoles {
+        HasPermissions::permissions insteadof TraitsHasRoles;
+    }
 
     public function roles(): BelongsToMany
     {
