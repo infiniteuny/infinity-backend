@@ -19,6 +19,7 @@ class RbacSeeder extends Seeder
     {
         $permissionActionWithOwnership = [
             'create',
+            'create-own',
             'read',
             'read-own',
             'update',
