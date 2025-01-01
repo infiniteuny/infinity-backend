@@ -12,7 +12,7 @@ class CoreTeamMemberPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-core-team-member');
     }
 
     /**
@@ -20,7 +20,7 @@ class CoreTeamMemberPolicy
      */
     public function view(User $user, CoreTeamMember $coreTeamMember): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-core-team-member');
     }
 
     /**
@@ -28,7 +28,7 @@ class CoreTeamMemberPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-core-team-member');
     }
 
     /**
@@ -36,7 +36,7 @@ class CoreTeamMemberPolicy
      */
     public function update(User $user, CoreTeamMember $coreTeamMember): bool
     {
-        return $user->role === 'admin';
+        return $user->can('update-core-team-member');
     }
 
     /**
@@ -44,22 +44,6 @@ class CoreTeamMemberPolicy
      */
     public function delete(User $user, CoreTeamMember $coreTeamMember): bool
     {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, CoreTeamMember $coreTeamMember): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, CoreTeamMember $coreTeamMember): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-core-team-member');
     }
 }

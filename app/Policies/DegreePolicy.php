@@ -12,7 +12,7 @@ class DegreePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-degree');
     }
 
     /**
@@ -20,7 +20,7 @@ class DegreePolicy
      */
     public function view(User $user, Degree $degree): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-degree');
     }
 
     /**
@@ -28,7 +28,7 @@ class DegreePolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-degree');
     }
 
     /**
@@ -36,7 +36,7 @@ class DegreePolicy
      */
     public function update(User $user, Degree $degree): bool
     {
-        return $user->role === 'admin';
+        return $user->can('update-degree');
     }
 
     /**
@@ -44,22 +44,6 @@ class DegreePolicy
      */
     public function delete(User $user, Degree $degree): bool
     {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Degree $degree): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Degree $degree): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-degree');
     }
 }

@@ -2,25 +2,26 @@
 
 namespace App\Policies;
 
-use App\Models\Testimonial;
+use App\Models\Token;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
-class TestimonialPolicy
+class TokenPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('read-testimonal');
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Testimonial $testimonial): bool
+    public function view(User $user, Token $token): bool
     {
-        return $user->can('read-testimonal');
+        //
     }
 
     /**
@@ -28,22 +29,22 @@ class TestimonialPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-testimonal');
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Testimonial $testimonial): bool
+    public function update(User $user, Token $token): bool
     {
-        return $user->can('update-testimonal');
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Testimonial $testimonial): bool
+    public function delete(User $user, Token $token): bool
     {
-        return $user->can('delete-testimonal');
+        //
     }
 }

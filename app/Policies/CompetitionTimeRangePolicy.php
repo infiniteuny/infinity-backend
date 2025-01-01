@@ -12,7 +12,7 @@ class CompetitionTimeRangePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-competition-time-range');
     }
 
     /**
@@ -20,7 +20,7 @@ class CompetitionTimeRangePolicy
      */
     public function view(User $user, CompetitionTimeRange $competitionTimeRange): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-competition-time-range');
     }
 
     /**
@@ -28,7 +28,7 @@ class CompetitionTimeRangePolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-competition-time-range');
     }
 
     /**
@@ -36,7 +36,7 @@ class CompetitionTimeRangePolicy
      */
     public function update(User $user, CompetitionTimeRange $competitionTimeRange): bool
     {
-        return $user->role === 'admin';
+        return $user->can('update-competition-time-range');
     }
 
     /**
@@ -44,22 +44,6 @@ class CompetitionTimeRangePolicy
      */
     public function delete(User $user, CompetitionTimeRange $competitionTimeRange): bool
     {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, CompetitionTimeRange $competitionTimeRange): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, CompetitionTimeRange $competitionTimeRange): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-competition-time-range');
     }
 }

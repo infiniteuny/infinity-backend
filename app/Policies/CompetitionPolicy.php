@@ -12,7 +12,7 @@ class CompetitionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-competition');
     }
 
     /**
@@ -20,7 +20,7 @@ class CompetitionPolicy
      */
     public function view(User $user, Competition $competition): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-competition');
     }
 
     /**
@@ -28,7 +28,7 @@ class CompetitionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-competition');
     }
 
     /**
@@ -36,7 +36,7 @@ class CompetitionPolicy
      */
     public function update(User $user, Competition $competition): bool
     {
-        return $user->role === 'admin';
+        return $user->can('update-competition');
     }
 
     /**
@@ -44,22 +44,6 @@ class CompetitionPolicy
      */
     public function delete(User $user, Competition $competition): bool
     {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Competition $competition): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Competition $competition): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-competition');
     }
 }

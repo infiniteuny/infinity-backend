@@ -12,7 +12,7 @@ class MajorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-major');
     }
 
     /**
@@ -20,7 +20,7 @@ class MajorPolicy
      */
     public function view(User $user, Major $major): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-major');
     }
 
     /**
@@ -28,7 +28,7 @@ class MajorPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-major');
     }
 
     /**
@@ -36,7 +36,7 @@ class MajorPolicy
      */
     public function update(User $user, Major $major): bool
     {
-        return $user->role === 'admin';
+        return $user->can('update-major');
     }
 
     /**
@@ -44,22 +44,6 @@ class MajorPolicy
      */
     public function delete(User $user, Major $major): bool
     {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Major $major): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Major $major): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-major');
     }
 }

@@ -28,22 +28,22 @@ class ConfigPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-config');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Config $config): bool
+    public function update(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('update-config');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Config $config): bool
+    public function delete(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('delete-config');
     }
 }

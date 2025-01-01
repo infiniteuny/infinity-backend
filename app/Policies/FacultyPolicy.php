@@ -12,7 +12,7 @@ class FacultyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-faculty');
     }
 
     /**
@@ -20,7 +20,7 @@ class FacultyPolicy
      */
     public function view(User $user, Faculty $faculty): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-faculty');
     }
 
     /**
@@ -28,7 +28,7 @@ class FacultyPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-faculty');
     }
 
     /**
@@ -36,7 +36,7 @@ class FacultyPolicy
      */
     public function update(User $user, Faculty $faculty): bool
     {
-        return $user->role === 'admin';
+        return $user->can('update-faculty');
     }
 
     /**
@@ -44,22 +44,6 @@ class FacultyPolicy
      */
     public function delete(User $user, Faculty $faculty): bool
     {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Faculty $faculty): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Faculty $faculty): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-faculty');
     }
 }

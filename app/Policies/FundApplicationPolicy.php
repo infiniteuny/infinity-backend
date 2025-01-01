@@ -12,7 +12,7 @@ class FundApplicationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-fund-application');
     }
 
     /**
@@ -20,7 +20,7 @@ class FundApplicationPolicy
      */
     public function view(User $user, FundApplication $fundApplication): bool
     {
-        return $user->role === 'admin' || $user->role === 'student';
+        return $user->can('read-fund-application');
     }
 
     /**
@@ -28,7 +28,7 @@ class FundApplicationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin' || $user->role === 'student';
+        return $user->can('create-fund-application');
     }
 
     /**
@@ -36,7 +36,7 @@ class FundApplicationPolicy
      */
     public function update(User $user, FundApplication $fundApplication): bool
     {
-        return $user->role === 'admin' || $user->role === 'student';
+        return $user->can('update-fund-application');
     }
 
     /**
@@ -44,22 +44,6 @@ class FundApplicationPolicy
      */
     public function delete(User $user, FundApplication $fundApplication): bool
     {
-        return $user->role === 'admin' || $user->role === 'student';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, FundApplication $fundApplication): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, FundApplication $fundApplication): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-fund-application');
     }
 }

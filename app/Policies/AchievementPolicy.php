@@ -12,7 +12,7 @@ class AchievementPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-achievement');
     }
 
     /**
@@ -20,7 +20,9 @@ class AchievementPolicy
      */
     public function view(User $user, Achievement $achievement): bool
     {
-        return $user->role === 'admin' || $user->role === 'student';
+        return $user->can('read-achievement') ||
+            ($user->can('read-own-achievement') &&
+            $achievement->team->leader_id === $user->id);
     }
 
     /**
@@ -28,7 +30,7 @@ class AchievementPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-achievement') || $user->can('create-own-achievement');
     }
 
     /**
@@ -36,7 +38,9 @@ class AchievementPolicy
      */
     public function update(User $user, Achievement $achievement): bool
     {
-        return $user->role === 'admin' || $user->role === 'student';
+        return $user->can('update-achievement') ||
+            ($user->can('update-own-achievement') &&
+            $achievement->team->leader_id === $user->id);
     }
 
     /**
@@ -44,22 +48,8 @@ class AchievementPolicy
      */
     public function delete(User $user, Achievement $achievement): bool
     {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Achievement $achievement): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Achievement $achievement): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-achievement') ||
+            ($user->can('delete-own-achievement') &&
+            $achievement->team->leader_id === $user->id);
     }
 }

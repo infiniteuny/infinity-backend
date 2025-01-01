@@ -12,7 +12,7 @@ class ProjectGalleryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-project-gallery');
     }
 
     /**
@@ -20,7 +20,7 @@ class ProjectGalleryPolicy
      */
     public function view(User $user, ProjectGallery $projectGallery): bool
     {
-        return $user->role === 'admin';
+        return $user->can('read-project-gallery');
     }
 
     /**
@@ -28,7 +28,7 @@ class ProjectGalleryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->can('create-project-gallery');
     }
 
     /**
@@ -36,7 +36,7 @@ class ProjectGalleryPolicy
      */
     public function update(User $user, ProjectGallery $projectGallery): bool
     {
-        return $user->role === 'admin';
+        return $user->can('update-project-gallery');
     }
 
     /**
@@ -44,22 +44,6 @@ class ProjectGalleryPolicy
      */
     public function delete(User $user, ProjectGallery $projectGallery): bool
     {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, ProjectGallery $projectGallery): bool
-    {
-        return $user->role === 'admin';
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, ProjectGallery $projectGallery): bool
-    {
-        return $user->role === 'admin';
+        return $user->can('delete-project-gallery');
     }
 }
