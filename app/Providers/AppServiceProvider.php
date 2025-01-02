@@ -8,7 +8,7 @@ use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
 use App\Repositories\StorageRepository;
 use App\Repositories\StorageRepositoryImpl;
-use App\Services\OidcGuard;
+use App\Guards\OidcGuard;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

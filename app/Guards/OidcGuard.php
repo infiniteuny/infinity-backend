@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Guards;
 
 use App\Models\Token;
 use App\Models\User;
