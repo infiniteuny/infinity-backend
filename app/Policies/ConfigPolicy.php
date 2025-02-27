@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Config;
 use App\Models\User;
 
 class ConfigPolicy
