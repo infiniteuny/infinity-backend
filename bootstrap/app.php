@@ -43,41 +43,26 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {
-            return JsendFormatter::fail(
-                $e->getMessage() ?: 'Unauthenticated.',
-                null,
+            return response()->json(
+                JsendFormatter::fail($e->getMessage() ?: 'Unauthenticated.'),
                 401,
             );
         });
 
         $exceptions->render(function (ValidationException $e) {
-            return JsendFormatter::fail(
-                $e->getMessage() ?: 'The given data was invalid.',
-                ['details' => $e->errors()],
+            return response()->json(
+                JsendFormatter::fail(
+                    $e->getMessage() ?: 'The given data was invalid.',
+                    ['details' => $e->errors()],
+                ),
                 $e->status ?? 422,
             );
         });
 
         $exceptions->render(function (AccessDeniedHttpException $e) {
-            return JsendFormatter::fail(
-                $e->getMessage() ?: 'Forbidden.',
-                config('app.debug') ? [
-                    'exception' => get_class($e),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                    'trace' => collect($e->getTrace())->map(function ($trace) {
-                        return Arr::except($trace, ['args']);
-                    })->all(),
-                ] : [],
-                $e->getStatusCode(),
-                $e->getHeaders() ?: [],
-            );
-        });
-
-        $exceptions->render(function (HttpException $e) {
-            if ($e->getStatusCode() <= 500) {
-                return JsendFormatter::fail(
-                    $e->getMessage(),
+            return response()->json(
+                JsendFormatter::fail(
+                    $e->getMessage() ?: 'Forbidden.',
                     config('app.debug') ? [
                         'exception' => get_class($e),
                         'file' => $e->getFile(),
@@ -86,12 +71,53 @@ return Application::configure(basePath: dirname(__DIR__))
                             return Arr::except($trace, ['args']);
                         })->all(),
                     ] : [],
+                ),
+                $e->getStatusCode(),
+                $e->getHeaders() ?: [],
+            );
+        });
+
+        $exceptions->render(function (HttpException $e) {
+            if ($e->getStatusCode() <= 500) {
+                return response()->json(
+                    JsendFormatter::fail(
+                        $e->getMessage(),
+                        config('app.debug') ? [
+                            'exception' => get_class($e),
+                            'file' => $e->getFile(),
+                            'line' => $e->getLine(),
+                            'trace' => collect($e->getTrace())->map(function ($trace) {
+                                return Arr::except($trace, ['args']);
+                            })->all(),
+                        ] : [],
+                    ),
                     $e->getStatusCode(),
                     $e->getHeaders() ?: [],
                 );
             } else {
-                return JsendFormatter::error(
-                    $e->getMessage(),
+                return response()->json(
+                    JsendFormatter::error(
+                        $e->getMessage(),
+                        $e->getCode() ?: null,
+                        config('app.debug') ? [
+                            'exception' => get_class($e),
+                            'file' => $e->getFile(),
+                            'line' => $e->getLine(),
+                            'trace' => collect($e->getTrace())->map(function ($trace) {
+                                return Arr::except($trace, ['args']);
+                            })->all(),
+                        ] : null,
+                    ),
+                    $e->getStatusCode() ?? 500,
+                    $e->getHeaders() ?: [],
+                );
+            }
+        });
+
+        $exceptions->render(function (Throwable $e) {
+            return response()->json(
+                JsendFormatter::error(
+                    config('app.debug') ? $e->getMessage() : 'Internal server error.',
                     $e->getCode() ?: null,
                     config('app.debug') ? [
                         'exception' => get_class($e),
@@ -101,24 +127,7 @@ return Application::configure(basePath: dirname(__DIR__))
                             return Arr::except($trace, ['args']);
                         })->all(),
                     ] : null,
-                    $e->getStatusCode() ?? 500,
-                    $e->getHeaders() ?: [],
-                );
-            }
-        });
-
-        $exceptions->render(function (Throwable $e) {
-            return JsendFormatter::error(
-                config('app.debug') ? $e->getMessage() : 'Internal server error.',
-                $e->getCode() ?: null,
-                config('app.debug') ? [
-                    'exception' => get_class($e),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                    'trace' => collect($e->getTrace())->map(function ($trace) {
-                        return Arr::except($trace, ['args']);
-                    })->all(),
-                ] : null,
+                ),
                 500,
             );
         });
