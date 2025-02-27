@@ -17,7 +17,7 @@ class RbacSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissionActionWithOwnership = [
+        $permissionActionsWithOwnership = [
             'create',
             'create-own',
             'read',
@@ -27,15 +27,14 @@ class RbacSeeder extends Seeder
             'delete',
             'delete-own',
         ];
-        $permissionActionWithoutOwnership = [
+        $permissionActionsWithoutOwnership = [
             'create',
             'read',
             'update',
             'delete',
         ];
-        $permissionResourceWithOwnership = [
+        $permissionResourcesWithOwnership = [
             'user',
-            'token',
             'role-member',
             'community-group-member',
             'team',
@@ -43,7 +42,7 @@ class RbacSeeder extends Seeder
             'fund-application',
             'achievement',
         ];
-        $permissionResourceWithoutOwnership = [
+        $permissionResourcesWithoutOwnership = [
             'config',
             'degree',
             'faculty',
@@ -67,12 +66,18 @@ class RbacSeeder extends Seeder
             'testimonal',
             'project-gallery',
         ];
+        $specialPermissions = [
+            'read-token',
+            'read-own-token',
+            'delete-token',
+            'delete-own-token',
+        ];
 
         // Reset cached roles and permissions
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
-        foreach ($permissionResourceWithOwnership as $resource) {
-            foreach ($permissionActionWithOwnership as $action) {
+        foreach ($permissionResourcesWithOwnership as $resource) {
+            foreach ($permissionActionsWithOwnership as $action) {
                 Permission::firstOrCreate([
                     'name' => $action.'-'.$resource,
                     'guard_name' => Guard::getDefaultName(Permission::class),
@@ -80,13 +85,20 @@ class RbacSeeder extends Seeder
             }
         }
 
-        foreach ($permissionResourceWithoutOwnership as $resource) {
-            foreach ($permissionActionWithoutOwnership as $action) {
+        foreach ($permissionResourcesWithoutOwnership as $resource) {
+            foreach ($permissionActionsWithoutOwnership as $action) {
                 Permission::firstOrCreate([
                     'name' => $action.'-'.$resource,
                     'guard_name' => Guard::getDefaultName(Permission::class),
                 ]);
             }
+        }
+
+        foreach ($specialPermissions as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission,
+                'guard_name' => Guard::getDefaultName(Permission::class),
+            ]);
         }
 
         // Update cache to know about the newly created permissions
