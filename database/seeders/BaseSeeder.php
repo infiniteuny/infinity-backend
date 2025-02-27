@@ -975,6 +975,7 @@ class BaseSeeder extends Seeder
                 'name' => 'Cyber Security',
                 'priority' => 7,
                 'description' => 'Grup yang berfokus pada pengembangan keamanan sistem, data, dan jaringan.',
+                'logo' => '',
             ],
         ]);
         CoreTeamDivision::createMany([
