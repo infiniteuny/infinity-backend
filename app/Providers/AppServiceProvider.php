@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
+use App\Guards\OidcGuard;
 use App\Repositories\OidcFacade;
 use App\Repositories\OidcFacadeImpl;
 use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
 use App\Repositories\StorageRepository;
 use App\Repositories\StorageRepositoryImpl;
-use App\Guards\OidcGuard;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

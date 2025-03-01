@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\CommunityGroupMember;
+namespace App\Http\Resources\CommunityGroup;
 
 use App\Http\Resources\Resource;
 use App\Utils\ResponseFormatter;
