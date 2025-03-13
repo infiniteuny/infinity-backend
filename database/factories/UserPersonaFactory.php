@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Persona;
-use App\Models\UserPersona;
 use App\Models\User;
+use App\Models\UserPersona;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,8 +28,8 @@ class UserPersonaFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'persona_id' => Persona::factory(),
             'user_id' => User::factory(),
+            'persona_id' => Persona::factory(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

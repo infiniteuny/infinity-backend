@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\UserPersona;
 use App\Models\User;
+use App\Models\UserPersona;
 
 class UserPersonaPolicy
 {
