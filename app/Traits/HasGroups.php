@@ -16,7 +16,7 @@ trait HasGroups
         HasPermissions::permissions insteadof TraitsHasRoles;
     }
 
-    public function roles(): BelongsToMany
+    public function groups(): BelongsToMany
     {
         $relation = $this->belongsToMany(
             config('permission.models.role'),
@@ -37,9 +37,9 @@ trait HasGroups
             ->where(fn ($q) => $q->whereNull($teamField)->orWhere($teamField, getPermissionsTeamId()));
     }
 
-    public function groups(): BelongsToMany
+    public function roles(): BelongsToMany
     {
-        return $this->roles();
+        return $this->groups();
     }
 
     public function scopeGroup(Builder $query, $roles, $guard = null, $without = false): Builder
