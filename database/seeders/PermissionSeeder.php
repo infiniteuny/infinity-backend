@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Guard;
 use Spatie\Permission\PermissionRegistrar;
 
-class RbacSeeder extends Seeder
+class PermissionSeeder extends Seeder
 {
     use WithoutModelEvents;
 
