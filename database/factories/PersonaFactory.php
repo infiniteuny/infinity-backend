@@ -2,21 +2,21 @@
 
 namespace Database\Factories;
 
-use App\Models\Role;
+use App\Models\Persona;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Role>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Persona>
  */
-class RoleFactory extends Factory
+class PersonaFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-    protected $model = Role::class;
+    protected $model = Persona::class;
 
     /**
      * Define the model's default state.

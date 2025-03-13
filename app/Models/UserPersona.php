@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class RoleMember extends Model
+class UserPersona extends Model
 {
     use HasFactory, HasUuids;
 
@@ -19,7 +19,7 @@ class RoleMember extends Model
      */
     protected $fillable = [
         'user_id',
-        'role_id',
+        'persona_id',
     ];
 
     /**
@@ -35,8 +35,8 @@ class RoleMember extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function role(): BelongsTo
+    public function persona(): BelongsTo
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Persona::class);
     }
 }

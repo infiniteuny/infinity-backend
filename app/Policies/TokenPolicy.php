@@ -12,7 +12,7 @@ class TokenPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->can('read-token');
     }
 
     /**
@@ -20,7 +20,9 @@ class TokenPolicy
      */
     public function view(User $user, Token $token): bool
     {
-        //
+        return $user->can('read-token') ||
+        ($user->can('read-own-token') &&
+        $token->user_id === $user->id);
     }
 
     /**
@@ -28,6 +30,8 @@ class TokenPolicy
      */
     public function delete(User $user, Token $token): bool
     {
-        //
+        return $user->can('delete-token') ||
+            ($user->can('delete-own-token') &&
+            $token->user_id === $user->id);
     }
 }

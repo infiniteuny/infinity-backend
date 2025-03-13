@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Role;
+namespace App\Http\Resources\Persona;
 
 use App\Http\Resources\Resource;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\Request;
 
-class RoleResource extends Resource
+class PersonaResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,7 @@ class RoleResource extends Resource
     public function toArray(Request $request): array
     {
         return ResponseFormatter::singleton(
-            'role',
+            'persona',
             $this->toBaseArray($request),
         );
     }

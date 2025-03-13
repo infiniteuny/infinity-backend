@@ -35,7 +35,7 @@ class PermissionSeeder extends Seeder
         ];
         $permissionResourcesWithOwnership = [
             'user',
-            'role-member',
+            'user-persona',
             'community-group-member',
             'team',
             'team-member',
@@ -49,7 +49,7 @@ class PermissionSeeder extends Seeder
             'major',
             'permission',
             'group',
-            'role',
+            'persona',
             'community-group',
             'community-group-admin',
             'community-group-admin-member',

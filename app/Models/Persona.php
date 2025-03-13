@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Role extends Model
+class Persona extends Model
 {
     use HasBulkCreate, HasFactory, HasUuids;
 
@@ -43,8 +43,8 @@ class Role extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function roleMembers(): HasMany
+    public function users(): HasMany
     {
-        return $this->hasMany(RoleMember::class);
+        return $this->hasMany(UserPersona::class);
     }
 }

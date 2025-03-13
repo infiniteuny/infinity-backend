@@ -13,7 +13,7 @@ use App\Models\CoreTeamDivision;
 use App\Models\Degree;
 use App\Models\Faculty;
 use App\Models\Major;
-use App\Models\Role;
+use App\Models\Persona;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -914,7 +914,7 @@ class BaseSeeder extends Seeder
                 'name' => 'Administrasi Perkantoran',
             ],
         ];
-        $roles = [
+        $personas = [
             [
                 'name' => 'Hustler',
                 'priority' => 1,
@@ -1155,8 +1155,8 @@ class BaseSeeder extends Seeder
                 'name' => $major['name'],
             ]);
         }
-        foreach ($roles as $role) {
-            Role::firstOrCreate($role);
+        foreach ($personas as $persona) {
+            Persona::firstOrCreate($persona);
         }
         foreach ($communityGroups as $communityGroup) {
             CommunityGroup::firstOrCreate($communityGroup);

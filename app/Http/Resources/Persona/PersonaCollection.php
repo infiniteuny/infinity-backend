@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Role;
+namespace App\Http\Resources\Persona;
 
 use App\Http\Resources\Collection;
 use App\Utils\ResponseFormatter;
 use Illuminate\Http\Request;
 
-class RoleCollection extends Collection
+class PersonaCollection extends Collection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,7 +16,7 @@ class RoleCollection extends Collection
     public function toArray(Request $request): array
     {
         return ResponseFormatter::collection(
-            'roles',
+            'personas',
             $this->collection->map->toBaseArray($request)->all(),
         );
     }

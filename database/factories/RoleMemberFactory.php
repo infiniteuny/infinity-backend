@@ -2,22 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\Role;
-use App\Models\RoleMember;
+use App\Models\Persona;
+use App\Models\UserPersona;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RoleMember>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserPersona>
  */
-class RoleMemberFactory extends Factory
+class UserPersonaFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-    protected $model = RoleMember::class;
+    protected $model = UserPersona::class;
 
     /**
      * Define the model's default state.
@@ -28,7 +28,7 @@ class RoleMemberFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'role_id' => Role::factory(),
+            'persona_id' => Persona::factory(),
             'user_id' => User::factory(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
