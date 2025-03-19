@@ -17,7 +17,7 @@ class StoreProjectGalleryRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'url' => ['required', 'string', 'url:http,https'],
-            'image' => ['required', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }
 }

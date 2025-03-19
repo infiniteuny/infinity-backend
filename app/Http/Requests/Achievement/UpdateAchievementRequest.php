@@ -25,7 +25,7 @@ class UpdateAchievementRequest extends FormRequest
             'competition_start_date' => ['sometimes', 'date', 'before_or_equal:competition_end_date'],
             'competition_end_date' => ['sometimes', 'date', 'after_or_equal:competition_start_date'],
             'description' => ['sometimes', 'string'],
-            'image' => ['sometimes', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'image' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'status' => ['sometimes', 'string', 'in:PENDING,REJECTED,ACCEPTED'],
         ];
     }

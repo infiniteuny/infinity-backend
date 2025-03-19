@@ -16,7 +16,7 @@ class UpdateTestimonialRequest extends FormRequest
         return [
             'name' => ['sometimes', 'string'],
             'position' => ['sometimes', 'string', 'max:255'],
-            'photo' => ['sometimes', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'content' => ['sometimes', 'string'],
         ];
     }

@@ -21,8 +21,8 @@ class StoreFundApplicationRequest extends FormRequest
             'competition_branch' => ['required', 'string'],
             'competition_start_date' => ['required', 'date', 'before_or_equal:competition_end_date'],
             'competition_end_date' => ['required', 'date', 'after_or_equal:competition_start_date'],
-            'letter_of_acceptance' => ['required', 'mimes:pdf,jpg,jpeg,png,webp', 'max:20480'],
-            'proposal' => ['required', 'mimes:doc,docx', 'max:20480'],
+            'letter_of_acceptance' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png,webp', 'max:20480'],
+            'proposal' => ['required', 'file', 'mimes:doc,docx', 'max:20480'],
             'status' => ['required', 'string', 'in:PENDING,REJECTED,ACCEPTED'],
         ];
     }

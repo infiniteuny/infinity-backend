@@ -16,7 +16,7 @@ class StoreTestimonialRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'position' => ['required', 'string', 'max:255'],
-            'photo' => ['required', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'photo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'content' => ['required', 'string'],
         ];
     }
