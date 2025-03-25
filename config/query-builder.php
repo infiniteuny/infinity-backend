@@ -14,11 +14,11 @@ return [
     */
 
     'parameters' => [
-        'include' => 'include',
-        'filter' => 'filter',
-        'sort' => 'sort',
+        'include' => 'includes',
+        'filter' => 'filters',
+        'sort' => 'sorts',
         'fields' => 'fields',
-        'append' => 'append',
+        'append' => 'appends',
     ],
 
     /*
