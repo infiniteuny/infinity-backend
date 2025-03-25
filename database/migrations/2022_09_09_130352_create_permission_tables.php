@@ -49,8 +49,8 @@ return new class extends Migration
             }
         });
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
-            $table->uuid($pivotPermission);
             $table->uuid($columnNames['model_morph_key']);
+            $table->uuid($pivotPermission);
 
             $table->foreign($columnNames['model_morph_key'])
                 ->references('id') // user id
@@ -72,8 +72,8 @@ return new class extends Migration
 
         });
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
-            $table->uuid($pivotRole);
             $table->uuid($columnNames['model_morph_key']);
+            $table->uuid($pivotRole);
 
             $table->foreign($columnNames['model_morph_key'])
                 ->references('id') // user id
@@ -94,17 +94,17 @@ return new class extends Migration
             }
         });
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
-            $table->uuid($pivotPermission);
             $table->uuid($pivotRole);
-
-            $table->foreign($pivotPermission)
-                ->references('id') // permission id
-                ->on($tableNames['permissions'])
-                ->cascadeOnDelete();
+            $table->uuid($pivotPermission);
 
             $table->foreign($pivotRole)
                 ->references('id') // role id
                 ->on($tableNames['roles'])
+                ->cascadeOnDelete();
+
+            $table->foreign($pivotPermission)
+                ->references('id') // permission id
+                ->on($tableNames['permissions'])
                 ->cascadeOnDelete();
 
             $table->primary([$pivotPermission, $pivotRole]);

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('community_group_members', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('community_group_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('user_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('community_group_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
