@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Casts\Blob;
-use App\Traits\HasUuids;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 

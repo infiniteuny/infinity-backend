@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuids;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CommunityGroupMember extends Pivot
