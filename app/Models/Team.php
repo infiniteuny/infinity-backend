@@ -7,6 +7,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Team extends Model
@@ -46,9 +47,14 @@ class Team extends Model
         return $this->belongsTo(User::class, 'leader_id');
     }
 
-    public function teamMembers(): HasMany
+    public function members(): BelongsToMany
     {
-        return $this->hasMany(TeamMember::class);
+        return $this->belongsToMany(
+            User::class,
+            'team_members',
+            'team_id',
+            'user_id',
+        )->using(TeamMember::class)->withTimestamps();
     }
 
     public function fundApplications(): HasMany

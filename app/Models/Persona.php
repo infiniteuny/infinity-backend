@@ -8,7 +8,7 @@ use App\Traits\HasUuids;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Persona extends Model
 {
@@ -43,8 +43,13 @@ class Persona extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function users(): HasMany
+    public function users(): BelongsToMany
     {
-        return $this->hasMany(UserPersona::class);
+        return $this->belongsToMany(
+            User::class,
+            'user_personas',
+            'persona_id',
+            'user_id',
+        )->using(UserPersona::class)->withTimestamps();
     }
 }

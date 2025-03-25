@@ -5,13 +5,12 @@ namespace App\Models;
 use App\Casts\Blob;
 use App\Traits\HasUuids;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class CommunityGroupAdminMember extends Model
+class CommunityGroupAdminMember extends Pivot
 {
-    use HasFactory, HasUuids;
+    use HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -42,16 +41,6 @@ class CommunityGroupAdminMember extends Model
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format(DATE_ATOM);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function communityGroupAdmin(): BelongsTo
-    {
-        return $this->belongsTo(CommunityGroupAdmin::class);
     }
 
     public function communityGroup(): BelongsTo

@@ -4,13 +4,11 @@ namespace App\Models;
 
 use App\Traits\HasUuids;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserPersona extends Model
+class UserPersona extends Pivot
 {
-    use HasFactory, HasUuids;
+    use HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -28,15 +26,5 @@ class UserPersona extends Model
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format(DATE_ATOM);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function persona(): BelongsTo
-    {
-        return $this->belongsTo(Persona::class);
     }
 }

@@ -6,7 +6,7 @@ use App\Traits\HasUuids;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class CommunityGroupAdmin extends Model
 {
@@ -29,8 +29,20 @@ class CommunityGroupAdmin extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function communityGroupAdminMembers(): HasMany
+    public function members(): BelongsToMany
     {
-        return $this->hasMany(CoreTeamMember::class);
+        return $this->belongsToMany(
+            User::class,
+            'community_group_admin_members',
+            'community_group_admin_id',
+            'user_id',
+        )
+            ->using(CommunityGroupAdminMember::class)
+            ->withPivot([
+                'community_group_id',
+                'photo',
+                'animation',
+            ])
+            ->withTimestamps();
     }
 }

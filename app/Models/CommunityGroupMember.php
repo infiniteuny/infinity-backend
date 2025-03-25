@@ -4,13 +4,11 @@ namespace App\Models;
 
 use App\Traits\HasUuids;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class CommunityGroupMember extends Model
+class CommunityGroupMember extends Pivot
 {
-    use HasFactory, HasUuids;
+    use HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +16,8 @@ class CommunityGroupMember extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'community_group_id',
         'user_id',
+        'community_group_id',
     ];
 
     /**
@@ -28,15 +26,5 @@ class CommunityGroupMember extends Model
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format(DATE_ATOM);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function communityGroup(): BelongsTo
-    {
-        return $this->belongsTo(CommunityGroup::class);
     }
 }

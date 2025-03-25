@@ -6,7 +6,7 @@ use App\Traits\HasUuids;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class CoreTeam extends Model
 {
@@ -29,8 +29,20 @@ class CoreTeam extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function coreTeamMembers(): HasMany
+    public function members(): BelongsToMany
     {
-        return $this->hasMany(CoreTeamMember::class);
+        return $this->belongsToMany(
+            User::class,
+            'core_team_members',
+            'core_team_id',
+            'user_id',
+        )
+            ->using(CoreTeamMember::class)
+            ->withPivot([
+                'core_team_division_id',
+                'photo',
+                'animation',
+            ])
+            ->withTimestamps();
     }
 }

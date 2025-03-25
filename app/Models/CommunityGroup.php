@@ -8,7 +8,7 @@ use App\Traits\HasUuids;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class CommunityGroup extends Model
 {
@@ -43,13 +43,15 @@ class CommunityGroup extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function communityGroupAdminMembers(): HasMany
+    public function members(): BelongsToMany
     {
-        return $this->hasMany(CommunityGroupAdminMember::class);
-    }
-
-    public function communityGroupMembers(): HasMany
-    {
-        return $this->hasMany(CommunityGroupMember::class);
+        return $this->belongsToMany(
+            User::class,
+            'community_group_members',
+            'community_group_id',
+            'user_id',
+        )
+            ->using(CommunityGroupMember::class)
+            ->withTimestamps();
     }
 }
