@@ -26,11 +26,11 @@
         "barryvdh/laravel-ide-helper": "3.5.5",
         "fakerphp/faker": "1.24.1",
         "knuckleswtf/scribe": "4.40.0",
-        "laravel/pint": "1.21.1",
+        "laravel/pint": "1.21.2",
         "laravel/sail": "1.41.0",
         "mockery/mockery": "1.6.12",
-        "nunomaduro/collision": "8.6.1",
-        "phpunit/phpunit": "11.5.12",
+        "nunomaduro/collision": "8.7.0",
+        "phpunit/phpunit": "11.5.15",
         "spatie/laravel-ignition": "2.9.1"
     },
     "autoload": {
