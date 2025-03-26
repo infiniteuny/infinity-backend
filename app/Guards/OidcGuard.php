@@ -4,7 +4,7 @@ namespace App\Guards;
 
 use App\Models\Token;
 use App\Models\User;
-use App\Repositories\OidcFacade;
+use App\Services\OidcService;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
@@ -19,7 +19,7 @@ class OidcGuard implements Guard
 
     protected Request $request;
 
-    protected OidcFacade $oidcFacade;
+    protected OidcService $oidcService;
 
     /**
      * Create a new authentication guard.
@@ -28,12 +28,12 @@ class OidcGuard implements Guard
      */
     public function __construct(
         UserProvider $provider,
-        OidcFacade $oidcFacade,
+        OidcService $oidcService,
         Request $request
     ) {
         $this->request = $request;
         $this->provider = $provider;
-        $this->oidcFacade = $oidcFacade;
+        $this->oidcService = $oidcService;
         $this->user = null;
     }
 
@@ -66,7 +66,7 @@ class OidcGuard implements Guard
 
         // Verify the token signature
         try {
-            $tokenPayload = $this->oidcFacade->verify($credentials['token']);
+            $tokenPayload = $this->oidcService->verify($credentials['token']);
         } catch (Throwable $e) {
             return false;
         }
@@ -77,7 +77,7 @@ class OidcGuard implements Guard
         // If the token is not found in the database, check if it is still valid
         if (is_null($token)) {
             try {
-                $tokenInfo = $this->oidcFacade->introspect($credentials['token']);
+                $tokenInfo = $this->oidcService->introspect($credentials['token']);
 
                 if ($tokenInfo['active']) {
                     $token = new Token([
@@ -99,7 +99,7 @@ class OidcGuard implements Guard
 
         // If the user is not found, try to get the user info from the OIDC server
         if (is_null($user)) {
-            $userInfo = $this->oidcFacade->getUserInfo($credentials['token']);
+            $userInfo = $this->oidcService->getUserInfo($credentials['token']);
 
             $user = User::where('email_address', $userInfo['email'])->first();
 

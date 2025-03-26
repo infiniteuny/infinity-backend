@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Services;
 
-interface OidcFacade
+interface OidcService
 {
     public function verify(string $token): array;
 

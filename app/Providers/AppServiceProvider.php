@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 use App\Guards\OidcGuard;
-use App\Repositories\OidcFacade;
-use App\Repositories\OidcFacadeImpl;
 use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
 use App\Repositories\StorageRepository;
 use App\Repositories\StorageRepositoryImpl;
+use App\Services\OidcService;
+use App\Services\OidcServiceImpl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public $singletons = [
         PsrCacheRepository::class => PsrCacheRepositoryImpl::class,
         StorageRepository::class => StorageRepositoryImpl::class,
-        OidcFacade::class => OidcFacadeImpl::class,
+        OidcService::class => OidcServiceImpl::class,
     ];
 
     /**
@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
         Auth::extend('oidc', function ($app, $name, array $config) {
             return new OidcGuard(
                 Auth::createUserProvider($config['provider']),
-                $app->make(OidcFacade::class),
+                $app->make(OidcService::class),
                 $app->make('request'),
             );
         });

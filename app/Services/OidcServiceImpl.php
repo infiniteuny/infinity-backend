@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Services;
 
+use App\Repositories\PsrCacheRepository;
 use Facile\JoseVerifier\AccessTokenVerifierBuilder;
 use Facile\JoseVerifier\JWK\JwksProviderBuilder;
 use Facile\JoseVerifier\TokenVerifierInterface;
@@ -20,7 +21,7 @@ use Facile\OpenIDClient\Service\IntrospectionService;
 use Facile\OpenIDClient\Service\UserInfoService;
 use Facile\OpenIDClient\Token\TokenSet;
 
-class OidcFacadeImpl implements OidcFacade
+class OidcServiceImpl implements OidcService
 {
     protected IssuerMetadataInterface $issuerMetadata;
 

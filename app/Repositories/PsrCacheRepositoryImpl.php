@@ -2,40 +2,44 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Cache\Repository;
 
 class PsrCacheRepositoryImpl implements PsrCacheRepository
 {
+    public function __construct(
+        private Repository $cacheRepository,
+    ) {}
+
     public function get($key, $default = null): mixed
     {
-        return Cache::get($key, $default);
+        return $this->cacheRepository->get($key, $default);
     }
 
     public function set($key, $value, $ttl = null): bool
     {
-        Cache::put($key, $value, $this->ttl2minutes($ttl));
+        $this->cacheRepository->put($key, $value, $this->ttl2minutes($ttl));
 
         return true;
     }
 
     public function delete($key): bool
     {
-        return Cache::forget($key);
+        return $this->cacheRepository->forget($key);
     }
 
     public function clear(): bool
     {
-        return Cache::flush();
+        return $this->cacheRepository->flush();
     }
 
     public function getMultiple($keys, $default = null): iterable
     {
-        return Cache::many($keys);
+        return $this->cacheRepository->many($keys);
     }
 
     public function setMultiple($values, $ttl = null): bool
     {
-        Cache::putMany((array) $values, $this->ttl2minutes($ttl));
+        $this->cacheRepository->putMany((array) $values, $this->ttl2minutes($ttl));
 
         return true;
     }
@@ -51,7 +55,7 @@ class PsrCacheRepositoryImpl implements PsrCacheRepository
 
     public function has($key): bool
     {
-        return Cache::has($key);
+        return $this->cacheRepository->has($key);
     }
 
     protected function ttl2minutes($ttl): float|int|null
