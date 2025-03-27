@@ -96,7 +96,7 @@ class FundApplicationController extends Controller
                     $query->where('leader_id', $userId);
                 })
                 ->orWhereHas('team.members', function ($query) use ($userId) {
-                    $query->where('id', $userId);
+                    $query->where('team_members.id', $userId);
                 });
         }
 
