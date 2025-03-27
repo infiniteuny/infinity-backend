@@ -2,11 +2,27 @@
 
 namespace App\Http\Resources;
 
+use App\Utils\ResponseFormatter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class Collection extends ResourceCollection
 {
+    protected $collectionName = 'resources';
+
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @return array<int|string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return ResponseFormatter::collection(
+            $this->collectionName,
+            $this->collection->map->toBaseArray($request)->all(),
+        );
+    }
+
     /**
      * Customize the pagination information for the resource.
      */
