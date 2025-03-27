@@ -5,33 +5,47 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionOutput\StoreCompetitionOutputRequest;
 use App\Http\Requests\CompetitionOutput\UpdateCompetitionOutputRequest;
+use App\Http\Resources\CompetitionOutput\CompetitionOutputCollection;
+use App\Http\Resources\CompetitionOutput\CompetitionOutputResource;
 use App\Models\CompetitionOutput;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Competition Outputs
+ * Manage competition outputs.
+ */
 class CompetitionOutputController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(CompetitionOutput::class, 'competition_output');
+        $this->authorizeResource(CompetitionOutput::class, 'competition_output');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all competition outputs.
+     *
+     * @apiResourceCollection App\Http\Resources\CompetitionOutput\CompetitionOutputCollection
+     *
+     * @apiResourceModel App\Models\CompetitionOutput
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $competitionOutputs = QueryBuilder::for(CompetitionOutput::class)
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
             ->allowedFilters([
                 'name',
                 AllowedFilter::exact('weight'),
-            ])
-            ->defaultSorts([
-                'weight',
-                'id',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -40,46 +54,76 @@ class CompetitionOutputController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                'weight',
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('competition_outputs', $competitionOutputs);
+        return new CompetitionOutputCollection($competitionOutputs);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a competition output.
+     *
+     * @apiResource App\Http\Resources\CompetitionOutput\CompetitionOutputResource
+     *
+     * @apiResourceModel App\Models\CompetitionOutput
      */
-    public function store(StoreCompetitionOutputRequest $request): JsonResponse
+    public function store(StoreCompetitionOutputRequest $request)
     {
         $competitionOutput = CompetitionOutput::create($request->validated());
 
-        return ResponseFormatter::singleton('competition_output', $competitionOutput, 201);
+        return new CompetitionOutputResource($competitionOutput);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a competition output.
+     *
+     * @apiResource App\Http\Resources\CompetitionOutput\CompetitionOutputResource
+     *
+     * @apiResourceModel App\Models\CompetitionOutput
      */
-    public function show(CompetitionOutput $competitionOutput): JsonResponse
+    public function show(CompetitionOutput $competitionOutput)
     {
-        return ResponseFormatter::singleton('competition_output', $competitionOutput);
+        $competitionOutput = QueryBuilder::for(CompetitionOutput::where('id', $competitionOutput->id))
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new CompetitionOutputResource($competitionOutput);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a competition output.
+     *
+     * @apiResource App\Http\Resources\CompetitionOutput\CompetitionOutputResource
+     *
+     * @apiResourceModel App\Models\CompetitionOutput
      */
-    public function update(UpdateCompetitionOutputRequest $request, CompetitionOutput $competitionOutput): JsonResponse
+    public function update(UpdateCompetitionOutputRequest $request, CompetitionOutput $competitionOutput)
     {
         $competitionOutput->update($request->validated());
 
-        return ResponseFormatter::singleton('competition_output', $competitionOutput);
+        return new CompetitionOutputResource($competitionOutput);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a competition output.
+     *
+     * @apiResource App\Http\Resources\CompetitionOutput\CompetitionOutputResource
+     *
+     * @apiResourceModel App\Models\CompetitionOutput
      */
-    public function destroy(CompetitionOutput $competitionOutput): JsonResponse
+    public function destroy(CompetitionOutput $competitionOutput)
     {
         $competitionOutput->delete();
 
-        return ResponseFormatter::singleton('competition_output', $competitionOutput);
+        return new CompetitionOutputResource($competitionOutput);
     }
 }

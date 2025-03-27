@@ -39,4 +39,12 @@ class Config extends Model
     {
         return $date->format(DATE_ATOM);
     }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'key';
+    }
 }

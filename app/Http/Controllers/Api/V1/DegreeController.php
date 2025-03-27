@@ -5,33 +5,47 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Degree\StoreDegreeRequest;
 use App\Http\Requests\Degree\UpdateDegreeRequest;
+use App\Http\Resources\Degree\DegreeCollection;
+use App\Http\Resources\Degree\DegreeResource;
 use App\Models\Degree;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Degrees
+ * Manage degrees.
+ */
 class DegreeController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(Degree::class, 'degree');
+        $this->authorizeResource(Degree::class, 'degree');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all degrees.
+     *
+     * @apiResourceCollection App\Http\Resources\Degree\DegreeCollection
+     *
+     * @apiResourceModel App\Models\Degree
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $degrees = QueryBuilder::for(Degree::class)
+            ->allowedFields([
+                'id',
+                'code',
+                'name',
+                'created_at',
+                'updated_at',
+            ])
             ->allowedFilters([
                 AllowedFilter::exact('code'),
                 'name',
-            ])
-            ->defaultSorts([
-                'code',
-                'id',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -40,46 +54,75 @@ class DegreeController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                'code',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('degrees', $degrees);
+        return new DegreeCollection($degrees);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a degree.
+     *
+     * @apiResource App\Http\Resources\Degree\DegreeResource
+     *
+     * @apiResourceModel App\Models\Degree
      */
-    public function store(StoreDegreeRequest $request): JsonResponse
+    public function store(StoreDegreeRequest $request)
     {
         $degree = Degree::create($request->validated());
 
-        return ResponseFormatter::singleton('degree', $degree, 201);
+        return new DegreeResource($degree);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a degree.
+     *
+     * @apiResource App\Http\Resources\Degree\DegreeResource
+     *
+     * @apiResourceModel App\Models\Degree
      */
-    public function show(Degree $degree): JsonResponse
+    public function show(Degree $degree)
     {
-        return ResponseFormatter::singleton('degree', $degree);
+        $degree = QueryBuilder::for(Degree::where('id', $degree->id))
+            ->allowedFields([
+                'id',
+                'code',
+                'name',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new DegreeResource($degree);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a degree.
+     *
+     * @apiResource App\Http\Resources\Degree\DegreeResource
+     *
+     * @apiResourceModel App\Models\Degree
      */
-    public function update(UpdateDegreeRequest $request, Degree $degree): JsonResponse
+    public function update(UpdateDegreeRequest $request, Degree $degree)
     {
         $degree->update($request->validated());
 
-        return ResponseFormatter::singleton('degree', $degree);
+        return new DegreeResource($degree);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a degree.
+     *
+     * @apiResource App\Http\Resources\Degree\DegreeResource
+     *
+     * @apiResourceModel App\Models\Degree
      */
-    public function destroy(Degree $degree): JsonResponse
+    public function destroy(Degree $degree)
     {
         $degree->delete();
 
-        return ResponseFormatter::singleton('degree', $degree);
+        return new DegreeResource($degree);
     }
 }

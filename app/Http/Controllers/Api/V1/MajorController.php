@@ -5,85 +5,140 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Major\StoreMajorRequest;
 use App\Http\Requests\Major\UpdateMajorRequest;
+use App\Http\Resources\Major\MajorCollection;
+use App\Http\Resources\Major\MajorResource;
 use App\Models\Major;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Majors
+ * Manage majors.
+ */
 class MajorController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(Major::class, 'major');
+        $this->authorizeResource(Major::class, 'major');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all majors.
+     *
+     * @apiResourceCollection App\Http\Resources\Major\MajorCollection
+     *
+     * @apiResourceModel App\Models\Major
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $majors = QueryBuilder::for(Major::class)
-            ->allowedFilters([
-                AllowedFilter::exact('code'),
-                'name',
-                AllowedFilter::exact('degree_id'),
-                AllowedFilter::exact('faculty_id'),
-            ])
-            ->defaultSorts([
-                'code',
+            ->allowedFields([
                 'id',
-            ])
-            ->allowedSorts([
-                'id',
-                'code',
-                'name',
                 'degree_id',
                 'faculty_id',
+                'code',
+                'name',
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->allowedIncludes([
+                'degree',
+                'faculty',
+            ])
+            ->allowedFilters([
+                AllowedFilter::exact('degree_id'),
+                AllowedFilter::exact('faculty_id'),
+                AllowedFilter::exact('code'),
+                'name',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            ])
+            ->allowedSorts([
+                'id',
+                'degree_id',
+                'faculty_id',
+                'code',
+                'name',
+                'created_at',
+                'updated_at',
+            ])
+            ->defaultSorts([
+                'code',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('majors', $majors);
+        return new MajorCollection($majors);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a major.
+     *
+     * @apiResource App\Http\Resources\Major\MajorResource
+     *
+     * @apiResourceModel App\Models\Major
      */
-    public function store(StoreMajorRequest $request): JsonResponse
+    public function store(StoreMajorRequest $request)
     {
         $major = Major::create($request->validated());
 
-        return ResponseFormatter::singleton('major', $major, 201);
+        return new MajorResource($major);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a major.
+     *
+     * @apiResource App\Http\Resources\Major\MajorResource
+     *
+     * @apiResourceModel App\Models\Major
      */
-    public function show(Major $major): JsonResponse
+    public function show(Major $major)
     {
-        return ResponseFormatter::singleton('major', $major);
+        $major = QueryBuilder::for(Major::where('id', $major->id))
+            ->allowedFields([
+                'id',
+                'degree_id',
+                'faculty_id',
+                'code',
+                'name',
+                'created_at',
+                'updated_at',
+            ])
+            ->allowedIncludes([
+                'degree',
+                'faculty',
+            ])
+            ->firstOrFail();
+
+        return new MajorResource($major);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a major.
+     *
+     * @apiResource App\Http\Resources\Major\MajorResource
+     *
+     * @apiResourceModel App\Models\Major
      */
-    public function update(UpdateMajorRequest $request, Major $major): JsonResponse
+    public function update(UpdateMajorRequest $request, Major $major)
     {
         $major->update($request->validated());
 
-        return ResponseFormatter::singleton('major', $major);
+        return new MajorResource($major);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a major.
+     *
+     * @apiResource App\Http\Resources\Major\MajorResource
+     *
+     * @apiResourceModel App\Models\Major
      */
-    public function destroy(Major $major): JsonResponse
+    public function destroy(Major $major)
     {
         $major->delete();
 
-        return ResponseFormatter::singleton('major', $major);
+        return new MajorResource($major);
     }
 }

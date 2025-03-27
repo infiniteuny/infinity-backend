@@ -2,81 +2,120 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Testimonial\StoreTestimonialRequest;
 use App\Http\Requests\Testimonial\UpdateTestimonialRequest;
+use App\Http\Resources\Testimonial\TestimonialCollection;
+use App\Http\Resources\Testimonial\TestimonialResource;
 use App\Jobs\DeleteBlob;
 use App\Models\Testimonial;
-use App\Repositories\StorageRepository;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Testimonial
+ * Manage testimonials.
+ */
 class TestimonialController extends Controller
 {
-    public function __construct(
-        protected StorageRepository $storageRepository,
-    ) {
-        // $this->authorizeResource(Testimonial::class, 'testimonial');
+    public function __construct()
+    {
+        $this->authorizeResource(Testimonial::class, 'testimonial');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all testimonials.
+     *
+     * @apiResourceCollection App\Http\Resources\Testimonial\TestimonialCollection
+     *
+     * @apiResourceModel App\Models\Testimonial
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $testimonials = QueryBuilder::for(Testimonial::class)
-            ->allowedFilters([
-                'code',
-                'name',
-                'degree_id',
-                'faculty_id',
-            ])
-            ->defaultSorts([
-                '-created_at',
+            ->allowedFields([
                 'id',
-            ])
-            ->allowedSorts([
-                'id',
-                'code',
                 'name',
-                'degree_id',
-                'faculty_id',
+                'position',
+                'photo',
+                'content',
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->allowedFilters([
+                'name',
+                'position',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            ])
+            ->allowedSorts([
+                'id',
+                'name',
+                'position',
+                'created_at',
+                'updated_at',
+            ])
+            ->defaultSorts([
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('testimonials', $testimonials);
+        return new TestimonialCollection($testimonials);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a testimonial.
+     *
+     * @apiResource App\Http\Resources\Testimonial\TestimonialResource
+     *
+     * @apiResourceModel App\Models\Testimonial
      */
-    public function store(StoreTestimonialRequest $request): JsonResponse
+    public function store(StoreTestimonialRequest $request)
     {
-        $manifest = $this->storageRepository->store($request->file('photo'), 'images/testimonials');
+        $manifest = Storage::store($request->file('photo'), 'images/testimonials');
 
         $testimonial = Testimonial::create(
-            array_replace($request->validated(), ['image' => $manifest])
+            array_replace($request->validated(), ['photo' => $manifest])
         );
 
-        return ResponseFormatter::singleton('testimonial', $testimonial, 201);
+        return new TestimonialResource($testimonial);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a testimonial.
+     *
+     * @apiResource App\Http\Resources\Testimonial\TestimonialResource
+     *
+     * @apiResourceModel App\Models\Testimonial
      */
-    public function show(Testimonial $testimonial): JsonResponse
+    public function show(Testimonial $testimonial)
     {
-        return ResponseFormatter::singleton('testimonial', $testimonial);
+        $testimonial = QueryBuilder::for(Testimonial::where('id', $testimonial->id))
+            ->allowedFields([
+                'id',
+                'name',
+                'position',
+                'photo',
+                'content',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new TestimonialResource($testimonial);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a testimonial.
+     *
+     * @apiResource App\Http\Resources\Testimonial\TestimonialResource
+     *
+     * @apiResourceModel App\Models\Testimonial
      */
-    public function update(UpdateTestimonialRequest $request, Testimonial $testimonial): JsonResponse
+    public function update(UpdateTestimonialRequest $request, Testimonial $testimonial)
     {
         $hasPhoto = $request->has('photo');
 
@@ -85,7 +124,7 @@ class TestimonialController extends Controller
 
             dispatch(new DeleteBlob($encodedManifest));
 
-            $manifest = $this->storageRepository->store($request->file('photo'), 'images/testimonials');
+            $manifest = Storage::store($request->file('photo'), 'images/testimonials');
         }
 
         $testimonial->update(
@@ -94,11 +133,15 @@ class TestimonialController extends Controller
                 : $request->validated()
         );
 
-        return ResponseFormatter::singleton('testimonial', $testimonial);
+        return new TestimonialResource($testimonial);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a testimonial.
+     *
+     * @apiResource App\Http\Resources\Testimonial\TestimonialResource
+     *
+     * @apiResourceModel App\Models\Testimonial
      */
     public function destroy(Testimonial $testimonial)
     {
@@ -108,6 +151,6 @@ class TestimonialController extends Controller
 
         $testimonial->delete();
 
-        return ResponseFormatter::singleton('testimonial', $testimonial);
+        return new TestimonialResource($testimonial);
     }
 }

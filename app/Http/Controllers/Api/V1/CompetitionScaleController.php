@@ -5,33 +5,47 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionScale\StoreCompetitionScaleRequest;
 use App\Http\Requests\CompetitionScale\UpdateCompetitionScaleRequest;
+use App\Http\Resources\CompetitionScale\CompetitionScaleCollection;
+use App\Http\Resources\CompetitionScale\CompetitionScaleResource;
 use App\Models\CompetitionScale;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Competition Scales
+ * Manage competition scales.
+ */
 class CompetitionScaleController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(CompetitionScale::class, 'competition_scale');
+        $this->authorizeResource(CompetitionScale::class, 'competition_scale');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all competition scales.
+     *
+     * @apiResourceCollection App\Http\Resources\CompetitionScale\CompetitionScaleCollection
+     *
+     * @apiResourceModel App\Models\CompetitionScale
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $competitionScales = QueryBuilder::for(CompetitionScale::class)
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
             ->allowedFilters([
                 'name',
                 AllowedFilter::exact('weight'),
-            ])
-            ->defaultSorts([
-                'weight',
-                'id',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -40,46 +54,76 @@ class CompetitionScaleController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                'weight',
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('competition_scales', $competitionScales);
+        return new CompetitionScaleCollection($competitionScales);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a competition scale.
+     *
+     * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
+     *
+     * @apiResourceModel App\Models\CompetitionScale
      */
-    public function store(StoreCompetitionScaleRequest $request): JsonResponse
+    public function store(StoreCompetitionScaleRequest $request)
     {
         $competitionScale = CompetitionScale::create($request->validated());
 
-        return ResponseFormatter::singleton('competition_scale', $competitionScale, 201);
+        return new CompetitionScaleResource($competitionScale);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a competition scale.
+     *
+     * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
+     *
+     * @apiResourceModel App\Models\CompetitionScale
      */
-    public function show(CompetitionScale $competitionScale): JsonResponse
+    public function show(CompetitionScale $competitionScale)
     {
-        return ResponseFormatter::singleton('competition_scale', $competitionScale);
+        $competitionScale = QueryBuilder::for(CompetitionScale::where('id', $competitionScale->id))
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new CompetitionScaleResource($competitionScale);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a competition scale.
+     *
+     * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
+     *
+     * @apiResourceModel App\Models\CompetitionScale
      */
-    public function update(UpdateCompetitionScaleRequest $request, CompetitionScale $competitionScale): JsonResponse
+    public function update(UpdateCompetitionScaleRequest $request, CompetitionScale $competitionScale)
     {
         $competitionScale->update($request->validated());
 
-        return ResponseFormatter::singleton('competition_scale', $competitionScale);
+        return new CompetitionScaleResource($competitionScale);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a competition scale.
+     *
+     * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
+     *
+     * @apiResourceModel App\Models\CompetitionScale
      */
-    public function destroy(CompetitionScale $competitionScale): JsonResponse
+    public function destroy(CompetitionScale $competitionScale)
     {
         $competitionScale->delete();
 
-        return ResponseFormatter::singleton('competition_scale', $competitionScale);
+        return new CompetitionScaleResource($competitionScale);
     }
 }

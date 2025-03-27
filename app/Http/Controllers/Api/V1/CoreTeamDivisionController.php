@@ -5,32 +5,47 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CoreTeamDivision\StoreCoreTeamDivisionRequest;
 use App\Http\Requests\CoreTeamDivision\UpdateCoreTeamDivisionRequest;
+use App\Http\Resources\CoreTeamDivision\CoreTeamDivisionCollection;
+use App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource;
 use App\Models\CoreTeamDivision;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Core Team Divisions
+ * Manage core team divisions.
+ */
 class CoreTeamDivisionController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(CoreTeamDivision::class, 'core_team_division');
+        $this->authorizeResource(CoreTeamDivision::class, 'core_team_division');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all core team divisions.
+     *
+     * @apiResourceCollection App\Http\Resources\CoreTeamDivision\CoreTeamDivisionCollection
+     *
+     * @apiResourceModel App\Models\CoreTeamDivision
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $coreTeamDivisions = QueryBuilder::for(CoreTeamDivision::class)
-            ->allowedFilters([
+            ->allowedFields([
+                'id',
                 'name',
                 'priority',
+                'created_at',
+                'updated_at',
             ])
-            ->defaultSorts([
-                '-created_at',
-                'id',
+            ->allowedFilters([
+                'name',
+                AllowedFilter::exact('priority'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -39,46 +54,76 @@ class CoreTeamDivisionController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                'priority',
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('core_team_divisions', $coreTeamDivisions);
+        return new CoreTeamDivisionCollection($coreTeamDivisions);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a core team division.
+     *
+     * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
+     *
+     * @apiResourceModel App\Models\CoreTeamDivision
      */
-    public function store(StoreCoreTeamDivisionRequest $request): JsonResponse
+    public function store(StoreCoreTeamDivisionRequest $request)
     {
         $coreTeamDivision = CoreTeamDivision::create($request->validated());
 
-        return ResponseFormatter::singleton('core_team_division', $coreTeamDivision, 201);
+        return new CoreTeamDivisionResource($coreTeamDivision);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a core team division.
+     *
+     * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
+     *
+     * @apiResourceModel App\Models\CoreTeamDivision
      */
-    public function show(CoreTeamDivision $coreTeamDivision): JsonResponse
+    public function show(CoreTeamDivision $coreTeamDivision)
     {
-        return ResponseFormatter::singleton('core_team_division', $coreTeamDivision);
+        $coreTeamDivision = QueryBuilder::for(CoreTeamDivision::where('id', $coreTeamDivision->id))
+            ->allowedFields([
+                'id',
+                'name',
+                'priority',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new CoreTeamDivisionResource($coreTeamDivision);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a core team division.
+     *
+     * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
+     *
+     * @apiResourceModel App\Models\CoreTeamDivision
      */
-    public function update(UpdateCoreTeamDivisionRequest $request, CoreTeamDivision $coreTeamDivision): JsonResponse
+    public function update(UpdateCoreTeamDivisionRequest $request, CoreTeamDivision $coreTeamDivision)
     {
         $coreTeamDivision->update($request->validated());
 
-        return ResponseFormatter::singleton('core_team_division', $coreTeamDivision);
+        return new CoreTeamDivisionResource($coreTeamDivision);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a core team division.
+     *
+     * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
+     *
+     * @apiResourceModel App\Models\CoreTeamDivision
      */
-    public function destroy(CoreTeamDivision $coreTeamDivision): JsonResponse
+    public function destroy(CoreTeamDivision $coreTeamDivision)
     {
         $coreTeamDivision->delete();
 
-        return ResponseFormatter::singleton('core_team_division', $coreTeamDivision);
+        return new CoreTeamDivisionResource($coreTeamDivision);
     }
 }

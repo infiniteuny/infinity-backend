@@ -5,33 +5,57 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Team\StoreTeamRequest;
 use App\Http\Requests\Team\UpdateTeamRequest;
+use App\Http\Resources\Team\TeamCollection;
+use App\Http\Resources\Team\TeamResource;
 use App\Models\Team;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Teams
+ * Manage teams.
+ */
 class TeamController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(Team::class, 'Team');
+        $this->authorizeResource(Team::class, 'team');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all teams.
+     *
+     * @apiResourceCollection App\Http\Resources\Team\TeamCollection
+     *
+     * @apiResourceModel App\Models\Team
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
+        $userId = $request->user()->id;
         $teams = QueryBuilder::for(Team::class)
-            ->allowedFilters([
+            ->allowedFields([
+                'id',
                 'leader_id',
                 'name',
                 'is_personal',
+                'created_at',
+                'updated_at',
             ])
-            ->defaultSorts([
-                '-created_at',
-                'id',
+            ->allowedIncludes([
+                'leader',
+                'members',
+                AllowedInclude::relationship('fundApplications', 'fund_applications'),
+                'achievements',
+            ])
+            ->allowedFilters([
+                AllowedFilter::exact('leader_id'),
+                'name',
+                AllowedFilter::exact('is_personal'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -41,46 +65,86 @@ class TeamController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                '-id',
+            ]);
 
-        return ResponseFormatter::paginatedCollection('teams', $teams);
+        if ($request->user()->can('read-team')) {
+            $teams = $teams;
+        } else {
+            $teams = $teams
+                ->where('leader_id', $userId)
+                ->orWhereHas('members', function ($query) use ($userId) {
+                    $query->where('id', $userId);
+                });
+        }
+
+        $teams = $teams
+            ->cursorPaginate($request->query('per_page', 10));
+
+        return new TeamCollection($teams);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a team.
+     *
+     * @apiResource App\Http\Resources\Team\TeamResource
+     *
+     * @apiResourceModel App\Models\Team
      */
-    public function store(StoreTeamRequest $request): JsonResponse
+    public function store(StoreTeamRequest $request)
     {
         $team = Team::create($request->validated());
 
-        return ResponseFormatter::singleton('team', $team, 201);
+        return new TeamResource($team);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a team.
+     *
+     * @apiResource App\Http\Resources\Team\TeamResource
+     *
+     * @apiResourceModel App\Models\Team
      */
-    public function show(Team $team): JsonResponse
+    public function show(Team $team)
     {
-        return ResponseFormatter::singleton('team', $team);
+        $team = QueryBuilder::for(Team::where('id', $team->id))
+            ->allowedFields([
+                'id',
+                'leader_id',
+                'name',
+                'is_personal',
+                'created_at',
+                'updated_at',
+            ])
+            ->allowedIncludes([
+                'leader',
+                'members',
+                AllowedInclude::relationship('fundApplications', 'fund_applications'),
+                'achievements',
+            ])
+            ->firstOrFail();
+
+        return new TeamResource($team);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a team.
      */
-    public function update(UpdateTeamRequest $request, Team $team): JsonResponse
+    public function update(UpdateTeamRequest $request, Team $team)
     {
         $team->update($request->validated());
 
-        return ResponseFormatter::singleton('team', $team);
+        return new TeamResource($team);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a team.
      */
-    public function destroy(Team $team): JsonResponse
+    public function destroy(Team $team)
     {
         $team->delete();
 
-        return ResponseFormatter::singleton('team', $team);
+        return new TeamResource($team);
     }
 }

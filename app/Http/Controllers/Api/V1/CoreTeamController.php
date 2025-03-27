@@ -5,31 +5,45 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CoreTeam\StoreCoreTeamRequest;
 use App\Http\Requests\CoreTeam\UpdateCoreTeamRequest;
+use App\Http\Resources\CoreTeam\CoreTeamCollection;
+use App\Http\Resources\CoreTeam\CoreTeamResource;
 use App\Models\CoreTeam;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Core Teams
+ * Manage core teams.
+ */
 class CoreTeamController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(CoreTeam::class, 'coreTeam');
+        $this->authorizeResource(CoreTeam::class, 'core_team');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all core teams.
+     *
+     * @apiResourceCollection App\Http\Resources\CoreTeam\CoreTeamCollection
+     *
+     * @apiResourceModel App\Models\CoreTeam
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $coreTeams = QueryBuilder::for(CoreTeam::class)
-            ->allowedFilters([
-                'year',
-            ])
-            ->defaultSorts([
-                '-created_at',
+            ->allowedFields([
                 'id',
+                'year',
+                'created_at',
+                'updated_at',
+            ])
+            ->allowedFilters([
+                AllowedFilter::exact('year'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -37,46 +51,74 @@ class CoreTeamController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('core_teams', $coreTeams);
+        return new CoreTeamCollection($coreTeams);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a core team.
+     *
+     * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
+     *
+     * @apiResourceModel App\Models\CoreTeam
      */
-    public function store(StoreCoreTeamRequest $request): JsonResponse
+    public function store(StoreCoreTeamRequest $request)
     {
         $coreTeam = CoreTeam::create($request->validated());
 
-        return ResponseFormatter::singleton('core_team', $coreTeam, 201);
+        return new CoreTeamResource($coreTeam);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a core team.
+     *
+     * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
+     *
+     * @apiResourceModel App\Models\CoreTeam
      */
-    public function show(CoreTeam $coreTeam): JsonResponse
+    public function show(CoreTeam $coreTeam)
     {
-        return ResponseFormatter::singleton('coreTeam', $coreTeam);
+        $coreTeam = QueryBuilder::for(CoreTeam::where('id', $coreTeam->id))
+            ->allowedFields([
+                'id',
+                'year',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new CoreTeamResource($coreTeam);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a core team.
+     *
+     * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
+     *
+     * @apiResourceModel App\Models\CoreTeam
      */
-    public function update(UpdateCoreTeamRequest $request, CoreTeam $coreTeam): JsonResponse
+    public function update(UpdateCoreTeamRequest $request, CoreTeam $coreTeam)
     {
         $coreTeam->update($request->validated());
 
-        return ResponseFormatter::singleton('coreTeam', $coreTeam);
+        return new CoreTeamResource($coreTeam);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a core team.
+     *
+     * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
+     *
+     * @apiResourceModel App\Models\CoreTeam
      */
-    public function destroy(CoreTeam $coreTeam): JsonResponse
+    public function destroy(CoreTeam $coreTeam)
     {
         $coreTeam->delete();
 
-        return ResponseFormatter::singleton('coreTeam', $coreTeam);
+        return new CoreTeamResource($coreTeam);
     }
 }

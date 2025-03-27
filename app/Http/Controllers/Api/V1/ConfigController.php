@@ -5,39 +5,57 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Config\StoreConfigRequest;
 use App\Http\Requests\Config\UpdateConfigRequest;
+use App\Http\Resources\Config\ConfigCollection;
+use App\Http\Resources\Config\ConfigResource;
 use App\Models\Config;
-use App\Utils\ResponseFormatter;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * @group Configs
+ * Manage configurations.
+ */
 class ConfigController extends Controller
 {
     public function __construct()
     {
         $this->middleware('can:create,'.Config::class)->only('store');
-        $this->middleware('can:update,'.Config::class)->only('update');
-        $this->middleware('can:delete,'.Config::class)->only('destroy');
+        $this->middleware('can:update,config')->only('update');
+        $this->middleware('can:delete,config')->only('destroy');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all configurations.
+     *
+     * @apiResourceCollection App\Http\Resources\Config\ConfigCollection
+     *
+     * @apiResourceModel App\Models\Config
      */
     public function index(Request $request)
     {
         $configs = QueryBuilder::for(Config::class)
-            ->defaultSorts([
-                '-created_at',
+            ->allowedFields([
                 'id',
+                'key',
+                'value',
+                'type',
+                'is_private',
+                'created_at',
+                'updated_at',
             ]);
 
         if (Auth::check()) {
             $configs = $configs
                 ->allowedFilters([
                     'key',
-                    'type',
-                    'is_private',
+                    AllowedFilter::exact('type'),
+                    AllowedFilter::exact('is_private'),
+                    AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                    AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
                 ])
                 ->allowedSorts([
                     'id',
@@ -51,7 +69,9 @@ class ConfigController extends Controller
             $configs = $configs
                 ->allowedFilters([
                     'key',
-                    'type',
+                    AllowedFilter::exact('type'),
+                    AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                    AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
                 ])
                 ->allowedSorts([
                     'id',
@@ -64,50 +84,83 @@ class ConfigController extends Controller
         }
 
         $configs = $configs
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('configs', $configs);
+        return new ConfigCollection($configs);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a configuration.
+     *
+     * @apiResource App\Http\Resources\Config\ConfigResource
+     *
+     * @apiResourceModel App\Models\Config
      */
     public function store(StoreConfigRequest $request)
     {
         $config = Config::create($request->validated());
 
-        return ResponseFormatter::singleton('survey_result', $config, 201);
+        return new ConfigResource($config);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a configuration.
+     *
+     * @apiResource App\Http\Resources\Config\ConfigResource
+     *
+     * @apiResourceModel App\Models\Config
      */
     public function show(Config $config)
     {
         if ($config->is_private && ! Auth::check()) {
-            throw new AuthenticationException;
+            // For security reasons, we don't want to expose private configurations to
+            // unauthenticated users nor give them a hint that the configuration exists.
+            throw new NotFoundHttpException;
         }
 
-        return ResponseFormatter::singleton('survey_result', $config);
+        $config = QueryBuilder::for(Config::where('id', $config->id))
+            ->allowedFields([
+                'id',
+                'key',
+                'value',
+                'type',
+                'is_private',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new ConfigResource($config);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a configuration.
+     *
+     * @apiResource App\Http\Resources\Config\ConfigResource
+     *
+     * @apiResourceModel App\Models\Config
      */
     public function update(UpdateConfigRequest $request, Config $config)
     {
         $config->update($request->validated());
 
-        return ResponseFormatter::singleton('config', $config);
+        return new ConfigResource($config);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a configuration.
+     *
+     * @apiResource App\Http\Resources\Config\ConfigResource
+     *
+     * @apiResourceModel App\Models\Config
      */
     public function destroy(Config $config)
     {
         $config->delete();
 
-        return ResponseFormatter::singleton('config', $config);
+        return new ConfigResource($config);
     }
 }

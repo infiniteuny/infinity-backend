@@ -5,33 +5,47 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionTeamType\StoreCompetitionTeamTypeRequest;
 use App\Http\Requests\CompetitionTeamType\UpdateCompetitionTeamTypeRequest;
+use App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeCollection;
+use App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource;
 use App\Models\CompetitionTeamType;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Competition Team Types
+ * Manage competition team types.
+ */
 class CompetitionTeamTypeController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(CompetitionTeamType::class, 'competition_team_type');
+        $this->authorizeResource(CompetitionTeamType::class, 'competition_team_type');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all competition team types.
+     *
+     * @apiResourceCollection App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeCollection
+     *
+     * @apiResourceModel App\Models\CompetitionTeamType
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $competitionTeamTypes = QueryBuilder::for(CompetitionTeamType::class)
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
             ->allowedFilters([
                 'name',
                 AllowedFilter::exact('weight'),
-            ])
-            ->defaultSorts([
-                'weight',
-                'id',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -40,46 +54,76 @@ class CompetitionTeamTypeController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                'weight',
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('competition_team_types', $competitionTeamTypes);
+        return new CompetitionTeamTypeCollection($competitionTeamTypes);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a competition team type.
+     *
+     * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
+     *
+     * @apiResourceModel App\Models\CompetitionTeamType
      */
-    public function store(StoreCompetitionTeamTypeRequest $request): JsonResponse
+    public function store(StoreCompetitionTeamTypeRequest $request)
     {
         $competitionTeamType = CompetitionTeamType::create($request->validated());
 
-        return ResponseFormatter::singleton('competition_team_type', $competitionTeamType, 201);
+        return new CompetitionTeamTypeResource($competitionTeamType);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a competition team type.
+     *
+     * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
+     *
+     * @apiResourceModel App\Models\CompetitionTeamType
      */
-    public function show(CompetitionTeamType $competitionTeamType): JsonResponse
+    public function show(CompetitionTeamType $competitionTeamType)
     {
-        return ResponseFormatter::singleton('competition_team_type', $competitionTeamType);
+        $competitionTeamType = QueryBuilder::for(CompetitionTeamType::where('id', $competitionTeamType->id))
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new CompetitionTeamTypeResource($competitionTeamType);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a competition team type.
+     *
+     * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
+     *
+     * @apiResourceModel App\Models\CompetitionTeamType
      */
-    public function update(UpdateCompetitionTeamTypeRequest $request, CompetitionTeamType $competitionTeamType): JsonResponse
+    public function update(UpdateCompetitionTeamTypeRequest $request, CompetitionTeamType $competitionTeamType)
     {
         $competitionTeamType->update($request->validated());
 
-        return ResponseFormatter::singleton('competition_team_type', $competitionTeamType);
+        return new CompetitionTeamTypeResource($competitionTeamType);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a competition team type.
+     *
+     * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
+     *
+     * @apiResourceModel App\Models\CompetitionTeamType
      */
-    public function destroy(CompetitionTeamType $competitionTeamType): JsonResponse
+    public function destroy(CompetitionTeamType $competitionTeamType)
     {
         $competitionTeamType->delete();
 
-        return ResponseFormatter::singleton('competition_team_type', $competitionTeamType);
+        return new CompetitionTeamTypeResource($competitionTeamType);
     }
 }

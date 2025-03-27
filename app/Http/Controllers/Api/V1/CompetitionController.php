@@ -2,78 +2,135 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Competition\StoreCompetitionRequest;
 use App\Http\Requests\Competition\UpdateCompetitionRequest;
+use App\Http\Resources\Competition\CompetitionCollection;
+use App\Http\Resources\Competition\CompetitionResource;
 use App\Jobs\DeleteBlob;
 use App\Models\Competition;
-use App\Repositories\StorageRepository;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Competitions
+ * Manage competitions.
+ */
 class CompetitionController extends Controller
 {
-    public function __construct(
-        protected StorageRepository $storageRepository,
-    ) {
-        // $this->authorizeResource(Competition::class, 'competition');
+    public function __construct()
+    {
+        $this->authorizeResource(Competition::class, 'competition');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all competitions.
+     *
+     * @apiResourceCollection App\Http\Resources\Competition\CompetitionCollection
+     *
+     * @apiResourceModel App\Models\Competition
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $competitions = QueryBuilder::for(Competition::class)
+            ->allowedFields([
+                'id',
+                'name',
+                'description',
+                'url',
+                'organizer',
+                'organizer_type_id',
+                'logo',
+                'created_at',
+                'updated_at',
+            ])
+            ->allowedIncludes([
+                AllowedInclude::relationship('organizer_type', 'organizerType'),
+            ])
             ->allowedFilters([
                 'name',
                 'description',
                 'url',
                 'organizer',
-            ])
-            ->defaultSorts([
-                '-created_at',
-                'id',
+                AllowedFilter::exact('organizer_type_id'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
                 'name',
+                'organizer',
+                'organizer_type_id',
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('competitions', $competitions);
+        return new CompetitionCollection($competitions);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a competition.
+     *
+     * @apiResource App\Http\Resources\Competition\CompetitionResource
+     *
+     * @apiResourceModel App\Models\Competition
      */
-    public function store(StoreCompetitionRequest $request): JsonResponse
+    public function store(StoreCompetitionRequest $request)
     {
-        $manifest = $this->storageRepository->store($request->file('logo'), 'images/competitions');
+        $manifest = Storage::store($request->file('logo'), 'images/competitions');
 
         $competition = Competition::create(
             array_replace($request->validated(), ['logo' => $manifest])
         );
 
-        return ResponseFormatter::singleton('competition', $competition, 201);
+        return new CompetitionResource($competition);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a competition.
+     *
+     * @apiResource App\Http\Resources\Competition\CompetitionResource
+     *
+     * @apiResourceModel App\Models\Competition
      */
-    public function show(Competition $competition): JsonResponse
+    public function show(Competition $competition)
     {
-        return ResponseFormatter::singleton('competition', $competition);
+        $competition = QueryBuilder::for(Competition::where('id', $competition->id))
+            ->allowedFields([
+                'id',
+                'name',
+                'description',
+                'url',
+                'organizer',
+                'organizer_type_id',
+                'logo',
+                'created_at',
+                'updated_at',
+            ])
+            ->allowedIncludes([
+                AllowedInclude::relationship('organizer_type', 'organizerType'),
+            ])
+            ->firstOrFail();
+
+        return new CompetitionResource($competition);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a competition.
+     *
+     * @apiResource App\Http\Resources\Competition\CompetitionResource
+     *
+     * @apiResourceModel App\Models\Competition
      */
-    public function update(UpdateCompetitionRequest $request, Competition $competition): JsonResponse
+    public function update(UpdateCompetitionRequest $request, Competition $competition)
     {
         $hasLogo = $request->has('logo');
 
@@ -82,7 +139,7 @@ class CompetitionController extends Controller
 
             dispatch(new DeleteBlob($encodedManifest));
 
-            $manifest = $this->storageRepository->store($request->file('logo'), 'images/competitions');
+            $manifest = Storage::store($request->file('logo'), 'images/competitions');
         }
 
         $competition->update(
@@ -91,13 +148,17 @@ class CompetitionController extends Controller
                 : $request->validated()
         );
 
-        return ResponseFormatter::singleton('competition', $competition);
+        return new CompetitionResource($competition);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a competition.
+     *
+     * @apiResource App\Http\Resources\Competition\CompetitionResource
+     *
+     * @apiResourceModel App\Models\Competition
      */
-    public function destroy(Competition $competition): JsonResponse
+    public function destroy(Competition $competition)
     {
         $encodedManifest = $competition->getRawOriginal('logo');
 
@@ -105,6 +166,6 @@ class CompetitionController extends Controller
 
         $competition->delete();
 
-        return ResponseFormatter::singleton('competition', $competition);
+        return new CompetitionResource($competition);
     }
 }

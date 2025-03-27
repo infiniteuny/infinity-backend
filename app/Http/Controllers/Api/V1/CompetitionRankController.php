@@ -5,33 +5,47 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionRank\StoreCompetitionRankRequest;
 use App\Http\Requests\CompetitionRank\UpdateCompetitionRankRequest;
+use App\Http\Resources\CompetitionRank\CompetitionRankCollection;
+use App\Http\Resources\CompetitionRank\CompetitionRankResource;
 use App\Models\CompetitionRank;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Competition Ranks
+ * Manage competition ranks.
+ */
 class CompetitionRankController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(CompetitionRank::class, 'competition_rank');
+        $this->authorizeResource(CompetitionRank::class, 'competition_rank');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all competition ranks.
+     *
+     * @apiResourceCollection App\Http\Resources\CompetitionRank\CompetitionRankCollection
+     *
+     * @apiResourceModel App\Models\CompetitionRank
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $competitionRanks = QueryBuilder::for(CompetitionRank::class)
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
             ->allowedFilters([
                 'name',
                 AllowedFilter::exact('weight'),
-            ])
-            ->defaultSorts([
-                'weight',
-                'id',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -40,46 +54,76 @@ class CompetitionRankController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                'weight',
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('competition_ranks', $competitionRanks);
+        return new CompetitionRankCollection($competitionRanks);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a competition rank.
+     *
+     * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
+     *
+     * @apiResourceModel App\Models\CompetitionRank
      */
-    public function store(StoreCompetitionRankRequest $request): JsonResponse
+    public function store(StoreCompetitionRankRequest $request)
     {
         $competitionRank = CompetitionRank::create($request->validated());
 
-        return ResponseFormatter::singleton('competition_rank', $competitionRank, 201);
+        return new CompetitionRankResource($competitionRank);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a competition rank.
+     *
+     * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
+     *
+     * @apiResourceModel App\Models\CompetitionRank
      */
-    public function show(CompetitionRank $competitionRank): JsonResponse
+    public function show(CompetitionRank $competitionRank)
     {
-        return ResponseFormatter::singleton('competition_rank', $competitionRank);
+        $competitionRank = QueryBuilder::for(CompetitionRank::where('id', $competitionRank->id))
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new CompetitionRankResource($competitionRank);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a competition rank.
+     *
+     * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
+     *
+     * @apiResourceModel App\Models\CompetitionRank
      */
-    public function update(UpdateCompetitionRankRequest $request, CompetitionRank $competitionRank): JsonResponse
+    public function update(UpdateCompetitionRankRequest $request, CompetitionRank $competitionRank)
     {
         $competitionRank->update($request->validated());
 
-        return ResponseFormatter::singleton('competition_rank', $competitionRank);
+        return new CompetitionRankResource($competitionRank);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a competition rank.
+     *
+     * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
+     *
+     * @apiResourceModel App\Models\CompetitionRank
      */
-    public function destroy(CompetitionRank $competitionRank): JsonResponse
+    public function destroy(CompetitionRank $competitionRank)
     {
         $competitionRank->delete();
 
-        return ResponseFormatter::singleton('competition_rank', $competitionRank);
+        return new CompetitionRankResource($competitionRank);
     }
 }

@@ -5,33 +5,47 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompetitionOrganizerType\StoreCompetitionOrganizerTypeRequest;
 use App\Http\Requests\CompetitionOrganizerType\UpdateCompetitionOrganizerTypeRequest;
+use App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeCollection;
+use App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource;
 use App\Models\CompetitionOrganizerType;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Competition Organizer Types
+ * Manage competition organizer types.
+ */
 class CompetitionOrganizerTypeController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(CompetitionOrganizerType::class, 'competition_organizer_type');
+        $this->authorizeResource(CompetitionOrganizerType::class, 'competition_organizer_type');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all competition organizer types.
+     *
+     * @apiResourceCollection App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeCollection
+     *
+     * @apiResourceModel App\Models\CompetitionOrganizerType
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $competitionOrganizerTypes = QueryBuilder::for(CompetitionOrganizerType::class)
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
             ->allowedFilters([
                 'name',
                 AllowedFilter::exact('weight'),
-            ])
-            ->defaultSorts([
-                'weight',
-                'id',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -40,46 +54,76 @@ class CompetitionOrganizerTypeController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                'weight',
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('competition_organizer_types', $competitionOrganizerTypes);
+        return new CompetitionOrganizerTypeCollection($competitionOrganizerTypes);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a competition organizer type.
+     *
+     * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
+     *
+     * @apiResourceModel App\Models\CompetitionOrganizerType
      */
-    public function store(StoreCompetitionOrganizerTypeRequest $request): JsonResponse
+    public function store(StoreCompetitionOrganizerTypeRequest $request)
     {
         $competitionOrganizerType = CompetitionOrganizerType::create($request->validated());
 
-        return ResponseFormatter::singleton('competition_organizer_type', $competitionOrganizerType, 201);
+        return new CompetitionOrganizerTypeResource($competitionOrganizerType);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a competition organizer type.
+     *
+     * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
+     *
+     * @apiResourceModel App\Models\CompetitionOrganizerType
      */
-    public function show(CompetitionOrganizerType $competitionOrganizerType): JsonResponse
+    public function show(CompetitionOrganizerType $competitionOrganizerType)
     {
-        return ResponseFormatter::singleton('competition_organizer_type', $competitionOrganizerType);
+        $competitionOrganizerType = QueryBuilder::for(CompetitionOrganizerType::where('id', $competitionOrganizerType->id))
+            ->allowedFields([
+                'id',
+                'name',
+                'weight',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new CompetitionOrganizerTypeResource($competitionOrganizerType);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a competition organizer type.
+     *
+     * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
+     *
+     * @apiResourceModel App\Models\CompetitionOrganizerType
      */
-    public function update(UpdateCompetitionOrganizerTypeRequest $request, CompetitionOrganizerType $competitionOrganizerType): JsonResponse
+    public function update(UpdateCompetitionOrganizerTypeRequest $request, CompetitionOrganizerType $competitionOrganizerType)
     {
         $competitionOrganizerType->update($request->validated());
 
-        return ResponseFormatter::singleton('competition_organizer_type', $competitionOrganizerType);
+        return new CompetitionOrganizerTypeResource($competitionOrganizerType);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a competition organizer type.
+     *
+     * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
+     *
+     * @apiResourceModel App\Models\CompetitionOrganizerType
      */
-    public function destroy(CompetitionOrganizerType $competitionOrganizerType): JsonResponse
+    public function destroy(CompetitionOrganizerType $competitionOrganizerType)
     {
         $competitionOrganizerType->delete();
 
-        return ResponseFormatter::singleton('competition_organizer_type', $competitionOrganizerType);
+        return new CompetitionOrganizerTypeResource($competitionOrganizerType);
     }
 }

@@ -2,45 +2,74 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FundApplication\StoreFundApplicationRequest;
 use App\Http\Requests\FundApplication\UpdateFundApplicationRequest;
+use App\Http\Resources\FundApplication\FundApplicationCollection;
+use App\Http\Resources\FundApplication\FundApplicationResource;
 use App\Jobs\DeleteBlob;
 use App\Models\FundApplication;
-use App\Repositories\StorageRepository;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Fund Applications
+ * Manage fund applications.
+ */
 class FundApplicationController extends Controller
 {
-    public function __construct(
-        protected StorageRepository $storageRepository,
-    ) {
-        // $this->authorizeResource(FundApplication::class, 'fund_application');
+    public function __construct()
+    {
+        $this->authorizeResource(FundApplication::class, 'fund_application');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all fund applications.
+     *
+     * @apiResourceCollection App\Http\Resources\FundApplication\FundApplicationCollection
+     *
+     * @apiResourceModel App\Models\FundApplication
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
+        $userId = $request->user()->id;
         $fundApplications = QueryBuilder::for(FundApplication::class)
-            ->allowedFilters([
+            ->allowedFields([
+                'id',
                 'team_id',
                 'competition_id',
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_branch',
-                'competition_date',
+                'competition_start_date',
+                'competition_end_date',
                 'letter_of_acceptance',
                 'proposal',
                 'status',
+                'created_at',
+                'updated_at',
             ])
-            ->defaultSorts([
-                '-created_at',
-                'id',
+            ->allowedIncludes([
+                'team',
+                'competition',
+                AllowedInclude::relationship('competitionTeamType', 'competition_team_type'),
+                AllowedInclude::relationship('competitionScale', 'competition_scale'),
+            ])
+            ->allowedFilters([
+                AllowedFilter::exact('team_id'),
+                AllowedFilter::exact('competition_id'),
+                AllowedFilter::exact('competition_team_type_id'),
+                AllowedFilter::exact('competition_scale_id'),
+                'competition_branch',
+                AllowedFilter::operator('competition_start_date', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('competition_end_date', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('status'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -49,25 +78,45 @@ class FundApplicationController extends Controller
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_branch',
-                'competition_date',
-                'letter_of_acceptance',
-                'proposal',
+                'competition_start_date',
+                'competition_end_date',
                 'status',
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                '-id',
+            ]);
 
-        return ResponseFormatter::paginatedCollection('fund_applications', $fundApplications);
+        if ($request->user()->can('read-fund-applications')) {
+            $fundApplications = $fundApplications;
+        } else {
+            $fundApplications = $fundApplications
+                ->whereHas('team', function ($query) use ($userId) {
+                    $query->where('leader_id', $userId);
+                })
+                ->orWhereHas('team.members', function ($query) use ($userId) {
+                    $query->where('id', $userId);
+                });
+        }
+
+        $fundApplications = $fundApplications
+            ->cursorPaginate($request->query('per_page', 10));
+
+        return new FundApplicationCollection($fundApplications);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a fund application.
+     *
+     * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
+     *
+     * @apiResourceModel App\Models\FundApplication
      */
-    public function store(StoreFundApplicationRequest $request): JsonResponse
+    public function store(StoreFundApplicationRequest $request)
     {
-        $loaManifest = $this->storageRepository->store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
-        $proposalManifest = $this->storageRepository->store($request->file('proposal'), 'documents/fund-applications/proposals');
+        $loaManifest = Storage::store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
+        $proposalManifest = Storage::store($request->file('proposal'), 'documents/fund-applications/proposals');
 
         $fundApplication = FundApplication::create(
             array_replace($request->validated(), [
@@ -76,21 +125,53 @@ class FundApplicationController extends Controller
             ])
         );
 
-        return ResponseFormatter::singleton('fund_application', $fundApplication, 201);
+        return new FundApplicationResource($fundApplication);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a fund application.
+     *
+     * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
+     *
+     * @apiResourceModel App\Models\FundApplication
      */
-    public function show(FundApplication $fundApplication): JsonResponse
+    public function show(FundApplication $fundApplication)
     {
-        return ResponseFormatter::singleton('fund_application', $fundApplication);
+        $fundApplication = QueryBuilder::for(FundApplication::where('id', $fundApplication->id))
+            ->allowedFields([
+                'id',
+                'team_id',
+                'competition_id',
+                'competition_team_type_id',
+                'competition_scale_id',
+                'competition_branch',
+                'competition_start_date',
+                'competition_end_date',
+                'letter_of_acceptance',
+                'proposal',
+                'status',
+                'created_at',
+                'updated_at',
+            ])
+            ->allowedIncludes([
+                'team',
+                'competition',
+                AllowedInclude::relationship('competitionTeamType', 'competition_team_type'),
+                AllowedInclude::relationship('competitionScale', 'competition_scale'),
+            ])
+            ->firstOrFail();
+
+        return new FundApplicationResource($fundApplication);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a fund application.
+     *
+     * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
+     *
+     * @apiResourceModel App\Models\FundApplication
      */
-    public function update(UpdateFundApplicationRequest $request, FundApplication $fundApplication): JsonResponse
+    public function update(UpdateFundApplicationRequest $request, FundApplication $fundApplication)
     {
         $hasLoa = $request->has('letter_of_acceptance');
         $hasProposal = $request->has('proposal');
@@ -100,7 +181,7 @@ class FundApplicationController extends Controller
 
             dispatch(new DeleteBlob($loaEncodedManifest));
 
-            $loaManifest = $this->storageRepository->store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
+            $loaManifest = Storage::store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
         }
 
         if ($hasProposal) {
@@ -108,7 +189,7 @@ class FundApplicationController extends Controller
 
             dispatch(new DeleteBlob($proposalEncodedManifest));
 
-            $proposalManifest = $this->storageRepository->store($request->file('proposal'), 'documents/fund-applications/proposals');
+            $proposalManifest = Storage::store($request->file('proposal'), 'documents/fund-applications/proposals');
         }
 
         $fundApplication->update(
@@ -120,13 +201,17 @@ class FundApplicationController extends Controller
                 : $request->validated()
         );
 
-        return ResponseFormatter::singleton('fund_application', $fundApplication);
+        return new FundApplicationResource($fundApplication);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a fund application.
+     *
+     * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
+     *
+     * @apiResourceModel App\Models\FundApplication
      */
-    public function destroy(FundApplication $fundApplication): JsonResponse
+    public function destroy(FundApplication $fundApplication)
     {
         $loaEncodedManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
         $proposalEncodedManifest = $fundApplication->getRawOriginal('proposal');
@@ -136,6 +221,6 @@ class FundApplicationController extends Controller
 
         $fundApplication->delete();
 
-        return ResponseFormatter::singleton('fund_application', $fundApplication);
+        return new FundApplicationResource($fundApplication);
     }
 }

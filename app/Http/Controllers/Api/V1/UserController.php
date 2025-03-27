@@ -5,39 +5,70 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Resources\User\UserCollection;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Users
+ * Manage users.
+ */
 class UserController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(User::class, 'user');
+        $this->authorizeResource(User::class, 'user');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all users.
+     *
+     * @apiResourceCollection App\Http\Resources\User\UserCollection
+     *
+     * @apiResourceModel App\Models\User
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $users = QueryBuilder::for(User::class)
-            ->allowedFilters([
+            ->allowedFields([
+                'id',
+                'sso_id',
                 'name',
                 'email_address',
                 'phone_number',
                 'student_id',
                 'major_id',
+                'links',
                 'start_date',
                 'end_date',
                 'is_member',
                 'is_extraordinary',
+                'created_at',
+                'updated_at',
             ])
-            ->defaultSorts([
-                '-created_at',
-                'id',
+            ->allowedIncludes([
+                'major',
+                'personas',
+                'groups',
+                'permissions',
+            ])
+            ->allowedFilters([
+                AllowedFilter::exact('sso_id'),
+                'name',
+                'email_address',
+                'phone_number',
+                'student_id',
+                AllowedFilter::exact('major_id'),
+                AllowedFilter::operator('start_date', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('end_date', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('is_member'),
+                AllowedFilter::exact('is_extraordinary'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
@@ -53,46 +84,90 @@ class UserController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->defaultSorts([
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('users', $users);
+        return new UserCollection($users);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a user.
+     *
+     * @apiResource App\Http\Resources\User\UserResource
+     *
+     * @apiResourceModel App\Models\User
      */
-    public function store(StoreUserRequest $request): JsonResponse
+    public function store(StoreUserRequest $request)
     {
         $user = User::create($request->validated());
 
-        return ResponseFormatter::singleton('user', $user, 201);
+        return new UserResource($user);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a user.
+     *
+     * @apiResource App\Http\Resources\User\UserResource
+     *
+     * @apiResourceModel App\Models\User
      */
-    public function show(User $user): JsonResponse
+    public function show(User $user)
     {
-        return ResponseFormatter::singleton('user', $user);
+        $user = QueryBuilder::for(User::where('id', $user->id))
+            ->allowedFields([
+                'id',
+                'sso_id',
+                'name',
+                'email_address',
+                'phone_number',
+                'student_id',
+                'major_id',
+                'links',
+                'start_date',
+                'end_date',
+                'is_member',
+                'is_extraordinary',
+                'created_at',
+                'updated_at',
+            ])
+            ->allowedIncludes([
+                'major',
+                'personas',
+                'groups',
+                'permissions',
+            ])
+            ->firstOrFail();
+
+        return new UserResource($user);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a user.
+     *
+     * @apiResource App\Http\Resources\User\UserResource
+     *
+     * @apiResourceModel App\Models\User
      */
-    public function update(UpdateUserRequest $request, User $user): JsonResponse
+    public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated());
 
-        return ResponseFormatter::singleton('user', $user);
+        return new UserResource($user);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a user.
+     *
+     * @apiResource App\Http\Resources\User\UserResource
+     *
+     * @apiResourceModel App\Models\User
      */
-    public function destroy(User $user): JsonResponse
+    public function destroy(User $user)
     {
         $user->delete();
 
-        return ResponseFormatter::singleton('user', $user);
+        return new UserResource($user);
     }
 }

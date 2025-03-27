@@ -2,42 +2,39 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectGallery\StoreProjectGalleryRequest;
 use App\Http\Requests\ProjectGallery\UpdateProjectGalleryRequest;
+use App\Http\Resources\ProjectGallery\ProjectGalleryCollection;
+use App\Http\Resources\ProjectGallery\ProjectGalleryResource;
 use App\Jobs\DeleteBlob;
 use App\Models\ProjectGallery;
-use App\Repositories\StorageRepository;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Project Galleries
+ * Manage project galleries.
+ */
 class ProjectGalleryController extends Controller
 {
-    public function __construct(
-        protected StorageRepository $storageRepository,
-    ) {
-        // $this->authorizeResource(ProjectGallery::class, 'project_gallery');
+    public function __construct()
+    {
+        $this->authorizeResource(ProjectGallery::class, 'project_gallery');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all project galleries.
+     *
+     * @apiResourceCollection App\Http\Resources\ProjectGallery\ProjectGalleryCollection
+     *
+     * @apiResourceModel App\Models\ProjectGallery
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $projectGalleries = QueryBuilder::for(ProjectGallery::class)
-            ->allowedFilters([
-                'title',
-                'description',
-                'url',
-                'image',
-            ])
-            ->defaultSorts([
-                '-created_at',
-                'id',
-            ])
-            ->allowedSorts([
+            ->allowedFields([
                 'id',
                 'title',
                 'description',
@@ -46,37 +43,75 @@ class ProjectGalleryController extends Controller
                 'created_at',
                 'updated_at',
             ])
-            ->paginate($request->query('per_page', 10));
+            ->allowedFilters([
+                'title',
+                'description',
+                'url',
+            ])
+            ->allowedSorts([
+                'id',
+                'title',
+                'created_at',
+                'updated_at',
+            ])
+            ->defaultSorts([
+                '-id',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('project_galleries', $projectGalleries);
+        return new ProjectGalleryCollection($projectGalleries);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a project gallery.
+     *
+     * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
+     *
+     * @apiResourceModel App\Models\ProjectGallery
      */
-    public function store(StoreProjectGalleryRequest $request): JsonResponse
+    public function store(StoreProjectGalleryRequest $request)
     {
-        $manifest = $this->storageRepository->store($request->file('image'), 'images/project-galleries');
+        $manifest = Storage::store($request->file('image'), 'images/project-galleries');
 
         $projectGallery = ProjectGallery::create(
             array_replace($request->validated(), ['image' => $manifest])
         );
 
-        return ResponseFormatter::singleton('project_gallery', $projectGallery, 201);
+        return new ProjectGalleryResource($projectGallery);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a project gallery.
+     *
+     * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
+     *
+     * @apiResourceModel App\Models\ProjectGallery
      */
-    public function show(ProjectGallery $projectGallery): JsonResponse
+    public function show(ProjectGallery $projectGallery)
     {
-        return ResponseFormatter::singleton('project_gallery', $projectGallery);
+        $projectGallery = QueryBuilder::for(ProjectGallery::where('id', $projectGallery->id))
+            ->allowedFields([
+                'id',
+                'title',
+                'description',
+                'url',
+                'image',
+                'created_at',
+                'updated_at',
+            ])
+            ->firstOrFail();
+
+        return new ProjectGalleryResource($projectGallery);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a project gallery.
+     *
+     * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
+     *
+     * @apiResourceModel App\Models\ProjectGallery
      */
-    public function update(UpdateProjectGalleryRequest $request, ProjectGallery $projectGallery): JsonResponse
+    public function update(UpdateProjectGalleryRequest $request, ProjectGallery $projectGallery)
     {
         $hasImage = $request->has('image');
 
@@ -85,7 +120,7 @@ class ProjectGalleryController extends Controller
 
             dispatch(new DeleteBlob($encodedManifest));
 
-            $manifest = $this->storageRepository->store($request->file('image'), 'images/project-galleries');
+            $manifest = Storage::store($request->file('image'), 'images/project-galleries');
         }
 
         $projectGallery->update(
@@ -94,13 +129,17 @@ class ProjectGalleryController extends Controller
                 : $request->validated()
         );
 
-        return ResponseFormatter::singleton('project_gallery', $projectGallery);
+        return new ProjectGalleryResource($projectGallery);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a project gallery.
+     *
+     * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
+     *
+     * @apiResourceModel App\Models\ProjectGallery
      */
-    public function destroy(ProjectGallery $projectGallery): JsonResponse
+    public function destroy(ProjectGallery $projectGallery)
     {
         $encodedManifest = $projectGallery->getRawOriginal('image');
 
@@ -108,6 +147,6 @@ class ProjectGalleryController extends Controller
 
         $projectGallery->delete();
 
-        return ResponseFormatter::singleton('project_gallery', $projectGallery);
+        return new ProjectGalleryResource($projectGallery);
     }
 }
