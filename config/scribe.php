@@ -351,10 +351,12 @@ INTRO
             Strategies\Headers\GetFromHeaderAttribute::class,
             Strategies\Headers\GetFromHeaderTag::class,
             [
-                'override',
+                Strategies\StaticData::class,
                 [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
+                    'data' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ],
                 ],
             ],
         ],
