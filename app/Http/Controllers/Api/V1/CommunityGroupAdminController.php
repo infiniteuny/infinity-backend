@@ -25,7 +25,7 @@ class CommunityGroupAdminController extends Controller
     }
 
     /**
-     * List all community group administrators.
+     * List all community group administrators
      *
      * @apiResourceCollection App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminCollection
      *
@@ -60,7 +60,7 @@ class CommunityGroupAdminController extends Controller
     }
 
     /**
-     * Create a community group administrator.
+     * Create a community group administrator
      *
      * @apiResource App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource
      *
@@ -74,7 +74,7 @@ class CommunityGroupAdminController extends Controller
     }
 
     /**
-     * Retrieve a community group administrator.
+     * Retrieve a community group administrator
      *
      * @apiResource App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource
      *
@@ -95,7 +95,7 @@ class CommunityGroupAdminController extends Controller
     }
 
     /**
-     * Update a community group administrator.
+     * Update a community group administrator
      *
      * @apiResource App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource
      *
@@ -109,7 +109,7 @@ class CommunityGroupAdminController extends Controller
     }
 
     /**
-     * Delete a community group administrator.
+     * Delete a community group administrator
      *
      * @apiResource App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource
      *

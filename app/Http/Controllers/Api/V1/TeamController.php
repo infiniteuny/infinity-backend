@@ -26,7 +26,7 @@ class TeamController extends Controller
     }
 
     /**
-     * List all teams.
+     * List all teams
      *
      * @apiResourceCollection App\Http\Resources\Team\TeamCollection
      *
@@ -86,7 +86,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Create a team.
+     * Create a team
      *
      * @apiResource App\Http\Resources\Team\TeamResource
      *
@@ -100,7 +100,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Retrieve a team.
+     * Retrieve a team
      *
      * @apiResource App\Http\Resources\Team\TeamResource
      *
@@ -129,7 +129,11 @@ class TeamController extends Controller
     }
 
     /**
-     * Update a team.
+     * Update a team
+     * 
+     * @apiResource App\Http\Resources\Team\TeamResource
+     * 
+     * @apiResourceModel App\Models\Team
      */
     public function update(UpdateTeamRequest $request, Team $team)
     {
@@ -139,7 +143,11 @@ class TeamController extends Controller
     }
 
     /**
-     * Delete a team.
+     * Delete a team
+     * 
+     * @apiResource App\Http\Resources\Team\TeamResource
+     * 
+     * @apiResourceModel App\Models\Team
      */
     public function destroy(Team $team)
     {

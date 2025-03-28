@@ -29,7 +29,7 @@ class ConfigController extends Controller
     }
 
     /**
-     * List all configurations.
+     * List all configurations
      *
      * @apiResourceCollection App\Http\Resources\Config\ConfigCollection
      *
@@ -93,7 +93,7 @@ class ConfigController extends Controller
     }
 
     /**
-     * Create a configuration.
+     * Create a configuration
      *
      * @apiResource App\Http\Resources\Config\ConfigResource
      *
@@ -107,7 +107,7 @@ class ConfigController extends Controller
     }
 
     /**
-     * Retrieve a configuration.
+     * Retrieve a configuration
      *
      * @apiResource App\Http\Resources\Config\ConfigResource
      *
@@ -137,7 +137,7 @@ class ConfigController extends Controller
     }
 
     /**
-     * Update a configuration.
+     * Update a configuration
      *
      * @apiResource App\Http\Resources\Config\ConfigResource
      *
@@ -151,7 +151,7 @@ class ConfigController extends Controller
     }
 
     /**
-     * Delete a configuration.
+     * Delete a configuration
      *
      * @apiResource App\Http\Resources\Config\ConfigResource
      *

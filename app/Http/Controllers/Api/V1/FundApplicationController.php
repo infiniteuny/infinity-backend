@@ -28,7 +28,7 @@ class FundApplicationController extends Controller
     }
 
     /**
-     * List all fund applications.
+     * List all fund applications
      *
      * @apiResourceCollection App\Http\Resources\FundApplication\FundApplicationCollection
      *
@@ -107,7 +107,7 @@ class FundApplicationController extends Controller
     }
 
     /**
-     * Create a fund application.
+     * Create a fund application
      *
      * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
      *
@@ -129,7 +129,7 @@ class FundApplicationController extends Controller
     }
 
     /**
-     * Retrieve a fund application.
+     * Retrieve a fund application
      *
      * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
      *
@@ -165,7 +165,7 @@ class FundApplicationController extends Controller
     }
 
     /**
-     * Update a fund application.
+     * Update a fund application
      *
      * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
      *
@@ -205,7 +205,7 @@ class FundApplicationController extends Controller
     }
 
     /**
-     * Delete a fund application.
+     * Delete a fund application
      *
      * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
      *

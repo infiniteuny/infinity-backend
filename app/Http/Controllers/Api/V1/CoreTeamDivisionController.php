@@ -25,7 +25,7 @@ class CoreTeamDivisionController extends Controller
     }
 
     /**
-     * List all core team divisions.
+     * List all core team divisions
      *
      * @apiResourceCollection App\Http\Resources\CoreTeamDivision\CoreTeamDivisionCollection
      *
@@ -64,7 +64,7 @@ class CoreTeamDivisionController extends Controller
     }
 
     /**
-     * Create a core team division.
+     * Create a core team division
      *
      * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
      *
@@ -78,7 +78,7 @@ class CoreTeamDivisionController extends Controller
     }
 
     /**
-     * Retrieve a core team division.
+     * Retrieve a core team division
      *
      * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
      *
@@ -100,7 +100,7 @@ class CoreTeamDivisionController extends Controller
     }
 
     /**
-     * Update a core team division.
+     * Update a core team division
      *
      * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
      *
@@ -114,7 +114,7 @@ class CoreTeamDivisionController extends Controller
     }
 
     /**
-     * Delete a core team division.
+     * Delete a core team division
      *
      * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
      *

@@ -25,7 +25,7 @@ class UserController extends Controller
     }
 
     /**
-     * List all users.
+     * List all users
      *
      * @apiResourceCollection App\Http\Resources\User\UserCollection
      *
@@ -93,7 +93,7 @@ class UserController extends Controller
     }
 
     /**
-     * Create a user.
+     * Create a user
      *
      * @apiResource App\Http\Resources\User\UserResource
      *
@@ -107,7 +107,7 @@ class UserController extends Controller
     }
 
     /**
-     * Retrieve a user.
+     * Retrieve a user
      *
      * @apiResource App\Http\Resources\User\UserResource
      *
@@ -144,7 +144,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update a user.
+     * Update a user
      *
      * @apiResource App\Http\Resources\User\UserResource
      *
@@ -158,7 +158,7 @@ class UserController extends Controller
     }
 
     /**
-     * Delete a user.
+     * Delete a user
      *
      * @apiResource App\Http\Resources\User\UserResource
      *

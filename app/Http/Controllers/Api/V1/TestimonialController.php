@@ -27,7 +27,7 @@ class TestimonialController extends Controller
     }
 
     /**
-     * List all testimonials.
+     * List all testimonials
      *
      * @apiResourceCollection App\Http\Resources\Testimonial\TestimonialCollection
      *
@@ -67,7 +67,7 @@ class TestimonialController extends Controller
     }
 
     /**
-     * Create a testimonial.
+     * Create a testimonial
      *
      * @apiResource App\Http\Resources\Testimonial\TestimonialResource
      *
@@ -85,7 +85,7 @@ class TestimonialController extends Controller
     }
 
     /**
-     * Retrieve a testimonial.
+     * Retrieve a testimonial
      *
      * @apiResource App\Http\Resources\Testimonial\TestimonialResource
      *
@@ -109,7 +109,7 @@ class TestimonialController extends Controller
     }
 
     /**
-     * Update a testimonial.
+     * Update a testimonial
      *
      * @apiResource App\Http\Resources\Testimonial\TestimonialResource
      *
@@ -137,7 +137,7 @@ class TestimonialController extends Controller
     }
 
     /**
-     * Delete a testimonial.
+     * Delete a testimonial
      *
      * @apiResource App\Http\Resources\Testimonial\TestimonialResource
      *

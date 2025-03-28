@@ -25,7 +25,7 @@ class CoreTeamController extends Controller
     }
 
     /**
-     * List all core teams.
+     * List all core teams
      *
      * @apiResourceCollection App\Http\Resources\CoreTeam\CoreTeamCollection
      *
@@ -60,7 +60,7 @@ class CoreTeamController extends Controller
     }
 
     /**
-     * Create a core team.
+     * Create a core team
      *
      * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
      *
@@ -74,7 +74,7 @@ class CoreTeamController extends Controller
     }
 
     /**
-     * Retrieve a core team.
+     * Retrieve a core team
      *
      * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
      *
@@ -95,7 +95,7 @@ class CoreTeamController extends Controller
     }
 
     /**
-     * Update a core team.
+     * Update a core team
      *
      * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
      *
@@ -109,7 +109,7 @@ class CoreTeamController extends Controller
     }
 
     /**
-     * Delete a core team.
+     * Delete a core team
      *
      * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
      *

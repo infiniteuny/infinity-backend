@@ -27,7 +27,7 @@ class CommunityGroupController extends Controller
     }
 
     /**
-     * List all community groups.
+     * List all community groups
      *
      * @apiResourceCollection App\Http\Resources\CommunityGroup\CommunityGroupCollection
      *
@@ -69,7 +69,7 @@ class CommunityGroupController extends Controller
     }
 
     /**
-     * Create a community group.
+     * Create a community group
      *
      * @apiResource App\Http\Resources\CommunityGroup\CommunityGroupResource
      *
@@ -87,7 +87,7 @@ class CommunityGroupController extends Controller
     }
 
     /**
-     * Retrieve a community group.
+     * Retrieve a community group
      *
      * @apiResource App\Http\Resources\CommunityGroup\CommunityGroupResource
      *
@@ -111,7 +111,7 @@ class CommunityGroupController extends Controller
     }
 
     /**
-     * Update a community group.
+     * Update a community group
      *
      * @apiResource App\Http\Resources\CommunityGroup\CommunityGroupResource
      *
@@ -139,11 +139,11 @@ class CommunityGroupController extends Controller
     }
 
     /**
-     * Delete a community group.
+     * Delete a community group
      *
      * @apiResource App\Http\Resources\CommunityGroup\CommunityGroupResource
      *
-     *  @apiResourceModel App\Models\CommunityGroup
+     * @apiResourceModel App\Models\CommunityGroup
      */
     public function destroy(CommunityGroup $communityGroup)
     {

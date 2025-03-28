@@ -25,7 +25,7 @@ class CompetitionOrganizerTypeController extends Controller
     }
 
     /**
-     * List all competition organizer types.
+     * List all competition organizer types
      *
      * @apiResourceCollection App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeCollection
      *
@@ -64,7 +64,7 @@ class CompetitionOrganizerTypeController extends Controller
     }
 
     /**
-     * Create a competition organizer type.
+     * Create a competition organizer type
      *
      * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
      *
@@ -78,7 +78,7 @@ class CompetitionOrganizerTypeController extends Controller
     }
 
     /**
-     * Retrieve a competition organizer type.
+     * Retrieve a competition organizer type
      *
      * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
      *
@@ -100,7 +100,7 @@ class CompetitionOrganizerTypeController extends Controller
     }
 
     /**
-     * Update a competition organizer type.
+     * Update a competition organizer type
      *
      * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
      *
@@ -114,7 +114,7 @@ class CompetitionOrganizerTypeController extends Controller
     }
 
     /**
-     * Delete a competition organizer type.
+     * Delete a competition organizer type
      *
      * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
      *

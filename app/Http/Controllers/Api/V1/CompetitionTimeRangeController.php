@@ -25,7 +25,7 @@ class CompetitionTimeRangeController extends Controller
     }
 
     /**
-     * List all competition time ranges.
+     * List all competition time ranges
      *
      * @apiResourceCollection App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeCollection
      *
@@ -64,7 +64,7 @@ class CompetitionTimeRangeController extends Controller
     }
 
     /**
-     * Create a competition time range.
+     * Create a competition time range
      *
      * @apiResource App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeResource
      *
@@ -78,7 +78,7 @@ class CompetitionTimeRangeController extends Controller
     }
 
     /**
-     * Retrieve a competition time range.
+     * Retrieve a competition time range
      *
      * @apiResource App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeResource
      *
@@ -110,7 +110,7 @@ class CompetitionTimeRangeController extends Controller
     }
 
     /**
-     * Delete a competition time range.
+     * Delete a competition time range
      *
      * @apiResource App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeResource
      *

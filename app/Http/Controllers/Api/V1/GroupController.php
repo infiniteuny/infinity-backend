@@ -25,7 +25,7 @@ class GroupController extends Controller
     }
 
     /**
-     * List all groups.
+     * List all groups
      *
      * @apiResourceCollection App\Http\Resources\Group\GroupCollection
      *
@@ -63,7 +63,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Create a group.
+     * Create a group
      *
      * @apiResource App\Http\Resources\Group\GroupResource
      *
@@ -77,7 +77,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Retrieve a group.
+     * Retrieve a group
      *
      * @apiResource App\Http\Resources\Group\GroupResource
      *
@@ -99,7 +99,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Update a group.
+     * Update a group
      *
      * @apiResource App\Http\Resources\Group\GroupResource
      *
@@ -113,7 +113,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Delete a group.
+     * Delete a group
      *
      * @apiResource App\Http\Resources\Group\GroupResource
      *

@@ -25,7 +25,7 @@ class CompetitionScaleController extends Controller
     }
 
     /**
-     * List all competition scales.
+     * List all competition scales
      *
      * @apiResourceCollection App\Http\Resources\CompetitionScale\CompetitionScaleCollection
      *
@@ -64,7 +64,7 @@ class CompetitionScaleController extends Controller
     }
 
     /**
-     * Create a competition scale.
+     * Create a competition scale
      *
      * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
      *
@@ -78,7 +78,7 @@ class CompetitionScaleController extends Controller
     }
 
     /**
-     * Retrieve a competition scale.
+     * Retrieve a competition scale
      *
      * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
      *
@@ -100,7 +100,7 @@ class CompetitionScaleController extends Controller
     }
 
     /**
-     * Update a competition scale.
+     * Update a competition scale
      *
      * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
      *
@@ -114,7 +114,7 @@ class CompetitionScaleController extends Controller
     }
 
     /**
-     * Delete a competition scale.
+     * Delete a competition scale
      *
      * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
      *

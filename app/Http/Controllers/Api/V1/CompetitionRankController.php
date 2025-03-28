@@ -25,7 +25,7 @@ class CompetitionRankController extends Controller
     }
 
     /**
-     * List all competition ranks.
+     * List all competition ranks
      *
      * @apiResourceCollection App\Http\Resources\CompetitionRank\CompetitionRankCollection
      *
@@ -64,7 +64,7 @@ class CompetitionRankController extends Controller
     }
 
     /**
-     * Create a competition rank.
+     * Create a competition rank
      *
      * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
      *
@@ -78,7 +78,7 @@ class CompetitionRankController extends Controller
     }
 
     /**
-     * Retrieve a competition rank.
+     * Retrieve a competition rank
      *
      * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
      *
@@ -100,7 +100,7 @@ class CompetitionRankController extends Controller
     }
 
     /**
-     * Update a competition rank.
+     * Update a competition rank
      *
      * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
      *
@@ -114,7 +114,7 @@ class CompetitionRankController extends Controller
     }
 
     /**
-     * Delete a competition rank.
+     * Delete a competition rank
      *
      * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
      *

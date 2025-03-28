@@ -28,7 +28,7 @@ class CompetitionController extends Controller
     }
 
     /**
-     * List all competitions.
+     * List all competitions
      *
      * @apiResourceCollection App\Http\Resources\Competition\CompetitionCollection
      *
@@ -77,7 +77,7 @@ class CompetitionController extends Controller
     }
 
     /**
-     * Create a competition.
+     * Create a competition
      *
      * @apiResource App\Http\Resources\Competition\CompetitionResource
      *
@@ -95,7 +95,7 @@ class CompetitionController extends Controller
     }
 
     /**
-     * Retrieve a competition.
+     * Retrieve a competition
      *
      * @apiResource App\Http\Resources\Competition\CompetitionResource
      *
@@ -124,7 +124,7 @@ class CompetitionController extends Controller
     }
 
     /**
-     * Update a competition.
+     * Update a competition
      *
      * @apiResource App\Http\Resources\Competition\CompetitionResource
      *
@@ -152,7 +152,7 @@ class CompetitionController extends Controller
     }
 
     /**
-     * Delete a competition.
+     * Delete a competition
      *
      * @apiResource App\Http\Resources\Competition\CompetitionResource
      *

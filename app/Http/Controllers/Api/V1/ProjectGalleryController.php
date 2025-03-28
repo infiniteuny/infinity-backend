@@ -25,7 +25,7 @@ class ProjectGalleryController extends Controller
     }
 
     /**
-     * List all project galleries.
+     * List all project galleries
      *
      * @apiResourceCollection App\Http\Resources\ProjectGallery\ProjectGalleryCollection
      *
@@ -63,7 +63,7 @@ class ProjectGalleryController extends Controller
     }
 
     /**
-     * Create a project gallery.
+     * Create a project gallery
      *
      * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
      *
@@ -81,7 +81,7 @@ class ProjectGalleryController extends Controller
     }
 
     /**
-     * Retrieve a project gallery.
+     * Retrieve a project gallery
      *
      * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
      *
@@ -105,7 +105,7 @@ class ProjectGalleryController extends Controller
     }
 
     /**
-     * Update a project gallery.
+     * Update a project gallery
      *
      * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
      *
@@ -133,7 +133,7 @@ class ProjectGalleryController extends Controller
     }
 
     /**
-     * Delete a project gallery.
+     * Delete a project gallery
      *
      * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
      *

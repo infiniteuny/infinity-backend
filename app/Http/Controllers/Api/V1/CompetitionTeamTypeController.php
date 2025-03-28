@@ -25,7 +25,7 @@ class CompetitionTeamTypeController extends Controller
     }
 
     /**
-     * List all competition team types.
+     * List all competition team types
      *
      * @apiResourceCollection App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeCollection
      *
@@ -64,7 +64,7 @@ class CompetitionTeamTypeController extends Controller
     }
 
     /**
-     * Create a competition team type.
+     * Create a competition team type
      *
      * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
      *
@@ -78,7 +78,7 @@ class CompetitionTeamTypeController extends Controller
     }
 
     /**
-     * Retrieve a competition team type.
+     * Retrieve a competition team type
      *
      * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
      *
@@ -100,7 +100,7 @@ class CompetitionTeamTypeController extends Controller
     }
 
     /**
-     * Update a competition team type.
+     * Update a competition team type
      *
      * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
      *
@@ -114,7 +114,7 @@ class CompetitionTeamTypeController extends Controller
     }
 
     /**
-     * Delete a competition team type.
+     * Delete a competition team type
      *
      * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
      *

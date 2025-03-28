@@ -25,7 +25,7 @@ class TokenController extends Controller
     }
 
     /**
-     * List all tokens.
+     * List all tokens
      *
      * @apiResourceCollection App\Http\Resources\Token\TokenCollection
      *
@@ -77,7 +77,7 @@ class TokenController extends Controller
     }
 
     /**
-     * Retrieve a token.
+     * Retrieve a token
      *
      * @apiResource App\Http\Resources\Token\TokenResource
      *
@@ -103,7 +103,7 @@ class TokenController extends Controller
     }
 
     /**
-     * Delete a token.
+     * Delete a token
      *
      * @apiResource App\Http\Resources\Token\TokenResource
      *

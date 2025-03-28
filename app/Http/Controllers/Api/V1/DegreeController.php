@@ -25,7 +25,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * List all degrees.
+     * List all degrees
      *
      * @apiResourceCollection App\Http\Resources\Degree\DegreeCollection
      *
@@ -63,7 +63,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Create a degree.
+     * Create a degree
      *
      * @apiResource App\Http\Resources\Degree\DegreeResource
      *
@@ -77,7 +77,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Retrieve a degree.
+     * Retrieve a degree
      *
      * @apiResource App\Http\Resources\Degree\DegreeResource
      *
@@ -99,7 +99,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Update a degree.
+     * Update a degree
      *
      * @apiResource App\Http\Resources\Degree\DegreeResource
      *
@@ -113,7 +113,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Delete a degree.
+     * Delete a degree
      *
      * @apiResource App\Http\Resources\Degree\DegreeResource
      *

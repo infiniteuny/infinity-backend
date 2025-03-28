@@ -25,7 +25,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * List all permissions.
+     * List all permissions
      *
      * @apiResourceCollection App\Http\Resources\Permission\PermissionCollection
      *
@@ -63,7 +63,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * Create a permission.
+     * Create a permission
      *
      * @apiResource App\Http\Resources\Permission\PermissionResource
      *
@@ -77,7 +77,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * Retrieve a permission.
+     * Retrieve a permission
      *
      * @apiResource App\Http\Resources\Permission\PermissionResource
      *
@@ -99,7 +99,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * Update a permission.
+     * Update a permission
      *
      * @apiResource App\Http\Resources\Permission\PermissionResource
      *
@@ -113,7 +113,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * Delete a permission.
+     * Delete a permission
      *
      * @apiResource App\Http\Resources\Permission\PermissionResource
      *

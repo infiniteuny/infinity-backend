@@ -25,7 +25,7 @@ class PersonaController extends Controller
     }
 
     /**
-     * List all personas.
+     * List all personas
      *
      * @apiResourceCollection App\Http\Resources\Persona\PersonaCollection
      *
@@ -67,7 +67,7 @@ class PersonaController extends Controller
     }
 
     /**
-     * Create a persona.
+     * Create a persona
      *
      * @apiResource App\Http\Resources\Persona\PersonaResource
      *
@@ -81,7 +81,7 @@ class PersonaController extends Controller
     }
 
     /**
-     * Retrieve a persona.
+     * Retrieve a persona
      *
      * @apiResource App\Http\Resources\Persona\PersonaResource
      *
@@ -105,7 +105,7 @@ class PersonaController extends Controller
     }
 
     /**
-     * Update a persona.
+     * Update a persona
      *
      * @apiResource App\Http\Resources\Persona\PersonaResource
      *
@@ -119,7 +119,7 @@ class PersonaController extends Controller
     }
 
     /**
-     * Delete a persona.
+     * Delete a persona
      *
      * @apiResource App\Http\Resources\Persona\PersonaResource
      *

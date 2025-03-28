@@ -28,7 +28,7 @@ class AchievementController extends Controller
     }
 
     /**
-     * List all achievements.
+     * List all achievements
      *
      * @apiResourceCollection App\Http\Resources\Achievement\AchievementCollection
      *
@@ -121,7 +121,7 @@ class AchievementController extends Controller
     }
 
     /**
-     * Create an achievement.
+     * Create an achievement
      *
      * @apiResource App\Http\Resources\Achievement\AchievementResource
      *
@@ -139,7 +139,7 @@ class AchievementController extends Controller
     }
 
     /**
-     * Retrieve an achievement.
+     * Retrieve an achievement
      *
      * @apiResource App\Http\Resources\Achievement\AchievementResource
      *
@@ -182,7 +182,7 @@ class AchievementController extends Controller
     }
 
     /**
-     * Update an achievement.
+     * Update an achievement
      *
      * @apiResource App\Http\Resources\Achievement\AchievementResource
      *
@@ -210,7 +210,7 @@ class AchievementController extends Controller
     }
 
     /**
-     * Delete an achievement.
+     * Delete an achievement
      *
      * @apiResource App\Http\Resources\Achievement\AchievementResource
      *

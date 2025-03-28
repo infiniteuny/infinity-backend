@@ -25,7 +25,7 @@ class FacultyController extends Controller
     }
 
     /**
-     * List all faculties.
+     * List all faculties
      *
      * @apiResourceCollection App\Http\Resources\Faculty\FacultyCollection
      *
@@ -63,7 +63,7 @@ class FacultyController extends Controller
     }
 
     /**
-     * Create a faculty.
+     * Create a faculty
      *
      * @apiResource App\Http\Resources\Faculty\FacultyResource
      *
@@ -77,7 +77,7 @@ class FacultyController extends Controller
     }
 
     /**
-     * Retrieve a faculty.
+     * Retrieve a faculty
      *
      * @apiResource App\Http\Resources\Faculty\FacultyResource
      *
@@ -99,7 +99,7 @@ class FacultyController extends Controller
     }
 
     /**
-     * Update a faculty.
+     * Update a faculty
      *
      * @apiResource App\Http\Resources\Faculty\FacultyResource
      *
@@ -113,7 +113,7 @@ class FacultyController extends Controller
     }
 
     /**
-     * Delete a faculty.
+     * Delete a faculty
      *
      * @apiResource App\Http\Resources\Faculty\FacultyResource
      *

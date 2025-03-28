@@ -25,7 +25,7 @@ class MajorController extends Controller
     }
 
     /**
-     * List all majors.
+     * List all majors
      *
      * @apiResourceCollection App\Http\Resources\Major\MajorCollection
      *
@@ -73,7 +73,7 @@ class MajorController extends Controller
     }
 
     /**
-     * Create a major.
+     * Create a major
      *
      * @apiResource App\Http\Resources\Major\MajorResource
      *
@@ -87,7 +87,7 @@ class MajorController extends Controller
     }
 
     /**
-     * Retrieve a major.
+     * Retrieve a major
      *
      * @apiResource App\Http\Resources\Major\MajorResource
      *
@@ -115,7 +115,7 @@ class MajorController extends Controller
     }
 
     /**
-     * Update a major.
+     * Update a major
      *
      * @apiResource App\Http\Resources\Major\MajorResource
      *
@@ -129,7 +129,7 @@ class MajorController extends Controller
     }
 
     /**
-     * Delete a major.
+     * Delete a major
      *
      * @apiResource App\Http\Resources\Major\MajorResource
      *
