@@ -29,7 +29,7 @@ class GroupController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Group\GroupCollection
      *
-     * @apiResourceModel App\Models\Group
+     * @apiResourceModel App\Models\Group paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -65,7 +65,7 @@ class GroupController extends Controller
     /**
      * Create a group
      *
-     * @apiResource App\Http\Resources\Group\GroupResource
+     * @apiResource App\Http\Resources\Group\GroupResource status=201
      *
      * @apiResourceModel App\Models\Group
      */

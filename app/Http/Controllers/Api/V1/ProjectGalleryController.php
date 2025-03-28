@@ -29,7 +29,7 @@ class ProjectGalleryController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\ProjectGallery\ProjectGalleryCollection
      *
-     * @apiResourceModel App\Models\ProjectGallery
+     * @apiResourceModel App\Models\ProjectGallery paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -65,7 +65,7 @@ class ProjectGalleryController extends Controller
     /**
      * Create a project gallery
      *
-     * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
+     * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource status=201
      *
      * @apiResourceModel App\Models\ProjectGallery
      */

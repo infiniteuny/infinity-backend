@@ -29,7 +29,7 @@ class TokenController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Token\TokenCollection
      *
-     * @apiResourceModel App\Models\Token
+     * @apiResourceModel App\Models\Token paginate=10,cursor
      */
     public function index(Request $request)
     {

@@ -32,7 +32,7 @@ class FundApplicationController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\FundApplication\FundApplicationCollection
      *
-     * @apiResourceModel App\Models\FundApplication
+     * @apiResourceModel App\Models\FundApplication paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -109,7 +109,7 @@ class FundApplicationController extends Controller
     /**
      * Create a fund application
      *
-     * @apiResource App\Http\Resources\FundApplication\FundApplicationResource
+     * @apiResource App\Http\Resources\FundApplication\FundApplicationResource status=201
      *
      * @apiResourceModel App\Models\FundApplication
      */

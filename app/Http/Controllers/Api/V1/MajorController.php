@@ -29,7 +29,7 @@ class MajorController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Major\MajorCollection
      *
-     * @apiResourceModel App\Models\Major
+     * @apiResourceModel App\Models\Major paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -75,7 +75,7 @@ class MajorController extends Controller
     /**
      * Create a major
      *
-     * @apiResource App\Http\Resources\Major\MajorResource
+     * @apiResource App\Http\Resources\Major\MajorResource status=201
      *
      * @apiResourceModel App\Models\Major
      */

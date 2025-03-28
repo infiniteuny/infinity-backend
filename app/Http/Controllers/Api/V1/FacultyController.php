@@ -29,7 +29,7 @@ class FacultyController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Faculty\FacultyCollection
      *
-     * @apiResourceModel App\Models\Faculty
+     * @apiResourceModel App\Models\Faculty paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -65,7 +65,7 @@ class FacultyController extends Controller
     /**
      * Create a faculty
      *
-     * @apiResource App\Http\Resources\Faculty\FacultyResource
+     * @apiResource App\Http\Resources\Faculty\FacultyResource status=201
      *
      * @apiResourceModel App\Models\Faculty
      */

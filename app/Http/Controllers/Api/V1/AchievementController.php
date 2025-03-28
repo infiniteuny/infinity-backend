@@ -32,7 +32,7 @@ class AchievementController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Achievement\AchievementCollection
      *
-     * @apiResourceModel App\Models\Achievement
+     * @apiResourceModel App\Models\Achievement paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -123,7 +123,7 @@ class AchievementController extends Controller
     /**
      * Create an achievement
      *
-     * @apiResource App\Http\Resources\Achievement\AchievementResource
+     * @apiResource App\Http\Resources\Achievement\AchievementResource status=201
      *
      * @apiResourceModel App\Models\Achievement
      */

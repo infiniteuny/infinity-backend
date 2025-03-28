@@ -29,7 +29,7 @@ class CommunityGroupAdminController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminCollection
      *
-     * @apiResourceModel App\Models\CommunityGroupAdmin
+     * @apiResourceModel App\Models\CommunityGroupAdmin paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -62,7 +62,7 @@ class CommunityGroupAdminController extends Controller
     /**
      * Create a community group administrator
      *
-     * @apiResource App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource
+     * @apiResource App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource status=201
      *
      * @apiResourceModel App\Models\CommunityGroupAdmin
      */

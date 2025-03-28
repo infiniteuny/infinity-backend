@@ -29,7 +29,7 @@ class PersonaController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Persona\PersonaCollection
      *
-     * @apiResourceModel App\Models\Persona
+     * @apiResourceModel App\Models\Persona paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -69,7 +69,7 @@ class PersonaController extends Controller
     /**
      * Create a persona
      *
-     * @apiResource App\Http\Resources\Persona\PersonaResource
+     * @apiResource App\Http\Resources\Persona\PersonaResource status=201
      *
      * @apiResourceModel App\Models\Persona
      */

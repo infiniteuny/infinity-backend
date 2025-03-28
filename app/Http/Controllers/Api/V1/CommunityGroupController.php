@@ -31,7 +31,7 @@ class CommunityGroupController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\CommunityGroup\CommunityGroupCollection
      *
-     * @apiResourceModel App\Models\CommunityGroup
+     * @apiResourceModel App\Models\CommunityGroup paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -71,7 +71,7 @@ class CommunityGroupController extends Controller
     /**
      * Create a community group
      *
-     * @apiResource App\Http\Resources\CommunityGroup\CommunityGroupResource
+     * @apiResource App\Http\Resources\CommunityGroup\CommunityGroupResource status=201
      *
      * @apiResourceModel App\Models\CommunityGroup
      */

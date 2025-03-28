@@ -29,7 +29,7 @@ class DegreeController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Degree\DegreeCollection
      *
-     * @apiResourceModel App\Models\Degree
+     * @apiResourceModel App\Models\Degree paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -65,7 +65,7 @@ class DegreeController extends Controller
     /**
      * Create a degree
      *
-     * @apiResource App\Http\Resources\Degree\DegreeResource
+     * @apiResource App\Http\Resources\Degree\DegreeResource status=201
      *
      * @apiResourceModel App\Models\Degree
      */

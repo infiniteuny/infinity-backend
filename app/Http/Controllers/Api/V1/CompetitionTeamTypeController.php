@@ -29,7 +29,7 @@ class CompetitionTeamTypeController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeCollection
      *
-     * @apiResourceModel App\Models\CompetitionTeamType
+     * @apiResourceModel App\Models\CompetitionTeamType paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -66,7 +66,7 @@ class CompetitionTeamTypeController extends Controller
     /**
      * Create a competition team type
      *
-     * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource
+     * @apiResource App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource status=201
      *
      * @apiResourceModel App\Models\CompetitionTeamType
      */

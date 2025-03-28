@@ -29,7 +29,7 @@ class CompetitionScaleController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\CompetitionScale\CompetitionScaleCollection
      *
-     * @apiResourceModel App\Models\CompetitionScale
+     * @apiResourceModel App\Models\CompetitionScale paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -66,7 +66,7 @@ class CompetitionScaleController extends Controller
     /**
      * Create a competition scale
      *
-     * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource
+     * @apiResource App\Http\Resources\CompetitionScale\CompetitionScaleResource status=201
      *
      * @apiResourceModel App\Models\CompetitionScale
      */

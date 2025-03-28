@@ -30,7 +30,7 @@ class TeamController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Team\TeamCollection
      *
-     * @apiResourceModel App\Models\Team
+     * @apiResourceModel App\Models\Team paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -88,7 +88,7 @@ class TeamController extends Controller
     /**
      * Create a team
      *
-     * @apiResource App\Http\Resources\Team\TeamResource
+     * @apiResource App\Http\Resources\Team\TeamResource status=201
      *
      * @apiResourceModel App\Models\Team
      */
@@ -130,9 +130,9 @@ class TeamController extends Controller
 
     /**
      * Update a team
-     * 
+     *
      * @apiResource App\Http\Resources\Team\TeamResource
-     * 
+     *
      * @apiResourceModel App\Models\Team
      */
     public function update(UpdateTeamRequest $request, Team $team)
@@ -144,9 +144,9 @@ class TeamController extends Controller
 
     /**
      * Delete a team
-     * 
+     *
      * @apiResource App\Http\Resources\Team\TeamResource
-     * 
+     *
      * @apiResourceModel App\Models\Team
      */
     public function destroy(Team $team)

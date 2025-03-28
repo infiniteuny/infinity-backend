@@ -29,7 +29,7 @@ class CoreTeamDivisionController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\CoreTeamDivision\CoreTeamDivisionCollection
      *
-     * @apiResourceModel App\Models\CoreTeamDivision
+     * @apiResourceModel App\Models\CoreTeamDivision paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -66,7 +66,7 @@ class CoreTeamDivisionController extends Controller
     /**
      * Create a core team division
      *
-     * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
+     * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource status=201
      *
      * @apiResourceModel App\Models\CoreTeamDivision
      */

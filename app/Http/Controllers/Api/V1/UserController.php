@@ -29,7 +29,7 @@ class UserController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\User\UserCollection
      *
-     * @apiResourceModel App\Models\User
+     * @apiResourceModel App\Models\User paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -95,7 +95,7 @@ class UserController extends Controller
     /**
      * Create a user
      *
-     * @apiResource App\Http\Resources\User\UserResource
+     * @apiResource App\Http\Resources\User\UserResource status=201
      *
      * @apiResourceModel App\Models\User
      */

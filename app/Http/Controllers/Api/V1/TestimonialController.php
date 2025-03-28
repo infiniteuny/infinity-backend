@@ -31,7 +31,7 @@ class TestimonialController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Testimonial\TestimonialCollection
      *
-     * @apiResourceModel App\Models\Testimonial
+     * @apiResourceModel App\Models\Testimonial paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -69,7 +69,7 @@ class TestimonialController extends Controller
     /**
      * Create a testimonial
      *
-     * @apiResource App\Http\Resources\Testimonial\TestimonialResource
+     * @apiResource App\Http\Resources\Testimonial\TestimonialResource status=201
      *
      * @apiResourceModel App\Models\Testimonial
      */

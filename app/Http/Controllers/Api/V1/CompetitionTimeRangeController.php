@@ -29,7 +29,7 @@ class CompetitionTimeRangeController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeCollection
      *
-     * @apiResourceModel App\Models\CompetitionTimeRange
+     * @apiResourceModel App\Models\CompetitionTimeRange paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -66,7 +66,7 @@ class CompetitionTimeRangeController extends Controller
     /**
      * Create a competition time range
      *
-     * @apiResource App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeResource
+     * @apiResource App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeResource status=201
      *
      * @apiResourceModel App\Models\CompetitionTimeRange
      */

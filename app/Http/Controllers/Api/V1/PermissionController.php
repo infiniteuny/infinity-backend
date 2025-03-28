@@ -29,7 +29,7 @@ class PermissionController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Permission\PermissionCollection
      *
-     * @apiResourceModel App\Models\Permission
+     * @apiResourceModel App\Models\Permission paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -65,7 +65,7 @@ class PermissionController extends Controller
     /**
      * Create a permission
      *
-     * @apiResource App\Http\Resources\Permission\PermissionResource
+     * @apiResource App\Http\Resources\Permission\PermissionResource status=201
      *
      * @apiResourceModel App\Models\Permission
      */

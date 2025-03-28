@@ -29,7 +29,7 @@ class CompetitionOrganizerTypeController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeCollection
      *
-     * @apiResourceModel App\Models\CompetitionOrganizerType
+     * @apiResourceModel App\Models\CompetitionOrganizerType paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -66,7 +66,7 @@ class CompetitionOrganizerTypeController extends Controller
     /**
      * Create a competition organizer type
      *
-     * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource
+     * @apiResource App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource status=201
      *
      * @apiResourceModel App\Models\CompetitionOrganizerType
      */

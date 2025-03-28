@@ -33,7 +33,7 @@ class ConfigController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Config\ConfigCollection
      *
-     * @apiResourceModel App\Models\Config
+     * @apiResourceModel App\Models\Config paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -95,7 +95,7 @@ class ConfigController extends Controller
     /**
      * Create a configuration
      *
-     * @apiResource App\Http\Resources\Config\ConfigResource
+     * @apiResource App\Http\Resources\Config\ConfigResource status=201
      *
      * @apiResourceModel App\Models\Config
      */

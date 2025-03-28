@@ -29,7 +29,7 @@ class CompetitionRankController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\CompetitionRank\CompetitionRankCollection
      *
-     * @apiResourceModel App\Models\CompetitionRank
+     * @apiResourceModel App\Models\CompetitionRank paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -66,7 +66,7 @@ class CompetitionRankController extends Controller
     /**
      * Create a competition rank
      *
-     * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource
+     * @apiResource App\Http\Resources\CompetitionRank\CompetitionRankResource status=201
      *
      * @apiResourceModel App\Models\CompetitionRank
      */

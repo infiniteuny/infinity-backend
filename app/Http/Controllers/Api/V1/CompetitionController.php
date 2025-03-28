@@ -32,7 +32,7 @@ class CompetitionController extends Controller
      *
      * @apiResourceCollection App\Http\Resources\Competition\CompetitionCollection
      *
-     * @apiResourceModel App\Models\Competition
+     * @apiResourceModel App\Models\Competition paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -79,7 +79,7 @@ class CompetitionController extends Controller
     /**
      * Create a competition
      *
-     * @apiResource App\Http\Resources\Competition\CompetitionResource
+     * @apiResource App\Http\Resources\Competition\CompetitionResource status=201
      *
      * @apiResourceModel App\Models\Competition
      */
