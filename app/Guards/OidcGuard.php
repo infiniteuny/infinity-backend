@@ -72,7 +72,7 @@ class OidcGuard implements Guard
         }
 
         // Check if the token is already used to authenticate before
-        $token = Token::where('external_id', $tokenPayload['uid'])->first();
+        $token = Token::withTrashed()->where('external_id', $tokenPayload['uid'])->first();
 
         // If the token is not found in the database, check if it is still valid
         if (is_null($token)) {
@@ -90,6 +90,10 @@ class OidcGuard implements Guard
                     return false;
                 }
             } catch (Throwable $e) {
+                return false;
+            }
+        } else {
+            if ($token->trashed()) {
                 return false;
             }
         }

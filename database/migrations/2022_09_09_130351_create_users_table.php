@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('external_id')->unique();
             $table->foreignUuid('user_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
             $table->timestamp('last_used_at');
+            $table->softDeletes('deleted_at');
             $table->timestamp('created_at');
             $table->timestamp('expires_at');
         });
