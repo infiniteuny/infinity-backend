@@ -38,7 +38,9 @@ class CoreTeam extends Model
             'user_id',
         )
             ->using(CoreTeamMember::class)
+            ->as('membership')
             ->withPivot([
+                'id',
                 'core_team_division_id',
                 'photo',
                 'animation',

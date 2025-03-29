@@ -56,6 +56,10 @@ class Team extends Model
             'user_id',
         )
             ->using(TeamMember::class)
+            ->as('membership')
+            ->withPivot([
+                'id',
+            ])
             ->withTimestamps();
     }
 

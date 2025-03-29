@@ -23,6 +23,10 @@ class Permission extends Model implements PermissionContract
             app(PermissionRegistrar::class)->pivotPermission,
             config('permission.column_names.model_morph_key')
         )
-            ->using(UserPermission::class);
+            ->using(UserPermission::class)
+            ->as('entitlement')
+            ->withPivot([
+                'id',
+            ]);
     }
 }

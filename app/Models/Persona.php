@@ -52,6 +52,10 @@ class Persona extends Model
             'user_id',
         )
             ->using(UserPersona::class)
+            ->as('entitlement')
+            ->withPivot([
+                'id',
+            ])
             ->withTimestamps();
     }
 }

@@ -77,6 +77,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'persona_id',
         )
             ->using(UserPersona::class)
+            ->as('entitlement')
+            ->withPivot([
+                'id',
+            ])
             ->withTimestamps();
     }
 
@@ -89,6 +93,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_id',
         )
             ->using(TeamMember::class)
+            ->as('membership')
+            ->withPivot([
+                'id',
+            ])
             ->withTimestamps();
     }
 
@@ -101,7 +109,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'core_team_id',
         )
             ->using(CoreTeamMember::class)
+            ->as('membership')
             ->withPivot([
+                'id',
                 'core_team_division_id',
                 'photo',
                 'animation',
@@ -118,6 +128,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'community_group_id',
         )
             ->using(CommunityGroupMember::class)
+            ->as('membership')
+            ->withPivot([
+                'id',
+            ])
             ->withTimestamps();
     }
 
@@ -130,7 +144,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'community_group_admin_id',
         )
             ->using(CommunityGroupAdminMember::class)
+            ->as('membership')
             ->withPivot([
+                'id',
                 'community_group_id',
                 'photo',
                 'animation',

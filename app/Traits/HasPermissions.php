@@ -19,7 +19,11 @@ trait HasPermissions
             config('permission.column_names.model_morph_key'),
             app(PermissionRegistrar::class)->pivotPermission
         )
-            ->using(UserPermission::class);
+            ->using(UserPermission::class)
+            ->as('entitlement')
+            ->withPivot([
+                'id',
+            ]);
 
         if (! app(PermissionRegistrar::class)->teams) {
             return $relation;

@@ -7,7 +7,6 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CoreTeamDivision extends Model
 {
@@ -29,10 +28,5 @@ class CoreTeamDivision extends Model
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format(DATE_ATOM);
-    }
-
-    public function coreTeamMembers(): HasMany
-    {
-        return $this->hasMany(CoreTeamMember::class);
     }
 }

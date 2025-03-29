@@ -52,6 +52,10 @@ class CommunityGroup extends Model
             'user_id',
         )
             ->using(CommunityGroupMember::class)
+            ->as('membership')
+            ->withPivot([
+                'id',
+            ])
             ->withTimestamps();
     }
 }

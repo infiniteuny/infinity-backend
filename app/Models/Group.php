@@ -22,6 +22,10 @@ class Group extends Model implements RoleContract
             app(PermissionRegistrar::class)->pivotRole,
             config('permission.column_names.model_morph_key')
         )
-            ->using(UserGroup::class);
+            ->using(UserGroup::class)
+            ->as('entitlement')
+            ->withPivot([
+                'id',
+            ]);
     }
 }

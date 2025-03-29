@@ -25,7 +25,11 @@ trait HasGroups
             config('permission.column_names.model_morph_key'),
             app(PermissionRegistrar::class)->pivotRole
         )
-            ->using(UserGroup::class);
+            ->using(UserGroup::class)
+            ->as('entitlement')
+            ->withPivot([
+                'id',
+            ]);
 
         if (! app(PermissionRegistrar::class)->teams) {
             return $relation;

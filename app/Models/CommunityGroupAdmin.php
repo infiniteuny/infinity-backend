@@ -38,7 +38,9 @@ class CommunityGroupAdmin extends Model
             'user_id',
         )
             ->using(CommunityGroupAdminMember::class)
+            ->as('membership')
             ->withPivot([
+                'id',
                 'community_group_id',
                 'photo',
                 'animation',
