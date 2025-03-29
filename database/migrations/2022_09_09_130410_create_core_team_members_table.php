@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('photo');
             $table->string('animation')->nullable();
             $table->timestamps();
+
+            $table->unique(['user_id', 'core_team_id']);
         });
     }
 

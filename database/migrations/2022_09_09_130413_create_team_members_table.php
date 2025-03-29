@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignUuid('user_id')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('team_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
             $table->timestamps();
+
+            $table->unique(['user_id', 'team_id']);
         });
     }
 

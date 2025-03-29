@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('photo');
             $table->string('animation')->nullable();
             $table->timestamps();
+
+            $table->unique(['user_id', 'community_group_admin_id', 'community_group_id'], 'community_group_admin_members_user_admin_group_unique');
         });
     }
 
