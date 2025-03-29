@@ -28,7 +28,7 @@ return new class extends Migration
         });
         Schema::create('tokens', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('external_id')->unique();
+            $table->string('sso_id')->unique();
             $table->foreignUuid('user_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
             $table->timestamp('last_used_at');
             $table->softDeletes('deleted_at');

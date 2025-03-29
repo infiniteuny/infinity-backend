@@ -38,7 +38,7 @@ class TokenController extends Controller
             ->allowedFields([
                 'id',
                 'user_id',
-                'external_id',
+                'sso_id',
                 'last_used_at',
                 'created_at',
                 'expires_at',
@@ -48,7 +48,7 @@ class TokenController extends Controller
             ])
             ->allowedFilters([
                 AllowedFilter::exact('user_id'),
-                'external_id',
+                'sso_id',
                 AllowedFilter::operator('last_used_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
@@ -56,7 +56,7 @@ class TokenController extends Controller
             ->allowedSorts([
                 'id',
                 'user_id',
-                'external_id',
+                'sso_id',
                 'last_used_at',
                 'created_at',
                 'expires_at',
@@ -89,7 +89,7 @@ class TokenController extends Controller
             ->allowedFields([
                 'id',
                 'user_id',
-                'external_id',
+                'sso_id',
                 'last_used_at',
                 'created_at',
                 'expires_at',

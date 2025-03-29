@@ -71,18 +71,40 @@ class OidcGuard implements Guard
             return false;
         }
 
-        // Check if the token is already used to authenticate before
-        $token = Token::withTrashed()->where('external_id', $tokenPayload['uid'])->first();
+        // Check if the token subject exists in the users database
+        $user = $this->provider->retrieveByCredentials(['sso_id' => $tokenPayload['sub']]);
 
-        // If the token is not found in the database, check if it is still valid
+        // If the user is not found, try to get the user info from the OIDC server
+        if (is_null($user)) {
+            try {
+                $userInfo = $this->oidcService->getUserInfo($credentials['token']);
+
+                /** @var User $user */
+                $user = $this->provider->retrieveByCredentials(['email_address' => $userInfo['email']]);
+
+                if (! is_null($user)) {
+                    $user->sso_id = $tokenPayload['sub'];
+                    $user->save();
+                } else {
+                    return false;
+                }
+            } catch (Throwable $e) {
+                return false;
+            }
+        }
+
+        // Check if the token is already used to authenticate before
+        $token = Token::withTrashed()->where('sso_id', $tokenPayload['uid'])->first();
+
+        // If the token is not found in the database, check if it is still active
         if (is_null($token)) {
             try {
                 $tokenInfo = $this->oidcService->introspect($credentials['token']);
 
                 if ($tokenInfo['active']) {
                     $token = new Token([
-                        'external_id' => $tokenPayload['uid'],
-                        'last_used_at' => Carbon::now(),
+                        'sso_id' => $tokenPayload['uid'],
+                        'user_id' => $user->id,
                         'created_at' => Carbon::createFromTimestamp($tokenInfo['iat']),
                         'expires_at' => Carbon::createFromTimestamp($tokenInfo['exp']),
                     ]);
@@ -98,30 +120,9 @@ class OidcGuard implements Guard
             }
         }
 
-        // Check if the token subject exists in the users database
-        $user = $this->provider->retrieveByCredentials(['sso_id' => $tokenPayload['sub']]);
-
-        // If the user is not found, try to get the user info from the OIDC server
-        if (is_null($user)) {
-            $userInfo = $this->oidcService->getUserInfo($credentials['token']);
-
-            $user = User::where('email_address', $userInfo['email'])->first();
-
-            if (! is_null($user)) {
-                $user->sso_id = $tokenPayload['sub'];
-                $user->save();
-
-                $this->setUser($user);
-            } else {
-                return false;
-            }
-        } else {
-            $this->setUser($user);
-        }
-
-        $token->user_id = $user->id;
         $token->last_used_at = Carbon::now();
         $token->save();
+        $this->setUser($user);
 
         return true;
     }

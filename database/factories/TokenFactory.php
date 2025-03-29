@@ -27,7 +27,7 @@ class TokenFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'external_id' => $this->faker->uuid(),
+            'sso_id' => $this->faker->uuid(),
             'user_id' => User::factory(),
             'last_used_at' => $this->faker->dateTime(),
             'created_at' => $this->faker->dateTime(),
