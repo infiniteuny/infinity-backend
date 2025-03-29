@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserPermission extends Pivot {}
+class UserPermission extends Pivot
+{
+    use HasUuids;
+}

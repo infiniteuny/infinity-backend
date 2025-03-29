@@ -22,6 +22,7 @@ class Permission extends Model implements PermissionContract
             config('permission.table_names.model_has_permissions'),
             app(PermissionRegistrar::class)->pivotPermission,
             config('permission.column_names.model_morph_key')
-        );
+        )
+            ->using(UserPermission::class);
     }
 }

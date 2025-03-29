@@ -50,6 +50,8 @@ class Persona extends Model
             'user_personas',
             'persona_id',
             'user_id',
-        )->using(UserPersona::class)->withTimestamps();
+        )
+            ->using(UserPersona::class)
+            ->withTimestamps();
     }
 }

@@ -49,6 +49,7 @@ return new class extends Migration
             }
         });
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
+            $table->uuid('id')->primary();
             $table->uuid($columnNames['model_morph_key']);
             $table->uuid($pivotPermission);
 
@@ -65,13 +66,14 @@ return new class extends Migration
             if ($teams) {
                 $table->uuid($columnNames['team_foreign_key'])->index();
 
-                $table->primary([$columnNames['team_foreign_key'], $pivotPermission, $columnNames['model_morph_key']]);
+                $table->unique([$columnNames['model_morph_key'], $pivotPermission, $columnNames['team_foreign_key']]);
             } else {
-                $table->primary([$pivotPermission, $columnNames['model_morph_key']]);
+                $table->unique([$columnNames['model_morph_key'], $pivotPermission]);
             }
 
         });
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
+            $table->uuid('id')->primary();
             $table->uuid($columnNames['model_morph_key']);
             $table->uuid($pivotRole);
 
@@ -88,12 +90,13 @@ return new class extends Migration
             if ($teams) {
                 $table->uuid($columnNames['team_foreign_key'])->index();
 
-                $table->primary([$columnNames['team_foreign_key'], $pivotRole, $columnNames['model_morph_key']]);
+                $table->unique([$columnNames['model_morph_key'], $pivotRole, $columnNames['team_foreign_key']]);
             } else {
-                $table->primary([$pivotRole, $columnNames['model_morph_key']]);
+                $table->unique([$columnNames['model_morph_key'], $pivotRole]);
             }
         });
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
+            $table->uuid('id')->primary();
             $table->uuid($pivotRole);
             $table->uuid($pivotPermission);
 
@@ -107,7 +110,7 @@ return new class extends Migration
                 ->on($tableNames['permissions'])
                 ->cascadeOnDelete();
 
-            $table->primary([$pivotPermission, $pivotRole]);
+            $table->unique([$pivotRole, $pivotPermission]);
         });
 
         app('cache')

@@ -54,7 +54,9 @@ class Team extends Model
             'team_members',
             'team_id',
             'user_id',
-        )->using(TeamMember::class)->withTimestamps();
+        )
+            ->using(TeamMember::class)
+            ->withTimestamps();
     }
 
     public function fundApplications(): HasMany

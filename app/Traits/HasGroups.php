@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\UserGroup;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,7 +24,8 @@ trait HasGroups
             config('permission.table_names.model_has_roles'),
             config('permission.column_names.model_morph_key'),
             app(PermissionRegistrar::class)->pivotRole
-        );
+        )
+            ->using(UserGroup::class);
 
         if (! app(PermissionRegistrar::class)->teams) {
             return $relation;
