@@ -34,7 +34,11 @@ class UserFactory extends Factory
             'phone_number' => $this->faker->unique()->phoneNumber(),
             'student_id' => $this->faker->unique()->uuid(),
             'major_id' => Major::factory(),
-            'links' => $this->faker->json(),
+            'links' => [
+                'github' => $this->faker->url(),
+                'linkedin' => $this->faker->url(),
+                'website' => $this->faker->url(),
+            ],
             'start_date' => $this->faker->date(),
             'end_date' => $this->faker->date(),
             'is_member' => $this->faker->boolean(),

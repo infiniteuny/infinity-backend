@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\Associative;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -19,8 +20,8 @@ class UpdateUserRequest extends FormRequest
             'phone_number' => ['sometimes', 'string', 'unique:users,phone_number'],
             'student_id' => ['sometimes', 'string', 'unique:users,student_id'],
             'major_id' => ['sometimes', 'uuid', 'exists:majors,id'],
-            'links' => ['sometimes', 'array'],
-            'links.*' => ['sometimes', 'json'],
+            'links' => ['sometimes', new Associative],
+            'links.*' => ['sometimes', 'url'],
             'start_date' => ['sometimes', 'nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['sometimes', 'nullable', 'date', 'after_or_equal:start_date'],
             'is_member' => ['sometimes', 'boolean'],

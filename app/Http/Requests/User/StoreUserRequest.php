@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\Associative;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
@@ -19,8 +20,8 @@ class StoreUserRequest extends FormRequest
             'phone_number' => ['required', 'string', 'unique:users,phone_number'],
             'student_id' => ['required', 'string', 'unique:users,student_id'],
             'major_id' => ['required', 'uuid', 'exists:majors,id'],
-            'links' => ['required', 'array'],
-            'links.*' => ['required', 'json'],
+            'links' => ['required', new Associative],
+            'links.*' => ['required', 'url'],
             'start_date' => ['sometimes', 'nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['sometimes', 'nullable', 'date', 'after_or_equal:start_date'],
             'is_member' => ['required', 'boolean'],

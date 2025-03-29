@@ -98,6 +98,9 @@ class UserController extends Controller
      * @apiResource App\Http\Resources\User\UserResource status=201
      *
      * @apiResourceModel App\Models\User
+     *
+     * @bodyParam links object required Example: {"github": "https://github.com/infiniteuny", "linkedin": "https://linkedin.com/company/infiniteuny/", "website": "https://infiniteuny.id"}
+     * @bodyParam links.* string Example: https://example.com
      */
     public function store(StoreUserRequest $request)
     {
@@ -149,6 +152,9 @@ class UserController extends Controller
      * @apiResource App\Http\Resources\User\UserResource
      *
      * @apiResourceModel App\Models\User
+     *
+     * @bodyParam links object Example: {"github": "https://github.com/infiniteuny", "linkedin": "https://linkedin.com/company/infiniteuny/", "website": "https://infiniteuny.id"}
+     * @bodyParam links.* string Example: https://example.com
      */
     public function update(UpdateUserRequest $request, User $user)
     {
