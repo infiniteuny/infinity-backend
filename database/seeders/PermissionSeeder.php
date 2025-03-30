@@ -34,8 +34,6 @@ class PermissionSeeder extends Seeder
             'delete',
         ];
         $permissionResourcesWithOwnership = [
-            'user-permission',
-            'user-group',
             'user-persona',
             'community-group-member',
             'team',
@@ -50,6 +48,8 @@ class PermissionSeeder extends Seeder
             'permission',
             'group',
             'group-permission',
+            'user-permission',
+            'user-group',
             'persona',
             'community-group',
             'community-group-admin',
@@ -78,6 +78,8 @@ class PermissionSeeder extends Seeder
             'update-own-user',
             'delete-user',
             'delete-own-user',
+            'read-own-user-group',
+            'read-own-user-permission',
             'read-token',
             'read-own-token',
             'delete-token',
