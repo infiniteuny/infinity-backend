@@ -96,6 +96,8 @@ class TeamController extends Controller
     {
         $team = Team::create($request->validated());
 
+        $team->members()->attach($team->leader_id);
+
         return new TeamResource($team);
     }
 
