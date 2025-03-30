@@ -12,7 +12,7 @@ class TokenPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('read-token');
+        return $user->can('read-token') || $user->can('read-own-token');
     }
 
     /**

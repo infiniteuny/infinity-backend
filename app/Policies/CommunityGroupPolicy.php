@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\CommunityGroup;
 use App\Models\User;
 
 class CommunityGroupPolicy
@@ -10,17 +9,17 @@ class CommunityGroupPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->can('read-community-group');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CommunityGroup $communityGroup): bool
+    public function view(): bool
     {
-        return $user->can('read-community-group');
+        return true;
     }
 
     /**
@@ -34,7 +33,7 @@ class CommunityGroupPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CommunityGroup $communityGroup): bool
+    public function update(User $user): bool
     {
         return $user->can('update-community-group');
     }
@@ -42,7 +41,7 @@ class CommunityGroupPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CommunityGroup $communityGroup): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-community-group');
     }

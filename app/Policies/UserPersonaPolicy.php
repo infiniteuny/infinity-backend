@@ -10,25 +10,26 @@ class UserPersonaPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->can('read-user-persona');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, UserPersona $userPersona): bool
+    public function view(): bool
     {
-        return $user->can('read-user-persona');
+        return true;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, User $model): bool
     {
-        return $user->can('create-user-persona');
+        return $user->can('create-user-persona') ||
+            ($user->can('create-own-user-persona') && $user->id === $model->id);
     }
 
     /**
@@ -36,7 +37,8 @@ class UserPersonaPolicy
      */
     public function update(User $user, UserPersona $userPersona): bool
     {
-        return $user->can('update-user-persona');
+        return $user->can('update-user-persona') ||
+            ($user->can('update-own-user-persona') && $user->id === $userPersona->user_id);
     }
 
     /**
@@ -44,6 +46,7 @@ class UserPersonaPolicy
      */
     public function delete(User $user, UserPersona $userPersona): bool
     {
-        return $user->can('delete-user-persona');
+        return $user->can('delete-user-persona' ||
+            ($user->can('delete-own-user-persona') && $user->id === $userPersona->user_id));
     }
 }

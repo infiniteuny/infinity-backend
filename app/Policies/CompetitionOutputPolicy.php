@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\CompetitionOutput;
 use App\Models\User;
 
 class CompetitionOutputPolicy
@@ -18,7 +17,7 @@ class CompetitionOutputPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CompetitionOutput $competitionOutput): bool
+    public function view(User $user): bool
     {
         return $user->can('read-competition-output');
     }
@@ -34,7 +33,7 @@ class CompetitionOutputPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CompetitionOutput $competitionOutput): bool
+    public function update(User $user): bool
     {
         return $user->can('update-competition-output');
     }
@@ -42,7 +41,7 @@ class CompetitionOutputPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CompetitionOutput $competitionOutput): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-competition-output');
     }

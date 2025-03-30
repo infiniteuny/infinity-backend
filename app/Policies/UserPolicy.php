@@ -9,17 +9,17 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->can('read-user');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, User $model): bool
+    public function view(): bool
     {
-        return $user->can('read-user');
+        return true;
     }
 
     /**
@@ -35,7 +35,8 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->can('update-user');
+        return $user->can('update-user') ||
+            ($user->can('update-own-user') && $user->id === $model->id);
     }
 
     /**
@@ -43,6 +44,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->can('delete-user');
+        return $user->can('delete-user') ||
+            ($user->can('delete-own-user') && $user->id === $model->id);
     }
 }

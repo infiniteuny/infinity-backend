@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Persona;
 use App\Models\User;
 
 class PersonaPolicy
@@ -10,17 +9,17 @@ class PersonaPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->can('read-persona');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Persona $persona): bool
+    public function view(): bool
     {
-        return $user->can('read-persona');
+        return true;
     }
 
     /**
@@ -34,7 +33,7 @@ class PersonaPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Persona $persona): bool
+    public function update(User $user): bool
     {
         return $user->can('update-persona');
     }
@@ -42,7 +41,7 @@ class PersonaPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Persona $persona): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-persona');
     }

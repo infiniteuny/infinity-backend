@@ -12,7 +12,7 @@ class TeamPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('read-team');
+        return $user->can('read-team') || $user->can('read-own-team');
     }
 
     /**
@@ -20,7 +20,9 @@ class TeamPolicy
      */
     public function view(User $user, Team $team): bool
     {
-        return $user->can('read-team');
+        return $user->can('read-team') ||
+            ($user->can('read-own-team') && ($user->id === $team->leader_id ||
+            $team->members()->wherePivot('user_id', $user->id)->exists()));
     }
 
     /**
@@ -28,7 +30,7 @@ class TeamPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-team');
+        return $user->can('create-team') || $user->can('create-own-team');
     }
 
     /**
@@ -36,7 +38,8 @@ class TeamPolicy
      */
     public function update(User $user, Team $team): bool
     {
-        return $user->can('update-team');
+        return $user->can('update-team') ||
+            ($user->can('update-own-team') && $user->id === $team->leader_id);
     }
 
     /**
@@ -44,6 +47,7 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team): bool
     {
-        return $user->can('delete-team');
+        return $user->can('delete-team') ||
+            ($user->can('delete-own-team') && $user->id === $team->leader_id);
     }
 }

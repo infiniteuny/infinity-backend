@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Competition;
 use App\Models\User;
 
 class CompetitionPolicy
@@ -10,17 +9,17 @@ class CompetitionPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->can('read-competition');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Competition $competition): bool
+    public function view(): bool
     {
-        return $user->can('read-competition');
+        return true;
     }
 
     /**
@@ -34,7 +33,7 @@ class CompetitionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Competition $competition): bool
+    public function update(User $user): bool
     {
         return $user->can('update-competition');
     }
@@ -42,7 +41,7 @@ class CompetitionPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Competition $competition): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-competition');
     }

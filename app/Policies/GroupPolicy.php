@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Group;
 use App\Models\User;
 
 class GroupPolicy
@@ -18,7 +17,7 @@ class GroupPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Group $group): bool
+    public function view(User $user): bool
     {
         return $user->can('read-group');
     }
@@ -34,7 +33,7 @@ class GroupPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Group $group): bool
+    public function update(User $user): bool
     {
         return $user->can('update-group');
     }
@@ -42,7 +41,7 @@ class GroupPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Group $group): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-group');
     }

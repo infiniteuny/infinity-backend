@@ -10,19 +10,17 @@ class AchievementPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->can('read-achievement');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Achievement $achievement): bool
+    public function view(): bool
     {
-        return $user->can('read-achievement') ||
-            ($user->can('read-own-achievement') &&
-            $achievement->team->leader_id === $user->id);
+        return true;
     }
 
     /**
@@ -30,7 +28,8 @@ class AchievementPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-achievement') || $user->can('create-own-achievement');
+        return $user->can('create-achievement') ||
+            $user->can('create-own-achievement');
     }
 
     /**
@@ -39,8 +38,8 @@ class AchievementPolicy
     public function update(User $user, Achievement $achievement): bool
     {
         return $user->can('update-achievement') ||
-            ($user->can('update-own-achievement') &&
-            $achievement->team->leader_id === $user->id);
+            ($user->can('update-own-achievement') && ($achievement->team->leader_id === $user->id ||
+            $achievement->team->members()->wherePivot('user_id', $user->id)->exists()));
     }
 
     /**
@@ -49,7 +48,6 @@ class AchievementPolicy
     public function delete(User $user, Achievement $achievement): bool
     {
         return $user->can('delete-achievement') ||
-            ($user->can('delete-own-achievement') &&
-            $achievement->team->leader_id === $user->id);
+            ($user->can('delete-own-achievement') && $achievement->team->leader_id === $user->id);
     }
 }

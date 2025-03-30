@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Faculty;
 use App\Models\User;
 
 class FacultyPolicy
@@ -18,7 +17,7 @@ class FacultyPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Faculty $faculty): bool
+    public function view(User $user): bool
     {
         return $user->can('read-faculty');
     }
@@ -34,7 +33,7 @@ class FacultyPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Faculty $faculty): bool
+    public function update(User $user): bool
     {
         return $user->can('update-faculty');
     }
@@ -42,7 +41,7 @@ class FacultyPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Faculty $faculty): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-faculty');
     }

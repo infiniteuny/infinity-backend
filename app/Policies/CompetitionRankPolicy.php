@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\CompetitionRank;
 use App\Models\User;
 
 class CompetitionRankPolicy
@@ -18,7 +17,7 @@ class CompetitionRankPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CompetitionRank $competitionRank): bool
+    public function view(User $user): bool
     {
         return $user->can('read-competition-rank');
     }
@@ -34,7 +33,7 @@ class CompetitionRankPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CompetitionRank $competitionRank): bool
+    public function update(User $user): bool
     {
         return $user->can('update-competition-rank');
     }
@@ -42,7 +41,7 @@ class CompetitionRankPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CompetitionRank $competitionRank): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-competition-rank');
     }

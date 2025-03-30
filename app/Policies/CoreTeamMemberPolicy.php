@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\CoreTeamMember;
 use App\Models\User;
 
 class CoreTeamMemberPolicy
@@ -10,17 +9,17 @@ class CoreTeamMemberPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->can('read-core-team-member');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CoreTeamMember $coreTeamMember): bool
+    public function view(): bool
     {
-        return $user->can('read-core-team-member');
+        return true;
     }
 
     /**
@@ -34,7 +33,7 @@ class CoreTeamMemberPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CoreTeamMember $coreTeamMember): bool
+    public function update(User $user): bool
     {
         return $user->can('update-core-team-member');
     }
@@ -42,7 +41,7 @@ class CoreTeamMemberPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CoreTeamMember $coreTeamMember): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-core-team-member');
     }

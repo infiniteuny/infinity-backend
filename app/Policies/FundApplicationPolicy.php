@@ -12,7 +12,8 @@ class FundApplicationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('read-fund-application');
+        return $user->can('read-fund-application') ||
+            $user->can('read-own-fund-application');
     }
 
     /**
@@ -20,7 +21,9 @@ class FundApplicationPolicy
      */
     public function view(User $user, FundApplication $fundApplication): bool
     {
-        return $user->can('read-fund-application');
+        return $user->can('read-fund-application') ||
+            ($user->can('read-own-fund-application') && ($user->id === $fundApplication->team->leader_id ||
+            $fundApplication->team->members()->wherePivot('user_id', $user->id)->exists()));
     }
 
     /**
@@ -28,7 +31,8 @@ class FundApplicationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-fund-application');
+        return $user->can('create-fund-application') ||
+            $user->can('create-own-fund-application');
     }
 
     /**
@@ -36,7 +40,9 @@ class FundApplicationPolicy
      */
     public function update(User $user, FundApplication $fundApplication): bool
     {
-        return $user->can('update-fund-application');
+        return $user->can('update-fund-application') ||
+            ($user->can('update-own-fund-application') && ($user->id === $fundApplication->team->leader_id ||
+            $fundApplication->team->members()->wherePivot('user_id', $user->id)->exists()));
     }
 
     /**
@@ -44,6 +50,7 @@ class FundApplicationPolicy
      */
     public function delete(User $user, FundApplication $fundApplication): bool
     {
-        return $user->can('delete-fund-application');
+        return $user->can('delete-fund-application') ||
+            ($user->can('delete-own-fund-application') && $user->id === $fundApplication->team->leader_id);
     }
 }

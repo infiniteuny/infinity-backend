@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\CompetitionTeamType;
 use App\Models\User;
 
 class CompetitionTeamTypePolicy
@@ -18,7 +17,7 @@ class CompetitionTeamTypePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CompetitionTeamType $competitionTeamType): bool
+    public function view(User $user): bool
     {
         return $user->can('read-competition-team-type');
     }
@@ -34,7 +33,7 @@ class CompetitionTeamTypePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CompetitionTeamType $competitionTeamType): bool
+    public function update(User $user): bool
     {
         return $user->can('update-competition-team-type');
     }
@@ -42,7 +41,7 @@ class CompetitionTeamTypePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CompetitionTeamType $competitionTeamType): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete-competition-team-type');
     }

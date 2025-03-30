@@ -4,22 +4,22 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class TestimonialPolicy
+class GroupPermissionPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(): bool
+    public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('read-group-permission');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(): bool
+    public function view(User $user): bool
     {
-        return true;
+        return $user->can('read-group-permission');
     }
 
     /**
@@ -27,7 +27,7 @@ class TestimonialPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-testimonal');
+        return $user->can('create-group-permission');
     }
 
     /**
@@ -35,7 +35,7 @@ class TestimonialPolicy
      */
     public function update(User $user): bool
     {
-        return $user->can('update-testimonal');
+        return $user->can('update-group-permission');
     }
 
     /**
@@ -43,6 +43,6 @@ class TestimonialPolicy
      */
     public function delete(User $user): bool
     {
-        return $user->can('delete-testimonal');
+        return $user->can('delete-group-permission');
     }
 }
