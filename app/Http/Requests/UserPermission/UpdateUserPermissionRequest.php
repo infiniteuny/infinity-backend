@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\TeamMember;
+namespace App\Http\Requests\UserPermission;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTeamMemberRequest extends FormRequest
+class UpdateUserPermissionRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class UpdateTeamMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['sometimes', 'uuid', 'exists:users,id'],
+            'permission_id' => ['sometimes', 'uuid', 'exists:permissions,id'],
         ];
     }
 }

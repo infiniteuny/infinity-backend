@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\TeamMember;
+namespace App\Http\Requests\CommunityGroupMember;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTeamMemberRequest extends FormRequest
+class StoreCommunityGroupMemberRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class UpdateTeamMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['sometimes', 'uuid', 'exists:users,id'],
+            'user_id' => ['required', 'uuid', 'exists:users,id'],
         ];
     }
 }

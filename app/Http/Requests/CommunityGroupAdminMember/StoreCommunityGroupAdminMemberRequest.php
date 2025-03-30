@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CoreTeamMember;
+namespace App\Http\Requests\CommunityGroupAdminMember;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCoreTeamMemberRequest extends FormRequest
+class StoreCommunityGroupAdminMemberRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,7 +15,7 @@ class StoreCoreTeamMemberRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'uuid', 'exists:users,id'],
-            'core_team_division_id' => ['required', 'uuid', 'exists:core_team_divisions,id'],
+            'community_group_id' => ['required', 'uuid', 'exists:community_groups,id'],
             'photo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'animation' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
