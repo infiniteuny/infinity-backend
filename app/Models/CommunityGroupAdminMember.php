@@ -13,6 +13,13 @@ class CommunityGroupAdminMember extends Pivot
     use HasUuids;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'community_group_admin_members';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -41,6 +48,16 @@ class CommunityGroupAdminMember extends Pivot
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format(DATE_ATOM);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function communityGroupAdmin(): BelongsTo
+    {
+        return $this->belongsTo(CommunityGroupAdmin::class);
     }
 
     public function communityGroup(): BelongsTo
