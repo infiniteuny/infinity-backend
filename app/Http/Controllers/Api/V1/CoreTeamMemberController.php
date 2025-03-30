@@ -2,87 +2,92 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CoreTeamMember\StoreCoreTeamMemberRequest;
 use App\Http\Requests\CoreTeamMember\UpdateCoreTeamMemberRequest;
+use App\Http\Resources\CoreTeamMember\CoreTeamMemberCollection;
+use App\Http\Resources\CoreTeamMember\CoreTeamMemberResource;
 use App\Jobs\DeleteBlob;
+use App\Models\CoreTeam;
 use App\Models\CoreTeamMember;
-use App\Repositories\StorageRepository;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Core Team Member
+ * Manage core team members.
+ */
 class CoreTeamMemberController extends Controller
 {
-    public function __construct(
-        protected StorageRepository $storageRepository,
-    ) {
-        // $this->authorizeResource(Degree::class, 'Degree');
+    public function __construct()
+    {
+        $this->authorizeResource(CoreTeamMember::class, 'core_team_member');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all core team members
      */
-    public function index(Request $request): JsonResponse
+    public function index(CoreTeam $coreTeam, Request $request)
     {
-        $coreTeamMembers = QueryBuilder::for(CoreTeamMember::class)
-            ->allowedFilters([
-                'code',
-                'name',
-            ])
-            ->defaultSorts([
-                '-created_at',
-                'id',
-            ])
-            ->allowedSorts([
-                'id',
-                'code',
-                'name',
-                'created_at',
-                'updated_at',
-            ])
-            ->paginate($request->query('per_page', 10));
+        $coreTeamMembers = QueryBuilder::for($coreTeam->members())
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('core_team_members', $coreTeamMembers);
+        return new CoreTeamMemberCollection($coreTeamMembers);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a core team member
      */
-    public function store(StoreCoreTeamMemberRequest $request): JsonResponse
+    public function store(CoreTeam $coreTeam, StoreCoreTeamMemberRequest $request)
     {
-        $photoManifest = $this->storageRepository->store($request->file('photo'), 'images/core-team-members/photos');
+        $photoManifest = Storage::store($request->file('photo'), 'images/core-teams/photos');
 
         $hasAnimation = $request->has('animation');
 
         if ($hasAnimation) {
-            $animationManifest = $this->storageRepository->store($request->file('animation'), 'images/core-team-members/animations');
+            $animationManifest = Storage::store($request->file('animation'), 'images/core-teams/animations');
         }
 
-        $coreTeamMember = CoreTeamMember::create(
-            array_replace($request->validated(), [
-                'photo' => $photoManifest,
-                ...($hasAnimation ? ['animation' => $animationManifest] : []),
-            ])
-        );
+        $coreTeam->members()->attach($request->safe()->only('user_id'), [
+            'core_team_division_id' => $request->safe()->only('core_team_division_id'),
+            'photo' => $photoManifest,
+            'animation' => $hasAnimation ? $animationManifest : null,
+        ]);
 
-        return ResponseFormatter::singleton('core_team_member', $coreTeamMember, 201);
+        $coreTeamMember = $coreTeam
+            ->members()
+            ->wherePivot('user_id', $request->safe()->only('user_id'))
+            ->first();
+
+        return new CoreTeamMemberResource($coreTeamMember);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a core team member
      */
-    public function show(CoreTeamMember $coreTeamMember): JsonResponse
+    public function show(CoreTeamMember $coreTeamMember)
     {
-        return ResponseFormatter::singleton('core_team_member', $coreTeamMember);
+        $coreTeamMemberId = $coreTeamMember->id;
+        $coreTeamMember = $coreTeamMember
+            ->coreTeam
+            ->members()
+            ->wherePivot('id', $coreTeamMemberId);
+
+        $coreTeamMember = QueryBuilder::for($coreTeamMember)
+            ->firstOrFail();
+
+        return new CoreTeamMemberResource($coreTeamMember);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a core team member
      */
-    public function update(UpdateCoreTeamMemberRequest $request, CoreTeamMember $coreTeamMember): JsonResponse
+    public function update(UpdateCoreTeamMemberRequest $request, CoreTeamMember $coreTeamMember)
     {
+        $coreTeamMemberId = $coreTeamMember->id;
+        $coreTeam = $coreTeamMember->coreTeam;
+
         $hasPhoto = $request->has('image');
         $hasAnimation = $request->has('animation');
         $hasFileAnimation = $request->hasFile('animation');
@@ -92,7 +97,7 @@ class CoreTeamMemberController extends Controller
 
             dispatch(new DeleteBlob($photoEncodedManifest));
 
-            $photoManifest = $this->storageRepository->store($request->file('photo'), 'images/core-team-members/photos');
+            $photoManifest = Storage::store($request->file('photo'), 'images/core-teams/photos');
         }
 
         if ($hasAnimation) {
@@ -101,7 +106,7 @@ class CoreTeamMemberController extends Controller
             dispatch(new DeleteBlob($animationEncodedManifest));
 
             if ($hasFileAnimation) {
-                $animationManifest = $this->storageRepository->store($request->file('animation'), 'images/core-team-members/animations');
+                $animationManifest = Storage::store($request->file('animation'), 'images/core-teams/animations');
             } else {
                 $animationManifest = null;
             }
@@ -115,23 +120,34 @@ class CoreTeamMemberController extends Controller
                 ])
                 : $request->validated()
         );
+        $coreTeamMember = $coreTeam
+            ->members()
+            ->wherePivot('id', $coreTeamMemberId)
+            ->firstOrFail();
 
-        return ResponseFormatter::singleton('core_team_member', $coreTeamMember);
+        return new CoreTeamMemberResource($coreTeamMember);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a core team member
      */
-    public function destroy(CoreTeamMember $coreTeamMember): JsonResponse
+    public function destroy(CoreTeamMember $coreTeamMember)
     {
+        $coreTeamMemberId = $coreTeamMember->id;
+        $coreTeam = $coreTeamMember->coreTeam;
+        $coreTeamMember = $coreTeam
+            ->members()
+            ->wherePivot('id', $coreTeamMemberId)
+            ->firstOrFail();
+
         $photoEncodedManifest = $coreTeamMember->getRawOriginal('photo');
         $animationEncodedManifest = $coreTeamMember->getRawOriginal('animation');
 
         dispatch(new DeleteBlob($photoEncodedManifest));
         dispatch(new DeleteBlob($animationEncodedManifest));
 
-        $coreTeamMember->delete();
+        $coreTeam->members()->detach($coreTeamMember->id);
 
-        return ResponseFormatter::singleton('core_team_member', $coreTeamMember);
+        return new CoreTeamMemberResource($coreTeamMember);
     }
 }

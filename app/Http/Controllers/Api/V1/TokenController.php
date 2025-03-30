@@ -65,7 +65,7 @@ class TokenController extends Controller
                 '-id',
             ]);
 
-        if ($request->user()->can('read-tokens')) {
+        if ($request->user()->can('read-token')) {
             $tokens = $tokens;
         } else {
             $tokens = $tokens->where('user_id', $userId);

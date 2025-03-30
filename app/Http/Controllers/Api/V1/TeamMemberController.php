@@ -5,68 +5,98 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TeamMember\StoreTeamMemberRequest;
 use App\Http\Requests\TeamMember\UpdateTeamMemberRequest;
+use App\Http\Resources\TeamMember\TeamMemberCollection;
+use App\Http\Resources\TeamMember\TeamMemberResource;
+use App\Models\Team;
 use App\Models\TeamMember;
-use App\Utils\ResponseFormatter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Team Members
+ * Manage team members.
+ */
 class TeamMemberController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(TeamMember::class, 'team_member');
+        $this->authorizeResource(TeamMember::class, 'team_member');
     }
 
     /**
-     * Display a listing of the resource.
+     * List all team members
      */
-    public function index(Request $request): JsonResponse
+    public function index(Team $team, Request $request)
     {
-        $teamMembers = QueryBuilder::for(TeamMember::class)
-            ->allowedFilters(['team_id', 'user_id'])
-            ->defaultSorts(['-created_at', 'id'])
-            ->allowedSorts(['id', 'team_id', 'user_id', 'created_at', 'updated_at'])
-            ->paginate($request->query('per_page', 10));
+        $teamMembers = QueryBuilder::for($team->members())
+            ->cursorPaginate($request->query('per_page', 10));
 
-        return ResponseFormatter::paginatedCollection('team_members', $teamMembers);
+        return new TeamMemberCollection($teamMembers);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a team member
      */
-    public function store(StoreTeamMemberRequest $request): JsonResponse
+    public function store(Team $team, StoreTeamMemberRequest $request)
     {
-        $teamMember = TeamMember::create($request->validated());
+        $team->members()->attach($request->safe()->only('user_id'));
 
-        return ResponseFormatter::singleton('team_member', $teamMember, 201);
+        $teamMember = $team
+            ->members()
+            ->wherePivot('user_id', $request->safe()->only('user_id'))
+            ->first();
+
+        return new TeamMemberResource($teamMember);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a team member
      */
-    public function show(TeamMember $teamMember): JsonResponse
+    public function show(TeamMember $teamMember)
     {
-        return ResponseFormatter::singleton('team_member', $teamMember);
+        $teamMemberId = $teamMember->id;
+        $teamMember = $teamMember
+            ->team
+            ->members()
+            ->wherePivot('id', $teamMemberId);
+
+        $teamMember = QueryBuilder::for($teamMember)
+            ->firstOrFail();
+
+        return new TeamMemberResource($teamMember);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a team member
      */
-    public function update(UpdateTeamMemberRequest $request, TeamMember $teamMember): JsonResponse
+    public function update(UpdateTeamMemberRequest $request, TeamMember $teamMember)
     {
+        $teamMemberId = $teamMember->id;
+        $team = $teamMember->team;
+
         $teamMember->update($request->validated());
+        $teamMember = $team
+            ->members()
+            ->wherePivot('id', $teamMemberId)
+            ->firstOrFail();
 
-        return ResponseFormatter::singleton('team_member', $teamMember);
+        return new TeamMemberResource($teamMember);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a team member
      */
-    public function destroy(TeamMember $teamMember): JsonResponse
+    public function destroy(TeamMember $teamMember)
     {
-        $teamMember->delete();
+        $teamMemberId = $teamMember->id;
+        $team = $teamMember->team;
+        $teamMember = $team
+            ->members()
+            ->wherePivot('id', $teamMemberId)
+            ->firstOrFail();
 
-        return ResponseFormatter::singleton('team_member', $teamMember);
+        $team->members()->detach($teamMember->id);
+
+        return new TeamMemberResource($teamMember);
     }
 }
