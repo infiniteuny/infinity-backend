@@ -34,7 +34,8 @@ class PermissionSeeder extends Seeder
             'delete',
         ];
         $permissionResourcesWithOwnership = [
-            'user',
+            'user-permission',
+            'user-group',
             'user-persona',
             'community-group-member',
             'team',
@@ -43,12 +44,12 @@ class PermissionSeeder extends Seeder
             'achievement',
         ];
         $permissionResourcesWithoutOwnership = [
-            'config',
             'degree',
             'faculty',
             'major',
             'permission',
             'group',
+            'group-permission',
             'persona',
             'community-group',
             'community-group-admin',
@@ -67,6 +68,16 @@ class PermissionSeeder extends Seeder
             'project-gallery',
         ];
         $specialPermissions = [
+            'create-config',
+            'update-config',
+            'delete-config',
+            'create-user',
+            'read-user',
+            'read-own-user',
+            'update-user',
+            'update-own-user',
+            'delete-user',
+            'delete-own-user',
             'read-token',
             'read-own-token',
             'delete-token',
