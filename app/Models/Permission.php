@@ -12,8 +12,22 @@ use Spatie\Permission\PermissionRegistrar;
 
 class Permission extends Model implements PermissionContract
 {
-    use HasFactory, HasUuids;
-    use HasGroups;
+    use HasFactory, HasGroups, HasUuids;
+
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Group::class,
+            config('permission.table_names.role_has_permissions'),
+            app(PermissionRegistrar::class)->pivotPermission,
+            config('permission.column_names.role_pivot_key')
+        )
+            ->using(GroupPermission::class)
+            ->as('entitlement')
+            ->withPivot([
+                'id',
+            ]);
+    }
 
     public function users(): BelongsToMany
     {
