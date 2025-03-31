@@ -39,7 +39,8 @@ RUN docker-php-source delete && \
 # Install dependencies
 FROM composer:2.8.6 AS vendor
 
-ENV COMPOSER_FUND=0
+ENV COMPOSER_FUND=0 \
+    COMPOSER_IGNORE_PLATFORM_REQS=1
 
 WORKDIR /tmp
 
