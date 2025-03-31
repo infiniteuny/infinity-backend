@@ -9,7 +9,7 @@
         "restek",
         "profile"
     ],
-    "license": "MIT",
+    "license": "GPL-3.0-or-later",
     "require": {
         "php": "^8.2.0",
         "facile-it/php-openid-client": "0.3.5",
