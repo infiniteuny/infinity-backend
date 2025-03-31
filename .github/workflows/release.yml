@@ -34,13 +34,13 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: type=semver,pattern={{version}}
           labels: |
-            org.opencontainers.image.title=WalletWatch Back-End
-            org.opencontainers.image.description=WalletWatch back-end web app image, see https://github.com/walletwatch-id/backend for more info.
-            org.opencontainers.image.vendor=WalletWatch
+            org.opencontainers.image.title=Infinity Back-End
+            org.opencontainers.image.description=Infinity back-end app image, see https://github.com/infiniteuny/infinity-backend/ for more info.
+            org.opencontainers.image.vendor=INFINITE UNY
           annotations: |
-            org.opencontainers.image.title=WalletWatch Back-End
-            org.opencontainers.image.description=WalletWatch back-end web app image, see https://github.com/walletwatch-id/backend for more info.
-            org.opencontainers.image.vendor=WalletWatch
+            org.opencontainers.image.title=Infinity Back-End
+            org.opencontainers.image.description=Infinity back-end app image, see https://github.com/infiniteuny/infinity-backend/ for more info.
+            org.opencontainers.image.vendor=INFINITE UNY
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
