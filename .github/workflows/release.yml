@@ -50,6 +50,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           annotations: ${{ steps.meta.outputs.annotations }}
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}-cache:latest
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}-cache:latest,mode=max
