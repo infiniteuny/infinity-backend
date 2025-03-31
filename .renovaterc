@@ -26,6 +26,9 @@
             "matchDepNames": [
                 "php"
             ],
+            "matchManagers": [
+                "composer"
+            ],
             "enabled": false
         },
         {
