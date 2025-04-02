@@ -17,6 +17,7 @@
         "laravel/horizon": "5.31.0",
         "laravel/octane": "2.8.2",
         "laravel/tinker": "2.10.1",
+        "league/flysystem-aws-s3-v3": "3.29.0",
         "spatie/laravel-permission": "6.16.0",
         "spatie/laravel-query-builder": "6.3.1",
         "spomky-labs/aes-key-wrap": "7.0.0",
