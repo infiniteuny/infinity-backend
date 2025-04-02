@@ -115,8 +115,14 @@ class FundApplicationController extends Controller
      */
     public function store(StoreFundApplicationRequest $request)
     {
-        $loaManifest = Storage::store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
-        $proposalManifest = Storage::store($request->file('proposal'), 'documents/fund-applications/proposals');
+        $loaManifest = Storage::store(
+            $request->file('letter_of_acceptance'),
+            'fund-applications/letter-of-acceptances',
+        );
+        $proposalManifest = Storage::store(
+            $request->file('proposal'),
+            'fund-applications/proposals',
+        );
 
         $fundApplication = FundApplication::create(
             array_replace($request->validated(), [
@@ -177,19 +183,25 @@ class FundApplicationController extends Controller
         $hasProposal = $request->has('proposal');
 
         if ($hasLoa) {
-            $loaEncodedManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
+            $oldLoaManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
 
-            dispatch(new DeleteBlob($loaEncodedManifest));
+            dispatch(new DeleteBlob($oldLoaManifest));
 
-            $loaManifest = Storage::store($request->file('letter_of_acceptance'), 'documents/fund-applications/letter-of-acceptances');
+            $loaManifest = Storage::store(
+                $request->file('letter_of_acceptance'),
+                'fund-applications/letter-of-acceptances',
+            );
         }
 
         if ($hasProposal) {
-            $proposalEncodedManifest = $fundApplication->getRawOriginal('proposal');
+            $oldProposalManifest = $fundApplication->getRawOriginal('proposal');
 
-            dispatch(new DeleteBlob($proposalEncodedManifest));
+            dispatch(new DeleteBlob($oldProposalManifest));
 
-            $proposalManifest = Storage::store($request->file('proposal'), 'documents/fund-applications/proposals');
+            $proposalManifest = Storage::store(
+                $request->file('proposal'),
+                'fund-applications/proposals',
+            );
         }
 
         $fundApplication->update(
@@ -213,11 +225,11 @@ class FundApplicationController extends Controller
      */
     public function destroy(FundApplication $fundApplication)
     {
-        $loaEncodedManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
-        $proposalEncodedManifest = $fundApplication->getRawOriginal('proposal');
+        $loaManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
+        $proposalManifest = $fundApplication->getRawOriginal('proposal');
 
-        dispatch(new DeleteBlob($loaEncodedManifest));
-        dispatch(new DeleteBlob($proposalEncodedManifest));
+        dispatch(new DeleteBlob($loaManifest));
+        dispatch(new DeleteBlob($proposalManifest));
 
         $fundApplication->delete();
 

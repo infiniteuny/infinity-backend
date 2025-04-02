@@ -129,7 +129,7 @@ class AchievementController extends Controller
      */
     public function store(StoreAchievementRequest $request)
     {
-        $manifest = Storage::store($request->file('image'), 'images/achievements');
+        $manifest = Storage::store($request->file('image'), 'achievements/images');
 
         $achievement = Achievement::create(
             array_replace($request->validated(), ['image' => $manifest])
@@ -193,11 +193,11 @@ class AchievementController extends Controller
         $hasImage = $request->has('image');
 
         if ($hasImage) {
-            $encodedManifest = $achievement->getRawOriginal('image');
+            $oldManifest = $achievement->getRawOriginal('image');
 
-            dispatch(new DeleteBlob($encodedManifest));
+            dispatch(new DeleteBlob($oldManifest));
 
-            $manifest = Storage::store($request->file('image'), 'images/achievements');
+            $manifest = Storage::store($request->file('image'), 'achievements/images');
         }
 
         $achievement->update(
@@ -218,9 +218,9 @@ class AchievementController extends Controller
      */
     public function destroy(Achievement $achievement)
     {
-        $encodedManifest = $achievement->getRawOriginal('image');
+        $manifest = $achievement->getRawOriginal('image');
 
-        dispatch(new DeleteBlob($encodedManifest));
+        dispatch(new DeleteBlob($manifest));
 
         $achievement->delete();
 

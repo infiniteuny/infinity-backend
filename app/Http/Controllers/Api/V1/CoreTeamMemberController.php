@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\StorageVisibility;
 use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CoreTeamMember\StoreCoreTeamMemberRequest;
@@ -41,12 +42,20 @@ class CoreTeamMemberController extends Controller
      */
     public function store(CoreTeam $coreTeam, StoreCoreTeamMemberRequest $request)
     {
-        $photoManifest = Storage::store($request->file('photo'), 'images/core-teams/photos');
+        $photoManifest = Storage::store(
+            $request->file('photo'),
+            'core-teams/photos',
+            StorageVisibility::PUBLIC,
+        );
 
         $hasAnimation = $request->has('animation');
 
         if ($hasAnimation) {
-            $animationManifest = Storage::store($request->file('animation'), 'images/core-teams/animations');
+            $animationManifest = Storage::store(
+                $request->file('animation'),
+                'core-teams/animations',
+                StorageVisibility::PUBLIC,
+            );
         }
 
         $coreTeam->members()->attach($request->safe()->only('user_id'), [
@@ -93,20 +102,28 @@ class CoreTeamMemberController extends Controller
         $hasFileAnimation = $request->hasFile('animation');
 
         if ($hasPhoto) {
-            $photoEncodedManifest = $coreTeamMember->getRawOriginal('photo');
+            $photoManifest = $coreTeamMember->getRawOriginal('photo');
 
-            dispatch(new DeleteBlob($photoEncodedManifest));
+            dispatch(new DeleteBlob($photoManifest));
 
-            $photoManifest = Storage::store($request->file('photo'), 'images/core-teams/photos');
+            $photoManifest = Storage::store(
+                $request->file('photo'),
+                'core-teams/photos',
+                StorageVisibility::PUBLIC,
+            );
         }
 
         if ($hasAnimation) {
-            $animationEncodedManifest = $coreTeamMember->getRawOriginal('animation');
+            $animationManifest = $coreTeamMember->getRawOriginal('animation');
 
-            dispatch(new DeleteBlob($animationEncodedManifest));
+            dispatch(new DeleteBlob($animationManifest));
 
             if ($hasFileAnimation) {
-                $animationManifest = Storage::store($request->file('animation'), 'images/core-teams/animations');
+                $animationManifest = Storage::store(
+                    $request->file('animation'),
+                    'core-teams/animations',
+                    StorageVisibility::PUBLIC,
+                );
             } else {
                 $animationManifest = null;
             }
@@ -140,11 +157,11 @@ class CoreTeamMemberController extends Controller
             ->wherePivot('id', $coreTeamMemberId)
             ->firstOrFail();
 
-        $photoEncodedManifest = $coreTeamMember->getRawOriginal('photo');
-        $animationEncodedManifest = $coreTeamMember->getRawOriginal('animation');
+        $photoManifest = $coreTeamMember->getRawOriginal('photo');
+        $animationManifest = $coreTeamMember->getRawOriginal('animation');
 
-        dispatch(new DeleteBlob($photoEncodedManifest));
-        dispatch(new DeleteBlob($animationEncodedManifest));
+        dispatch(new DeleteBlob($photoManifest));
+        dispatch(new DeleteBlob($animationManifest));
 
         $coreTeam->members()->detach($coreTeamMember->id);
 

@@ -85,7 +85,7 @@ class CompetitionController extends Controller
      */
     public function store(StoreCompetitionRequest $request)
     {
-        $manifest = Storage::store($request->file('logo'), 'images/competitions');
+        $manifest = Storage::store($request->file('logo'), 'competitions/images');
 
         $competition = Competition::create(
             array_replace($request->validated(), ['logo' => $manifest])
@@ -135,11 +135,11 @@ class CompetitionController extends Controller
         $hasLogo = $request->has('logo');
 
         if ($hasLogo) {
-            $encodedManifest = $competition->getRawOriginal('logo');
+            $oldManifest = $competition->getRawOriginal('logo');
 
-            dispatch(new DeleteBlob($encodedManifest));
+            dispatch(new DeleteBlob($oldManifest));
 
-            $manifest = Storage::store($request->file('logo'), 'images/competitions');
+            $manifest = Storage::store($request->file('logo'), 'competitions/images');
         }
 
         $competition->update(
@@ -160,9 +160,9 @@ class CompetitionController extends Controller
      */
     public function destroy(Competition $competition)
     {
-        $encodedManifest = $competition->getRawOriginal('logo');
+        $manifest = $competition->getRawOriginal('logo');
 
-        dispatch(new DeleteBlob($encodedManifest));
+        dispatch(new DeleteBlob($manifest));
 
         $competition->delete();
 

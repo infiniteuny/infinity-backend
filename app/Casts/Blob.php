@@ -2,7 +2,7 @@
 
 namespace App\Casts;
 
-use App\Utils\Encoder;
+use App\Facades\Storage;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,7 @@ class Blob implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value ? route('api.v1.blobs.show', ['blob' => $value]) : null;
+        return $value ? Storage::url($value) : null;
     }
 
     /**
@@ -25,6 +25,6 @@ class Blob implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return Encoder::base64UrlEncode($value);
+        return $value;
     }
 }

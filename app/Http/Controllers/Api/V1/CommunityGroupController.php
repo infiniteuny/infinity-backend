@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\StorageVisibility;
 use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommunityGroup\StoreCommunityGroupRequest;
@@ -77,7 +78,11 @@ class CommunityGroupController extends Controller
      */
     public function store(StoreCommunityGroupRequest $request)
     {
-        $manifest = Storage::store($request->file('logo'), 'images/community-groups');
+        $manifest = Storage::store(
+            $request->file('logo'),
+            'community-groups/images',
+            StorageVisibility::PUBLIC,
+        );
 
         $communityGroup = CommunityGroup::create(
             array_replace($request->validated(), ['logo' => $manifest])
@@ -122,11 +127,15 @@ class CommunityGroupController extends Controller
         $hasLogo = $request->has('logo');
 
         if ($hasLogo) {
-            $encodedManifest = $communityGroup->getRawOriginal('logo');
+            $oldManifest = $communityGroup->getRawOriginal('logo');
 
-            dispatch(new DeleteBlob($encodedManifest));
+            dispatch(new DeleteBlob($oldManifest));
 
-            $manifest = Storage::store($request->file('logo'), 'images/community-groups');
+            $manifest = Storage::store(
+                $request->file('logo'),
+                'community-groups/images',
+                StorageVisibility::PUBLIC,
+            );
         }
 
         $communityGroup->update(
@@ -147,9 +156,9 @@ class CommunityGroupController extends Controller
      */
     public function destroy(CommunityGroup $communityGroup)
     {
-        $encodedManifest = $communityGroup->getRawOriginal('logo');
+        $manifest = $communityGroup->getRawOriginal('logo');
 
-        dispatch(new DeleteBlob($encodedManifest));
+        dispatch(new DeleteBlob($manifest));
 
         $communityGroup->delete();
 

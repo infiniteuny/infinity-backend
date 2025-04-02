@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\StorageVisibility;
 use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectGallery\StoreProjectGalleryRequest;
@@ -71,7 +72,11 @@ class ProjectGalleryController extends Controller
      */
     public function store(StoreProjectGalleryRequest $request)
     {
-        $manifest = Storage::store($request->file('image'), 'images/project-galleries');
+        $manifest = Storage::store(
+            $request->file('image'),
+            'project-galleries/images',
+            StorageVisibility::PUBLIC,
+        );
 
         $projectGallery = ProjectGallery::create(
             array_replace($request->validated(), ['image' => $manifest])
@@ -116,11 +121,15 @@ class ProjectGalleryController extends Controller
         $hasImage = $request->has('image');
 
         if ($hasImage) {
-            $encodedManifest = $projectGallery->getRawOriginal('image');
+            $oldManifest = $projectGallery->getRawOriginal('image');
 
-            dispatch(new DeleteBlob($encodedManifest));
+            dispatch(new DeleteBlob($oldManifest));
 
-            $manifest = Storage::store($request->file('image'), 'images/project-galleries');
+            $manifest = Storage::store(
+                $request->file('image'),
+                'project-galleries/images',
+                StorageVisibility::PUBLIC,
+            );
         }
 
         $projectGallery->update(
@@ -141,9 +150,9 @@ class ProjectGalleryController extends Controller
      */
     public function destroy(ProjectGallery $projectGallery)
     {
-        $encodedManifest = $projectGallery->getRawOriginal('image');
+        $manifest = $projectGallery->getRawOriginal('image');
 
-        dispatch(new DeleteBlob($encodedManifest));
+        dispatch(new DeleteBlob($manifest));
 
         $projectGallery->delete();
 

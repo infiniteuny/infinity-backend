@@ -70,7 +70,7 @@ return Application::configure(basePath: dirname(__DIR__))
                         'trace' => collect($e->getTrace())->map(function ($trace) {
                             return Arr::except($trace, ['args']);
                         })->all(),
-                    ] : [],
+                    ] : null,
                 ),
                 $e->getStatusCode(),
                 $e->getHeaders() ?: [],
@@ -89,7 +89,7 @@ return Application::configure(basePath: dirname(__DIR__))
                             'trace' => collect($e->getTrace())->map(function ($trace) {
                                 return Arr::except($trace, ['args']);
                             })->all(),
-                        ] : [],
+                        ] : null,
                     ),
                     $e->getStatusCode(),
                     $e->getHeaders() ?: [],

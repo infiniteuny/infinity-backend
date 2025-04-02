@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AchievementController;
-use App\Http\Controllers\Api\V1\BlobController;
 use App\Http\Controllers\Api\V1\CommunityGroupAdminController;
 use App\Http\Controllers\Api\V1\CommunityGroupAdminMemberController;
 use App\Http\Controllers\Api\V1\CommunityGroupController;
@@ -34,6 +33,7 @@ use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\UserGroupController;
 use App\Http\Controllers\Api\V1\UserPermissionController;
 use App\Http\Controllers\Api\V1\UserPersonaController;
+use App\Http\Controllers\BlobController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,12 +47,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('static/private/{blob}', BlobController::class)
+    ->name('blobs.show');
+
 Route::group([
     'as' => 'api.v1.',
     'prefix' => 'v1',
 ], function () {
-    Route::get('blobs/{blob}', BlobController::class)
-        ->name('blobs.show');
     Route::apiResources([
         'achievements' => AchievementController::class,
         'configs' => ConfigController::class,

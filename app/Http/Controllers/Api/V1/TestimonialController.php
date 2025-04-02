@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\StorageVisibility;
 use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Testimonial\StoreTestimonialRequest;
@@ -75,7 +76,11 @@ class TestimonialController extends Controller
      */
     public function store(StoreTestimonialRequest $request)
     {
-        $manifest = Storage::store($request->file('photo'), 'images/testimonials');
+        $manifest = Storage::store(
+            $request->file('photo'),
+            'testimonials/images',
+            StorageVisibility::PUBLIC,
+        );
 
         $testimonial = Testimonial::create(
             array_replace($request->validated(), ['photo' => $manifest])
@@ -120,11 +125,15 @@ class TestimonialController extends Controller
         $hasPhoto = $request->has('photo');
 
         if ($hasPhoto) {
-            $encodedManifest = $testimonial->getRawOriginal('photo');
+            $oldManifest = $testimonial->getRawOriginal('photo');
 
-            dispatch(new DeleteBlob($encodedManifest));
+            dispatch(new DeleteBlob($oldManifest));
 
-            $manifest = Storage::store($request->file('photo'), 'images/testimonials');
+            $manifest = Storage::store(
+                $request->file('photo'),
+                'testimonials/images',
+                StorageVisibility::PUBLIC,
+            );
         }
 
         $testimonial->update(
@@ -145,9 +154,9 @@ class TestimonialController extends Controller
      */
     public function destroy(Testimonial $testimonial)
     {
-        $encodedManifest = $testimonial->getRawOriginal('photo');
+        $manifest = $testimonial->getRawOriginal('photo');
 
-        dispatch(new DeleteBlob($encodedManifest));
+        dispatch(new DeleteBlob($manifest));
 
         $testimonial->delete();
 

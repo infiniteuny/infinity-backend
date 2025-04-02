@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\StorageVisibility;
 use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommunityGroupAdminMember\StoreCommunityGroupAdminMemberRequest;
@@ -41,12 +42,20 @@ class CommunityGroupAdminMemberController extends Controller
      */
     public function store(CommunityGroupAdmin $communityGroupAdmin, StoreCommunityGroupAdminMemberRequest $request)
     {
-        $photoManifest = Storage::store($request->file('photo'), 'images/community-group-admins/photos');
+        $photoManifest = Storage::store(
+            $request->file('photo'),
+            'community-group-admins/photos',
+            StorageVisibility::PUBLIC,
+        );
 
         $hasAnimation = $request->has('animation');
 
         if ($hasAnimation) {
-            $animationManifest = Storage::store($request->file('animation'), 'images/community-group-admins/animations');
+            $animationManifest = Storage::store(
+                $request->file('animation'),
+                'community-group-admins/animations',
+                StorageVisibility::PUBLIC,
+            );
         }
 
         $communityGroupAdmin->members()->attach($request->safe()->only('user_id'), [
@@ -93,20 +102,28 @@ class CommunityGroupAdminMemberController extends Controller
         $hasFileAnimation = $request->hasFile('animation');
 
         if ($hasPhoto) {
-            $photoEncodedManifest = $communityGroupAdminMember->getRawOriginal('photo');
+            $oldPhotoManifest = $communityGroupAdminMember->getRawOriginal('photo');
 
-            dispatch(new DeleteBlob($photoEncodedManifest));
+            dispatch(new DeleteBlob($oldPhotoManifest));
 
-            $photoManifest = Storage::store($request->file('photo'), 'images/community-group-admins/photos');
+            $photoManifest = Storage::store(
+                $request->file('photo'),
+                'community-group-admins/photos',
+                StorageVisibility::PUBLIC,
+            );
         }
 
         if ($hasAnimation) {
-            $animationEncodedManifest = $communityGroupAdminMember->getRawOriginal('animation');
+            $oldAnimationManifest = $communityGroupAdminMember->getRawOriginal('animation');
 
-            dispatch(new DeleteBlob($animationEncodedManifest));
+            dispatch(new DeleteBlob($oldAnimationManifest));
 
             if ($hasFileAnimation) {
-                $animationManifest = Storage::store($request->file('animation'), 'images/community-group-admins/animations');
+                $animationManifest = Storage::store(
+                    $request->file('animation'),
+                    'community-group-admins/animations',
+                    StorageVisibility::PUBLIC,
+                );
             } else {
                 $animationManifest = null;
             }
@@ -140,11 +157,11 @@ class CommunityGroupAdminMemberController extends Controller
             ->wherePivot('id', $communityGroupAdminMemberId)
             ->firstOrFail();
 
-        $photoEncodedManifest = $communityGroupAdminMember->getRawOriginal('photo');
-        $animationEncodedManifest = $communityGroupAdminMember->getRawOriginal('animation');
+        $photoManifest = $communityGroupAdminMember->getRawOriginal('photo');
+        $animationManifest = $communityGroupAdminMember->getRawOriginal('animation');
 
-        dispatch(new DeleteBlob($photoEncodedManifest));
-        dispatch(new DeleteBlob($animationEncodedManifest));
+        dispatch(new DeleteBlob($photoManifest));
+        dispatch(new DeleteBlob($animationManifest));
 
         $communityGroupAdmin->members()->detach($communityGroupAdminMember->id);
 
