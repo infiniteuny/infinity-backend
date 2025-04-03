@@ -30,6 +30,8 @@ class CompetitionController extends Controller
     /**
      * List all competitions
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\Competition\CompetitionCollection
      *
      * @apiResourceModel App\Models\Competition paginate=10,cursor
@@ -96,6 +98,8 @@ class CompetitionController extends Controller
 
     /**
      * Retrieve a competition
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\Competition\CompetitionResource
      *

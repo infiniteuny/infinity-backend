@@ -25,6 +25,8 @@ class UserPersonaController extends Controller
 
     /**
      * List all user personas
+     *
+     * @unauthenticated
      */
     public function index(User $user, Request $request)
     {
@@ -51,6 +53,8 @@ class UserPersonaController extends Controller
 
     /**
      * Retrieve a user persona
+     *
+     * @unauthenticated
      */
     public function show(UserPersona $userPersona)
     {

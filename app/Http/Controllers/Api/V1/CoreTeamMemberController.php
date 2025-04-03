@@ -28,6 +28,8 @@ class CoreTeamMemberController extends Controller
 
     /**
      * List all core team members
+     *
+     * @unauthenticated
      */
     public function index(CoreTeam $coreTeam, Request $request)
     {
@@ -74,6 +76,8 @@ class CoreTeamMemberController extends Controller
 
     /**
      * Retrieve a core team member
+     *
+     * @unauthenticated
      */
     public function show(CoreTeamMember $coreTeamMember)
     {

@@ -27,6 +27,8 @@ class UserController extends Controller
     /**
      * List all users
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\User\UserCollection
      *
      * @apiResourceModel App\Models\User paginate=10,cursor
@@ -111,6 +113,8 @@ class UserController extends Controller
 
     /**
      * Retrieve a user
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\User\UserResource
      *

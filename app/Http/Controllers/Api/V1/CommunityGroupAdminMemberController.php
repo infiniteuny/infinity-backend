@@ -28,6 +28,8 @@ class CommunityGroupAdminMemberController extends Controller
 
     /**
      * List all community group administrator members
+     *
+     * @unauthenticated
      */
     public function index(CommunityGroupAdmin $communityGroupAdmin, Request $request)
     {
@@ -74,6 +76,8 @@ class CommunityGroupAdminMemberController extends Controller
 
     /**
      * Retrieve a community group administrator member
+     *
+     * @unauthenticated
      */
     public function show(CommunityGroupAdminMember $communityGroupAdminMember)
     {

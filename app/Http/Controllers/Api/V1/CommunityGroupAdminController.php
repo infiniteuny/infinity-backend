@@ -27,6 +27,8 @@ class CommunityGroupAdminController extends Controller
     /**
      * List all community group administrators
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminCollection
      *
      * @apiResourceModel App\Models\CommunityGroupAdmin paginate=10,cursor
@@ -75,6 +77,8 @@ class CommunityGroupAdminController extends Controller
 
     /**
      * Retrieve a community group administrator
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource
      *

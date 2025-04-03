@@ -28,6 +28,8 @@ class ProjectGalleryController extends Controller
     /**
      * List all project galleries
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\ProjectGallery\ProjectGalleryCollection
      *
      * @apiResourceModel App\Models\ProjectGallery paginate=10,cursor
@@ -87,6 +89,8 @@ class ProjectGalleryController extends Controller
 
     /**
      * Retrieve a project gallery
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
      *

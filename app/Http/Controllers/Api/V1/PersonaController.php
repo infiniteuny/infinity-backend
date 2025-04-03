@@ -30,6 +30,8 @@ class PersonaController extends Controller
     /**
      * List all personas
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\Persona\PersonaCollection
      *
      * @apiResourceModel App\Models\Persona paginate=10,cursor
@@ -93,6 +95,8 @@ class PersonaController extends Controller
 
     /**
      * Retrieve a persona
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\Persona\PersonaResource
      *

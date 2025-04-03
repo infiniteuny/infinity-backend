@@ -30,6 +30,8 @@ class AchievementController extends Controller
     /**
      * List all achievements
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\Achievement\AchievementCollection
      *
      * @apiResourceModel App\Models\Achievement paginate=10,cursor
@@ -140,6 +142,8 @@ class AchievementController extends Controller
 
     /**
      * Retrieve an achievement
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\Achievement\AchievementResource
      *

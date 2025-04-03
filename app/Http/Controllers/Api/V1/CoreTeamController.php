@@ -27,6 +27,8 @@ class CoreTeamController extends Controller
     /**
      * List all core teams
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\CoreTeam\CoreTeamCollection
      *
      * @apiResourceModel App\Models\CoreTeam paginate=10,cursor
@@ -75,6 +77,8 @@ class CoreTeamController extends Controller
 
     /**
      * Retrieve a core team
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\CoreTeam\CoreTeamResource
      *

@@ -25,6 +25,8 @@ class UserPermissionController extends Controller
 
     /**
      * List all user permissions
+     *
+     * @unauthenticated
      */
     public function index(User $user, Request $request)
     {
@@ -51,6 +53,8 @@ class UserPermissionController extends Controller
 
     /**
      * Retrieve a user permission
+     *
+     * @unauthenticated
      */
     public function show(UserPermission $userPermission)
     {

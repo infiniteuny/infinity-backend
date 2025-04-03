@@ -30,6 +30,8 @@ class TestimonialController extends Controller
     /**
      * List all testimonials
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\Testimonial\TestimonialCollection
      *
      * @apiResourceModel App\Models\Testimonial paginate=10,cursor
@@ -91,6 +93,8 @@ class TestimonialController extends Controller
 
     /**
      * Retrieve a testimonial
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\Testimonial\TestimonialResource
      *

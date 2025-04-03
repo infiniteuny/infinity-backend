@@ -30,6 +30,8 @@ class CommunityGroupController extends Controller
     /**
      * List all community groups
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\CommunityGroup\CommunityGroupCollection
      *
      * @apiResourceModel App\Models\CommunityGroup paginate=10,cursor
@@ -93,6 +95,8 @@ class CommunityGroupController extends Controller
 
     /**
      * Retrieve a community group
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\CommunityGroup\CommunityGroupResource
      *
