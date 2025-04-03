@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\StorageVisibility;
+use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Persona\StorePersonaRequest;
 use App\Http\Requests\Persona\UpdatePersonaRequest;
 use App\Http\Resources\Persona\PersonaCollection;
 use App\Http\Resources\Persona\PersonaResource;
+use App\Jobs\DeleteBlob;
 use App\Models\Persona;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -75,7 +78,15 @@ class PersonaController extends Controller
      */
     public function store(StorePersonaRequest $request)
     {
-        $persona = Persona::create($request->validated());
+        $manifest = Storage::store(
+            $request->file('logo'),
+            'personas/logos',
+            StorageVisibility::PUBLIC,
+        );
+
+        $persona = Persona::create(
+            array_replace($request->validated(), ['logo' => $manifest])
+        );
 
         return new PersonaResource($persona);
     }
@@ -113,7 +124,25 @@ class PersonaController extends Controller
      */
     public function update(UpdatePersonaRequest $request, Persona $persona)
     {
-        $persona->update($request->validated());
+        $hasLogo = $request->has('logo');
+
+        if ($hasLogo) {
+            $oldManifest = $persona->getRawOriginal('logo');
+
+            dispatch(new DeleteBlob($oldManifest));
+
+            $manifest = Storage::store(
+                $request->file('logo'),
+                'personas/logos',
+                StorageVisibility::PUBLIC,
+            );
+        }
+
+        $persona->update(
+            $hasLogo
+                ? array_replace($request->validated(), ['logo' => $manifest])
+                : $request->validated()
+        );
 
         return new PersonaResource($persona);
     }
@@ -127,6 +156,10 @@ class PersonaController extends Controller
      */
     public function destroy(Persona $persona)
     {
+        $manifest = $persona->getRawOriginal('logo');
+
+        dispatch(new DeleteBlob($manifest));
+
         $persona->delete();
 
         return new PersonaResource($persona);

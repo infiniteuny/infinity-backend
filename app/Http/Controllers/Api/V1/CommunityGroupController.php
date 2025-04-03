@@ -80,7 +80,7 @@ class CommunityGroupController extends Controller
     {
         $manifest = Storage::store(
             $request->file('logo'),
-            'community-groups/images',
+            'community-groups/logos',
             StorageVisibility::PUBLIC,
         );
 
@@ -133,7 +133,7 @@ class CommunityGroupController extends Controller
 
             $manifest = Storage::store(
                 $request->file('logo'),
-                'community-groups/images',
+                'community-groups/logos',
                 StorageVisibility::PUBLIC,
             );
         }

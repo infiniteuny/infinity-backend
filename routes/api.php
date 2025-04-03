@@ -48,6 +48,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('static/private/{blob}', BlobController::class)
+    ->where('blob', '.*')
     ->name('blobs.show');
 
 Route::group([

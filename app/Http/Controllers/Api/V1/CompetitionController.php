@@ -85,7 +85,7 @@ class CompetitionController extends Controller
      */
     public function store(StoreCompetitionRequest $request)
     {
-        $manifest = Storage::store($request->file('logo'), 'competitions/images');
+        $manifest = Storage::store($request->file('logo'), 'competitions/logos');
 
         $competition = Competition::create(
             array_replace($request->validated(), ['logo' => $manifest])
@@ -139,7 +139,7 @@ class CompetitionController extends Controller
 
             dispatch(new DeleteBlob($oldManifest));
 
-            $manifest = Storage::store($request->file('logo'), 'competitions/images');
+            $manifest = Storage::store($request->file('logo'), 'competitions/logos');
         }
 
         $competition->update(

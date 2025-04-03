@@ -13,6 +13,8 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,8 +43,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());
+        Storage::disk('local')->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
+            return URL::to(
+                URL::temporarySignedRoute(
+                    'blobs.show',
+                    $expiration,
+                    array_merge($options, ['blob' => $path]),
+                    false,
+                ),
+            );
         });
         Auth::extend('oidc', function ($app, $name, array $config) {
             return new OidcGuard(
@@ -50,6 +59,9 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(OidcService::class),
                 $app->make('request'),
             );
+        });
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());
         });
     }
 }

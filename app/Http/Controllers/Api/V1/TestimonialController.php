@@ -78,7 +78,7 @@ class TestimonialController extends Controller
     {
         $manifest = Storage::store(
             $request->file('photo'),
-            'testimonials/images',
+            'testimonials/photos',
             StorageVisibility::PUBLIC,
         );
 
@@ -131,7 +131,7 @@ class TestimonialController extends Controller
 
             $manifest = Storage::store(
                 $request->file('photo'),
-                'testimonials/images',
+                'testimonials/photos',
                 StorageVisibility::PUBLIC,
             );
         }
