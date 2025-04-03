@@ -30,7 +30,12 @@ class ProjectGalleryFactory extends Factory
             'title' => Str::title($this->faker->sentence()),
             'description' => $this->faker->paragraph(),
             'url' => $this->faker->url(),
-            'image' => 'some-image-id',
+            'image' => json_encode([
+                'disk' => 'local',
+                'visibility' => 'public',
+                'path' => 'project-galleries/images',
+                'name' => 'some-image-id.jpg',
+            ]),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

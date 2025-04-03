@@ -45,7 +45,12 @@ class AchievementFactory extends Factory
             'competition_start_date' => $this->faker->date(),
             'competition_end_date' => $this->faker->date(),
             'description' => $this->faker->text,
-            'image' => 'some-image-id',
+            'image' => json_encode([
+                'disk' => 'local',
+                'visibility' => 'private',
+                'path' => 'achievements/images',
+                'name' => 'some-image-id.jpg',
+            ]),
             'status' => $this->faker->randomElement(['PENDING', 'REJECTED', 'ACCEPTED']),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

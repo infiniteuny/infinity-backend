@@ -29,7 +29,12 @@ class TestimonialFactory extends Factory
             'id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->name()),
             'position' => $this->faker->jobTitle(),
-            'photo' => 'some-photo-id',
+            'photo' => json_encode([
+                'disk' => 'local',
+                'visibility' => 'public',
+                'path' => 'testimonials/photos',
+                'name' => 'some-photo-id.jpg',
+            ]),
             'content' => $this->faker->paragraph(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

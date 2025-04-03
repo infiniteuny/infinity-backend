@@ -30,7 +30,12 @@ class PersonaFactory extends Factory
             'name' => Str::title($this->faker->unique()->word()),
             'priority' => $this->faker->numberBetween(1, 10),
             'description' => $this->faker->text(),
-            'logo' => 'some-logo-id',
+            'logo' => json_encode([
+                'disk' => 'local',
+                'visibility' => 'public',
+                'path' => 'personas/logos',
+                'name' => 'some-logo-id.jpg',
+            ]),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

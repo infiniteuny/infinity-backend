@@ -29,7 +29,12 @@ class CommunityGroupFactory extends Factory
             'name' => $this->faker->unique()->word(),
             'priority' => $this->faker->numberBetween(),
             'description' => $this->faker->text(),
-            'logo' => 'some-logo-id',
+            'logo' => json_encode([
+                'disk' => 'local',
+                'visibility' => 'public',
+                'path' => 'community-groups/logos',
+                'name' => 'some-logo-id.jpg',
+            ]),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
