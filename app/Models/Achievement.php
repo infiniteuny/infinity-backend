@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\Blob;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,6 +47,31 @@ class Achievement extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'point',
+    ];
+
+    protected function point(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                $organizerTypePoint = $this->competition->competitionOrganizerType->weight;
+                $teamTypePoint = $this->competitionTeamType->weight;
+                $scalePoint = $this->competitionScale->weight;
+                $timeRangePoint = $this->competitionTimeRange->weight;
+                $outputPoint = $this->competitionOutput->weight;
+                $rankPoint = $this->competitionRank->weight;
+
+                return $organizerTypePoint * $teamTypePoint * $scalePoint * $timeRangePoint * $outputPoint * $rankPoint;
+            },
+        );
+    }
+
+    /**
      * Prepare a date for array / JSON serialization.
      */
     protected function serializeDate(DateTimeInterface $date): string
@@ -61,6 +87,11 @@ class Achievement extends Model
     public function competition(): BelongsTo
     {
         return $this->belongsTo(Competition::class);
+    }
+
+    public function competitionTeamType(): BelongsTo
+    {
+        return $this->belongsTo(CompetitionTeamType::class);
     }
 
     public function competitionScale(): BelongsTo
