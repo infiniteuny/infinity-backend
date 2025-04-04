@@ -1,0 +1,281 @@
+name: Faculties
+description: 'Manage faculties.'
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: v1/faculties
+    metadata:
+      groupName: Faculties
+      groupDescription: 'Manage faculties.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List all faculties'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"faculties":[{"id":"e6dd6f18-4626-3982-bfd3-853118653a32","code":"54","name":"Quisquam","created_at":"1975-10-22T15:32:02+00:00","updated_at":"1977-05-26T16:43:28+00:00"},{"id":"b80ce70b-0fe0-3cc6-b0d8-2fc41bb69419","code":"96","name":"Distinctio","created_at":"1991-07-18T15:59:29+00:00","updated_at":"1985-07-29T18:58:17+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: v1/faculties
+    metadata:
+      groupName: Faculties
+      groupDescription: 'Manage faculties.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create a faculty'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      code:
+        name: code
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      code: architecto
+      name: architecto
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: '{"status":"success","data":{"faculty":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"26","name":"Et","created_at":"2019-09-22T22:20:07+00:00","updated_at":"2020-11-24T05:29:17+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'v1/faculties/{id}'
+    metadata:
+      groupName: Faculties
+      groupDescription: 'Manage faculties.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Retrieve a faculty'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the faculty.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"faculty":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"40","name":"Incidunt","created_at":"1983-05-17T03:07:42+00:00","updated_at":"1991-02-14T15:14:21+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'v1/faculties/{id}'
+    metadata:
+      groupName: Faculties
+      groupDescription: 'Manage faculties.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update a faculty'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the faculty.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      code:
+        name: code
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      code: architecto
+      name: architecto
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"faculty":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"25","name":"Sunt","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'v1/faculties/{id}'
+    metadata:
+      groupName: Faculties
+      groupDescription: 'Manage faculties.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete a faculty'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the faculty.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"faculty":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"79","name":"Iure","created_at":"1991-02-14T15:14:21+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []

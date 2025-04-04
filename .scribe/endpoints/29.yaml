@@ -1,0 +1,303 @@
+name: Teams
+description: 'Manage teams.'
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: v1/teams
+    metadata:
+      groupName: Teams
+      groupDescription: 'Manage teams.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List all teams'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"teams":[{"id":"3f37799d-cee0-3a99-9f18-ab13b11e5875","leader_id":"e3644e6b-72ef-3396-b3b8-5ae61e81a935","name":"Neque","is_personal":true,"created_at":"2009-09-06T07:59:39+00:00","updated_at":"2002-04-28T12:23:51+00:00"},{"id":"ded36dfe-a636-3a80-adc8-ba9128289f93","leader_id":"daf3add7-c9da-3dee-8da1-9b038cf6e98f","name":"Officia","is_personal":false,"created_at":"1989-08-13T04:04:23+00:00","updated_at":"2000-12-08T08:04:34+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: v1/teams
+    metadata:
+      groupName: Teams
+      groupDescription: 'Manage teams.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create a team'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      leader_id:
+        name: leader_id
+        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the users table.'
+        required: true
+        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      is_personal:
+        name: is_personal
+        description: ''
+        required: true
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      name: architecto
+      is_personal: true
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Molestias","is_personal":true,"created_at":"2022-02-02T09:49:12+00:00","updated_at":"2022-05-07T11:01:03+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'v1/teams/{id}'
+    metadata:
+      groupName: Teams
+      groupDescription: 'Manage teams.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Retrieve a team'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the team.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Fugit","is_personal":false,"created_at":"2022-05-07T11:01:03+00:00","updated_at":"2013-02-14T00:13:02+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'v1/teams/{id}'
+    metadata:
+      groupName: Teams
+      groupDescription: 'Manage teams.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update a team'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the team.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      leader_id:
+        name: leader_id
+        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the users table.'
+        required: false
+        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      is_personal:
+        name: is_personal
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      name: architecto
+      is_personal: true
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Deleniti","is_personal":false,"created_at":"2013-02-14T00:13:02+00:00","updated_at":"1978-02-22T06:30:41+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'v1/teams/{id}'
+    metadata:
+      groupName: Teams
+      groupDescription: 'Manage teams.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete a team'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the team.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Distinctio","is_personal":false,"created_at":"1978-02-22T06:30:41+00:00","updated_at":"1992-01-23T18:11:49+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []

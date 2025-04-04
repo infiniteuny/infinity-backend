@@ -1,0 +1,361 @@
+name: Competitions
+description: 'Manage competitions.'
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: v1/competitions
+    metadata:
+      groupName: Competitions
+      groupDescription: 'Manage competitions.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List all competitions'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"competitions":[{"id":"0964e659-4df9-3172-bd34-4357afeac7e7","name":"Augusta Kovacek","description":"Magni culpa explicabo iusto aut in eius nihil. Rerum perspiciatis fuga et dolorem laudantium eos sed. Similique sunt aspernatur distinctio quaerat et fugit itaque.","url":"http:\/\/little.com\/quia-aperiam-rerum-modi-eaque-illo-doloribus","organizer":"Wisozk, VonRueden and Gutkowski","organizer_type_id":"5a523652-8b5b-31c2-81a4-a610e20bfbd0","logo":"http:\/\/localhost\/static\/private\/competitions\/logos\/some-logo-id.jpg?expires=1743796415&signature=04cf0d5562e156544787f685e88e9803e26950cd0897ee50008c1d33fa554d0c","created_at":"1973-03-23T18:07:25+00:00","updated_at":"1995-05-23T21:53:07+00:00"},{"id":"9cb5b8bb-dd99-3885-b302-6158addffcbf","name":"Anya Pacocha","description":"Quia cupiditate ea velit atque at. Rem est sint exercitationem occaecati. Architecto nobis voluptas quam eveniet nihil nihil. Est minus at autem.","url":"http:\/\/www.waelchi.com\/non-perspiciatis-quis-iusto-et-similique","organizer":"Muller, Spinka and Murazik","organizer_type_id":"7e6bd3b2-bc0e-3b93-88a8-29f161910009","logo":"http:\/\/localhost\/static\/private\/competitions\/logos\/some-logo-id.jpg?expires=1743796415&signature=04cf0d5562e156544787f685e88e9803e26950cd0897ee50008c1d33fa554d0c","created_at":"2019-02-22T14:23:19+00:00","updated_at":"1984-12-09T16:12:05+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'v1/competitions/{id}'
+    metadata:
+      groupName: Competitions
+      groupDescription: 'Manage competitions.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Retrieve a competition'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the competition.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"competition":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","description":"Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.","url":"http:\/\/www.considine.com\/eum-doloremque-id-aut-libero-aliquam-veniam-corporis","organizer":"Schaden, King and Fahey","organizer_type_id":"2024410d-26cd-3763-b1f0-31011d306e58","logo":"http:\/\/localhost\/static\/private\/competitions\/logos\/some-logo-id.jpg?expires=1743796415&signature=04cf0d5562e156544787f685e88e9803e26950cd0897ee50008c1d33fa554d0c","created_at":"2010-08-21T08:20:53+00:00","updated_at":"2021-03-28T12:52:13+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: v1/competitions
+    metadata:
+      groupName: Competitions
+      groupDescription: 'Manage competitions.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create a competition'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: true
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      url:
+        name: url
+        description: 'Must be a valid URL.'
+        required: false
+        example: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      organizer:
+        name: organizer
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      organizer_type_id:
+        name: organizer_type_id
+        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the competition_organizer_types table.'
+        required: true
+        example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      logo:
+        name: logo
+        description: 'Must be a file. Must not be greater than 5120 kilobytes.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: architecto
+      description: 'Eius et animi quos velit et.'
+      url: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
+      organizer: architecto
+      organizer_type_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
+    fileParameters:
+      logo: null
+    responses:
+      -
+        status: 201
+        content: '{"status":"success","data":{"competition":{"id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","description":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","url":"http:\/\/www.considine.com\/eum-doloremque-id-aut-libero-aliquam-veniam-corporis","organizer":"Schaden, King and Fahey","organizer_type_id":"2024410d-26cd-3763-b1f0-31011d306e58","logo":"http:\/\/localhost\/static\/private\/competitions\/logos\/some-logo-id.jpg?expires=1743796416&signature=c6541fe2e02cd5e194ec774caf5a7457c5f7ddaa54162ef33bfe051f2cb72971","created_at":"2010-08-21T08:20:52+00:00","updated_at":"2021-03-28T12:52:13+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'v1/competitions/{id}'
+    metadata:
+      groupName: Competitions
+      groupDescription: 'Manage competitions.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update a competition'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the competition.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      url:
+        name: url
+        description: 'Must be a valid URL.'
+        required: false
+        example: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      organizer:
+        name: organizer
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      organizer_type_id:
+        name: organizer_type_id
+        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the competition_organizer_types table.'
+        required: false
+        example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      logo:
+        name: logo
+        description: 'Must be a file. Must not be greater than 5120 kilobytes.'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: architecto
+      description: 'Eius et animi quos velit et.'
+      url: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
+      organizer: architecto
+      organizer_type_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
+    fileParameters:
+      logo: null
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"competition":{"id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","description":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","url":"http:\/\/www.considine.com\/eum-doloremque-id-aut-libero-aliquam-veniam-corporis","organizer":"Schaden, King and Fahey","organizer_type_id":"2024410d-26cd-3763-b1f0-31011d306e58","logo":"http:\/\/localhost\/static\/private\/competitions\/logos\/some-logo-id.jpg?expires=1743796416&signature=c6541fe2e02cd5e194ec774caf5a7457c5f7ddaa54162ef33bfe051f2cb72971","created_at":"2010-08-21T08:20:52+00:00","updated_at":"2021-03-28T12:52:13+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'v1/competitions/{id}'
+    metadata:
+      groupName: Competitions
+      groupDescription: 'Manage competitions.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete a competition'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the competition.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"competition":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Miss Pearl Hauck","description":"Odit et et modi. Nostrum omnis autem et consequatur aut. Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id.","url":"https:\/\/www.casper.com\/et-recusandae-modi-rerum-ex-repellendus-assumenda-et","organizer":"Cassin Inc","organizer_type_id":"128dddd1-af1b-310e-a6a4-c38c0253b195","logo":"http:\/\/localhost\/static\/private\/competitions\/logos\/some-logo-id.jpg?expires=1743796416&signature=c6541fe2e02cd5e194ec774caf5a7457c5f7ddaa54162ef33bfe051f2cb72971","created_at":"1992-04-28T03:30:54+00:00","updated_at":"1970-12-03T05:50:39+00:00"}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
