@@ -15,7 +15,7 @@ class UpdatePersonaRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string'],
-            'priority' => ['sometimes', 'integer'],
+            'priority' => ['sometimes', 'integer', 'between:0,127'],
             'description' => ['sometimes', 'string'],
             'logo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];

@@ -15,7 +15,7 @@ class StoreCommunityGroupRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'priority' => ['required', 'integer'],
+            'priority' => ['required', 'integer', 'between:0,127'],
             'description' => ['required', 'string'],
             'logo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];

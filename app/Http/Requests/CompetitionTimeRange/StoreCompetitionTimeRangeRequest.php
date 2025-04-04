@@ -15,7 +15,7 @@ class StoreCompetitionTimeRangeRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'weight' => ['required', 'integer'],
+            'weight' => ['required', 'integer', 'between:0,2147483647'],
         ];
     }
 }

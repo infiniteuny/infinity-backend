@@ -15,7 +15,7 @@ class UpdateCompetitionScaleRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string'],
-            'weight' => ['sometimes', 'integer'],
+            'weight' => ['sometimes', 'integer', 'between:0,2147483647'],
         ];
     }
 }

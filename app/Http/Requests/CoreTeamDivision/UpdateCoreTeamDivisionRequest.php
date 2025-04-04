@@ -15,7 +15,7 @@ class UpdateCoreTeamDivisionRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string'],
-            'priority' => ['sometimes', 'integer'],
+            'priority' => ['sometimes', 'integer', 'between:0,127'],
         ];
     }
 }

@@ -15,7 +15,7 @@ class StoreCoreTeamDivisionRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'priority' => ['required', 'integer'],
+            'priority' => ['required', 'integer', 'between:0,127'],
         ];
     }
 }
