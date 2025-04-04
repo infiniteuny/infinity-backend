@@ -30,6 +30,10 @@ class CoreTeamMemberController extends Controller
      * List all core team members
      *
      * @unauthenticated
+     *
+     * @apiResourceCollection App\Http\Resources\CoreTeamMember\CoreTeamMemberCollection
+     *
+     * @apiResourceModel App\Models\User states=pivotCoreTeamMember paginate=10,cursor
      */
     public function index(CoreTeam $coreTeam, Request $request)
     {
@@ -41,6 +45,10 @@ class CoreTeamMemberController extends Controller
 
     /**
      * Create a core team member
+     *
+     * @apiResource App\Http\Resources\CoreTeamMember\CoreTeamMemberResource status=201
+     *
+     * @apiResourceModel App\Models\User states=pivotCoreTeamMember
      */
     public function store(CoreTeam $coreTeam, StoreCoreTeamMemberRequest $request)
     {
@@ -78,6 +86,10 @@ class CoreTeamMemberController extends Controller
      * Retrieve a core team member
      *
      * @unauthenticated
+     *
+     * @apiResource App\Http\Resources\CoreTeamMember\CoreTeamMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCoreTeamMember
      */
     public function show(CoreTeamMember $coreTeamMember)
     {
@@ -95,6 +107,10 @@ class CoreTeamMemberController extends Controller
 
     /**
      * Update a core team member
+     *
+     * @apiResource App\Http\Resources\CoreTeamMember\CoreTeamMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCoreTeamMember
      */
     public function update(UpdateCoreTeamMemberRequest $request, CoreTeamMember $coreTeamMember)
     {
@@ -151,6 +167,10 @@ class CoreTeamMemberController extends Controller
 
     /**
      * Delete a core team member
+     *
+     * @apiResource App\Http\Resources\CoreTeamMember\CoreTeamMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCoreTeamMember
      */
     public function destroy(CoreTeamMember $coreTeamMember)
     {

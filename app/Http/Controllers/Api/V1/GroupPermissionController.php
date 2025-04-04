@@ -25,6 +25,10 @@ class GroupPermissionController extends Controller
 
     /**
      * List all group permissions
+     *
+     * @apiResourceCollection App\Http\Resources\GroupPermission\GroupPermissionCollection
+     *
+     * @apiResourceModel App\Models\Permission states=pivotGroupPermission paginate=10,cursor
      */
     public function index(Group $group, Request $request)
     {
@@ -36,6 +40,10 @@ class GroupPermissionController extends Controller
 
     /**
      * Create a group permission
+     *
+     * @apiResource App\Http\Resources\GroupPermission\GroupPermissionResource status=201
+     *
+     * @apiResourceModel App\Models\Permission states=pivotGroupPermission
      */
     public function store(Group $group, StoreGroupPermissionRequest $request)
     {
@@ -51,6 +59,10 @@ class GroupPermissionController extends Controller
 
     /**
      * Retrieve a group permission
+     *
+     * @apiResource App\Http\Resources\GroupPermission\GroupPermissionResource
+     *
+     * @apiResourceModel App\Models\Permission states=pivotGroupPermission
      */
     public function show(GroupPermission $groupPermission)
     {
@@ -68,6 +80,10 @@ class GroupPermissionController extends Controller
 
     /**
      * Update a group permission
+     *
+     * @apiResource App\Http\Resources\GroupPermission\GroupPermissionResource
+     *
+     * @apiResourceModel App\Models\Permission states=pivotGroupPermission
      */
     public function update(UpdateGroupPermissionRequest $request, GroupPermission $groupPermission)
     {
@@ -85,6 +101,10 @@ class GroupPermissionController extends Controller
 
     /**
      * Delete a group permission
+     *
+     * @apiResource App\Http\Resources\GroupPermission\GroupPermissionResource
+     *
+     * @apiResourceModel App\Models\Permission states=pivotGroupPermission
      */
     public function destroy(GroupPermission $groupPermission)
     {

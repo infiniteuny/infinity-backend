@@ -27,6 +27,10 @@ class UserPermissionController extends Controller
      * List all user permissions
      *
      * @unauthenticated
+     *
+     * @apiResourceCollection App\Http\Resources\UserPermission\UserPermissionCollection
+     *
+     * @apiResourceModel App\Models\Permission states=pivotUserPermission paginate=10,cursor
      */
     public function index(User $user, Request $request)
     {
@@ -38,6 +42,10 @@ class UserPermissionController extends Controller
 
     /**
      * Create a user permission
+     *
+     * @apiResource App\Http\Resources\UserPermission\UserPermissionResource status=201
+     *
+     * @apiResourceModel App\Models\Permission states=pivotUserPermission
      */
     public function store(User $user, StoreUserPermissionRequest $request)
     {
@@ -55,6 +63,10 @@ class UserPermissionController extends Controller
      * Retrieve a user permission
      *
      * @unauthenticated
+     *
+     * @apiResource App\Http\Resources\UserPermission\UserPermissionResource
+     *
+     * @apiResourceModel App\Models\Permission states=pivotUserPermission
      */
     public function show(UserPermission $userPermission)
     {
@@ -72,6 +84,10 @@ class UserPermissionController extends Controller
 
     /**
      * Update a user permission
+     *
+     * @apiResource App\Http\Resources\UserPermission\UserPermissionResource
+     *
+     * @apiResourceModel App\Models\Permission states=pivotUserPermission
      */
     public function update(UpdateUserPermissionRequest $request, UserPermission $userPermission)
     {
@@ -89,6 +105,10 @@ class UserPermissionController extends Controller
 
     /**
      * Delete a user permission
+     *
+     * @apiResource App\Http\Resources\UserPermission\UserPermissionResource
+     *
+     * @apiResourceModel App\Models\Permission states=pivotUserPermission
      */
     public function destroy(UserPermission $userPermission)
     {

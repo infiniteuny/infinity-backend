@@ -27,6 +27,10 @@ class CommunityGroupMemberController extends Controller
      * List all community group members
      *
      * @unauthenticated
+     *
+     * @apiResourceCollection App\Http\Resources\CommunityGroupMember\CommunityGroupMemberCollection
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupMember paginate=10,cursor
      */
     public function index(CommunityGroup $communityGroup, Request $request)
     {
@@ -38,6 +42,10 @@ class CommunityGroupMemberController extends Controller
 
     /**
      * Create a community group member
+     *
+     * @apiResource App\Http\Resources\CommunityGroupMember\CommunityGroupMemberResource status=201
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupMember
      */
     public function store(CommunityGroup $communityGroup, StoreCommunityGroupMemberRequest $request)
     {
@@ -55,6 +63,10 @@ class CommunityGroupMemberController extends Controller
      * Retrieve a community group member
      *
      * @unauthenticated
+     *
+     * @apiResource App\Http\Resources\CommunityGroupMember\CommunityGroupMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupMember
      */
     public function show(CommunityGroupMember $communityGroupMember)
     {
@@ -72,6 +84,10 @@ class CommunityGroupMemberController extends Controller
 
     /**
      * Update a community group member
+     *
+     * @apiResource App\Http\Resources\CommunityGroupMember\CommunityGroupMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupMember
      */
     public function update(UpdateCommunityGroupMemberRequest $request, CommunityGroupMember $communityGroupMember)
     {
@@ -89,6 +105,10 @@ class CommunityGroupMemberController extends Controller
 
     /**
      * Delete a community group member
+     *
+     * @apiResource App\Http\Resources\CommunityGroupMember\CommunityGroupMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupMember
      */
     public function destroy(CommunityGroupMember $communityGroupMember)
     {

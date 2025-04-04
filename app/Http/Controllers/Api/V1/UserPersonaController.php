@@ -27,6 +27,10 @@ class UserPersonaController extends Controller
      * List all user personas
      *
      * @unauthenticated
+     *
+     * @apiResourceCollection App\Http\Resources\UserPersona\UserPersonaCollection
+     *
+     * @apiResourceModel App\Models\Persona states=pivotUserPersona paginate=10,cursor
      */
     public function index(User $user, Request $request)
     {
@@ -38,6 +42,10 @@ class UserPersonaController extends Controller
 
     /**
      * Create a user persona
+     *
+     * @apiResource App\Http\Resources\UserPersona\UserPersonaResource status=201
+     *
+     * @apiResourceModel App\Models\Persona states=pivotUserPersona
      */
     public function store(User $user, StoreUserPersonaRequest $request)
     {
@@ -55,6 +63,10 @@ class UserPersonaController extends Controller
      * Retrieve a user persona
      *
      * @unauthenticated
+     *
+     * @apiResource App\Http\Resources\UserPersona\UserPersonaResource
+     *
+     * @apiResourceModel App\Models\Persona states=pivotUserPersona
      */
     public function show(UserPersona $userPersona)
     {
@@ -72,6 +84,10 @@ class UserPersonaController extends Controller
 
     /**
      * Update a user persona
+     *
+     * @apiResource App\Http\Resources\UserPersona\UserPersonaResource
+     *
+     * @apiResourceModel App\Models\Persona states=pivotUserPersona
      */
     public function update(UpdateUserPersonaRequest $request, UserPersona $userPersona)
     {
@@ -89,6 +105,10 @@ class UserPersonaController extends Controller
 
     /**
      * Delete a user persona
+     *
+     * @apiResource App\Http\Resources\UserPersona\UserPersonaResource
+     *
+     * @apiResourceModel App\Models\Persona states=pivotUserPersona
      */
     public function destroy(UserPersona $userPersona)
     {

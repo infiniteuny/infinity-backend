@@ -25,6 +25,10 @@ class TeamMemberController extends Controller
 
     /**
      * List all team members
+     *
+     * @apiResourceCollection App\Http\Resources\TeamMember\TeamMemberCollection
+     *
+     * @apiResourceModel App\Models\User states=pivotTeamMember paginate=10,cursor
      */
     public function index(Team $team, Request $request)
     {
@@ -36,6 +40,10 @@ class TeamMemberController extends Controller
 
     /**
      * Create a team member
+     *
+     * @apiResource App\Http\Resources\TeamMember\TeamMemberResource status=201
+     *
+     * @apiResourceModel App\Models\User states=pivotTeamMember
      */
     public function store(Team $team, StoreTeamMemberRequest $request)
     {
@@ -51,6 +59,10 @@ class TeamMemberController extends Controller
 
     /**
      * Retrieve a team member
+     *
+     * @apiResource App\Http\Resources\TeamMember\TeamMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotTeamMember
      */
     public function show(TeamMember $teamMember)
     {
@@ -68,6 +80,10 @@ class TeamMemberController extends Controller
 
     /**
      * Update a team member
+     *
+     * @apiResource App\Http\Resources\TeamMember\TeamMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotTeamMember
      */
     public function update(UpdateTeamMemberRequest $request, TeamMember $teamMember)
     {
@@ -85,6 +101,10 @@ class TeamMemberController extends Controller
 
     /**
      * Delete a team member
+     *
+     * @apiResource App\Http\Resources\TeamMember\TeamMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotTeamMember
      */
     public function destroy(TeamMember $teamMember)
     {

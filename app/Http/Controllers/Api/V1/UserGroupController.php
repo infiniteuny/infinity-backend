@@ -25,6 +25,10 @@ class UserGroupController extends Controller
 
     /**
      * List all user groups
+     *
+     * @apiResourceCollection App\Http\Resources\UserGroup\UserGroupCollection
+     *
+     * @apiResourceModel App\Models\Group states=pivotUserGroup paginate=10,cursor
      */
     public function index(User $user, Request $request)
     {
@@ -36,6 +40,10 @@ class UserGroupController extends Controller
 
     /**
      * Create a user group
+     *
+     * @apiResource App\Http\Resources\UserGroup\UserGroupResource status=201
+     *
+     * @apiResourceModel App\Models\Group states=pivotUserGroup
      */
     public function store(User $user, StoreUserGroupRequest $request)
     {
@@ -51,6 +59,10 @@ class UserGroupController extends Controller
 
     /**
      * Retrieve a user group
+     *
+     * @apiResource App\Http\Resources\UserGroup\UserGroupResource
+     *
+     * @apiResourceModel App\Models\Group states=pivotUserGroup
      */
     public function show(UserGroup $userGroup)
     {
@@ -68,6 +80,10 @@ class UserGroupController extends Controller
 
     /**
      * Update a user group
+     *
+     * @apiResource App\Http\Resources\UserGroup\UserGroupResource
+     *
+     * @apiResourceModel App\Models\Group states=pivotUserGroup
      */
     public function update(UpdateUserGroupRequest $request, UserGroup $userGroup)
     {
@@ -85,6 +101,10 @@ class UserGroupController extends Controller
 
     /**
      * Delete a user group
+     *
+     * @apiResource App\Http\Resources\UserGroup\UserGroupResource
+     *
+     * @apiResourceModel App\Models\Group states=pivotUserGroup
      */
     public function destroy(UserGroup $userGroup)
     {

@@ -30,6 +30,10 @@ class CommunityGroupAdminMemberController extends Controller
      * List all community group administrator members
      *
      * @unauthenticated
+     *
+     * @apiResourceCollection App\Http\Resources\CommunityGroupAdminMember\CommunityGroupAdminMemberCollection
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupAdminMember paginate=10,cursor
      */
     public function index(CommunityGroupAdmin $communityGroupAdmin, Request $request)
     {
@@ -41,6 +45,10 @@ class CommunityGroupAdminMemberController extends Controller
 
     /**
      * Create a community group administrator member
+     *
+     * @apiResource App\Http\Resources\CommunityGroupAdminMember\CommunityGroupAdminMemberResource status=201
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupAdminMember
      */
     public function store(CommunityGroupAdmin $communityGroupAdmin, StoreCommunityGroupAdminMemberRequest $request)
     {
@@ -78,6 +86,10 @@ class CommunityGroupAdminMemberController extends Controller
      * Retrieve a community group administrator member
      *
      * @unauthenticated
+     *
+     * @apiResource App\Http\Resources\CommunityGroupAdminMember\CommunityGroupAdminMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupAdminMember
      */
     public function show(CommunityGroupAdminMember $communityGroupAdminMember)
     {
@@ -95,6 +107,10 @@ class CommunityGroupAdminMemberController extends Controller
 
     /**
      * Update a community group administrator member
+     *
+     * @apiResource App\Http\Resources\CommunityGroupAdminMember\CommunityGroupAdminMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupAdminMember
      */
     public function update(UpdateCommunityGroupAdminMemberRequest $request, CommunityGroupAdminMember $communityGroupAdminMember)
     {
@@ -151,6 +167,10 @@ class CommunityGroupAdminMemberController extends Controller
 
     /**
      * Delete a community group administrator member
+     *
+     * @apiResource App\Http\Resources\CommunityGroupAdminMember\CommunityGroupAdminMemberResource
+     *
+     * @apiResourceModel App\Models\User states=pivotCommunityGroupAdminMember
      */
     public function destroy(CommunityGroupAdminMember $communityGroupAdminMember)
     {
