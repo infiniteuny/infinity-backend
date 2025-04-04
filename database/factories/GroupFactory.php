@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group>
@@ -32,5 +32,18 @@ class GroupFactory extends Factory
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
+    }
+
+    public function pivotUserGroup(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'entitlement' => [
+                    'id' => $this->faker->uuid(),
+                    'user_id' => $this->faker->uuid(),
+                    'group_id' => $attributes['id'],
+                ],
+            ];
+        });
     }
 }

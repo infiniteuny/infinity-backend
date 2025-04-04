@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\CoreTeamDivision;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CoreTeamDivision>
@@ -28,7 +28,7 @@ class CoreTeamDivisionFactory extends Factory
         return [
             'id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->unique()->word()),
-            'priority' => $this->faker->numberBetween(1, 10),
+            'priority' => $this->faker->numberBetween(1, 127),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

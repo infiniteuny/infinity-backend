@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Permission>
@@ -32,5 +32,31 @@ class PermissionFactory extends Factory
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
+    }
+
+    public function pivotUserPermission(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'entitlement' => [
+                    'id' => $this->faker->uuid(),
+                    'user_id' => $this->faker->uuid(),
+                    'permission_id' => $attributes['id'],
+                ],
+            ];
+        });
+    }
+
+    public function pivotGroupPermission(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'entitlement' => [
+                    'id' => $this->faker->uuid(),
+                    'group_id' => $this->faker->uuid(),
+                    'permission_id' => $attributes['id'],
+                ],
+            ];
+        });
     }
 }

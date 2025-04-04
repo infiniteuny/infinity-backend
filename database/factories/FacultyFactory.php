@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Faculty;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Faculty>
@@ -27,7 +27,7 @@ class FacultyFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'code' => $this->faker->unique()->randomNumber(),
+            'code' => sprintf('%02d', $this->faker->unique()->numberBetween(1, 99)),
             'name' => Str::title($this->faker->word()),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

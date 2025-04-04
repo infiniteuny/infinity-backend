@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Competition;
-use App\Models\CompetitionOrganizerType;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Competition>
@@ -32,7 +31,7 @@ class CompetitionFactory extends Factory
             'description' => $this->faker->text(),
             'url' => $this->faker->url(),
             'organizer' => $this->faker->company(),
-            'organizer_type_id' => CompetitionOrganizerType::factory(),
+            'organizer_type_id' => $this->faker->uuid(),
             'logo' => json_encode([
                 'disk' => 'local',
                 'visibility' => 'private',

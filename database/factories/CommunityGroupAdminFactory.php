@@ -25,8 +25,8 @@ class CommunityGroupAdminFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => $this->faker->uuid,
-            'year' => $this->faker->year,
+            'id' => $this->faker->uuid(),
+            'year' => $this->faker->year(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

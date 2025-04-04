@@ -27,7 +27,7 @@ class CommunityGroupFactory extends Factory
         return [
             'id' => $this->faker->uuid(),
             'name' => $this->faker->unique()->word(),
-            'priority' => $this->faker->numberBetween(),
+            'priority' => $this->faker->numberBetween(1, 127),
             'description' => $this->faker->text(),
             'logo' => json_encode([
                 'disk' => 'local',

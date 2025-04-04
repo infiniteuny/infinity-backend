@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Team;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Team>
@@ -28,7 +27,7 @@ class TeamFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'leader_id' => User::factory(),
+            'leader_id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->unique()->word()),
             'is_personal' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTime(),

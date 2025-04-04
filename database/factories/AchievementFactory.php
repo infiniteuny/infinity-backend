@@ -3,15 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Achievement;
-use App\Models\Competition;
-use App\Models\CompetitionOutput;
-use App\Models\CompetitionRank;
-use App\Models\CompetitionScale;
-use App\Models\CompetitionTeamType;
-use App\Models\CompetitionTimeRange;
-use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Achievement>
@@ -33,18 +26,18 @@ class AchievementFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => $this->faker->uuid,
-            'team_id' => Team::factory(),
-            'competition_id' => Competition::factory(),
-            'competition_team_type_id' => CompetitionTeamType::factory(),
-            'competition_scale_id' => CompetitionScale::factory(),
-            'competition_time_range_id' => CompetitionTimeRange::factory(),
-            'competition_output_id' => CompetitionOutput::factory(),
-            'competition_rank_id' => CompetitionRank::factory(),
-            'competition_branch' => Str::title($this->faker->word),
+            'id' => $this->faker->uuid(),
+            'team_id' => $this->faker->uuid(),
+            'competition_id' => $this->faker->uuid(),
+            'competition_team_type_id' => $this->faker->uuid(),
+            'competition_scale_id' => $this->faker->uuid(),
+            'competition_time_range_id' => $this->faker->uuid(),
+            'competition_output_id' => $this->faker->uuid(),
+            'competition_rank_id' => $this->faker->uuid(),
+            'competition_branch' => Str::title($this->faker->word()),
             'competition_start_date' => $this->faker->date(),
             'competition_end_date' => $this->faker->date(),
-            'description' => $this->faker->text,
+            'description' => $this->faker->text(),
             'image' => json_encode([
                 'disk' => 'local',
                 'visibility' => 'private',

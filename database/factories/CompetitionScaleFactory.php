@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\CompetitionScale;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CompetitionScale>
@@ -28,7 +28,7 @@ class CompetitionScaleFactory extends Factory
         return [
             'id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->word()),
-            'weight' => $this->faker->randomNumber(),
+            'weight' => $this->faker->numberBetween(0, 2147483647),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

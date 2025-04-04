@@ -2,13 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Competition;
-use App\Models\CompetitionScale;
-use App\Models\CompetitionTeamType;
 use App\Models\FundApplication;
-use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FundApplication>
@@ -31,10 +27,10 @@ class FundApplicationFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'team_id' => Team::factory(),
-            'competition_id' => Competition::factory(),
-            'competition_team_type_id' => CompetitionTeamType::factory(),
-            'competition_scale_id' => CompetitionScale::factory(),
+            'team_id' => $this->faker->uuid(),
+            'competition_id' => $this->faker->uuid(),
+            'competition_team_type_id' => $this->faker->uuid(),
+            'competition_scale_id' => $this->faker->uuid(),
             'competition_branch' => Str::title($this->faker->word()),
             'competition_start_date' => $this->faker->date(),
             'competition_end_date' => $this->faker->date(),

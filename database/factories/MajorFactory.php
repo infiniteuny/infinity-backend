@@ -6,7 +6,7 @@ use App\Models\Degree;
 use App\Models\Faculty;
 use App\Models\Major;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Major>
@@ -29,9 +29,9 @@ class MajorFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'degree_id' => Degree::factory(),
-            'faculty_id' => Faculty::factory(),
-            'code' => $this->faker->unique()->randomNumber(2),
+            'degree_id' => $this->faker->uuid(),
+            'faculty_id' => $this->faker->uuid(),
+            'code' => sprintf('%04d', $this->faker->unique()->numberBetween(101, 9999)),
             'name' => Str::title($this->faker->word()),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Persona;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Persona>
@@ -28,7 +28,7 @@ class PersonaFactory extends Factory
         return [
             'id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->unique()->word()),
-            'priority' => $this->faker->numberBetween(1, 10),
+            'priority' => $this->faker->numberBetween(1, 127),
             'description' => $this->faker->text(),
             'logo' => json_encode([
                 'disk' => 'local',
@@ -39,5 +39,20 @@ class PersonaFactory extends Factory
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
+    }
+
+    public function pivotUserPersona(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'entitlement' => [
+                    'id' => $this->faker->uuid(),
+                    'user_id' => $this->faker->uuid(),
+                    'persona_id' => $attributes['id'],
+                    'created_at' => $this->faker->dateTime()->format(DATE_ATOM),
+                    'updated_at' => $this->faker->dateTime()->format(DATE_ATOM),
+                ],
+            ];
+        });
     }
 }
