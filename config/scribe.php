@@ -110,7 +110,7 @@ return [
     'static' => [
         // HTML documentation, assets and Postman collection will be generated
         // to this folder. Source Markdown will still be in resources/docs.
-        'output_path' => 'public',
+        'output_path' => 'public/docs',
     ],
 
     'laravel' => [
@@ -121,7 +121,7 @@ return [
         // URL path to use for the docs endpoint (if `add_routes` is true).
         // By default, `/docs` opens the HTML page, `/docs.postman` opens the
         // Postman collection, and `/docs.openapi` the OpenAPI spec.
-        'docs_url' => '/',
+        'docs_url' => '/docs',
 
         // Directory within `public` in which to store CSS and JS assets.
         // By default, assets are stored in `public/vendor/scribe`.
@@ -333,7 +333,7 @@ return [
         // example models to use in your API responses. By default, Scribe
         // will try the model's factory, and if that fails, try fetching the
         // first from the database. You can reorder or remove strategies here.
-        'models_source' => ['factoryCreate', 'factoryMake', 'databaseFirst'],
+        'models_source' => ['factoryMake'],
     ],
 
     /*
