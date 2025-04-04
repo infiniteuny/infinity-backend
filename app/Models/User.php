@@ -9,6 +9,7 @@ use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, MustVerifyEmailContract
 {
@@ -60,6 +62,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'is_member' => 'boolean',
         'is_extraordinary' => 'boolean',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'is_active',
+    ];
+
+    protected function isActive(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->is_member && $this->start_date <= Carbon::now() &&
+                $this->end_date >= Carbon::now(),
+        );
+    }
 
     /**
      * Prepare a date for array / JSON serialization.

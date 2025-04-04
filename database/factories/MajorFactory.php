@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Degree;
-use App\Models\Faculty;
 use App\Models\Major;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
