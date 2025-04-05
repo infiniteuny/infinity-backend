@@ -61,6 +61,12 @@ class AppServiceProvider extends ServiceProvider
                 $app->make('request'),
             );
         });
+        Auth::extend('dummy_oidc', function ($app, $name, array $config) {
+            return new OidcDummyGuard(
+                Auth::createUserProvider($config['provider']),
+                $app->make('request'),
+            );
+        });
         RateLimiter::for('api', function (Request $request) {
             return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());
         });
