@@ -24,7 +24,9 @@ class AchievementController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Achievement::class, 'achievement');
+        $this->middleware('can:create,'.Achievement::class)->only('store');
+        $this->middleware('can:update,achievement')->only('update');
+        $this->middleware('can:delete,achievement')->only('destroy');
     }
 
     /**
@@ -38,7 +40,8 @@ class AchievementController extends Controller
      */
     public function index(Request $request)
     {
-        $userId = $request->user()->id;
+        $user = $request->user();
+
         $achievements = QueryBuilder::for(Achievement::class)
             ->allowedFields([
                 'id',
@@ -58,63 +61,114 @@ class AchievementController extends Controller
                 'status',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
-                'team',
-                'competition',
-                AllowedInclude::relationship('competition_team_type', 'competitionTeamType'),
-                AllowedInclude::relationship('competition_scale', 'competitionScale'),
-                AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
-                AllowedInclude::relationship('competition_output', 'competitionOutput'),
-                AllowedInclude::relationship('competition_rank', 'competitionRank'),
-            ])
-            ->allowedFilters([
-                AllowedFilter::exact('team_id'),
-                AllowedFilter::exact('competition_id'),
-                AllowedFilter::exact('competition_team_type_id'),
-                AllowedFilter::exact('competition_scale_id'),
-                AllowedFilter::exact('competition_time_range_id'),
-                AllowedFilter::exact('competition_output_id'),
-                AllowedFilter::exact('competition_rank_id'),
-                'competition_branch',
-                AllowedFilter::operator('competition_start_date', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('competition_end_date', FilterOperator::DYNAMIC),
-                'description',
-                AllowedFilter::exact('status'),
-                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
-                'id',
-                'team_id',
-                'competition_id',
-                'competition_team_type_id',
-                'competition_scale_id',
-                'competition_time_range_id',
-                'competition_output_id',
-                'competition_rank_id',
-                'competition_branch',
-                'competition_start_date',
-                'competition_end_date',
-                'description',
-                'status',
-                'created_at',
-                'updated_at',
-            ])
+            ]);
+
+        if ($user) {
+            $achievements = $achievements
+                ->allowedIncludes([
+                    'team',
+                    'competition',
+                    AllowedInclude::relationship('competition_team_type', 'competitionTeamType'),
+                    AllowedInclude::relationship('competition_scale', 'competitionScale'),
+                    AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
+                    AllowedInclude::relationship('competition_output', 'competitionOutput'),
+                    AllowedInclude::relationship('competition_rank', 'competitionRank'),
+                ])
+                ->allowedFilters([
+                    AllowedFilter::exact('team_id'),
+                    AllowedFilter::exact('competition_id'),
+                    AllowedFilter::exact('competition_team_type_id'),
+                    AllowedFilter::exact('competition_scale_id'),
+                    AllowedFilter::exact('competition_time_range_id'),
+                    AllowedFilter::exact('competition_output_id'),
+                    AllowedFilter::exact('competition_rank_id'),
+                    'competition_branch',
+                    AllowedFilter::operator('competition_start_date', FilterOperator::DYNAMIC),
+                    AllowedFilter::operator('competition_end_date', FilterOperator::DYNAMIC),
+                    'description',
+                    AllowedFilter::exact('status'),
+                    AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                    AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+                ])
+                ->allowedSorts([
+                    'id',
+                    'team_id',
+                    'competition_id',
+                    'competition_team_type_id',
+                    'competition_scale_id',
+                    'competition_time_range_id',
+                    'competition_output_id',
+                    'competition_rank_id',
+                    'competition_branch',
+                    'competition_start_date',
+                    'competition_end_date',
+                    'description',
+                    'status',
+                    'created_at',
+                    'updated_at',
+                ]);
+        } else {
+            $achievements = $achievements
+                ->allowedIncludes([
+                    'competition',
+                    AllowedInclude::relationship('competition_team_type', 'competitionTeamType'),
+                    AllowedInclude::relationship('competition_scale', 'competitionScale'),
+                    AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
+                    AllowedInclude::relationship('competition_output', 'competitionOutput'),
+                    AllowedInclude::relationship('competition_rank', 'competitionRank'),
+                ])
+                ->allowedFilters([
+                    AllowedFilter::exact('competition_id'),
+                    AllowedFilter::exact('competition_team_type_id'),
+                    AllowedFilter::exact('competition_scale_id'),
+                    AllowedFilter::exact('competition_time_range_id'),
+                    AllowedFilter::exact('competition_output_id'),
+                    AllowedFilter::exact('competition_rank_id'),
+                    'competition_branch',
+                    AllowedFilter::operator('competition_start_date', FilterOperator::DYNAMIC),
+                    AllowedFilter::operator('competition_end_date', FilterOperator::DYNAMIC),
+                    'description',
+                    AllowedFilter::exact('status'),
+                    AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                    AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+                ])
+                ->allowedSorts([
+                    'id',
+                    'competition_id',
+                    'competition_team_type_id',
+                    'competition_scale_id',
+                    'competition_time_range_id',
+                    'competition_output_id',
+                    'competition_rank_id',
+                    'competition_branch',
+                    'competition_start_date',
+                    'competition_end_date',
+                    'description',
+                    'status',
+                    'created_at',
+                    'updated_at',
+                ]);
+        }
+
+        $achievements = $achievements
             ->defaultSorts([
                 '-id',
             ]);
 
-        if ($request->user()->can('read-achievement')) {
-            $achievements = $achievements;
-        } else {
-            $achievements = $achievements
-                ->whereHas('team', function ($query) use ($userId) {
-                    $query->where('leader_id', $userId);
-                })
-                ->orWhereHas('team.members', function ($query) use ($userId) {
-                    $query->where('team_members.id', $userId);
-                });
+        if ($user) {
+            $userId = $user->id;
+
+            if ($user->can('read-achievement')) {
+                $achievements = $achievements;
+            } else {
+                $achievements = $achievements
+                    ->whereHas('team', function ($query) use ($userId) {
+                        $query->where('leader_id', $userId);
+                    })
+                    ->orWhereHas('team.members', function ($query) use ($userId) {
+                        $query->where('team_members.id', $userId);
+                    });
+            }
         }
 
         $achievements = $achievements->cursorPaginate($request->query('per_page', 10));

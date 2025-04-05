@@ -24,7 +24,9 @@ class CompetitionController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Competition::class, 'competition');
+        $this->middleware('can:create,'.Competition::class)->only('store');
+        $this->middleware('can:update,competition')->only('update');
+        $this->middleware('can:delete,competition')->only('destroy');
     }
 
     /**

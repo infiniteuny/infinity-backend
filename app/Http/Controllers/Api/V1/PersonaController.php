@@ -24,7 +24,9 @@ class PersonaController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Persona::class, 'persona');
+        $this->middleware('can:create,'.Persona::class)->only('store');
+        $this->middleware('can:update,persona')->only('update');
+        $this->middleware('can:delete,persona')->only('destroy');
     }
 
     /**

@@ -20,7 +20,9 @@ class CommunityGroupMemberController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(CommunityGroupMember::class, 'community_group_member');
+        $this->middleware('can:create,'.CommunityGroupMember::class)->only('store');
+        $this->middleware('can:update,community_group_member')->only('update');
+        $this->middleware('can:delete,community_group_member')->only('destroy');
     }
 
     /**

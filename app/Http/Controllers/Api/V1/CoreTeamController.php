@@ -21,7 +21,9 @@ class CoreTeamController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(CoreTeam::class, 'core_team');
+        $this->middleware('can:create,'.CoreTeam::class)->only('store');
+        $this->middleware('can:update,core_team')->only('update');
+        $this->middleware('can:delete,core_team')->only('destroy');
     }
 
     /**

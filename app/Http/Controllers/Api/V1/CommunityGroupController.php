@@ -24,7 +24,9 @@ class CommunityGroupController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(CommunityGroup::class, 'community_group');
+        $this->middleware('can:create,'.CommunityGroup::class)->only('store');
+        $this->middleware('can:update,community_group')->only('update');
+        $this->middleware('can:delete,community_group')->only('destroy');
     }
 
     /**

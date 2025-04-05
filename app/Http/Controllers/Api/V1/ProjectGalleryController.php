@@ -22,7 +22,9 @@ class ProjectGalleryController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(ProjectGallery::class, 'project_gallery');
+        $this->middleware('can:create,'.ProjectGallery::class)->only('store');
+        $this->middleware('can:update,project_gallery')->only('update');
+        $this->middleware('can:delete,project_gallery')->only('destroy');
     }
 
     /**

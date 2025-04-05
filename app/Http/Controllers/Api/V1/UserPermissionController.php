@@ -20,7 +20,9 @@ class UserPermissionController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(UserPermission::class, 'user_permission');
+        $this->middleware('can:create,'.UserPermission::class)->only('store');
+        $this->middleware('can:update,user_permission')->only('update');
+        $this->middleware('can:delete,user_permission')->only('destroy');
     }
 
     /**

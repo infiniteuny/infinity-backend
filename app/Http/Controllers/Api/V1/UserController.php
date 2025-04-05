@@ -21,7 +21,9 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(User::class, 'user');
+        $this->middleware('can:create,'.User::class)->only('store');
+        $this->middleware('can:update,user')->only('update');
+        $this->middleware('can:delete,user')->only('destroy');
     }
 
     /**

@@ -23,7 +23,9 @@ class CoreTeamMemberController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(CoreTeamMember::class, 'core_team_member');
+        $this->middleware('can:create,'.CoreTeamMember::class)->only('store');
+        $this->middleware('can:update,core_team_member')->only('update');
+        $this->middleware('can:delete,core_team_member')->only('destroy');
     }
 
     /**

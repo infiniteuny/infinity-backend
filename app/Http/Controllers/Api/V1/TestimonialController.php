@@ -24,7 +24,9 @@ class TestimonialController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Testimonial::class, 'testimonial');
+        $this->middleware('can:create,'.Testimonial::class)->only('store');
+        $this->middleware('can:update,testimonial')->only('update');
+        $this->middleware('can:delete,testimonial')->only('destroy');
     }
 
     /**
