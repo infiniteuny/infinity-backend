@@ -31,6 +31,8 @@ class ConfigController extends Controller
     /**
      * List all configurations
      *
+     * @unauthenticated
+     *
      * @apiResourceCollection App\Http\Resources\Config\ConfigCollection
      *
      * @apiResourceModel App\Models\Config paginate=10,cursor
@@ -108,6 +110,8 @@ class ConfigController extends Controller
 
     /**
      * Retrieve a configuration
+     *
+     * @unauthenticated
      *
      * @apiResource App\Http\Resources\Config\ConfigResource
      *
