@@ -26,8 +26,8 @@ permissions:
   contents: write
 
 jobs:
-  docker-image-release:
-    name: Docker Image Release
+  inputs-check:
+    name: Inputs Check
     runs-on: ubuntu-latest
     steps:
       - name: Check if branch and release type match
@@ -61,6 +61,40 @@ jobs:
           script: |
             core.setFailed('Workflow failed. Did you set the correct version, release type, and pre-release version?');
 
+  docs-update:
+    name: Documentations Update
+    needs: inputs-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: "--ignore-platform-reqs --optimize-autoloader"
+
+      - name: Generate documentations
+        run: |
+          php artisan scribe:generate --env docs
+
+      - name: Commit documentations update
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(scribe): Update documentations"
+
+  docker-image-release:
+    name: Docker Image Release
+    needs:
+      - inputs-check
+      - docs-update
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
