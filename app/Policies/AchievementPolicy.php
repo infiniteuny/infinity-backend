@@ -8,22 +8,6 @@ use App\Models\User;
 class AchievementPolicy
 {
     /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(): bool
-    {
-        return true;
-    }
-
-    /**
      * Determine whether the user can create models.
      */
     public function create(User $user): bool
