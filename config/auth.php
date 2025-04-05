@@ -41,6 +41,10 @@ return [
             'driver' => 'oidc',
             'provider' => 'users',
         ],
+        'dummy' => [
+            'driver' => 'dummy_oidc',
+            'provider' => 'users',
+        ],
     ],
 
     /*

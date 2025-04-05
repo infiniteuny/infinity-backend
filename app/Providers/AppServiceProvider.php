@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Guards\OidcDummyGuard;
 use App\Guards\OidcGuard;
 use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
