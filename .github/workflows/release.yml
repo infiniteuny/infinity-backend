@@ -2,15 +2,65 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version"
+        required: true
+      release_type:
+        description: "Release type"
+        required: true
+        type: choice
+        default: "prod"
+        options:
+          - alpha
+          - beta
+          - rc
+          - prod
+      pre_release_version:
+        description: "Pre-release version (for non production releases)"
+        required: false
+        type: number
+
+permissions:
+  contents: write
 
 jobs:
   docker-image-release:
     name: Docker Image Release
     runs-on: ubuntu-latest
     steps:
+      - name: Check if branch and release type match
+        id: guard
+        run: |
+          # Check if the branch is not main or develop
+          if [[ "$BRANCH" != "main" && "$BRANCH" != "develop" ]]; then
+            echo "Branch is not main or develop! Aborting."
+            VERSION_MISMATCH='true';
+          elif [ "$BRANCH" == "main" ] && [ "$RELEASE_TYPE" != "prod" ]; then
+            echo "Branch and release type do not match! Aborting."
+            VERSION_MISMATCH='true';
+          elif [ "$BRANCH" == "develop" ] && ( [ "$RELEASE_TYPE" == "prod" ] || [ -z "$PRE_RELEASE_VERSION" ] ); then
+            echo "Branch and release type do not match! Aborting."
+            VERSION_MISMATCH='true';
+          else
+            echo "Branch and release type match! Proceeding."
+            VERSION_MISMATCH='false';
+          fi
+
+          echo "version_mismatch=$(echo $VERSION_MISMATCH)" >> "$GITHUB_OUTPUT";
+        env:
+          BRANCH: ${{ github.ref_name }}
+          RELEASE_TYPE: ${{ inputs.release_type }}
+          PRE_RELEASE_VERSION: ${{ inputs.pre_release_version }}
+
+      - name: Fail if branch and release type do not match
+        if: ${{ steps.guard.outputs.version_mismatch == 'true' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.setFailed('Workflow failed. Did you set the correct version, release type, and pre-release version?');
+
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -27,12 +77,26 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set version
+        id: version
+        run: |
+          if [ "$RELEASE_TYPE" != "prod" ]; then
+            VERSION="${VERSION#v}-${RELEASE_TYPE}.${PRE_RELEASE_VERSION}"
+          else
+            VERSION="${VERSION#v}"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+        env:
+          VERSION: ${{ inputs.version }}
+          RELEASE_TYPE: ${{ inputs.release_type }}
+          PRE_RELEASE_VERSION: ${{ inputs.pre_release_version }}
+
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
-          tags: type=semver,pattern={{version}}
+          tags: type=semver,pattern={{version}},value=${{ steps.version.outputs.version }}
           labels: |
             org.opencontainers.image.title=Infinity Back-End
             org.opencontainers.image.description=Infinity back-end app image, see https://github.com/infiniteuny/infinity-backend/ for more info.
