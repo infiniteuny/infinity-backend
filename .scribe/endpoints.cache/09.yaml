@@ -29,7 +29,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"users":[{"id":"d34becdc-c0c1-3b29-91d0-b8358c864cf4","name":"Henri Mitchell","email_address":"feeney.demarcus@gmail.com","phone_number":"559.897.7788","student_id":"55159266794","major_id":"56db1203-2e82-3de6-a828-ead32bd52d27","links":{"github":"http:\/\/www.schaden.com\/odit-quia-officia-est-dignissimos-neque-blanditiis-odio.html","linkedin":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html","website":"http:\/\/howe.com\/accusamus-ut-et-recusandae.html"},"start_date":"1991-02-25","end_date":"1973-04-14","is_member":false,"is_extraordinary":false,"created_at":"1983-03-13T03:26:49+00:00","updated_at":"1996-05-13T07:22:41+00:00","is_active":false},{"id":"aa7148ea-5fbc-38cb-95a9-bdfc3d462337","name":"Mona Lemke","email_address":"mayert.margaretta@thiel.com","phone_number":"+1 (619) 523-1922","student_id":"19214877433","major_id":"741f623f-132b-3692-ab2c-a09b08acdad6","links":{"github":"http:\/\/brekke.com\/suscipit-doloribus-fugiat-ut-aut-deserunt-et-error","linkedin":"http:\/\/tromp.com\/dolorem-et-ut-dicta","website":"http:\/\/www.lakin.com\/"},"start_date":"2014-02-06","end_date":"1971-06-18","is_member":true,"is_extraordinary":true,"created_at":"2008-08-26T10:03:30+00:00","updated_at":"1970-11-05T15:02:36+00:00","is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"users":[{"id":"d34becdc-c0c1-3b29-91d0-b8358c864cf4","name":"Henri Mitchell","email_address":"feeney.demarcus@gmail.com","phone_number":"559.897.7788","student_id":"55159266794","major_id":"56db1203-2e82-3de6-a828-ead32bd52d27","links":{"github":"http:\/\/www.schaden.com\/odit-quia-officia-est-dignissimos-neque-blanditiis-odio.html","linkedin":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html","website":"http:\/\/howe.com\/accusamus-ut-et-recusandae.html"},"start_date":"1991-02-25","end_date":"1973-04-14","is_member":false,"is_extraordinary":false,"created_at":"1983-03-12T20:47:05+00:00","updated_at":"1996-05-13T00:42:57+00:00","is_active":false},{"id":"aa7148ea-5fbc-38cb-95a9-bdfc3d462337","name":"Mona Lemke","email_address":"mayert.margaretta@thiel.com","phone_number":"+1 (619) 523-1922","student_id":"19214877433","major_id":"741f623f-132b-3692-ab2c-a09b08acdad6","links":{"github":"http:\/\/brekke.com\/suscipit-doloribus-fugiat-ut-aut-deserunt-et-error","linkedin":"http:\/\/tromp.com\/dolorem-et-ut-dicta","website":"http:\/\/www.lakin.com\/"},"start_date":"2014-02-06","end_date":"1971-06-18","is_member":true,"is_extraordinary":true,"created_at":"2008-08-26T03:23:46+00:00","updated_at":"1970-11-05T15:02:36+00:00","is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -76,7 +76,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jermaine.tillman@yahoo.com","phone_number":"1-820-420-3724","student_id":"43084522821","major_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","links":{"github":"http:\/\/www.baumbach.org\/et-modi-ipsum-nostrum-omnis-autem-et-consequatur","linkedin":"http:\/\/leffler.com\/","website":"http:\/\/vonrueden.com\/"},"start_date":"2020-03-13","end_date":"1985-12-26","is_member":true,"is_extraordinary":true,"created_at":"2003-05-24T17:02:13+00:00","updated_at":"1976-05-10T20:20:47+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jermaine.tillman@yahoo.com","phone_number":"1-820-420-3724","student_id":"43084522821","major_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","links":{"github":"http:\/\/www.baumbach.org\/et-modi-ipsum-nostrum-omnis-autem-et-consequatur","linkedin":"http:\/\/leffler.com\/","website":"http:\/\/vonrueden.com\/"},"start_date":"2020-03-13","end_date":"1985-12-26","is_member":true,"is_extraordinary":true,"created_at":"2003-05-24T10:22:29+00:00","updated_at":"1976-05-10T13:41:03+00:00","is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -175,7 +175,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
         required: false
-        example: '2021-04-28'
+        example: '2021-04-29'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -205,7 +205,7 @@ endpoints:
         name: is_extraordinary
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -232,15 +232,15 @@ endpoints:
         linkedin: 'https://linkedin.com/company/infiniteuny/'
         website: 'https://infiniteuny.id'
         '*': 'https://example.com'
-      start_date: '2021-04-28'
+      start_date: '2021-04-29'
       end_date: '2051-04-29'
       is_member: false
-      is_extraordinary: false
+      is_extraordinary: true
     fileParameters: []
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jhaag@hotmail.com","phone_number":"1-847-548-7905","student_id":"78785868631","major_id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","links":{"github":"http:\/\/www.torp.com\/neque-blanditiis-odio-veritatis-excepturi-doloribus-delectus","linkedin":"http:\/\/kuvalis.com\/est-alias-tenetur-ratione","website":"https:\/\/www.casper.com\/et-recusandae-modi-rerum-ex-repellendus-assumenda-et"},"start_date":"1985-03-25","end_date":"1981-01-06","is_member":false,"is_extraordinary":false,"created_at":"1991-10-07T18:54:16+00:00","updated_at":"1992-04-28T03:30:54+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jhaag@hotmail.com","phone_number":"1-847-548-7905","student_id":"78785868631","major_id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","links":{"github":"http:\/\/www.torp.com\/neque-blanditiis-odio-veritatis-excepturi-doloribus-delectus","linkedin":"http:\/\/kuvalis.com\/est-alias-tenetur-ratione","website":"https:\/\/www.casper.com\/et-recusandae-modi-rerum-ex-repellendus-assumenda-et"},"start_date":"1985-03-25","end_date":"1981-01-06","is_member":false,"is_extraordinary":false,"created_at":"1991-10-07T12:14:32+00:00","updated_at":"1992-04-28T03:30:54+00:00","is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -354,7 +354,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
         required: false
-        example: '2021-04-28'
+        example: '2021-04-29'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -374,7 +374,7 @@ endpoints:
         name: is_member
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -384,7 +384,7 @@ endpoints:
         name: is_extraordinary
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -411,10 +411,10 @@ endpoints:
         linkedin: 'https://linkedin.com/company/infiniteuny/'
         website: 'https://infiniteuny.id'
         '*': 'https://example.com'
-      start_date: '2021-04-28'
+      start_date: '2021-04-29'
       end_date: '2051-04-29'
-      is_member: true
-      is_extraordinary: true
+      is_member: false
+      is_extraordinary: false
     fileParameters: []
     responses:
       -
