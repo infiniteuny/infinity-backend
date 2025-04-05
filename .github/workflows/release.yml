@@ -106,6 +106,15 @@ jobs:
             org.opencontainers.image.description=Infinity back-end app image, see https://github.com/infiniteuny/infinity-backend/ for more info.
             org.opencontainers.image.vendor=INFINITE UNY
 
+      - name: Update app version
+        run: sed -i "s/'version' => '.*',/'version' => '${{ steps.version.outputs.version }}';/g" config/app.php
+
+      - name: Commit version change
+        if: ${{ inputs.release_type == 'prod' }}
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: Update version to v${{ steps.version.outputs.version }}"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
