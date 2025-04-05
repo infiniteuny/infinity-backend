@@ -65,6 +65,20 @@ jobs:
     name: Documentations Update
     needs: inputs-check
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_PASSWORD: postgres
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -81,7 +95,15 @@ jobs:
 
       - name: Generate documentations
         run: |
+          php artisan migrate --force
           php artisan scribe:generate --env docs
+        env:
+          APP_KEY: "base64:wOy0BDdP65xkwGbM6fsgh97oBV9J02zn/VvTkiTXQqE="
+          DB_CONNECTION: pgsql
+          DB_HOST: localhost
+          DB_DATABASE: postgres
+          DB_USERNAME: postgres
+          DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
       - name: Commit documentations update
         uses: stefanzweifel/git-auto-commit-action@v5
