@@ -29,7 +29,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"testimonials":[{"id":"f2726f3d-9044-3663-bede-2a0f37053879","name":"Mrs. Abbey Gaylord Md","position":"Environmental Engineer","photo":"http:\/\/localhost\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Aliquam veniam corporis dolorem mollitia deleniti nemo. Quia officia est dignissimos neque. Odio veritatis excepturi doloribus delectus fugit qui repudiandae. Est alias tenetur ratione.","created_at":"1995-09-03T09:05:57+00:00","updated_at":"1987-04-30T09:55:05+00:00"},{"id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","name":"Fausto Conroy","position":"Casting Machine Operator","photo":"http:\/\/localhost\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Et tenetur ab reiciendis quia perspiciatis deserunt ducimus. Et dolores quia maiores. Odit doloribus repellat officiis corporis nesciunt ut ratione iure.","created_at":"1999-10-18T04:46:46+00:00","updated_at":"2021-02-03T11:32:02+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"testimonials":[{"id":"f2726f3d-9044-3663-bede-2a0f37053879","name":"Mrs. Abbey Gaylord Md","position":"Environmental Engineer","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Aliquam veniam corporis dolorem mollitia deleniti nemo. Quia officia est dignissimos neque. Odio veritatis excepturi doloribus delectus fugit qui repudiandae. Est alias tenetur ratione.","created_at":"1995-09-02T11:38:18+00:00","updated_at":"1987-04-29T12:27:26+00:00"},{"id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","name":"Fausto Conroy","position":"Casting Machine Operator","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Et tenetur ab reiciendis quia perspiciatis deserunt ducimus. Et dolores quia maiores. Odit doloribus repellat officiis corporis nesciunt ut ratione iure.","created_at":"1999-10-17T07:19:07+00:00","updated_at":"2021-02-03T11:32:02+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -76,7 +76,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"http:\/\/localhost\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2019-12-04T20:10:41+00:00"}}}'
+        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2019-12-03T22:43:02+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -157,7 +157,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"http:\/\/localhost\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2019-12-04T20:10:41+00:00"}}}'
+        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2019-12-03T22:43:01+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -253,7 +253,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"http:\/\/localhost\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2019-12-04T20:10:41+00:00"}}}'
+        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2019-12-03T22:43:01+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -304,7 +304,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"testimonial":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Miss Pearl Hauck","position":"Locomotive Engineer","photo":"http:\/\/localhost\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora.","created_at":"2020-03-13T08:10:43+00:00","updated_at":"1985-12-26T03:24:50+00:00"}}}'
+        content: '{"status":"success","data":{"testimonial":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Miss Pearl Hauck","position":"Locomotive Engineer","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora.","created_at":"2020-03-13T08:10:43+00:00","updated_at":"1985-12-26T03:24:50+00:00"}}}'
         headers: []
         description: ''
         custom: []
