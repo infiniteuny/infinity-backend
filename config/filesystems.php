@@ -64,8 +64,6 @@ return [
     |
     */
 
-    'links' => [
-        public_path('static/public') => storage_path('app/local/public'),
-    ],
+    'links' => [],
 
 ];
