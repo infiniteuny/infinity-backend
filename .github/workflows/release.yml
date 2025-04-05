@@ -116,11 +116,16 @@ jobs:
       - docs-update
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       contents: write
       packages: write
+      attestations: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -174,6 +179,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push container image
+        id: build-and-push
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -184,6 +190,25 @@ jobs:
           platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}-cache:latest
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}-cache:latest,mode=max
+
+      - name: Attest the build
+        uses: actions/attest-build-provenance@v2
+        id: attest
+        with:
+          subject-name: ghcr.io/${{ github.repository }}
+          subject-digest: ${{ steps.build-and-push.outputs.digest }}
+          push-to-registry: true
+
+      - name: Sign the images with GitHub OIDC token
+        run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes ${images}
+        env:
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          TAGS: ${{ steps.meta.outputs.tags }}
 
       - name: Create release
         uses: softprops/action-gh-release@v2
