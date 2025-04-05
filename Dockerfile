@@ -8,8 +8,14 @@ RUN apk add --no-cache \
     curl \
     wget \
     ca-certificates \
+    tzdata \
+    procps \
+    ncdu \
+    unzip \
+    git \
     supervisor \
-    libsodium-dev
+    libsodium-dev \
+    brotli
 
 COPY --link --from=php-ext-installer /usr/bin/install-php-extensions /usr/local/bin/
 
@@ -20,6 +26,7 @@ RUN install-php-extensions \
     gd \
     igbinary \
     intl \
+    mbstring \
     opcache \
     pcntl \
     pdo_pgsql \
@@ -27,6 +34,7 @@ RUN install-php-extensions \
     pgsql \
     redis \
     sockets \
+    vips \
     zip
 
 RUN install-php-extensions \
@@ -40,18 +48,18 @@ RUN docker-php-source delete && \
 FROM composer:2.8.6 AS vendor
 
 ENV COMPOSER_FUND=0 \
+    COMPOSER_MAX_PARALLEL_HTTP=24 \
     COMPOSER_IGNORE_PLATFORM_REQS=1
 
 WORKDIR /tmp
 
-COPY --link composer.json composer.lock ./
+COPY --link . .
 
 RUN --mount=type=cache,target=/root/.composer \
     composer install \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
-    --no-plugins \
     --no-scripts \
     --no-dev \
     --prefer-dist
@@ -61,16 +69,18 @@ FROM base AS runner
 
 ARG UID=1000 \
     GID=1000 \
-    TZ=UTC
+    TZ=UTC \
+    APP_ENV=prod
 
 ENV USER=octane \
     ROOT=/var/www/html \
     OCTANE_SERVER=swoole \
+    TZ=${TZ} \
+    TERM=xterm-color \
     WITH_HORIZON=false \
     WITH_REVERB=false \
     WITH_SCHEDULER=false \
-    APP_NAME="INFINITE Dashboard" \
-    APP_ENV=prod \
+    APP_ENV=${APP_ENV} \
     APP_DEBUG=false
 
 WORKDIR ${ROOT}
@@ -94,15 +104,15 @@ RUN arch="$(apk --print-arch)" && \
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
     echo ${TZ} > /etc/timezone
 
-RUN addgroup -S ${USER} -g ${GID} && \
-    adduser -S ${USER} -u ${UID} -h ${ROOT} -s /bin/sh
+RUN addgroup -g ${GID} ${USER} && \
+    adduser -D -h ${ROOT} -G ${USER} -u ${UID} -s /bin/sh ${USER}
 
 RUN mkdir -p /var/log/supervisor /var/run/supervisor && \
     chown -R ${UID}:${GID} ${ROOT} /var/log /var/run && \
     chmod -R a+rw ${ROOT} /var/log /var/run
 
 # Use the default production configuration
-RUN mv ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
+RUN cp ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
 
 USER ${USER}
 
@@ -114,7 +124,6 @@ RUN composer dump-autoload \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
-    --no-plugins \
     --no-scripts \
     --no-dev && \
     rm -rf /usr/bin/composer
@@ -126,6 +135,13 @@ COPY --link --chown=${UID}:${GID} deployment/healthcheck /usr/local/bin/healthch
 COPY --link --chown=${UID}:${GID} deployment/start-container /usr/local/bin/start-container
 
 RUN chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
+
+RUN mkdir -p \
+    storage/app/local/{private,public} \
+    storage/framework/{sessions,views,cache,testing} \
+    storage/logs \
+    bootstrap/cache && \
+    chmod -R a+rw storage
 
 EXPOSE 8000 8080
 
