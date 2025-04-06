@@ -193,7 +193,7 @@ return [
 
         // Any extra authentication-related info for your users. Markdown
         // and HTML are supported.
-        'extra_info' => 'You can retrieve an access token using OAuth 2.0 from <b><a href="https://auth.infiniteunny.id/">INFINITE Singe Sign-On</a></b>.',
+        'extra_info' => 'OAuth 2.0 authentication using INFINITE Single Sign-On.',
     ],
 
     /*

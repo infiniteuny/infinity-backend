@@ -15,10 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         api: __DIR__.'/../routes/api.php',
         apiPrefix: '',
+        web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->use([
+            \Illuminate\Http\Middleware\ValidatePathEncoding::class,
+            \Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks::class,
             // \Illuminate\Http\Middleware\TrustHosts::class,
             \Illuminate\Http\Middleware\TrustProxies::class,
             \Illuminate\Http\Middleware\HandleCors::class,
@@ -26,11 +29,15 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\ValidatePostSize::class,
             \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
             \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-            \App\Http\Middleware\ForceJsonResponse::class,
         ]);
 
         $middleware->group('api', [
+            \App\Http\Middleware\ForceJsonResponse::class,
             'throttle:api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ]);
+
+        $middleware->group('web', [
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
 
