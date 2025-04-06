@@ -119,7 +119,6 @@ jobs:
       id-token: write
       contents: write
       packages: write
-      attestations: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -190,14 +189,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}-cache:latest
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}-cache:latest,mode=max
-
-      - name: Attest the build
-        uses: actions/attest-build-provenance@v2
-        id: attest
-        with:
-          subject-name: ghcr.io/${{ github.repository }}
-          subject-digest: ${{ steps.build-and-push.outputs.digest }}
-          push-to-registry: true
 
       - name: Sign the images with GitHub OIDC token
         run: |
