@@ -30,7 +30,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"permissions":[{"id":"81d01d24-25a4-3119-a6de-1b3478c56b16","name":"Nulla","guard_name":"oidc","created_at":"1975-07-14T19:21:16.000000Z","updated_at":"1990-04-13T23:23:34.000000Z"},{"id":"d06759a6-f41c-3715-acce-12bd87ce1179","name":"Sapiente","guard_name":"oidc","created_at":"1997-08-11T13:38:36.000000Z","updated_at":"1971-11-27T14:03:09.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"permissions":[{"id":"e9b0f2ac-0209-3cbf-8453-de9f1ee4881a","name":"Vitae","guard_name":"oidc","created_at":"2003-04-24T16:05:23.000000Z","updated_at":"1977-10-14T13:03:15.000000Z"},{"id":"e3283cad-18da-39e6-a144-2e29b71f6f8d","name":"Exercitationem","guard_name":"oidc","created_at":"2005-11-23T13:35:12.000000Z","updated_at":"1982-05-19T19:39:52.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
