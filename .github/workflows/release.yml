@@ -98,6 +98,7 @@ jobs:
         run: |
           php artisan migrate --force
           php artisan scribe:generate --env docs
+          mv storage/app/local/scribe/* storage/app/scribe/
         env:
           APP_KEY: "base64:wOy0BDdP65xkwGbM6fsgh97oBV9J02zn/VvTkiTXQqE="
           DB_CONNECTION: pgsql
