@@ -175,6 +175,8 @@ jobs:
             org.opencontainers.image.title=Infinity Back-End
             org.opencontainers.image.description=Infinity back-end app image, see https://github.com/infiniteuny/infinity-backend/ for more info.
             org.opencontainers.image.vendor=INFINITE UNY
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
