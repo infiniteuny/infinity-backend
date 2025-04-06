@@ -23,9 +23,27 @@ on:
         type: number
 
 jobs:
-  inputs-check:
-    name: Inputs Check
+  container-image-release:
+    name: Container Image Release
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
+    env:
+      POSTGRES_PASSWORD: postgres
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Check if branch and release type match
         id: guard
@@ -58,86 +76,6 @@ jobs:
           script: |
             core.setFailed('Workflow failed. Did you set the correct version, release type, and pre-release version?');
 
-  docs-update:
-    name: Documentations Update
-    needs: inputs-check
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    env:
-      POSTGRES_PASSWORD: postgres
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-    outputs:
-      new_ref: ${{ steps.commit.outputs.commit_hash }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.4"
-
-      - name: Install dependencies
-        uses: ramsey/composer-install@v3
-        with:
-          composer-options: "--ignore-platform-reqs --optimize-autoloader"
-
-      - name: Generate documentations
-        run: |
-          php artisan migrate --force
-          php artisan scribe:generate --env docs
-          mv storage/app/local/scribe/* storage/app/scribe/
-        env:
-          APP_KEY: "base64:wOy0BDdP65xkwGbM6fsgh97oBV9J02zn/VvTkiTXQqE="
-          DB_CONNECTION: pgsql
-          DB_HOST: localhost
-          DB_DATABASE: postgres
-          DB_USERNAME: postgres
-          DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-
-      - name: Commit documentations update
-        id: commit
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore(scribe): Update documentations"
-
-  container-image-release:
-    name: Container Image Release
-    needs:
-      - inputs-check
-      - docs-update
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
-      packages: write
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.docs-update.outputs.new_ref }}
-
-      - name: Install Cosign
-        uses: sigstore/cosign-installer@v3
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Set version
         id: version
         run: |
@@ -152,14 +90,43 @@ jobs:
           RELEASE_TYPE: ${{ inputs.release_type }}
           PRE_RELEASE_VERSION: ${{ inputs.pre_release_version }}
 
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: "--ignore-platform-reqs --optimize-autoloader"
+
       - name: Update app version
         run: sed -i "s/'version' => '.*',/'version' => '${{ steps.version.outputs.version }}';/g" config/app.php
 
-      - name: Commit version change
-        if: ${{ inputs.release_type == 'prod' }}
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: Update version to v${{ steps.version.outputs.version }}"
+      - name: Generate documentations
+        run: |
+          php artisan migrate --force
+          php artisan scribe:generate --env docs
+          mv storage/app/local/scribe/* storage/app/scribe/
+        env:
+          APP_KEY: "base64:wOy0BDdP65xkwGbM6fsgh97oBV9J02zn/VvTkiTXQqE="
+          DB_CONNECTION: pgsql
+          DB_HOST: localhost
+          DB_DATABASE: postgres
+          DB_USERNAME: postgres
+          DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
       - name: Extract metadata for Container
         id: meta
@@ -208,6 +175,12 @@ jobs:
         env:
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
           TAGS: ${{ steps.meta.outputs.tags }}
+
+      - name: Commit docs and version change
+        if: ${{ inputs.release_type == 'prod' }}
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: Update docs and version to v${{ steps.version.outputs.version }}"
 
       - name: Create release
         uses: softprops/action-gh-release@v2
