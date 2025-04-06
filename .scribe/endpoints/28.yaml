@@ -28,7 +28,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"permissions":[{"id":"e9b0f2ac-0209-3cbf-8453-de9f1ee4881a","name":"Vitae","guard_name":"oidc","created_at":"2003-04-24T16:05:23.000000Z","updated_at":"1977-10-14T13:03:15.000000Z"},{"id":"e3283cad-18da-39e6-a144-2e29b71f6f8d","name":"Exercitationem","guard_name":"oidc","created_at":"2005-11-23T13:35:12.000000Z","updated_at":"1982-05-19T19:39:52.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Facere","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"},{"id":"4ac9147e-bdf0-3914-9dcd-3c6a5c52010c","name":"Quis","guard_name":"oidc","created_at":"1976-05-09T14:31:10.000000Z","updated_at":"2024-01-23T01:08:03.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -91,7 +91,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Non","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Tempora","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -142,7 +142,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Facere","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Ex","guard_name":"oidc","created_at":"1985-12-26T03:24:50.000000Z","updated_at":"2023-08-06T00:38:36.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -217,7 +217,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Tempora","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Voluptatem","guard_name":"oidc","created_at":"2023-08-06T00:38:36.000000Z","updated_at":"2003-05-23T11:12:36.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -268,7 +268,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Ex","guard_name":"oidc","created_at":"1985-12-26T03:24:50.000000Z","updated_at":"2023-08-06T00:38:36.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Laboriosam","guard_name":"oidc","created_at":"2023-08-06T00:38:36.000000Z","updated_at":"2003-05-23T11:12:36.000000Z"}}}'
         headers: []
         description: ''
         custom: []

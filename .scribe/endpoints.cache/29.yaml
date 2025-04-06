@@ -30,7 +30,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Voluptatem","is_personal":true,"created_at":"2023-08-06T00:38:36+00:00","updated_at":"2003-05-23T12:22:27+00:00"},{"id":"f2726f3d-9044-3663-bede-2a0f37053879","leader_id":"e660ec64-aeea-3ded-bfe4-fb1f468259dc","name":"Distinctio","is_personal":false,"created_at":"1978-02-20T04:23:17+00:00","updated_at":"1992-01-21T16:04:25+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Praesentium","is_personal":true,"created_at":"1976-05-09T14:31:10+00:00","updated_at":"2024-01-23T01:08:03+00:00"},{"id":"e660ec64-aeea-3ded-bfe4-fb1f468259dc","leader_id":"9e13baad-9e20-392f-94ab-6047f7ff6a83","name":"Doloremque","is_personal":true,"created_at":"1973-12-26T18:25:35+00:00","updated_at":"1992-03-30T05:19:10+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -103,7 +103,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Laboriosam","is_personal":true,"created_at":"2003-05-23T12:22:27+00:00","updated_at":"1976-05-09T15:41:01+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Molestias","is_personal":true,"created_at":"2022-01-31T06:31:57+00:00","updated_at":"2022-05-05T07:43:48+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -154,7 +154,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Praesentium","is_personal":true,"created_at":"1976-05-09T15:41:01+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Deleniti","is_personal":false,"created_at":"2013-02-14T00:13:02+00:00","updated_at":"1978-02-20T03:13:26+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -225,7 +225,7 @@ endpoints:
         name: is_personal
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -234,12 +234,12 @@ endpoints:
     cleanBodyParameters:
       leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       name: architecto
-      is_personal: false
+      is_personal: true
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-12-24T19:21:17+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Distinctio","is_personal":false,"created_at":"1978-02-20T03:13:26+00:00","updated_at":"1992-01-21T14:54:34+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -290,7 +290,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Molestias","is_personal":true,"created_at":"2022-01-31T07:41:48+00:00","updated_at":"2022-05-05T08:53:39+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Eum","is_personal":false,"created_at":"1992-01-21T14:54:34+00:00","updated_at":"1973-12-26T18:25:35+00:00"}}}'
         headers: []
         description: ''
         custom: []
