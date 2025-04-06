@@ -250,7 +250,7 @@ return [
         'enabled' => true,
 
         'overrides' => [
-            // 'info.version' => '2.0.0',
+            'info.version' => config('app.version'),
         ],
     ],
 
@@ -270,7 +270,7 @@ return [
         'enabled' => true,
 
         'overrides' => [
-            // 'info.version' => '2.0.0',
+            'info.version' => config('app.version'),
         ],
 
         // Additional generators to use when generating the OpenAPI spec.
