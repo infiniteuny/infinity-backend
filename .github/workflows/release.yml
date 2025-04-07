@@ -113,7 +113,7 @@ jobs:
           composer-options: "--ignore-platform-reqs --optimize-autoloader"
 
       - name: Update app version
-        run: sed -i "s/'version' => '.*',/'version' => '${{ steps.version.outputs.version }}';/g" config/app.php
+        run: sed -i "s/'version' => '.*',/'version' => '${{ steps.version.outputs.version }}',/g" config/app.php
 
       - name: Generate documentations
         run: |
