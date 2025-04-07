@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66856cc3a7d513c40717dc4871777707",
+    "content-hash": "2f0bd1e490f305441b2a36873ede9c04",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2847,6 +2847,67 @@
                 "source": "https://github.com/jmespath/jmespath.php/tree/2.8.0"
             },
             "time": "2024-09-04T18:46:31+00:00"
+        },
+        {
+            "name": "namoshek/laravel-redis-sentinel",
+            "version": "v0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Namoshek/laravel-redis-sentinel.git",
+                "reference": "73d4c0b0d051df84d0802b66bd5d4be25d75e295"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Namoshek/laravel-redis-sentinel/zipball/73d4c0b0d051df84d0802b66bd5d4be25d75e295",
+                "reference": "73d4c0b0d051df84d0802b66bd5d4be25d75e295",
+                "shasum": ""
+            },
+            "require": {
+                "ext-redis": "*",
+                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/redis": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0|^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Namoshek\\Redis\\Sentinel\\RedisSentinelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Namoshek\\Redis\\Sentinel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marvin Mall",
+                    "email": "marvin-mall@msn.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An extension of Laravels Redis driver which supports connecting to a Redis master through Redis Sentinel.",
+            "homepage": "https://github.com/Namoshek/laravel-redis-sentinel",
+            "keywords": [
+                "laravel",
+                "redis"
+            ],
+            "support": {
+                "issues": "https://github.com/Namoshek/laravel-redis-sentinel/issues",
+                "source": "https://github.com/Namoshek/laravel-redis-sentinel/tree/v0.8.0"
+            },
+            "time": "2025-02-24T19:31:00+00:00"
         },
         {
             "name": "nesbot/carbon",
