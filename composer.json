@@ -13,9 +13,9 @@
     "require": {
         "php": "^8.2.0",
         "facile-it/php-openid-client": "0.3.5",
-        "laravel/framework": "12.7.2",
+        "laravel/framework": "12.8.1",
         "laravel/horizon": "5.31.1",
-        "laravel/octane": "2.8.3",
+        "laravel/octane": "2.9.0",
         "laravel/tinker": "2.10.1",
         "league/flysystem-aws-s3-v3": "3.29.0",
         "namoshek/laravel-redis-sentinel": "0.8.0",
@@ -28,11 +28,11 @@
         "barryvdh/laravel-ide-helper": "3.5.5",
         "fakerphp/faker": "1.24.1",
         "knuckleswtf/scribe": "5.1.0",
-        "laravel/pint": "1.21.2",
+        "laravel/pint": "1.22.0",
         "laravel/sail": "1.41.0",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "8.8.0",
-        "phpunit/phpunit": "12.1.0",
+        "phpunit/phpunit": "12.1.2",
         "spatie/laravel-ignition": "2.9.1"
     },
     "autoload": {
