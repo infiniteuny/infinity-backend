@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa9460f564db03c50569468d5ace9c58",
+    "content-hash": "8681e6250a04bf0fab7f7853cf90c271",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -8083,7 +8083,7 @@
         },
         {
             "name": "web-token/jwt-signature-algorithm-ecdsa",
-            "version": "4.0.0",
+            "version": "3.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-ecdsa.git",
@@ -8136,7 +8136,7 @@
                 "symfony"
             ],
             "support": {
-                "source": "https://github.com/web-token/jwt-signature-algorithm-ecdsa/tree/4.0.0"
+                "source": "https://github.com/web-token/jwt-signature-algorithm-ecdsa/tree/3.4.8"
             },
             "funding": [
                 {

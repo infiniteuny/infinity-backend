@@ -22,7 +22,7 @@
         "spatie/laravel-permission": "6.18.0",
         "spatie/laravel-query-builder": "6.3.2",
         "spomky-labs/aes-key-wrap": "7.0.0",
-        "web-token/jwt-signature-algorithm-ecdsa": "4.0.0"
+        "web-token/jwt-signature-algorithm-ecdsa": "3.4.8"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.5",
