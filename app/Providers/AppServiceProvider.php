@@ -13,6 +13,7 @@ use App\Services\OidcServiceImpl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
@@ -66,6 +67,10 @@ class AppServiceProvider extends ServiceProvider
                 Auth::createUserProvider($config['provider']),
                 $app->make('request'),
             );
+        });
+        Http::macro('authentik', function () {
+            return Http::withToken(config('services.authentik.token'))
+                ->baseUrl(config('services.authentik.base_url'));
         });
         RateLimiter::for('api', function (Request $request) {
             return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());
