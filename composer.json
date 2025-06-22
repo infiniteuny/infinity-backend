@@ -12,7 +12,8 @@
     "license": "GPL-3.0-or-later",
     "require": {
         "php": "^8.2.0",
-        "facile-it/php-openid-client": "0.3.5",
+        "facile-it/php-jose-verifier": "0.5.0-beta1",
+        "facile-it/php-openid-client": "0.4.0-beta1",
         "laravel/framework": "12.19.3",
         "laravel/horizon": "5.33.1",
         "laravel/octane": "2.10.0",
@@ -21,7 +22,6 @@
         "namoshek/laravel-redis-sentinel": "0.8.0",
         "spatie/laravel-permission": "6.20.0",
         "spatie/laravel-query-builder": "6.3.2",
-        "spomky-labs/aes-key-wrap": "7.0.0",
         "web-token/jwt-signature-algorithm-ecdsa": "3.4.8"
     },
     "require-dev": {
