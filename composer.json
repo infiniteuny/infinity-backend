@@ -13,13 +13,13 @@
     "require": {
         "php": "^8.2.0",
         "facile-it/php-openid-client": "0.3.5",
-        "laravel/framework": "12.15.0",
-        "laravel/horizon": "5.32.0",
-        "laravel/octane": "2.9.3",
+        "laravel/framework": "12.19.3",
+        "laravel/horizon": "5.33.1",
+        "laravel/octane": "2.10.0",
         "laravel/tinker": "2.10.1",
         "league/flysystem-aws-s3-v3": "3.29.0",
         "namoshek/laravel-redis-sentinel": "0.8.0",
-        "spatie/laravel-permission": "6.18.0",
+        "spatie/laravel-permission": "6.20.0",
         "spatie/laravel-query-builder": "6.3.2",
         "spomky-labs/aes-key-wrap": "7.0.0",
         "web-token/jwt-signature-algorithm-ecdsa": "3.4.8"
@@ -29,10 +29,10 @@
         "fakerphp/faker": "1.24.1",
         "knuckleswtf/scribe": "5.2.1",
         "laravel/pint": "1.22.1",
-        "laravel/sail": "1.43.0",
+        "laravel/sail": "1.43.1",
         "mockery/mockery": "1.6.12",
-        "nunomaduro/collision": "8.8.0",
-        "phpunit/phpunit": "12.1.6",
+        "nunomaduro/collision": "8.8.1",
+        "phpunit/phpunit": "12.2.3",
         "spatie/laravel-ignition": "2.9.1"
     },
     "autoload": {
