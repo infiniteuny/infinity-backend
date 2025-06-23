@@ -17,16 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'as' => 'scribe.',
 ], function () {
-    Route::view("/", 'scribe.index');
+    Route::view('/', 'scribe.index');
 
-    Route::get("/collection.json", function () {
+    Route::get('/collection.json', function () {
         return new JsonResponse(
             file_get_contents(storage_path('app/scribe/collection.json')),
             json: true,
         );
     })->name('postman');
 
-    Route::get("/openapi.yaml", function () {
+    Route::get('/openapi.yaml', function () {
         return response()->file(storage_path('app/scribe/openapi.yaml'));
     })->name('openapi');
 });

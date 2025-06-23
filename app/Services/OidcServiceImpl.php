@@ -48,7 +48,7 @@ class OidcServiceImpl implements OidcService
 
     protected function getMetadataProviderBuilder(): MetadataProviderBuilder
     {
-        $builder = new MetadataProviderBuilder()
+        $builder = (new MetadataProviderBuilder)
             ->setCache($this->cacheRepository)
             // Cache metadata for 30 days
             ->setCacheTtl(2592000);
@@ -58,7 +58,7 @@ class OidcServiceImpl implements OidcService
 
     protected function getJwksProviderBuilder(): JwksProviderBuilder
     {
-        $builder = new JwksProviderBuilder()
+        $builder = (new JwksProviderBuilder)
             ->withCache($this->cacheRepository)
             // Cache JWKS for 1 day
             ->withCacheTtl(86400);
@@ -68,7 +68,7 @@ class OidcServiceImpl implements OidcService
 
     protected function getIssuerBuilder(): IssuerBuilder
     {
-        $builder = new IssuerBuilder()
+        $builder = (new IssuerBuilder)
             ->setMetadataProviderBuilder($this->getMetadataProviderBuilder())
             ->setJwksProviderBuilder($this->getJwksProviderBuilder());
 
@@ -77,7 +77,7 @@ class OidcServiceImpl implements OidcService
 
     protected function getClientBuilder(): ClientBuilder
     {
-        $builder = new ClientBuilder()
+        $builder = (new ClientBuilder)
             ->setIssuer($this->getIssuer())
             ->setClientMetadata(ClientMetadata::fromArray([
                 'client_id' => config('oidc.client_id'),
