@@ -22,10 +22,6 @@ use Facile\OpenIDClient\Token\TokenSet;
 
 class OidcServiceImpl implements OidcService
 {
-    protected IssuerMetadataInterface $issuerMetadata;
-
-    protected ClientMetadataInterface $clientMetadata;
-
     protected IssuerInterface $issuer;
 
     protected ClientInterface $client;
@@ -109,10 +105,6 @@ class OidcServiceImpl implements OidcService
 
     protected function getClientMetadata(): ClientMetadataInterface
     {
-        if (! empty($this->clientMetadata)) {
-            return $this->clientMetadata;
-        }
-
         return $this->getClient()->getMetadata();
     }
 
