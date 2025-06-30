@@ -4,10 +4,10 @@
     "description": "INFINITE Dashboard",
     "keywords": [
         "infinite",
-        "uny",
-        "laravel",
         "restek",
-        "profile"
+        "uny",
+        "profile",
+        "laravel"
     ],
     "license": "GPL-3.0-or-later",
     "require": {
@@ -20,6 +20,7 @@
         "laravel/tinker": "2.10.1",
         "league/flysystem-aws-s3-v3": "3.29.0",
         "namoshek/laravel-redis-sentinel": "0.8.0",
+        "spatie/laravel-data": "4.17.0",
         "spatie/laravel-permission": "6.20.0",
         "spatie/laravel-query-builder": "6.3.2"
     },
