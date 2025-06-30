@@ -7,6 +7,9 @@ use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
+use App\Jobs\CreateSsoUser;
+use App\Jobs\DeleteSsoUser;
+use App\Jobs\UpdateSsoUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -110,6 +113,8 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
+        dispatch(new CreateSsoUser($user));
+
         return new UserResource($user);
     }
 
@@ -166,6 +171,12 @@ class UserController extends Controller
     {
         $user->update($request->validated());
 
+        if ($user->sso_id) {
+            dispatch(new UpdateSsoUser($user));
+        } else {
+            dispatch(new CreateSsoUser($user));
+        }
+
         return new UserResource($user);
     }
 
@@ -179,6 +190,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
+        if ($user->sso_id) {
+            dispatch(new DeleteSsoUser($user->sso_id));
+        }
 
         return new UserResource($user);
     }

@@ -7,6 +7,9 @@ use App\Http\Requests\Group\StoreGroupRequest;
 use App\Http\Requests\Group\UpdateGroupRequest;
 use App\Http\Resources\Group\GroupCollection;
 use App\Http\Resources\Group\GroupResource;
+use App\Jobs\CreateSsoGroup;
+use App\Jobs\DeleteSsoGroup;
+use App\Jobs\UpdateSsoGroup;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -73,6 +76,8 @@ class GroupController extends Controller
     {
         $group = Group::create($request->validated());
 
+        dispatch(new CreateSsoGroup($group));
+
         return new GroupResource($group);
     }
 
@@ -109,6 +114,12 @@ class GroupController extends Controller
     {
         $group->update($request->validated());
 
+        if ($group->sso_id) {
+            dispatch(new UpdateSsoGroup($group));
+        } else {
+            dispatch(new CreateSsoGroup($group));
+        }
+
         return new GroupResource($group);
     }
 
@@ -122,6 +133,10 @@ class GroupController extends Controller
     public function destroy(Group $group)
     {
         $group->delete();
+
+        if ($group->sso_id) {
+            dispatch(new DeleteSsoGroup($group->sso_id));
+        }
 
         return new GroupResource($group);
     }
