@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Group;
 use App\Models\User;
 
 class GroupPolicy
@@ -33,16 +34,16 @@ class GroupPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user): bool
+    public function update(User $user, Group $group): bool
     {
-        return $user->can('update-group');
+        return $user->can('update-group') && ! $group->is_managed;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user, Group $group): bool
     {
-        return $user->can('delete-group');
+        return $user->can('delete-group') && ! $group->is_managed;
     }
 }
