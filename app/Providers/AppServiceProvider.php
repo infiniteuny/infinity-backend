@@ -10,6 +10,8 @@ use App\Repositories\StorageRepository;
 use App\Repositories\StorageRepositoryImpl;
 use App\Services\OidcService;
 use App\Services\OidcServiceImpl;
+use App\Services\SsoService;
+use App\Services\SsoServiceImpl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         PsrCacheRepository::class => PsrCacheRepositoryImpl::class,
         StorageRepository::class => StorageRepositoryImpl::class,
         OidcService::class => OidcServiceImpl::class,
+        SsoService::class => SsoServiceImpl::class,
     ];
 
     /**
