@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('sso_id')->unique()->nullable();
             $table->string('name')->fulltext();
+            $table->string('username')->unique();
             $table->string('email_address')->unique();
             $table->string('phone_number')->unique();
             $table->string('student_id')->unique();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->boolean('is_member');
             $table->boolean('is_extraordinary')->default(false);
+            $table->timestamp('sso_last_synced_at')->nullable();
             $table->timestamps();
         });
         Schema::create('tokens', function (Blueprint $table) {

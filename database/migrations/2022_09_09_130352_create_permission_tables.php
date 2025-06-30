@@ -35,11 +35,13 @@ return new class extends Migration
         });
         Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
             $table->uuid('id')->primary(); // role id
+            $table->string('sso_id')->unique()->nullable();
             if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
                 $table->uuid($columnNames['team_foreign_key'])->nullable()->index();
             }
             $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
             $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+            $table->timestamp('sso_last_synced_at')->nullable();
             $table->timestamps();
 
             if ($teams || config('permission.testing')) {

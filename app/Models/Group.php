@@ -14,6 +14,16 @@ class Group extends Model implements RoleContract
 {
     use HasFactory, HasPermissions, HasUuids;
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'sso_id',
+        'sso_last_synced_at',
+    ];
+
     public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(

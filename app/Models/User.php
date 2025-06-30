@@ -32,6 +32,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $fillable = [
         'name',
+        'username',
         'email_address',
         'phone_number',
         'student_id',
@@ -50,6 +51,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $hidden = [
         'sso_id',
+        'sso_last_synced_at',
     ];
 
     /**
