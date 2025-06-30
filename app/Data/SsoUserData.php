@@ -14,8 +14,6 @@ class SsoUserData extends Data
         public string|Optional $name,
         #[MapName('email')]
         public string|Optional $email_address,
-        /** @var string[] */
-        public array $groups,
         public bool|Optional $is_active,
         public string|Optional $path,
         public string|Optional $type,
@@ -27,7 +25,6 @@ class SsoUserData extends Data
             sso_id: $user->sso_id,
             name: $user->name,
             email_address: $user->email,
-            groups: $user->groups->pluck('sso_id')->toArray(),
             is_active: Optional::create(),
             path: Optional::create(),
             type: Optional::create(),

@@ -15,6 +15,8 @@ class SsoGroupData extends Data
         public string|Optional $sso_parent_id,
         public string|Optional $name,
         public bool|Optional $is_superuser,
+        /** @var string[] */
+        public array $user_ids,
     ) {}
 
     public static function fromModel(Group $group): self
@@ -24,6 +26,7 @@ class SsoGroupData extends Data
             sso_parent_id: Optional::create(),
             name: $group->name,
             is_superuser: Optional::create(),
+            user_ids: $group->users->pluck('sso_id')->toArray(),
         );
     }
 }
