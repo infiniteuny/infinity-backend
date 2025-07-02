@@ -19,15 +19,19 @@ class GroupSeeder extends Seeder
         $groups = [
             [
                 'name' => 'Administrator',
+                'is_managed' => true,
             ],
             [
                 'name' => 'Core',
+                'is_managed' => true,
             ],
             [
                 'name' => 'Supercore',
+                'is_managed' => true,
             ],
             [
                 'name' => 'Member',
+                'is_managed' => true,
             ],
         ];
 
