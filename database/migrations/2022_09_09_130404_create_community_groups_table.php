@@ -17,6 +17,7 @@ return new class extends Migration
             $table->tinyInteger('priority');
             $table->text('description');
             $table->string('logo');
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }

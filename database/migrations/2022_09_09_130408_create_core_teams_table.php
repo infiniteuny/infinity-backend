@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('core_teams', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->year('year')->unique();
+            $table->foreignUuid('group_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }
