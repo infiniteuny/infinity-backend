@@ -77,6 +77,11 @@ class CoreTeamController extends Controller
     {
         $coreTeam = CoreTeam::create($request->validated());
 
+        if ($coreTeam->is_active) {
+            CoreTeam::where('id', '!=', $coreTeam->id)
+                ->update(['is_active' => false]);
+        }
+
         return new CoreTeamResource($coreTeam);
     }
 
@@ -114,6 +119,11 @@ class CoreTeamController extends Controller
     public function update(UpdateCoreTeamRequest $request, CoreTeam $coreTeam)
     {
         $coreTeam->update($request->validated());
+
+        if ($coreTeam->is_active) {
+            CoreTeam::where('id', '!=', $coreTeam->id)
+                ->update(['is_active' => false]);
+        }
 
         return new CoreTeamResource($coreTeam);
     }

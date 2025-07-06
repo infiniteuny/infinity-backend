@@ -77,6 +77,11 @@ class CommunityGroupAdminController extends Controller
     {
         $communityGroupAdmin = CommunityGroupAdmin::create($request->validated());
 
+        if ($communityGroupAdmin->is_active) {
+            CommunityGroupAdmin::where('id', '!=', $communityGroupAdmin->id)
+                ->update(['is_active' => false]);
+        }
+
         return new CommunityGroupAdminResource($communityGroupAdmin);
     }
 
@@ -114,6 +119,11 @@ class CommunityGroupAdminController extends Controller
     public function update(UpdateCommunityGroupAdminRequest $request, CommunityGroupAdmin $communityGroupAdmin)
     {
         $communityGroupAdmin->update($request->validated());
+
+        if ($communityGroupAdmin->is_active) {
+            CommunityGroupAdmin::where('id', '!=', $communityGroupAdmin->id)
+                ->update(['is_active' => false]);
+        }
 
         return new CommunityGroupAdminResource($communityGroupAdmin);
     }
