@@ -15,6 +15,7 @@ class StoreCommunityGroupAdminRequest extends FormRequest
     {
         return [
             'year' => ['required', 'integer'],
+            'is_active' => ['sometimes', 'boolean'],
         ];
     }
 }

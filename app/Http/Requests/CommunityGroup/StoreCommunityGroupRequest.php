@@ -18,6 +18,7 @@ class StoreCommunityGroupRequest extends FormRequest
             'priority' => ['required', 'integer', 'between:0,127'],
             'description' => ['required', 'string'],
             'logo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'is_active' => ['required', 'boolean'],
         ];
     }
 }

@@ -15,6 +15,7 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
     {
         return [
             'year' => ['sometimes', 'integer'],
+            'is_active' => ['sometimes', 'boolean'],
         ];
     }
 }
