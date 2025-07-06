@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\CoreTeam;
 use App\Models\User;
 
 class CoreTeamPolicy
@@ -25,8 +26,8 @@ class CoreTeamPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user, CoreTeam $coreTeam): bool
     {
-        return $user->can('delete-core-team');
+        return $user->can('delete-core-team') && ! $coreTeam->is_active;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\CommunityGroupAdmin;
 use App\Models\User;
 
 class CommunityGroupAdminPolicy
@@ -25,8 +26,8 @@ class CommunityGroupAdminPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user, CommunityGroupAdmin $communityGroupAdmin): bool
     {
-        return $user->can('delete-community-group-admin');
+        return $user->can('delete-community-group-admin') && ! $communityGroupAdmin->is_active;
     }
 }
