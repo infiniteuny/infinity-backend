@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->year('year')->unique();
             $table->foreignUuid('group_id')->constrained()->restrictOnUpdate()->cascadeOnDelete();
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }
