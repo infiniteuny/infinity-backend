@@ -47,6 +47,7 @@ class CommunityGroupController extends Controller
                 'priority',
                 'description',
                 'logo',
+                'is_active',
                 'created_at',
                 'updated_at',
             ])
@@ -54,6 +55,7 @@ class CommunityGroupController extends Controller
                 'name',
                 AllowedFilter::exact('priority'),
                 'description',
+                AllowedFilter::exact('is_active'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
@@ -61,6 +63,7 @@ class CommunityGroupController extends Controller
                 'id',
                 'name',
                 'priority',
+                'is_active',
                 'created_at',
                 'updated_at',
             ])
@@ -113,6 +116,7 @@ class CommunityGroupController extends Controller
                 'priority',
                 'description',
                 'logo',
+                'is_active',
                 'created_at',
                 'updated_at',
             ])

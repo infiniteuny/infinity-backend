@@ -41,17 +41,20 @@ class CommunityGroupAdminController extends Controller
             ->allowedFields([
                 'id',
                 'year',
+                'is_active',
                 'created_at',
                 'updated_at',
             ])
             ->allowedFilters([
                 AllowedFilter::exact('year'),
+                AllowedFilter::exact('is_active'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
                 'year',
+                'is_active',
                 'created_at',
                 'updated_at',
             ])
@@ -92,6 +95,7 @@ class CommunityGroupAdminController extends Controller
             ->allowedFields([
                 'id',
                 'year',
+                'is_active',
                 'created_at',
                 'updated_at',
             ])
