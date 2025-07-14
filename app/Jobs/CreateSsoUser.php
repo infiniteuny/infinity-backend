@@ -11,7 +11,7 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 
 class CreateSsoUser implements ShouldQueue
 {
-    use Queueable, WithoutOverlapping;
+    use Queueable;
 
     /**
      * Create a new job instance.

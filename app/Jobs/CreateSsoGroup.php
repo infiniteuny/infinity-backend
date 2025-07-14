@@ -12,7 +12,7 @@ use Spatie\LaravelData\Optional;
 
 class CreateSsoGroup implements ShouldQueue
 {
-    use Queueable, WithoutOverlapping;
+    use Queueable;
 
     /**
      * Create a new job instance.
