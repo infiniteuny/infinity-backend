@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 
-class DeleteSsoGroup implements ShouldQueue
+class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
 
@@ -24,6 +24,14 @@ class DeleteSsoGroup implements ShouldQueue
      * @var int
      */
     public $tries = 5;
+
+    /**
+     * Get the unique ID for the job.
+     */
+    public function uniqueId(): string
+    {
+        return $this->groupSsoId;
+    }
 
     /**
      * Get the middleware the job should pass through.

@@ -5,12 +5,13 @@ namespace App\Jobs;
 use App\Data\SsoGroupData;
 use App\Models\Group;
 use App\Services\SsoService;
+use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Spatie\LaravelData\Optional;
 
-class CreateSsoGroup implements ShouldQueue
+class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
 
@@ -29,6 +30,14 @@ class CreateSsoGroup implements ShouldQueue
      * @var int
      */
     public $tries = 5;
+
+    /**
+     * Get the unique ID for the job.
+     */
+    public function uniqueId(): string
+    {
+        return $this->group->id;
+    }
 
     /**
      * Get the middleware the job should pass through.

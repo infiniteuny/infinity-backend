@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 
-class UpdateSsoUser implements ShouldQueue
+class UpdateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
 
@@ -29,6 +29,14 @@ class UpdateSsoUser implements ShouldQueue
      * @var int
      */
     public $tries = 5;
+
+    /**
+     * Get the unique ID for the job.
+     */
+    public function uniqueId(): string
+    {
+        return $this->user->id;
+    }
 
     /**
      * Get the middleware the job should pass through.

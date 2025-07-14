@@ -10,7 +10,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Spatie\LaravelData\Optional;
 
-class UpdateSsoGroup implements ShouldQueue
+class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
 
@@ -29,6 +29,14 @@ class UpdateSsoGroup implements ShouldQueue
      * @var int
      */
     public $tries = 5;
+
+    /**
+     * Get the unique ID for the job.
+     */
+    public function uniqueId(): string
+    {
+        return $this->group->id;
+    }
 
     /**
      * Get the middleware the job should pass through.
