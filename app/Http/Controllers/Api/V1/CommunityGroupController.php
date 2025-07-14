@@ -139,7 +139,7 @@ class CommunityGroupController extends Controller
         if ($hasLogo) {
             $oldManifest = $communityGroup->getRawOriginal('logo');
 
-            dispatch(new DeleteBlob($oldManifest));
+            DeleteBlob::dispatch($oldManifest);
 
             $manifest = Storage::store(
                 $request->file('logo'),
@@ -168,7 +168,7 @@ class CommunityGroupController extends Controller
     {
         $manifest = $communityGroup->getRawOriginal('logo');
 
-        dispatch(new DeleteBlob($manifest));
+        DeleteBlob::dispatch($manifest);
 
         $communityGroup->delete();
 

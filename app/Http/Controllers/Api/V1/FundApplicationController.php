@@ -185,7 +185,7 @@ class FundApplicationController extends Controller
         if ($hasLoa) {
             $oldLoaManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
 
-            dispatch(new DeleteBlob($oldLoaManifest));
+            DeleteBlob::dispatch($oldLoaManifest);
 
             $loaManifest = Storage::store(
                 $request->file('letter_of_acceptance'),
@@ -196,7 +196,7 @@ class FundApplicationController extends Controller
         if ($hasProposal) {
             $oldProposalManifest = $fundApplication->getRawOriginal('proposal');
 
-            dispatch(new DeleteBlob($oldProposalManifest));
+            DeleteBlob::dispatch($oldProposalManifest);
 
             $proposalManifest = Storage::store(
                 $request->file('proposal'),
@@ -228,8 +228,8 @@ class FundApplicationController extends Controller
         $loaManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
         $proposalManifest = $fundApplication->getRawOriginal('proposal');
 
-        dispatch(new DeleteBlob($loaManifest));
-        dispatch(new DeleteBlob($proposalManifest));
+        DeleteBlob::dispatch($loaManifest);
+        DeleteBlob::dispatch($proposalManifest);
 
         $fundApplication->delete();
 

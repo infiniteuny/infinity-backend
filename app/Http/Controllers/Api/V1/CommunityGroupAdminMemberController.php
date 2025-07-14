@@ -126,7 +126,7 @@ class CommunityGroupAdminMemberController extends Controller
         if ($hasPhoto) {
             $oldPhotoManifest = $communityGroupAdminMember->getRawOriginal('photo');
 
-            dispatch(new DeleteBlob($oldPhotoManifest));
+            DeleteBlob::dispatch($oldPhotoManifest);
 
             $photoManifest = Storage::store(
                 $request->file('photo'),
@@ -138,7 +138,7 @@ class CommunityGroupAdminMemberController extends Controller
         if ($hasAnimation) {
             $oldAnimationManifest = $communityGroupAdminMember->getRawOriginal('animation');
 
-            dispatch(new DeleteBlob($oldAnimationManifest));
+            DeleteBlob::dispatch($oldAnimationManifest);
 
             if ($hasFileAnimation) {
                 $animationManifest = Storage::store(
@@ -186,8 +186,8 @@ class CommunityGroupAdminMemberController extends Controller
         $photoManifest = $communityGroupAdminMember->getRawOriginal('photo');
         $animationManifest = $communityGroupAdminMember->getRawOriginal('animation');
 
-        dispatch(new DeleteBlob($photoManifest));
-        dispatch(new DeleteBlob($animationManifest));
+        DeleteBlob::dispatch($photoManifest);
+        DeleteBlob::dispatch($animationManifest);
 
         $communityGroupAdmin->members()->detach($communityGroupAdminMember->id);
 

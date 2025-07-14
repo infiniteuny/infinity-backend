@@ -113,7 +113,7 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
-        dispatch(new CreateSsoUser($user));
+        CreateSsoUser::dispatch($user);
 
         return new UserResource($user);
     }
@@ -172,9 +172,9 @@ class UserController extends Controller
         $user->update($request->validated());
 
         if ($user->sso_id) {
-            dispatch(new UpdateSsoUser($user));
+            UpdateSsoUser::dispatch($user);
         } else {
-            dispatch(new CreateSsoUser($user));
+            CreateSsoUser::dispatch($user);
         }
 
         return new UserResource($user);
@@ -192,7 +192,7 @@ class UserController extends Controller
         $user->delete();
 
         if ($user->sso_id) {
-            dispatch(new DeleteSsoUser($user->sso_id));
+            DeleteSsoUser::dispatch($user->sso_id);
         }
 
         return new UserResource($user);

@@ -253,7 +253,7 @@ class AchievementController extends Controller
         if ($hasImage) {
             $oldManifest = $achievement->getRawOriginal('image');
 
-            dispatch(new DeleteBlob($oldManifest));
+            DeleteBlob::dispatch($oldManifest);
 
             $manifest = Storage::store($request->file('image'), 'achievements/images');
         }
@@ -278,7 +278,7 @@ class AchievementController extends Controller
     {
         $manifest = $achievement->getRawOriginal('image');
 
-        dispatch(new DeleteBlob($manifest));
+        DeleteBlob::dispatch($manifest);
 
         $achievement->delete();
 

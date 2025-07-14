@@ -133,7 +133,7 @@ class TestimonialController extends Controller
         if ($hasPhoto) {
             $oldManifest = $testimonial->getRawOriginal('photo');
 
-            dispatch(new DeleteBlob($oldManifest));
+            DeleteBlob::dispatch($oldManifest);
 
             $manifest = Storage::store(
                 $request->file('photo'),
@@ -162,7 +162,7 @@ class TestimonialController extends Controller
     {
         $manifest = $testimonial->getRawOriginal('photo');
 
-        dispatch(new DeleteBlob($manifest));
+        DeleteBlob::dispatch($manifest);
 
         $testimonial->delete();
 

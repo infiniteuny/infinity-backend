@@ -27,9 +27,9 @@ class SyncCGAdminSsoGroups implements ShouldQueue
             }
 
             if (is_null($group->sso_last_synced_at)) {
-                dispatch(new CreateSsoGroup($group, $ssoParentId));
+                CreateSsoGroup::dispatch($group, $ssoParentId);
             } elseif ($group->sso_last_synced_at < $group->updated_at) {
-                dispatch(new UpdateSsoGroup($group, $ssoParentId));
+                UpdateSsoGroup::dispatch($group, $ssoParentId);
             }
         }
     }

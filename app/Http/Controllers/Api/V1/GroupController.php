@@ -76,7 +76,7 @@ class GroupController extends Controller
     {
         $group = Group::create($request->validated());
 
-        dispatch(new CreateSsoGroup($group));
+        CreateSsoGroup::dispatch($group);
 
         return new GroupResource($group);
     }
@@ -115,9 +115,9 @@ class GroupController extends Controller
         $group->update($request->validated());
 
         if ($group->sso_id) {
-            dispatch(new UpdateSsoGroup($group));
+            UpdateSsoGroup::dispatch($group);
         } else {
-            dispatch(new CreateSsoGroup($group));
+            CreateSsoGroup::dispatch($group);
         }
 
         return new GroupResource($group);
@@ -135,7 +135,7 @@ class GroupController extends Controller
         $group->delete();
 
         if ($group->sso_id) {
-            dispatch(new DeleteSsoGroup($group->sso_id));
+            DeleteSsoGroup::dispatch($group->sso_id);
         }
 
         return new GroupResource($group);

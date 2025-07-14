@@ -21,9 +21,9 @@ class SyncSsoUsers implements ShouldQueue
 
         foreach ($users as $user) {
             if (is_null($user->sso_last_synced_at)) {
-                dispatch(new CreateSsoUser($user));
+                CreateSsoUser::dispatch($user);
             } elseif ($user->sso_last_synced_at < $user->updated_at) {
-                dispatch(new UpdateSsoUser($user));
+                UpdateSsoUser::dispatch($user);
             }
         }
     }

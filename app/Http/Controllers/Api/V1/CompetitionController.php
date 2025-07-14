@@ -143,7 +143,7 @@ class CompetitionController extends Controller
         if ($hasLogo) {
             $oldManifest = $competition->getRawOriginal('logo');
 
-            dispatch(new DeleteBlob($oldManifest));
+            DeleteBlob::dispatch($oldManifest);
 
             $manifest = Storage::store($request->file('logo'), 'competitions/logos');
         }
@@ -168,7 +168,7 @@ class CompetitionController extends Controller
     {
         $manifest = $competition->getRawOriginal('logo');
 
-        dispatch(new DeleteBlob($manifest));
+        DeleteBlob::dispatch($manifest);
 
         $competition->delete();
 

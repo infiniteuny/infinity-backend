@@ -126,7 +126,7 @@ class CoreTeamMemberController extends Controller
         if ($hasPhoto) {
             $photoManifest = $coreTeamMember->getRawOriginal('photo');
 
-            dispatch(new DeleteBlob($photoManifest));
+            DeleteBlob::dispatch($photoManifest);
 
             $photoManifest = Storage::store(
                 $request->file('photo'),
@@ -138,7 +138,7 @@ class CoreTeamMemberController extends Controller
         if ($hasAnimation) {
             $animationManifest = $coreTeamMember->getRawOriginal('animation');
 
-            dispatch(new DeleteBlob($animationManifest));
+            DeleteBlob::dispatch($animationManifest);
 
             if ($hasFileAnimation) {
                 $animationManifest = Storage::store(
@@ -186,8 +186,8 @@ class CoreTeamMemberController extends Controller
         $photoManifest = $coreTeamMember->getRawOriginal('photo');
         $animationManifest = $coreTeamMember->getRawOriginal('animation');
 
-        dispatch(new DeleteBlob($photoManifest));
-        dispatch(new DeleteBlob($animationManifest));
+        DeleteBlob::dispatch($photoManifest);
+        DeleteBlob::dispatch($animationManifest);
 
         $coreTeam->members()->detach($coreTeamMember->id);
 

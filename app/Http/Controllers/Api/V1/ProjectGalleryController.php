@@ -129,7 +129,7 @@ class ProjectGalleryController extends Controller
         if ($hasImage) {
             $oldManifest = $projectGallery->getRawOriginal('image');
 
-            dispatch(new DeleteBlob($oldManifest));
+            DeleteBlob::dispatch($oldManifest);
 
             $manifest = Storage::store(
                 $request->file('image'),
@@ -158,7 +158,7 @@ class ProjectGalleryController extends Controller
     {
         $manifest = $projectGallery->getRawOriginal('image');
 
-        dispatch(new DeleteBlob($manifest));
+        DeleteBlob::dispatch($manifest);
 
         $projectGallery->delete();
 

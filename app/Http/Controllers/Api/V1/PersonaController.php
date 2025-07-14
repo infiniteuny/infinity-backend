@@ -135,7 +135,7 @@ class PersonaController extends Controller
         if ($hasLogo) {
             $oldManifest = $persona->getRawOriginal('logo');
 
-            dispatch(new DeleteBlob($oldManifest));
+            DeleteBlob::dispatch($oldManifest);
 
             $manifest = Storage::store(
                 $request->file('logo'),
@@ -164,7 +164,7 @@ class PersonaController extends Controller
     {
         $manifest = $persona->getRawOriginal('logo');
 
-        dispatch(new DeleteBlob($manifest));
+        DeleteBlob::dispatch($manifest);
 
         $persona->delete();
 
