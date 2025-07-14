@@ -22,14 +22,6 @@ class GroupSeeder extends Seeder
                 'is_managed' => true,
             ],
             [
-                'name' => 'Core',
-                'is_managed' => true,
-            ],
-            [
-                'name' => 'Supercore',
-                'is_managed' => true,
-            ],
-            [
                 'name' => 'Member',
                 'is_managed' => true,
             ],
