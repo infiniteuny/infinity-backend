@@ -4,15 +4,13 @@ namespace App\Jobs;
 
 use App\Facades\Storage;
 use Exception;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Queue\Queueable;
 
 class DeleteBlob implements ShouldBeUnique, ShouldQueue
 {
-    use Dispatchable, Queueable, SerializesModels;
+    use Queueable;
 
     /**
      * Create a new job instance.
