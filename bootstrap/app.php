@@ -1,6 +1,10 @@
 <?php
 
+use App\Jobs\SyncCGAdminSsoGroups;
+use App\Jobs\SyncCoreTeamSsoGroups;
 use App\Jobs\SyncSsoUsers;
+use App\Jobs\SyncXCGAdminSsoGroups;
+use App\Jobs\SyncXCoreTeamSsoGroups;
 use App\Utils\JsendFormatter;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Console\Scheduling\Schedule;
@@ -52,6 +56,10 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->job(new SyncSsoUsers)->daily();
+        $schedule->job(new SyncCoreTeamSsoGroups)->daily();
+        $schedule->job(new SyncCGAdminSsoGroups)->daily();
+        $schedule->job(new SyncXCoreTeamSsoGroups)->daily();
+        $schedule->job(new SyncXCGAdminSsoGroups)->daily();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {

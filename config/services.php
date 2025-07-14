@@ -38,6 +38,10 @@ return [
     'authentik' => [
         'base_url' => env('AUTHENTIK_BASE_URL', 'https://auth.infiniteuny.id'),
         'token' => env('AUTHENTIK_TOKEN'),
+        'core_team_group_id' => env('AUTHENTIK_CORE_TEAM_GROUP_ID'),
+        'xcore_team_group_id' => env('AUTHENTIK_XCORE_TEAM_GROUP_ID'),
+        'cg_admin_group_id' => env('AUTHENTIK_CG_ADMIN_GROUP_ID'),
+        'xcg_admin_group_id' => env('AUTHENTIK_XCG_ADMIN_GROUP_ID'),
     ],
 
 ];

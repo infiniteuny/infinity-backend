@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Models\CommunityGroupAdmin;
+use App\Models\Group;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
+
+class SyncXCGAdminSsoGroups implements ShouldQueue
+{
+    use Queueable;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
+    {
+        $admins = CommunityGroupAdmin::where('is_active', false)->get();
+        $ssoParentId = config('services.authentik.xcg_admin_group_id');
+
+        foreach ($admins as $admin) {
+            $group = Group::find($admin->group_id);
+
+            if (! $group) {
+                continue;
+            }
+
+            if (is_null($group->sso_last_synced_at)) {
+                dispatch(new CreateSsoGroup($group, $ssoParentId));
+            } elseif ($group->sso_last_synced_at < $group->updated_at) {
+                dispatch(new UpdateSsoGroup($group, $ssoParentId));
+            }
+        }
+    }
+}
