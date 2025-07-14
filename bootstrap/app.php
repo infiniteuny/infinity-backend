@@ -1,7 +1,9 @@
 <?php
 
+use App\Jobs\SyncSsoUsers;
 use App\Utils\JsendFormatter;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -47,6 +49,9 @@ return Application::configure(basePath: dirname(__DIR__))
                 | Request::HEADER_X_FORWARDED_HOST
                 | Request::HEADER_X_FORWARDED_PROTO
         );
+    })
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->job(new SyncSsoUsers)->daily();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {
