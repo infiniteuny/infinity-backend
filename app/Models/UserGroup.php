@@ -27,6 +27,15 @@ class UserGroup extends Pivot
         'group_id',
     ];
 
+    /**
+     * The relationships that should be touched on save.
+     *
+     * @var array
+     */
+    protected $touches = [
+        'group',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
