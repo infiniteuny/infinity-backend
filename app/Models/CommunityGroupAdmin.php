@@ -19,6 +19,8 @@ class CommunityGroupAdmin extends Model
      */
     protected $fillable = [
         'year',
+        'is_active',
+        'group_id',
     ];
 
     /**

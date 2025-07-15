@@ -19,6 +19,8 @@ class CoreTeam extends Model
      */
     protected $fillable = [
         'year',
+        'is_active',
+        'group_id',
     ];
 
     /**
