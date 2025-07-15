@@ -14,25 +14,25 @@
         "php": "^8.2.0",
         "facile-it/php-jose-verifier": "0.5.0-beta1",
         "facile-it/php-openid-client": "0.4.0-beta1",
-        "laravel/framework": "12.19.3",
+        "laravel/framework": "12.20.0",
         "laravel/horizon": "5.33.1",
-        "laravel/octane": "2.10.0",
+        "laravel/octane": "2.11.0",
         "laravel/tinker": "2.10.1",
         "league/flysystem-aws-s3-v3": "3.29.0",
         "namoshek/laravel-redis-sentinel": "0.8.0",
         "spatie/laravel-data": "4.17.0",
         "spatie/laravel-permission": "6.20.0",
-        "spatie/laravel-query-builder": "6.3.2"
+        "spatie/laravel-query-builder": "6.3.3"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.5",
         "fakerphp/faker": "1.24.1",
         "knuckleswtf/scribe": "5.2.1",
-        "laravel/pint": "1.22.1",
+        "laravel/pint": "1.24.0",
         "laravel/sail": "1.43.1",
         "mockery/mockery": "1.6.12",
-        "nunomaduro/collision": "8.8.1",
-        "phpunit/phpunit": "12.2.3",
+        "nunomaduro/collision": "8.8.2",
+        "phpunit/phpunit": "12.2.7",
         "spatie/laravel-ignition": "2.9.1"
     },
     "autoload": {
