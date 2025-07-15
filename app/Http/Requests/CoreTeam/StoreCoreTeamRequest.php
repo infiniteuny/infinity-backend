@@ -14,8 +14,20 @@ class StoreCoreTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'year' => ['required', 'integer'],
-            'is_active' => ['sometimes', 'boolean'],
+            'year' => ['required', 'integer', 'unique:core_teams,year'],
+            'is_active' => ['sometimes', 'accepted'],
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'is_active.accepted' => 'The is active field must be true.',
         ];
     }
 }
