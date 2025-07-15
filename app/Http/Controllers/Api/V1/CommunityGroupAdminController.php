@@ -8,7 +8,9 @@ use App\Http\Requests\CommunityGroupAdmin\UpdateCommunityGroupAdminRequest;
 use App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminCollection;
 use App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource;
 use App\Models\CommunityGroupAdmin;
+use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -75,12 +77,22 @@ class CommunityGroupAdminController extends Controller
      */
     public function store(StoreCommunityGroupAdminRequest $request)
     {
-        $communityGroupAdmin = CommunityGroupAdmin::create($request->validated());
+        DB::transaction(function () use ($request, &$communityGroupAdmin) {
+            $group = Group::create([
+                'name' => 'Community '.$request->safe()->only(['year'])['year'],
+                'guard_name' => 'api',
+                'is_managed' => true,
+            ]);
 
-        if ($communityGroupAdmin->is_active) {
-            CommunityGroupAdmin::where('id', '!=', $communityGroupAdmin->id)
-                ->update(['is_active' => false]);
-        }
+            $communityGroupAdmin = CommunityGroupAdmin::create(
+                array_merge($request->validated(), ['group_id' => $group->id])
+            );
+
+            if ($communityGroupAdmin->is_active) {
+                CommunityGroupAdmin::where('id', '!=', $communityGroupAdmin->id)
+                    ->update(['is_active' => false]);
+            }
+        });
 
         return new CommunityGroupAdminResource($communityGroupAdmin);
     }
@@ -118,12 +130,19 @@ class CommunityGroupAdminController extends Controller
      */
     public function update(UpdateCommunityGroupAdminRequest $request, CommunityGroupAdmin $communityGroupAdmin)
     {
-        $communityGroupAdmin->update($request->validated());
+        DB::transaction(function () use ($request, $communityGroupAdmin) {
+            $communityGroupAdmin->update($request->validated());
 
-        if ($communityGroupAdmin->is_active) {
-            CommunityGroupAdmin::where('id', '!=', $communityGroupAdmin->id)
-                ->update(['is_active' => false]);
-        }
+            if ($request->has('year')) {
+                $communityGroupAdmin->group->update(['name' => 'Community '.$communityGroupAdmin->year]);
+                unset($communityGroupAdmin->group);
+            }
+
+            if ($communityGroupAdmin->is_active) {
+                CommunityGroupAdmin::where('id', '!=', $communityGroupAdmin->id)
+                    ->update(['is_active' => false]);
+            }
+        });
 
         return new CommunityGroupAdminResource($communityGroupAdmin);
     }
@@ -137,7 +156,11 @@ class CommunityGroupAdminController extends Controller
      */
     public function destroy(CommunityGroupAdmin $communityGroupAdmin)
     {
-        $communityGroupAdmin->delete();
+        DB::transaction(function () use ($communityGroupAdmin) {
+            $communityGroupAdmin->group->delete();
+            unset($communityGroupAdmin->group);
+            $communityGroupAdmin->delete();
+        });
 
         return new CommunityGroupAdminResource($communityGroupAdmin);
     }

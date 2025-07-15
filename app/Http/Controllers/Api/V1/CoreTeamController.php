@@ -8,7 +8,9 @@ use App\Http\Requests\CoreTeam\UpdateCoreTeamRequest;
 use App\Http\Resources\CoreTeam\CoreTeamCollection;
 use App\Http\Resources\CoreTeam\CoreTeamResource;
 use App\Models\CoreTeam;
+use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -75,12 +77,22 @@ class CoreTeamController extends Controller
      */
     public function store(StoreCoreTeamRequest $request)
     {
-        $coreTeam = CoreTeam::create($request->validated());
+        DB::transaction(function () use ($request, &$coreTeam) {
+            $group = Group::create([
+                'name' => 'Core '.$request->safe()->only(['year'])['year'],
+                'guard_name' => 'api',
+                'is_managed' => true,
+            ]);
 
-        if ($coreTeam->is_active) {
-            CoreTeam::where('id', '!=', $coreTeam->id)
-                ->update(['is_active' => false]);
-        }
+            $coreTeam = CoreTeam::create(
+                array_merge($request->validated(), ['group_id' => $group->id])
+            );
+
+            if ($coreTeam->is_active) {
+                CoreTeam::where('id', '!=', $coreTeam->id)
+                    ->update(['is_active' => false]);
+            }
+        });
 
         return new CoreTeamResource($coreTeam);
     }
@@ -118,12 +130,20 @@ class CoreTeamController extends Controller
      */
     public function update(UpdateCoreTeamRequest $request, CoreTeam $coreTeam)
     {
-        $coreTeam->update($request->validated());
+        DB::transaction(function () use ($request, $coreTeam) {
+            $coreTeam->update($request->validated());
 
-        if ($coreTeam->is_active) {
-            CoreTeam::where('id', '!=', $coreTeam->id)
-                ->update(['is_active' => false]);
-        }
+            if ($request->has('year')) {
+                $coreTeam->group->update(['name' => 'Core '.$coreTeam->year]);
+                // Prevent the group from being serialized
+                unset($coreTeam->group);
+            }
+
+            if ($coreTeam->is_active) {
+                CoreTeam::where('id', '!=', $coreTeam->id)
+                    ->update(['is_active' => false]);
+            }
+        });
 
         return new CoreTeamResource($coreTeam);
     }
@@ -137,7 +157,13 @@ class CoreTeamController extends Controller
      */
     public function destroy(CoreTeam $coreTeam)
     {
-        $coreTeam->delete();
+        DB::transaction(function () use ($coreTeam) {
+            $coreTeam->group->delete();
+            // Prevent the group from being serialized
+            unset($coreTeam->group);
+
+            $coreTeam->delete();
+        });
 
         return new CoreTeamResource($coreTeam);
     }
