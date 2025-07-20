@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\SyncAchievementLeaderboards;
 use App\Jobs\SyncCGAdminMembersGroup;
 use App\Jobs\SyncCGAdminSsoGroups;
 use App\Jobs\SyncCoreTeamMembersGroup;
@@ -57,6 +58,7 @@ return Application::configure(basePath: dirname(__DIR__))
         );
     })
     ->withSchedule(function (Schedule $schedule) {
+        $schedule->job(new SyncAchievementLeaderboards(Date::now()->year))->daily();
         $schedule->job(new SyncCoreTeamMembersGroup)->daily();
         $schedule->job(new SyncCGAdminMembersGroup)->daily();
         $schedule->job(new SyncSsoUsers)->daily();
