@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55aae5c07c32611694be2e3d675fa3aa",
+    "content-hash": "5dafbb7c83a696950d166330f8b747a1",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3770,16 +3770,16 @@
         },
         {
             "name": "namoshek/laravel-redis-sentinel",
-            "version": "v0.8.0",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Namoshek/laravel-redis-sentinel.git",
-                "reference": "73d4c0b0d051df84d0802b66bd5d4be25d75e295"
+                "reference": "978d82b4e7db34ce43d23c5e80ecf97393946083"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Namoshek/laravel-redis-sentinel/zipball/73d4c0b0d051df84d0802b66bd5d4be25d75e295",
-                "reference": "73d4c0b0d051df84d0802b66bd5d4be25d75e295",
+                "url": "https://api.github.com/repos/Namoshek/laravel-redis-sentinel/zipball/978d82b4e7db34ce43d23c5e80ecf97393946083",
+                "reference": "978d82b4e7db34ce43d23c5e80ecf97393946083",
                 "shasum": ""
             },
             "require": {
@@ -3787,10 +3787,10 @@
                 "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0",
                 "illuminate/redis": "^8.0|^9.0|^10.0|^11.0|^12.0",
                 "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
-                "php": "^8.1"
+                "php": "^8.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
+                "laravel/pint": "^1.22",
                 "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0|^10.0"
             },
             "type": "library",
@@ -3825,9 +3825,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Namoshek/laravel-redis-sentinel/issues",
-                "source": "https://github.com/Namoshek/laravel-redis-sentinel/tree/v0.8.0"
+                "source": "https://github.com/Namoshek/laravel-redis-sentinel/tree/v1.0.0"
             },
-            "time": "2025-02-24T19:31:00+00:00"
+            "time": "2025-07-18T13:14:46+00:00"
         },
         {
             "name": "nesbot/carbon",
