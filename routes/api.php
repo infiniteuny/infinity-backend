@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AchievementController;
+use App\Http\Controllers\Api\V1\AchievementLeaderboardController;
 use App\Http\Controllers\Api\V1\CommunityGroupAdminController;
 use App\Http\Controllers\Api\V1\CommunityGroupAdminMemberController;
 use App\Http\Controllers\Api\V1\CommunityGroupController;
@@ -55,6 +56,14 @@ Route::group([
     'as' => 'api.v1.',
     'prefix' => 'v1',
 ], function () {
+    Route::group([
+        'as' => 'leaderboards.',
+        'prefix' => 'leaderboards',
+    ], function () {
+        Route::apiResource('achievements', AchievementLeaderboardController::class)
+            ->only(['index', 'show']);
+    });
+
     Route::apiResources([
         'achievements' => AchievementController::class,
         'configs' => ConfigController::class,
