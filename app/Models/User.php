@@ -74,6 +74,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'is_active',
     ];
 
+    protected string $guard_name = 'api';
+
+    protected function getDefaultGuardName(): string
+    {
+        return $this->guard_name;
+    }
+
     protected function isActive(): Attribute
     {
         return new Attribute(
