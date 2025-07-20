@@ -94,9 +94,11 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        $team = Team::create($request->validated());
+        DB::transaction(function () use ($request, &$team) {
+            $team = Team::create($request->validated());
 
-        $team->members()->attach($team->leader_id);
+            $team->members()->attach($team->leader_id);
+        });
 
         return new TeamResource($team);
     }
