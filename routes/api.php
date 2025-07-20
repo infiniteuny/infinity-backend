@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\V1\UserGroupController;
 use App\Http\Controllers\Api\V1\UserPermissionController;
 use App\Http\Controllers\Api\V1\UserPersonaController;
 use App\Http\Controllers\BlobController;
+use App\Http\Controllers\HealthCheckController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('_health', HealthCheckController::class)
+    ->name('health.show');
 
 Route::get('static/private/{blob}', BlobController::class)
     ->where('blob', '.*')
