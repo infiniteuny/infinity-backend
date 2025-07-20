@@ -1,16 +1,16 @@
-name: Teams
-description: 'Manage teams.'
+name: Permissions
+description: 'Manage permissions.'
 endpoints:
   -
     httpMethods:
       - GET
-    uri: v1/teams
+    uri: v1/permissions
     metadata:
-      groupName: Teams
-      groupDescription: 'Manage teams.'
+      groupName: Permissions
+      groupDescription: 'Manage permissions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all teams'
+      title: 'List all permissions'
       description: ''
       authenticated: true
       custom: []
@@ -28,7 +28,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Praesentium","is_personal":true,"created_at":"1976-05-09T14:31:10+00:00","updated_at":"2024-01-23T01:08:03+00:00"},{"id":"e660ec64-aeea-3ded-bfe4-fb1f468259dc","leader_id":"9e13baad-9e20-392f-94ab-6047f7ff6a83","name":"Doloremque","is_personal":true,"created_at":"1973-12-26T18:25:35+00:00","updated_at":"1992-03-30T05:19:10+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1998-03-16T20:58:31.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"},{"id":"1937113a-b0a2-3b03-925a-3163292463db","name":"Voluptatem","guard_name":"oidc","created_at":"2023-08-06T00:38:36.000000Z","updated_at":"2003-02-07T13:08:08.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -44,13 +44,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: v1/teams
+    uri: v1/permissions
     metadata:
-      groupName: Teams
-      groupDescription: 'Manage teams.'
+      groupName: Permissions
+      groupDescription: 'Manage permissions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a team'
+      title: 'Create a permission'
       description: ''
       authenticated: true
       custom: []
@@ -63,45 +63,35 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      leader_id:
-        name: leader_id
-        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the users table.'
-        required: true
-        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
       name:
         name: name
-        description: ''
+        description: 'Must not be greater than 255 characters.'
         required: true
-        example: architecto
+        example: b
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
-      is_personal:
-        name: is_personal
+      guard_name:
+        name: guard_name
         description: ''
         required: true
-        example: false
-        type: boolean
-        enumValues: []
+        example: api
+        type: string
+        enumValues:
+          - api
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      name: architecto
-      is_personal: false
+      name: b
+      guard_name: api
     fileParameters: []
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Molestias","is_personal":true,"created_at":"2022-01-31T06:31:57+00:00","updated_at":"2022-05-05T07:43:48+00:00"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Enim","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -117,13 +107,13 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'v1/teams/{id}'
+    uri: 'v1/permissions/{id}'
     metadata:
-      groupName: Teams
-      groupDescription: 'Manage teams.'
+      groupName: Permissions
+      groupDescription: 'Manage permissions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Retrieve a team'
+      title: 'Retrieve a permission'
       description: ''
       authenticated: true
       custom: []
@@ -134,7 +124,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the team.'
+        description: 'The ID of the permission.'
         required: true
         example: architecto
         type: string
@@ -152,7 +142,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Deleniti","is_personal":false,"created_at":"2013-02-14T00:13:02+00:00","updated_at":"1978-02-20T03:13:26+00:00"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Non","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -169,13 +159,13 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'v1/teams/{id}'
+    uri: 'v1/permissions/{id}'
     metadata:
-      groupName: Teams
-      groupDescription: 'Manage teams.'
+      groupName: Permissions
+      groupDescription: 'Manage permissions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a team'
+      title: 'Update a permission'
       description: ''
       authenticated: true
       custom: []
@@ -186,7 +176,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the team.'
+        description: 'The ID of the permission.'
         required: true
         example: architecto
         type: string
@@ -199,45 +189,35 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      leader_id:
-        name: leader_id
-        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the users table.'
-        required: false
-        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
       name:
         name: name
-        description: ''
+        description: 'Must not be greater than 255 characters.'
         required: false
-        example: architecto
+        example: b
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
-      is_personal:
-        name: is_personal
+      guard_name:
+        name: guard_name
         description: ''
         required: false
-        example: true
-        type: boolean
-        enumValues: []
+        example: api
+        type: string
+        enumValues:
+          - api
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      name: architecto
-      is_personal: true
+      name: b
+      guard_name: api
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Distinctio","is_personal":false,"created_at":"1978-02-20T03:13:26+00:00","updated_at":"1992-01-21T14:54:34+00:00"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Facere","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -253,13 +233,13 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'v1/teams/{id}'
+    uri: 'v1/permissions/{id}'
     metadata:
-      groupName: Teams
-      groupDescription: 'Manage teams.'
+      groupName: Permissions
+      groupDescription: 'Manage permissions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a team'
+      title: 'Delete a permission'
       description: ''
       authenticated: true
       custom: []
@@ -270,7 +250,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the team.'
+        description: 'The ID of the permission.'
         required: true
         example: architecto
         type: string
@@ -288,7 +268,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Eum","is_personal":false,"created_at":"1992-01-21T14:54:34+00:00","updated_at":"1973-12-26T18:25:35+00:00"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Tempora","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
         headers: []
         description: ''
         custom: []

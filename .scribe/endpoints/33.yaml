@@ -1,20 +1,21 @@
-name: 'User Permission'
-description: 'Manage user permissions.'
+name: 'User Group'
+description: 'Manage user groups.'
 endpoints:
   -
     httpMethods:
       - GET
-    uri: 'v1/users/{user_id}/permissions'
+    uri: 'v1/users/{user_id}/groups'
     metadata:
-      groupName: 'User Permission'
-      groupDescription: 'Manage user permissions.'
+      groupName: 'User Group'
+      groupDescription: 'Manage user groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all user permissions'
+      title: 'List all user groups'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -38,59 +39,15 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_permissions":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Fugiat","guard_name":"oidc","created_at":"2020-08-09T04:07:35.000000Z","updated_at":"2007-02-06T15:39:03.000000Z","entitlement":{"id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","user_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","permission_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0"}},{"id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","name":"Provident","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z","entitlement":{"id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","user_id":"d03cceb8-0e59-3c26-8133-808072ac8a4c","permission_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"user_groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Id","guard_name":"oidc","created_at":"1973-09-12T20:21:07.000000Z","updated_at":"1991-12-16T07:14:42.000000Z","entitlement":{"id":"56db1203-2e82-3de6-a828-ead32bd52d27","user_id":"ea57fb8f-9953-354e-9184-d01c4ec16bb0","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"1df0d726-07cf-39dc-9280-74563f231abd","name":"Officia","guard_name":"oidc","created_at":"2021-03-28T12:52:13.000000Z","updated_at":"1999-10-12T05:09:05.000000Z","entitlement":{"id":"0733da06-3f67-3b0d-b923-684c336397e5","user_id":"3457a2ff-ae91-3fa6-b7ef-d2a3b0cb075b","group_id":"1df0d726-07cf-39dc-9280-74563f231abd"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
     responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: 'v1/user-permissions/{id}'
-    metadata:
-      groupName: 'User Permission'
-      groupDescription: 'Manage user permissions.'
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Retrieve a user permission'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the user permission.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: '{"status":"success","data":{"user_permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Accusantium","guard_name":"oidc","created_at":"1990-07-03T04:54:01.000000Z","updated_at":"2007-08-18T02:42:34.000000Z","entitlement":{"id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","user_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","permission_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0"}}}}'
-        headers: []
-        description: ''
-        custom: []
-    responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -98,13 +55,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: 'v1/users/{user_id}/permissions'
+    uri: 'v1/users/{user_id}/groups'
     metadata:
-      groupName: 'User Permission'
-      groupDescription: 'Manage user permissions.'
+      groupName: 'User Group'
+      groupDescription: 'Manage user groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a user permission'
+      title: 'Create a user group'
       description: ''
       authenticated: true
       custom: []
@@ -128,9 +85,9 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      permission_id:
-        name: permission_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the permissions table.'
+      group_id:
+        name: group_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the groups table.'
         required: true
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -139,12 +96,63 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      permission_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      group_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Fugit","guard_name":"oidc","created_at":"2021-10-18T08:27:29.000000Z","updated_at":"2022-01-20T09:39:20.000000Z","entitlement":{"id":"0e2442a9-fa81-3115-8890-8b00ec9cd683","user_id":"1e9be565-c31b-3b43-8646-66a4d676e89f","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Libero","guard_name":"oidc","created_at":"1991-12-16T07:14:42.000000Z","updated_at":"1973-10-24T15:54:13.000000Z","entitlement":{"id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e","user_id":"45e62725-5da9-35c7-82db-977f64d08292","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'v1/user-groups/{id}'
+    metadata:
+      groupName: 'User Group'
+      groupDescription: 'Manage user groups.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Retrieve a user group'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the user group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Veritatis","guard_name":"oidc","created_at":"2002-06-12T15:42:43.000000Z","updated_at":"1976-06-15T13:59:48.000000Z","entitlement":{"id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","user_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
         custom: []
@@ -161,13 +169,13 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'v1/user-permissions/{id}'
+    uri: 'v1/user-groups/{id}'
     metadata:
-      groupName: 'User Permission'
-      groupDescription: 'Manage user permissions.'
+      groupName: 'User Group'
+      groupDescription: 'Manage user groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a user permission'
+      title: 'Update a user group'
       description: ''
       authenticated: true
       custom: []
@@ -178,7 +186,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the user permission.'
+        description: 'The ID of the user group.'
         required: true
         example: architecto
         type: string
@@ -191,9 +199,9 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      permission_id:
-        name: permission_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the permissions table.'
+      group_id:
+        name: group_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the groups table.'
         required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -202,12 +210,12 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      permission_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      group_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Aliquam","guard_name":"oidc","created_at":"1973-10-24T15:54:13.000000Z","updated_at":"2023-08-16T08:09:44.000000Z","entitlement":{"id":"45e62725-5da9-35c7-82db-977f64d08292","user_id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Excepturi","guard_name":"oidc","created_at":"1976-06-15T13:59:48.000000Z","updated_at":"1978-02-21T03:10:37.000000Z","entitlement":{"id":"d6795ffc-5469-39cc-b8a3-ff26d1b1d12a","user_id":"7299053e-5fea-32a4-be53-165db447cc87","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
         custom: []
@@ -223,13 +231,13 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'v1/user-permissions/{id}'
+    uri: 'v1/user-groups/{id}'
     metadata:
-      groupName: 'User Permission'
-      groupDescription: 'Manage user permissions.'
+      groupName: 'User Group'
+      groupDescription: 'Manage user groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a user permission'
+      title: 'Delete a user group'
       description: ''
       authenticated: true
       custom: []
@@ -240,7 +248,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the user permission.'
+        description: 'The ID of the user group.'
         required: true
         example: architecto
         type: string
@@ -258,7 +266,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Veniam","guard_name":"oidc","created_at":"2023-08-16T08:09:44.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","user_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Doloribus","guard_name":"oidc","created_at":"1976-06-15T13:59:48.000000Z","updated_at":"1978-02-21T03:10:37.000000Z","entitlement":{"id":"d6795ffc-5469-39cc-b8a3-ff26d1b1d12a","user_id":"7299053e-5fea-32a4-be53-165db447cc87","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
         custom: []

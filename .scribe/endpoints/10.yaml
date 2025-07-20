@@ -1,35 +1,24 @@
-name: 'Community Group Members'
-description: 'Manage community group members.'
+name: Users
+description: 'Manage users.'
 endpoints:
   -
     httpMethods:
       - GET
-    uri: 'v1/community-groups/{community_group_id}/members'
+    uri: v1/users
     metadata:
-      groupName: 'Community Group Members'
-      groupDescription: 'Manage community group members.'
+      groupName: Users
+      groupDescription: 'Manage users.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all community group members'
+      title: 'List all users'
       description: ''
       authenticated: false
       custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      community_group_id:
-        name: community_group_id
-        description: 'The ID of the community group.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-    cleanUrlParameters:
-      community_group_id: architecto
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -38,7 +27,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group_members":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"lexus42@gmail.com","phone_number":"253.392.8862","student_id":"53454247343","major_id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","links":{"github":"http:\/\/www.okeefe.net\/et-consequatur-aut-dolores-enim","linkedin":"http:\/\/vonrueden.com\/","website":"http:\/\/www.leffler.info\/quis-adipisci-molestias-fugit-deleniti-distinctio-eum"},"start_date":"1978-02-20","end_date":"1992-01-21","is_member":false,"is_extraordinary":true,"created_at":"1992-03-30T05:19:11+00:00","updated_at":"1974-02-06T13:58:42+00:00","membership":{"id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e","user_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","community_group_id":"45e62725-5da9-35c7-82db-977f64d08292","created_at":"1989-05-03T10:56:24+00:00","updated_at":"2010-08-03T06:52:52+00:00"},"is_active":false},{"id":"29635f5e-45e3-3a71-90b8-942cfd8ffe97","name":"Rodrigo O''connell","email_address":"pagac.skylar@yahoo.com","phone_number":"260-842-0483","student_id":"16934464815","major_id":"cd7c94c7-777c-3bc2-ab81-c1d1c184670a","links":{"github":"http:\/\/www.crist.com\/tenetur-ab-reiciendis-quia-perspiciatis","linkedin":"https:\/\/www.lemke.com\/dolores-quia-maiores-assumenda-odit-doloribus-repellat-officiis","website":"http:\/\/kreiger.info\/"},"start_date":"2008-10-27","end_date":"2018-10-05","is_member":true,"is_extraordinary":true,"created_at":"1979-10-22T10:56:29+00:00","updated_at":"1973-07-07T05:31:42+00:00","membership":{"id":"741f623f-132b-3692-ab2c-a09b08acdad6","user_id":"29635f5e-45e3-3a71-90b8-942cfd8ffe97","community_group_id":"95fbc6f1-62ad-37e9-b66f-26b48c54c413","created_at":"1977-05-02T01:48:41+00:00","updated_at":"1999-01-10T14:40:06+00:00"},"is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"users":[{"id":"d34becdc-c0c1-3b29-91d0-b8358c864cf4","name":"Henri Mitchell","email_address":"feeney.demarcus@gmail.com","phone_number":"559.897.7788","student_id":"55159266794","major_id":"56db1203-2e82-3de6-a828-ead32bd52d27","links":{"github":"http:\/\/www.schaden.com\/odit-quia-officia-est-dignissimos-neque-blanditiis-odio.html","linkedin":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html","website":"http:\/\/howe.com\/accusamus-ut-et-recusandae.html"},"start_date":"1990-11-11","end_date":"1972-12-29","is_member":false,"is_extraordinary":false,"created_at":"1982-11-26T23:32:46+00:00","updated_at":"1996-01-28T03:28:38+00:00","is_active":false},{"id":"aa7148ea-5fbc-38cb-95a9-bdfc3d462337","name":"Mona Lemke","email_address":"mayert.margaretta@thiel.com","phone_number":"+1 (619) 523-1922","student_id":"19214877433","major_id":"741f623f-132b-3692-ab2c-a09b08acdad6","links":{"github":"http:\/\/brekke.com\/suscipit-doloribus-fugiat-ut-aut-deserunt-et-error","linkedin":"http:\/\/tromp.com\/dolorem-et-ut-dicta","website":"http:\/\/www.lakin.com\/"},"start_date":"2013-10-23","end_date":"1971-03-04","is_member":true,"is_extraordinary":true,"created_at":"2008-05-12T06:09:27+00:00","updated_at":"1970-11-05T15:02:36+00:00","is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -51,13 +40,13 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'v1/community-group-members/{id}'
+    uri: 'v1/users/{id}'
     metadata:
-      groupName: 'Community Group Members'
-      groupDescription: 'Manage community group members.'
+      groupName: Users
+      groupDescription: 'Manage users.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Retrieve a community group member'
+      title: 'Retrieve a user'
       description: ''
       authenticated: false
       custom: []
@@ -67,7 +56,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the community group member.'
+        description: 'The ID of the user.'
         required: true
         example: architecto
         type: string
@@ -85,7 +74,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group_member":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"okeefe.isidro@yahoo.com","phone_number":"1-915-230-6227","student_id":"87072336780","major_id":"f2726f3d-9044-3663-bede-2a0f37053879","links":{"github":"https:\/\/wisoky.com\/doloremque-id-aut-libero-aliquam-veniam-corporis.html","linkedin":"http:\/\/www.schaden.com\/odit-quia-officia-est-dignissimos-neque-blanditiis-odio.html","website":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html"},"start_date":"2006-08-03","end_date":"1995-09-01","is_member":true,"is_extraordinary":true,"created_at":"2024-01-13T01:48:03+00:00","updated_at":"1975-11-24T15:37:19+00:00","membership":{"id":"43fd77a7-5d0e-3206-88ea-5c77b63072ad","user_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","community_group_id":"fecaf9fe-6060-39af-b373-7563b93c16ba","created_at":"2018-10-16T07:33:26+00:00","updated_at":"1983-03-11T21:37:13+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jermaine.tillman@yahoo.com","phone_number":"1-820-420-3724","student_id":"43084522821","major_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","links":{"github":"http:\/\/www.baumbach.org\/et-modi-ipsum-nostrum-omnis-autem-et-consequatur","linkedin":"http:\/\/leffler.com\/","website":"http:\/\/vonrueden.com\/"},"start_date":"2020-03-13","end_date":"1985-12-26","is_member":true,"is_extraordinary":true,"created_at":"2003-02-07T13:08:10+00:00","updated_at":"1976-01-25T16:26:44+00:00","is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -98,13 +87,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: 'v1/community-groups/{community_group_id}/members'
+    uri: v1/users
     metadata:
-      groupName: 'Community Group Members'
-      groupDescription: 'Manage community group members.'
+      groupName: Users
+      groupDescription: 'Manage users.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a community group member'
+      title: 'Create a user'
       description: ''
       authenticated: true
       custom: []
@@ -112,10 +101,14 @@ endpoints:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      community_group_id:
-        name: community_group_id
-        description: 'The ID of the community group.'
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
         required: true
         example: architecto
         type: string
@@ -123,28 +116,129 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
-    cleanUrlParameters:
-      community_group_id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      user_id:
-        name: user_id
-        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the users table.'
+      email_address:
+        name: email_address
+        description: 'Must be a valid email address.'
         required: true
-        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+        example: zbailey@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
+      phone_number:
+        name: phone_number
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      student_id:
+        name: student_id
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      major_id:
+        name: major_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the majors table.'
+        required: true
+        example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      links:
+        name: links
+        description: ''
+        required: true
+        example:
+          github: 'https://github.com/infiniteuny'
+          linkedin: 'https://linkedin.com/company/infiniteuny/'
+          website: 'https://infiniteuny.id'
+        type: object
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      start_date:
+        name: start_date
+        description: 'Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
+        required: false
+        example: '2021-08-13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      end_date:
+        name: end_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+        required: false
+        example: '2051-08-13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      is_member:
+        name: is_member
+        description: ''
+        required: true
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      is_extraordinary:
+        name: is_extraordinary
+        description: ''
+        required: true
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'links.*':
+        name: 'links.*'
+        description: ''
+        required: false
+        example: 'https://example.com'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
     cleanBodyParameters:
-      user_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      name: architecto
+      email_address: zbailey@example.net
+      phone_number: architecto
+      student_id: architecto
+      major_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
+      links:
+        github: 'https://github.com/infiniteuny'
+        linkedin: 'https://linkedin.com/company/infiniteuny/'
+        website: 'https://infiniteuny.id'
+        '*': 'https://example.com'
+      start_date: '2021-08-13'
+      end_date: '2051-08-13'
+      is_member: false
+      is_extraordinary: true
     fileParameters: []
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"community_group_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"cecil42@gmail.com","phone_number":"1-463-692-1881","student_id":"21149155711","major_id":"c68e0767-6220-31fb-a489-61093ff79529","links":{"github":"https:\/\/www.leuschke.info\/nostrum-omnis-autem-et-consequatur-aut","linkedin":"http:\/\/www.stokes.com\/tempora-ex-voluptatem-laboriosam-praesentium-quis.html","website":"http:\/\/www.haag.org\/distinctio-eum-doloremque-id-aut-libero-aliquam-veniam-corporis"},"start_date":"2023-11-29","end_date":"1975-07-10","is_member":true,"is_extraordinary":true,"created_at":"2010-08-03T06:52:51+00:00","updated_at":"1977-09-11T02:11:59+00:00","membership":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","community_group_id":"8529678e-de6b-32f2-9f70-231a0d681563","created_at":"1974-11-30T05:17:16+00:00","updated_at":"2002-09-25T13:47:11+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"micaela88@yahoo.com","phone_number":"+1 (878) 642-3669","student_id":"78281414653","major_id":"0733da06-3f67-3b0d-b923-684c336397e5","links":{"github":"https:\/\/beier.com\/delectus-fugit-qui-repudiandae-laboriosam.html","linkedin":"http:\/\/franecki.net\/nemo-voluptate-accusamus-ut-et.html","website":"http:\/\/kovacek.info\/"},"start_date":"2014-11-13","end_date":"2018-07-03","is_member":false,"is_extraordinary":true,"created_at":"1985-03-25T07:07:18+00:00","updated_at":"1981-01-06T21:28:39+00:00","is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -161,13 +255,13 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'v1/community-group-members/{id}'
+    uri: 'v1/users/{id}'
     metadata:
-      groupName: 'Community Group Members'
-      groupDescription: 'Manage community group members.'
+      groupName: Users
+      groupDescription: 'Manage users.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a community group member'
+      title: 'Update a user'
       description: ''
       authenticated: true
       custom: []
@@ -178,7 +272,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the community group member.'
+        description: 'The ID of the user.'
         required: true
         example: architecto
         type: string
@@ -191,23 +285,139 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      user_id:
-        name: user_id
-        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the users table.'
+      name:
+        name: name
+        description: ''
         required: false
-        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
+      email_address:
+        name: email_address
+        description: 'Must be a valid email address.'
+        required: false
+        example: zbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      phone_number:
+        name: phone_number
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      student_id:
+        name: student_id
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      major_id:
+        name: major_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the majors table.'
+        required: false
+        example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      links:
+        name: links
+        description: ''
+        required: false
+        example:
+          github: 'https://github.com/infiniteuny'
+          linkedin: 'https://linkedin.com/company/infiniteuny/'
+          website: 'https://infiniteuny.id'
+        type: object
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      start_date:
+        name: start_date
+        description: 'Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
+        required: false
+        example: '2021-08-13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      end_date:
+        name: end_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+        required: false
+        example: '2051-08-13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      is_member:
+        name: is_member
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      is_extraordinary:
+        name: is_extraordinary
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'links.*':
+        name: 'links.*'
+        description: ''
+        required: false
+        example: 'https://example.com'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
     cleanBodyParameters:
-      user_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      name: architecto
+      email_address: zbailey@example.net
+      phone_number: architecto
+      student_id: architecto
+      major_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
+      links:
+        github: 'https://github.com/infiniteuny'
+        linkedin: 'https://linkedin.com/company/infiniteuny/'
+        website: 'https://infiniteuny.id'
+        '*': 'https://example.com'
+      start_date: '2021-08-13'
+      end_date: '2051-08-13'
+      is_member: true
+      is_extraordinary: true
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"schultz.audrey@yahoo.com","phone_number":"(385) 434-5708","student_id":"29367070801","major_id":"1df0d726-07cf-39dc-9280-74563f231abd","links":{"github":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio","linkedin":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html","website":"http:\/\/howe.com\/accusamus-ut-et-recusandae.html"},"start_date":"1991-02-24","end_date":"1973-04-13","is_member":false,"is_extraordinary":false,"created_at":"1983-03-11T21:37:12+00:00","updated_at":"1996-05-12T01:33:04+00:00","membership":{"id":"aa7148ea-5fbc-38cb-95a9-bdfc3d462337","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","community_group_id":"6a5089a3-6a1a-3177-ab7e-021be8a337a9","created_at":"1991-10-06T13:04:40+00:00","updated_at":"1992-04-28T03:30:54+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"madisen51@hotmail.com","phone_number":"+1 (216) 979-0089","student_id":"50937833468","major_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","links":{"github":"https:\/\/www.green.com\/alias-tenetur-ratione-nemo-voluptate-accusamus-ut-et","linkedin":"http:\/\/kovacek.info\/","website":"http:\/\/www.crist.com\/tenetur-ab-reiciendis-quia-perspiciatis"},"start_date":"1992-04-28","end_date":"1970-12-03","is_member":false,"is_extraordinary":false,"created_at":"2014-08-30T10:37:42+00:00","updated_at":"1978-12-11T01:44:39+00:00","is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -223,13 +433,13 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'v1/community-group-members/{id}'
+    uri: 'v1/users/{id}'
     metadata:
-      groupName: 'Community Group Members'
-      groupDescription: 'Manage community group members.'
+      groupName: Users
+      groupDescription: 'Manage users.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a community group member'
+      title: 'Delete a user'
       description: ''
       authenticated: true
       custom: []
@@ -240,7 +450,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the community group member.'
+        description: 'The ID of the user.'
         required: true
         example: architecto
         type: string
@@ -258,7 +468,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"ernie.nitzsche@ankunding.biz","phone_number":"+1-380-698-8637","student_id":"69403872784","major_id":"7299053e-5fea-32a4-be53-165db447cc87","links":{"github":"http:\/\/little.net\/voluptate-accusamus-ut-et-recusandae.html","linkedin":"http:\/\/www.conroy.com\/assumenda-et-tenetur-ab-reiciendis-quia","website":"http:\/\/www.braun.org\/et-dolores-quia-maiores"},"start_date":"2022-04-30","end_date":"1979-04-08","is_member":false,"is_extraordinary":true,"created_at":"1986-02-19T08:35:51+00:00","updated_at":"2022-07-11T00:50:04+00:00","membership":{"id":"9aabaecc-2f21-32fd-9ece-469aadfdb927","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","community_group_id":"45d1e1f4-e38d-3971-92c7-6d933b3b67fa","created_at":"2021-02-03T11:32:02+00:00","updated_at":"1979-10-22T10:56:28+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"christian51@leffler.com","phone_number":"+1-559-693-2083","student_id":"55366487659","major_id":"9e13baad-9e20-392f-94ab-6047f7ff6a83","links":{"github":"https:\/\/nitzsche.net\/aliquam-veniam-corporis-dolorem-mollitia-deleniti-nemo.html","linkedin":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio","website":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html"},"start_date":"2006-04-20","end_date":"1995-05-19","is_member":true,"is_extraordinary":true,"created_at":"2024-01-13T01:48:03+00:00","updated_at":"1975-11-24T15:37:19+00:00","is_active":false}}}'
         headers: []
         description: ''
         custom: []

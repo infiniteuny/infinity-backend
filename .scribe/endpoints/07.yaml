@@ -1,16 +1,16 @@
-name: 'Project Galleries'
-description: 'Manage project galleries.'
+name: Personas
+description: 'Manage personas.'
 endpoints:
   -
     httpMethods:
       - GET
-    uri: v1/project-galleries
+    uri: v1/personas
     metadata:
-      groupName: 'Project Galleries'
-      groupDescription: 'Manage project galleries.'
+      groupName: Personas
+      groupDescription: 'Manage personas.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all project galleries'
+      title: 'List all personas'
       description: ''
       authenticated: false
       custom: []
@@ -27,7 +27,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"project_galleries":[{"id":"5f936efd-e185-3891-a84d-e9ea08ed9d45","title":"Doloremque Id Aut Libero Aliquam Veniam Corporis.","description":"Deleniti nemo odit quia officia. Dignissimos neque blanditiis odio. Excepturi doloribus delectus fugit qui repudiandae laboriosam.","url":"http:\/\/franecki.net\/nemo-voluptate-accusamus-ut-et.html","image":"https:\/\/api.infiniteuny.id\/infinity\/static\/project-galleries\/images\/some-image-id.jpg","created_at":"2005-09-29T05:08:01+00:00","updated_at":"1991-02-24T06:34:30+00:00"},{"id":"fecaf9fe-6060-39af-b373-7563b93c16ba","title":"Assumenda Et Tenetur Ab Reiciendis Quia.","description":"Ducimus corrupti et dolores quia maiores assumenda. Doloribus repellat officiis corporis nesciunt ut ratione iure. Molestiae ut rem est esse. Aut molestiae sunt suscipit doloribus fugiat.","url":"http:\/\/bogan.com\/error-neque-recusandae-et-ipsam-dolorem-et-ut-dicta","image":"https:\/\/api.infiniteuny.id\/infinity\/static\/project-galleries\/images\/some-image-id.jpg","created_at":"2001-03-13T12:24:20+00:00","updated_at":"1979-09-27T10:37:29+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"personas":[{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"Nihil","priority":47,"description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/personas\/logos\/some-logo-id.jpg","created_at":"1989-01-18T12:51:57+00:00","updated_at":"2010-04-20T08:48:25+00:00"},{"id":"29635f5e-45e3-3a71-90b8-942cfd8ffe97","name":"Est","priority":69,"description":"Odio veritatis excepturi doloribus delectus fugit qui repudiandae. Est alias tenetur ratione. Voluptate accusamus ut et recusandae. Rerum ex repellendus assumenda et.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/personas\/logos\/some-logo-id.jpg","created_at":"2021-06-25T09:42:17+00:00","updated_at":"1977-05-02T01:48:41+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -40,13 +40,13 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'v1/project-galleries/{id}'
+    uri: 'v1/personas/{id}'
     metadata:
-      groupName: 'Project Galleries'
-      groupDescription: 'Manage project galleries.'
+      groupName: Personas
+      groupDescription: 'Manage personas.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Retrieve a project gallery'
+      title: 'Retrieve a persona'
       description: ''
       authenticated: false
       custom: []
@@ -56,7 +56,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the project gallery.'
+        description: 'The ID of the persona.'
         required: true
         example: architecto
         type: string
@@ -74,7 +74,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"project_gallery":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","title":"Quos Velit Et Fugiat Sunt Nihil Accusantium Harum.","description":"Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.","url":"http:\/\/koch.biz\/aut-dolores-enim-non-facere-tempora-ex-voluptatem.html","image":"https:\/\/api.infiniteuny.id\/infinity\/static\/project-galleries\/images\/some-image-id.jpg","created_at":"2023-08-06T00:38:36+00:00","updated_at":"2003-05-23T11:12:37+00:00"}}}'
+        content: '{"status":"success","data":{"persona":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Velit","priority":40,"description":"Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/personas\/logos\/some-logo-id.jpg","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-09-10T20:07:00+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -87,13 +87,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: v1/project-galleries
+    uri: v1/personas
     metadata:
-      groupName: 'Project Galleries'
-      groupDescription: 'Manage project galleries.'
+      groupName: Personas
+      groupDescription: 'Manage personas.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a project gallery'
+      title: 'Create a persona'
       description: ''
       authenticated: true
       custom: []
@@ -106,12 +106,22 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      title:
-        name: title
-        description: 'Must not be greater than 255 characters.'
+      name:
+        name: name
+        description: ''
         required: true
-        example: b
+        example: architecto
         type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      priority:
+        name: priority
+        description: 'Must be between 0 and 127.'
+        required: true
+        example: 1
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
@@ -126,18 +136,8 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
-      url:
-        name: url
-        description: 'Must be a valid URL.'
-        required: true
-        example: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      image:
-        name: image
+      logo:
+        name: logo
         description: 'Must be a file. Must not be greater than 5120 kilobytes.'
         required: true
         example: null
@@ -147,15 +147,15 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: b
+      name: architecto
+      priority: 1
       description: 'Eius et animi quos velit et.'
-      url: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
     fileParameters:
-      image: null
+      logo: null
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"project_gallery":{"id":"a232abbe-3006-3f67-bed4-124abab91dce","title":"Adipisci Quidem Nostrum Qui Commodi Incidunt Iure.","description":"Et modi ipsum nostrum omnis autem et consequatur. Dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","url":"http:\/\/www.considine.com\/eum-doloremque-id-aut-libero-aliquam-veniam-corporis","image":"https:\/\/api.infiniteuny.id\/infinity\/static\/project-galleries\/images\/some-image-id.jpg","created_at":"2023-11-29T06:14:13+00:00","updated_at":"1975-07-10T01:22:31+00:00"}}}'
+        content: '{"status":"success","data":{"persona":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"Ab","priority":36,"description":"Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/personas\/logos\/some-logo-id.jpg","created_at":"1989-01-18T12:51:56+00:00","updated_at":"2010-04-20T08:48:24+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -172,13 +172,13 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'v1/project-galleries/{id}'
+    uri: 'v1/personas/{id}'
     metadata:
-      groupName: 'Project Galleries'
-      groupDescription: 'Manage project galleries.'
+      groupName: Personas
+      groupDescription: 'Manage personas.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a project gallery'
+      title: 'Update a persona'
       description: ''
       authenticated: true
       custom: []
@@ -189,7 +189,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the project gallery.'
+        description: 'The ID of the persona.'
         required: true
         example: architecto
         type: string
@@ -202,12 +202,22 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      title:
-        name: title
-        description: 'Must not be greater than 255 characters.'
+      name:
+        name: name
+        description: ''
         required: false
-        example: b
+        example: architecto
         type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      priority:
+        name: priority
+        description: 'Must be between 0 and 127.'
+        required: false
+        example: 1
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
@@ -222,18 +232,8 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
-      url:
-        name: url
-        description: 'Must be a valid URL.'
-        required: false
-        example: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      image:
-        name: image
+      logo:
+        name: logo
         description: 'Must be a file. Must not be greater than 5120 kilobytes.'
         required: false
         example: null
@@ -243,15 +243,15 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: b
+      name: architecto
+      priority: 1
       description: 'Eius et animi quos velit et.'
-      url: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
     fileParameters:
-      image: null
+      logo: null
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"project_gallery":{"id":"a232abbe-3006-3f67-bed4-124abab91dce","title":"Adipisci Quidem Nostrum Qui Commodi Incidunt Iure.","description":"Et modi ipsum nostrum omnis autem et consequatur. Dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","url":"http:\/\/www.considine.com\/eum-doloremque-id-aut-libero-aliquam-veniam-corporis","image":"https:\/\/api.infiniteuny.id\/infinity\/static\/project-galleries\/images\/some-image-id.jpg","created_at":"2023-11-29T06:14:13+00:00","updated_at":"1975-07-10T01:22:31+00:00"}}}'
+        content: '{"status":"success","data":{"persona":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"Perspiciatis","priority":62,"description":"Aut adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/personas\/logos\/some-logo-id.jpg","created_at":"2021-03-28T12:52:13+00:00","updated_at":"1999-10-12T05:09:05+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -267,13 +267,13 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'v1/project-galleries/{id}'
+    uri: 'v1/personas/{id}'
     metadata:
-      groupName: 'Project Galleries'
-      groupDescription: 'Manage project galleries.'
+      groupName: Personas
+      groupDescription: 'Manage personas.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a project gallery'
+      title: 'Delete a persona'
       description: ''
       authenticated: true
       custom: []
@@ -284,7 +284,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the project gallery.'
+        description: 'The ID of the persona.'
         required: true
         example: architecto
         type: string
@@ -302,7 +302,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"project_gallery":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","title":"Nostrum Qui Commodi Incidunt Iure.","description":"Et modi ipsum nostrum omnis autem et consequatur. Dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","url":"http:\/\/www.considine.com\/eum-doloremque-id-aut-libero-aliquam-veniam-corporis","image":"https:\/\/api.infiniteuny.id\/infinity\/static\/project-galleries\/images\/some-image-id.jpg","created_at":"2023-11-29T06:14:13+00:00","updated_at":"1975-07-10T01:22:31+00:00"}}}'
+        content: '{"status":"success","data":{"persona":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Qui","priority":114,"description":"Odit et et modi. Nostrum omnis autem et consequatur aut. Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/personas\/logos\/some-logo-id.jpg","created_at":"1995-05-19T07:44:14+00:00","updated_at":"1987-01-13T08:33:22+00:00"}}}'
         headers: []
         description: ''
         custom: []

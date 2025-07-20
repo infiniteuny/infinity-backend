@@ -1,16 +1,16 @@
-name: 'User Group'
-description: 'Manage user groups.'
+name: 'Team Members'
+description: 'Manage team members.'
 endpoints:
   -
     httpMethods:
       - GET
-    uri: 'v1/users/{user_id}/groups'
+    uri: 'v1/teams/{team_id}/members'
     metadata:
-      groupName: 'User Group'
-      groupDescription: 'Manage user groups.'
+      groupName: 'Team Members'
+      groupDescription: 'Manage team members.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all user groups'
+      title: 'List all team members'
       description: ''
       authenticated: true
       custom: []
@@ -19,9 +19,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      user_id:
-        name: user_id
-        description: 'The ID of the user.'
+      team_id:
+        name: team_id
+        description: 'The ID of the team.'
         required: true
         example: architecto
         type: string
@@ -30,7 +30,7 @@ endpoints:
         nullable: false
         custom: []
     cleanUrlParameters:
-      user_id: architecto
+      team_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -39,7 +39,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Corporis","guard_name":"oidc","created_at":"2023-11-29T06:14:12.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","user_id":"2024410d-26cd-3763-b1f0-31011d306e58","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","name":"Neque","guard_name":"oidc","created_at":"1974-11-30T05:17:16.000000Z","updated_at":"2002-09-25T13:47:11.000000Z","entitlement":{"id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","user_id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","group_id":"1f5f3396-ae02-35de-8a96-3a1f05669df3"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"team_members":[{"id":"52b35990-1c00-3b16-92e0-6704dbeea482","name":"Mr. Kyle Sauer","email_address":"huels.donnell@kozey.biz","phone_number":"(539) 856-0569","student_id":"79596711241","major_id":"1c39493a-a35a-3058-a9bb-1d178890b16b","links":{"github":"http:\/\/bergstrom.info\/sint-omnis-quo-fugit-voluptatem-similique-nesciunt","linkedin":"http:\/\/www.stracke.com\/hic-aut-dolor-molestiae-est","website":"http:\/\/www.murray.biz\/facilis-temporibus-magnam-totam-nemo-cumque-omnis-sint.html"},"start_date":"2017-04-18","end_date":"2022-04-25","is_member":false,"is_extraordinary":false,"created_at":"2020-10-22T04:10:52+00:00","updated_at":"1972-05-13T18:58:21+00:00","membership":{"id":"1b8bb2ef-7d40-3ea7-9db1-d4109b8a505d","user_id":"52b35990-1c00-3b16-92e0-6704dbeea482","team_id":"d8ae8a3c-19dd-3166-9216-464b04e6af1a","created_at":"1984-04-28T07:59:35+00:00","updated_at":"2006-07-17T22:07:42+00:00"},"is_active":false},{"id":"5065c11d-821c-3b5e-98e3-f570993b0952","name":"Dr. Kiarra Mcclure Dvm","email_address":"muriel.batz@gerlach.org","phone_number":"1-718-330-3501","student_id":"71607274217","major_id":"9eefe963-3391-31e0-931c-c88f99840ce4","links":{"github":"http:\/\/www.dietrich.biz\/","linkedin":"http:\/\/www.bartell.com\/dolorum-adipisci-ipsum-voluptates-quia-nisi-non-velit","website":"https:\/\/beahan.net\/dicta-vel-ullam-ut-facere-quia.html"},"start_date":"1990-12-19","end_date":"2004-08-14","is_member":false,"is_extraordinary":true,"created_at":"1982-11-03T03:57:22+00:00","updated_at":"1972-01-13T13:14:48+00:00","membership":{"id":"06f3b9fa-5032-39e8-a867-b7f8869eceed","user_id":"5065c11d-821c-3b5e-98e3-f570993b0952","team_id":"b573cbcd-e255-3a60-bff1-df2da862d525","created_at":"1990-05-20T09:36:50+00:00","updated_at":"1971-10-05T17:40:25+00:00"},"is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -55,13 +55,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: 'v1/users/{user_id}/groups'
+    uri: 'v1/teams/{team_id}/members'
     metadata:
-      groupName: 'User Group'
-      groupDescription: 'Manage user groups.'
+      groupName: 'Team Members'
+      groupDescription: 'Manage team members.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a user group'
+      title: 'Create a team member'
       description: ''
       authenticated: true
       custom: []
@@ -70,9 +70,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      user_id:
-        name: user_id
-        description: 'The ID of the user.'
+      team_id:
+        name: team_id
+        description: 'The ID of the team.'
         required: true
         example: architecto
         type: string
@@ -81,13 +81,13 @@ endpoints:
         nullable: false
         custom: []
     cleanUrlParameters:
-      user_id: architecto
+      team_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      group_id:
-        name: group_id
-        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the groups table.'
+      user_id:
+        name: user_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the users table.'
         required: true
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -96,12 +96,12 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      group_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      user_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Nemo","guard_name":"oidc","created_at":"2010-08-03T06:52:51.000000Z","updated_at":"1977-09-11T02:11:59.000000Z","entitlement":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","user_id":"8529678e-de6b-32f2-9f70-231a0d681563","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"team_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"tleuschke@hotmail.com","phone_number":"646-329-5127","student_id":"19238056764","major_id":"7ede3c6a-246e-324b-b30f-8fde291e43b3","links":{"github":"http:\/\/kutch.com\/nemo-odit-quia-officia-est-dignissimos.html","linkedin":"https:\/\/ward.org\/excepturi-doloribus-delectus-fugit-qui-repudiandae-laboriosam.html","website":"http:\/\/franecki.net\/nemo-voluptate-accusamus-ut-et.html"},"start_date":"2005-09-29","end_date":"1990-11-11","is_member":true,"is_extraordinary":false,"created_at":"2018-07-03T09:28:57+00:00","updated_at":"1982-11-26T23:32:44+00:00","membership":{"id":"fbfcb7d8-9709-33e7-b1ee-ad9e734c960c","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","team_id":"1a8f9812-061b-31ad-9fbb-9fcfc1913ef3","created_at":"2010-05-04T11:02:18+00:00","updated_at":"1991-06-23T15:00:12+00:00"},"is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -117,13 +117,13 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'v1/user-groups/{id}'
+    uri: 'v1/team-members/{id}'
     metadata:
-      groupName: 'User Group'
-      groupDescription: 'Manage user groups.'
+      groupName: 'Team Members'
+      groupDescription: 'Manage team members.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Retrieve a user group'
+      title: 'Retrieve a team member'
       description: ''
       authenticated: true
       custom: []
@@ -134,7 +134,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the user group.'
+        description: 'The ID of the team member.'
         required: true
         example: architecto
         type: string
@@ -152,7 +152,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Repudiandae","guard_name":"oidc","created_at":"2008-07-17T08:58:18.000000Z","updated_at":"1976-06-12T01:02:48.000000Z","entitlement":{"id":"7bf95f9e-5598-3dfb-aac6-bcd7a2f2f4ae","user_id":"2da616f3-ce5e-38f4-9369-f1be3919879d","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"team_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"modesta58@hotmail.com","phone_number":"831.892.1956","student_id":"90512722294","major_id":"17df4930-f309-3e44-be01-0debd940c19f","links":{"github":"http:\/\/www.robel.com\/corporis-nesciunt-ut-ratione-iure-impedit-molestiae","linkedin":"http:\/\/schimmel.info\/","website":"https:\/\/www.hammes.biz\/sunt-suscipit-doloribus-fugiat-ut-aut-deserunt-et"},"start_date":"2014-12-18","end_date":"2005-10-18","is_member":false,"is_extraordinary":true,"created_at":"1978-08-22T08:16:49+00:00","updated_at":"1998-03-23T00:15:48+00:00","membership":{"id":"d41da34e-bea2-317f-a534-9185f3c20cf5","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"0619a743-b519-3617-8921-b1a778af771b","created_at":"2013-10-23T15:22:08+00:00","updated_at":"1971-03-04T07:04:24+00:00"},"is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -169,13 +169,13 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'v1/user-groups/{id}'
+    uri: 'v1/team-members/{id}'
     metadata:
-      groupName: 'User Group'
-      groupDescription: 'Manage user groups.'
+      groupName: 'Team Members'
+      groupDescription: 'Manage team members.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a user group'
+      title: 'Update a team member'
       description: ''
       authenticated: true
       custom: []
@@ -186,7 +186,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the user group.'
+        description: 'The ID of the team member.'
         required: true
         example: architecto
         type: string
@@ -199,9 +199,9 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      group_id:
-        name: group_id
-        description: 'Must be a valid UUID.  The <code>id</code> of an existing record in the groups table.'
+      user_id:
+        name: user_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the users table.'
         required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -210,12 +210,12 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      group_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      user_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Alias","guard_name":"oidc","created_at":"2006-08-03T19:08:24.000000Z","updated_at":"1995-09-01T05:48:40.000000Z","entitlement":{"id":"067d00f5-e958-3b01-bc80-7e5e367be869","user_id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"team_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"tobin24@yahoo.com","phone_number":"(364) 414-8487","student_id":"87001717076","major_id":"c5c9a208-4ff7-3616-958b-9c7ee2ea5a1e","links":{"github":"http:\/\/collins.net\/ut-aut-deserunt-et-error-neque-recusandae-et.html","linkedin":"https:\/\/hoeger.net\/dicta-vitae-assumenda-consequatur-ut.html","website":"http:\/\/www.feest.info\/repellendus-ut-eaque-alias-ratione-dolores.html"},"start_date":"1997-10-06","end_date":"1993-11-19","is_member":true,"is_extraordinary":false,"created_at":"1999-08-12T21:40:07+00:00","updated_at":"1992-12-15T00:02:30+00:00","membership":{"id":"d227776f-0624-3293-a1f4-42a99347a555","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","team_id":"ed143340-974b-35ee-9ef9-134025b82d5d","created_at":"2015-12-28T09:03:36+00:00","updated_at":"2012-03-16T11:44:15+00:00"},"is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -231,13 +231,13 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'v1/user-groups/{id}'
+    uri: 'v1/team-members/{id}'
     metadata:
-      groupName: 'User Group'
-      groupDescription: 'Manage user groups.'
+      groupName: 'Team Members'
+      groupDescription: 'Manage team members.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a user group'
+      title: 'Delete a team member'
       description: ''
       authenticated: true
       custom: []
@@ -248,7 +248,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the user group.'
+        description: 'The ID of the team member.'
         required: true
         example: architecto
         type: string
@@ -266,7 +266,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Tenetur","guard_name":"oidc","created_at":"1995-09-01T05:48:40.000000Z","updated_at":"1987-04-28T06:37:48.000000Z","entitlement":{"id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","user_id":"43fd77a7-5d0e-3206-88ea-5c77b63072ad","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"team_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"fae.corwin@hotmail.com","phone_number":"341.218.5161","student_id":"71054573914","major_id":"b5765f3d-499a-38df-9c81-0c590f8822c7","links":{"github":"http:\/\/www.orn.com\/recusandae-et-ipsam-dolorem-et-ut-dicta-vitae","linkedin":"https:\/\/crooks.org\/sunt-quisquam-sit-repellendus.html","website":"http:\/\/marquardt.info\/dolores-sed-rem-ea"},"start_date":"1986-10-18","end_date":"1999-08-12","is_member":false,"is_extraordinary":false,"created_at":"1991-08-13T09:01:08+00:00","updated_at":"1990-05-24T06:34:48+00:00","membership":{"id":"90096d86-bae9-3a38-82f3-305e67d3efe5","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"fb4e9a96-8ae8-34e3-9349-fc9386a9928f","created_at":"1979-04-23T10:16:00+00:00","updated_at":"2000-09-13T01:01:58+00:00"},"is_active":false}}}'
         headers: []
         description: ''
         custom: []
