@@ -2,7 +2,7 @@
 FROM mlocati/php-extension-installer:2.8.1 AS php-ext-installer
 
 # Install PHP extensions for base image
-FROM php:8.4.8-cli-alpine AS base
+FROM php:8.4.10-cli-alpine AS base
 
 RUN apk add --no-cache \
     curl \
