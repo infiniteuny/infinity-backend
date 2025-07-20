@@ -45,7 +45,7 @@ RUN docker-php-source delete && \
     rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
 # Install dependencies
-FROM composer:2.8.9 AS vendor
+FROM composer:2.8.10 AS vendor
 
 ENV COMPOSER_FUND=0 \
     COMPOSER_MAX_PARALLEL_HTTP=24 \
