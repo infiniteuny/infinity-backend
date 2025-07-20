@@ -110,7 +110,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'noreply@infiniteuny.id'),
-        'name' => env('MAIL_FROM_NAME', 'INFINITE'),
+        'name' => env('MAIL_FROM_NAME', 'INFINITE Dashboard'),
     ],
 
 ];
