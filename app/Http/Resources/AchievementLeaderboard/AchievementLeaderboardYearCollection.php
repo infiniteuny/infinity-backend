@@ -22,5 +22,4 @@ class AchievementLeaderboardYearCollection extends Collection
             $this->collection->map(fn ($item) => $item->year)->all(),
         );
     }
-
 }

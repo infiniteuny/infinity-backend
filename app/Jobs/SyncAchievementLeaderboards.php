@@ -6,14 +6,13 @@ use App\Models\AchievementLeaderboard;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
 
-        /**
+    /**
      * Create a new job instance.
      */
     public function __construct(

@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AchievementLeaderboard\AchievementLeaderboardCollection;
 use App\Http\Resources\AchievementLeaderboard\AchievementLeaderboardYearCollection;
 use App\Models\AchievementLeaderboard;
-use App\Utils\ResponseFormatter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -22,13 +20,13 @@ class AchievementLeaderboardController extends Controller
     {
         $years = QueryBuilder::for(AchievementLeaderboard::query()
             ->selectRaw('DISTINCT year'))
-                ->allowedSorts([
-                    'year',
-                ])
-                ->defaultSorts([
-                    '-year',
-                ])
-                ->cursorPaginate($request->query('per_page', 10));
+            ->allowedSorts([
+                'year',
+            ])
+            ->defaultSorts([
+                '-year',
+            ])
+            ->cursorPaginate($request->query('per_page', 10));
 
         return new AchievementLeaderboardYearCollection($years);
     }
