@@ -14,6 +14,7 @@
         "php": "^8.2.0",
         "facile-it/php-jose-verifier": "0.5.0-beta1",
         "facile-it/php-openid-client": "0.4.0-beta1",
+        "knuckleswtf/scribe": "5.2.1",
         "laravel/framework": "12.20.0",
         "laravel/horizon": "5.33.1",
         "laravel/octane": "2.11.0",
@@ -27,7 +28,6 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.6.0",
         "fakerphp/faker": "1.24.1",
-        "knuckleswtf/scribe": "5.2.1",
         "laravel/pint": "1.24.0",
         "laravel/sail": "1.43.1",
         "mockery/mockery": "1.6.12",
