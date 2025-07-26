@@ -136,13 +136,6 @@ COPY --link --chown=${UID}:${GID} deployment/start-container /usr/local/bin/star
 
 RUN chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
 
-RUN mkdir -p \
-    storage/app/local/{private,public} \
-    storage/framework/{sessions,views,cache,testing} \
-    storage/logs \
-    bootstrap/cache && \
-    chmod -R a+rw storage
-
 EXPOSE 8000 8080
 
 HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD healthcheck || exit 1

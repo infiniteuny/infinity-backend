@@ -21,10 +21,15 @@ init() {
         php "${ROOT}/artisan" db:seed --force
     fi
 
-    ln -s "${ROOT}/storage/app/local/public" "${ROOT}/static/public"
+    mkdir -p "${ROOT}/storage/app/local/{private,public}" \
+    "${ROOT}/storage/framework/{sessions,views,cache,testing}" \
+    "${ROOT}/storage/logs" \
+    "${ROOT}/bootstrap/cache" && \
+    chmod -R a+rw "${ROOT}/storage" && \
+    ln -s "${ROOT}/storage/app/local/public" "${ROOT}/public/static/public"
 
     php "${ROOT}/artisan" optimize:clear; \
-    php "${ROOT}/artisan" optimize;
+    php "${ROOT}/artisan" optimize
 }
 
 if [ "$1" != "" ]; then
