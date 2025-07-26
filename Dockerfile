@@ -60,7 +60,6 @@ RUN --mount=type=cache,target=/root/.composer \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
-    --no-scripts \
     --no-dev \
     --prefer-dist
 
@@ -124,7 +123,6 @@ RUN composer dump-autoload \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
-    --no-scripts \
     --no-dev && \
     rm -rf /usr/bin/composer
 
