@@ -40,7 +40,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_permissions":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Fugiat","guard_name":"oidc","created_at":"2020-08-03T04:16:42.000000Z","updated_at":"2007-02-06T15:39:03.000000Z","entitlement":{"id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","user_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","permission_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0"}},{"id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","name":"Provident","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z","entitlement":{"id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","user_id":"d03cceb8-0e59-3c26-8133-808072ac8a4c","permission_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"user_permissions":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Fugiat","guard_name":"oidc","created_at":"2020-08-03T03:38:26.000000Z","updated_at":"2007-02-06T15:39:03.000000Z","entitlement":{"id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","user_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","permission_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0"}},{"id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","name":"Provident","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z","entitlement":{"id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","user_id":"d03cceb8-0e59-3c26-8133-808072ac8a4c","permission_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -146,7 +146,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Fugit","guard_name":"oidc","created_at":"2021-10-12T08:36:36.000000Z","updated_at":"2022-01-14T09:48:27.000000Z","entitlement":{"id":"0e2442a9-fa81-3115-8890-8b00ec9cd683","user_id":"1e9be565-c31b-3b43-8646-66a4d676e89f","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Fugit","guard_name":"oidc","created_at":"2021-10-12T07:58:20.000000Z","updated_at":"2022-01-14T09:10:11.000000Z","entitlement":{"id":"0e2442a9-fa81-3115-8890-8b00ec9cd683","user_id":"1e9be565-c31b-3b43-8646-66a4d676e89f","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
         custom: []
@@ -209,7 +209,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Aliquam","guard_name":"oidc","created_at":"1973-10-18T16:03:19.000000Z","updated_at":"2023-08-10T08:18:50.000000Z","entitlement":{"id":"45e62725-5da9-35c7-82db-977f64d08292","user_id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Veniam","guard_name":"oidc","created_at":"2023-08-10T07:40:35.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","user_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
         custom: []
@@ -260,7 +260,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"user_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Veniam","guard_name":"oidc","created_at":"2023-08-10T08:18:50.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","user_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"user_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Corporis","guard_name":"oidc","created_at":"2023-08-10T07:40:35.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","user_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
         custom: []

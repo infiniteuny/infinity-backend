@@ -27,7 +27,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"configs":[{"id":"2da616f3-ce5e-38f4-9369-f1be3919879d","key":"voluptate","value":"accusamus","type":"STRING","is_private":true,"created_at":"2005-09-29T05:08:01+00:00","updated_at":"1990-11-05T08:39:09+00:00"},{"id":"fecaf9fe-6060-39af-b373-7563b93c16ba","key":"repellendus","value":"assumenda","type":"STRING","is_private":true,"created_at":"1981-01-06T21:28:39+00:00","updated_at":"1997-01-27T03:11:59+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"configs":[{"id":"2da616f3-ce5e-38f4-9369-f1be3919879d","key":"voluptate","value":"accusamus","type":"STRING","is_private":true,"created_at":"2005-09-29T05:08:01+00:00","updated_at":"1990-11-05T08:00:54+00:00"},{"id":"fecaf9fe-6060-39af-b373-7563b93c16ba","key":"repellendus","value":"assumenda","type":"STRING","is_private":true,"created_at":"1981-01-06T21:28:39+00:00","updated_at":"1997-01-27T02:33:44+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -74,7 +74,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2019-06-01T21:07:32+00:00","updated_at":"2020-08-03T04:16:42+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2019-06-01T20:29:17+00:00","updated_at":"2020-08-03T03:38:27+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -130,7 +130,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: INTEGER
+        example: BOOLEAN
         type: string
         enumValues:
           - STRING
@@ -143,7 +143,7 @@ endpoints:
         name: is_private
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -152,8 +152,8 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: INTEGER
-      is_private: true
+      type: BOOLEAN
+      is_private: false
     fileParameters: []
     responses:
       -
@@ -229,7 +229,7 @@ endpoints:
         name: type
         description: ''
         required: false
-        example: INTEGER
+        example: STRING
         type: string
         enumValues:
           - STRING
@@ -242,7 +242,7 @@ endpoints:
         name: is_private
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -251,8 +251,8 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: INTEGER
-      is_private: true
+      type: STRING
+      is_private: false
     fileParameters: []
     responses:
       -
