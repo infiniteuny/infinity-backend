@@ -13,7 +13,7 @@ init() {
 
     if [ "${run_migrations}" = "true" ]; then
         echo "Running migrations database ..."
-        php "${ROOT}/artisan" migrate --isolated --seed --force
+        php "${ROOT}/artisan" migrate --isolated --force
     fi
 
     if [ "${run_seeders}" = "true" ]; then
