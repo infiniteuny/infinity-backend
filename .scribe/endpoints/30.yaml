@@ -28,7 +28,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Ex","is_personal":false,"created_at":"2023-08-06T00:38:36+00:00","updated_at":"2003-02-01T12:18:29+00:00"},{"id":"f2726f3d-9044-3663-bede-2a0f37053879","leader_id":"e660ec64-aeea-3ded-bfe4-fb1f468259dc","name":"Distinctio","is_personal":false,"created_at":"1977-11-01T04:19:19+00:00","updated_at":"1991-10-02T16:00:27+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Ex","is_personal":false,"created_at":"2023-08-06T00:38:36+00:00","updated_at":"2003-01-31T23:42:59+00:00"},{"id":"f2726f3d-9044-3663-bede-2a0f37053879","leader_id":"e660ec64-aeea-3ded-bfe4-fb1f468259dc","name":"Distinctio","is_personal":false,"created_at":"1977-10-31T15:43:49+00:00","updated_at":"1991-10-02T03:24:57+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -87,7 +87,7 @@ endpoints:
         name: is_personal
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -96,12 +96,12 @@ endpoints:
     cleanBodyParameters:
       leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       name: architecto
-      is_personal: false
+      is_personal: true
     fileParameters: []
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Laboriosam","is_personal":true,"created_at":"2003-02-01T12:18:29+00:00","updated_at":"1976-01-19T15:37:03+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Laboriosam","is_personal":true,"created_at":"2003-01-31T23:42:59+00:00","updated_at":"1976-01-19T03:01:33+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -152,7 +152,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Praesentium","is_personal":true,"created_at":"1976-01-19T15:37:03+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Praesentium","is_personal":true,"created_at":"1976-01-19T03:01:33+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -223,7 +223,7 @@ endpoints:
         name: is_personal
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -232,12 +232,12 @@ endpoints:
     cleanBodyParameters:
       leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       name: architecto
-      is_personal: true
+      is_personal: false
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-09-04T19:17:19+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-09-04T06:41:49+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -288,7 +288,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Molestias","is_personal":true,"created_at":"2021-10-12T07:37:50+00:00","updated_at":"2022-01-14T08:49:41+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Molestias","is_personal":true,"created_at":"2021-10-11T19:02:20+00:00","updated_at":"2022-01-13T20:14:11+00:00"}}}'
         headers: []
         description: ''
         custom: []

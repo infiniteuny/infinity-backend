@@ -30,7 +30,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"groups":[{"id":"9a16b746-2997-322c-86d4-b4f0016bf6f4","name":"Doloremque","guard_name":"oidc","created_at":"2019-06-06T15:47:35.000000Z","updated_at":"1987-05-09T17:22:48.000000Z"},{"id":"d168c3af-1ae9-369b-8ec2-64102622be81","name":"Nemo","guard_name":"oidc","created_at":"1984-05-12T17:53:49.000000Z","updated_at":"2003-01-25T11:11:46.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"groups":[{"id":"1b8b280a-87e0-3467-94be-afb945c5badd","name":"Ratione","guard_name":"oidc","created_at":"2019-01-13T08:29:27.000000Z","updated_at":"1978-07-16T04:47:11.000000Z"},{"id":"c1541ec1-f7ea-3420-9e77-23fba02f6a4c","name":"Aspernatur","guard_name":"oidc","created_at":"1978-02-05T18:47:42.000000Z","updated_at":"1980-07-11T16:57:49.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -93,7 +93,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2007-06-15T10:57:29.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2007-06-14T22:21:59.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -144,7 +144,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-11-26T17:30:44.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-11-26T04:55:14.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -270,7 +270,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2014-11-30T18:20:15.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2014-11-30T05:44:45.000000Z"}}}'
         headers: []
         description: ''
         custom: []
