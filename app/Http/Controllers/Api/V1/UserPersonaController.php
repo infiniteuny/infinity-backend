@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group User Persona
+ * @group User Personas
  * Manage user personas.
  */
 class UserPersonaController extends Controller

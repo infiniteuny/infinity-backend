@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group Community Group Admin Member
+ * @group Community Group Admin Members
  * Manage community group administrator members.
  */
 class CommunityGroupAdminMemberController extends Controller

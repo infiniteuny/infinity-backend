@@ -11,10 +11,16 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Leaderboards
+ * Retrieve leaderboards.
+ */
 class AchievementLeaderboardController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * List all achievement leaderboard years
+     *
+     * @unauthenticated
      */
     public function index(Request $request)
     {
@@ -32,7 +38,9 @@ class AchievementLeaderboardController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve an achievement leaderboard
+     *
+     * @unauthenticated
      */
     public function show(Request $request, string $achievement)
     {

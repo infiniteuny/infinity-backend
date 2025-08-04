@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group Core Team Member
+ * @group Core Team Members
  * Manage core team members.
  */
 class CoreTeamMemberController extends Controller

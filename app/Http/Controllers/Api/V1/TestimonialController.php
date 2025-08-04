@@ -17,7 +17,7 @@ use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group Testimonial
+ * @group Testimonials
  * Manage testimonials.
  */
 class TestimonialController extends Controller

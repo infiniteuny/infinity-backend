@@ -16,7 +16,7 @@ use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group Community Group Admin
+ * @group Community Group Admins
  * Manage community group administrators.
  */
 class CommunityGroupAdminController extends Controller

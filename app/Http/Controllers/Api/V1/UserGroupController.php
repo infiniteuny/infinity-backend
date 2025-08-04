@@ -13,7 +13,7 @@ use Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group User Group
+ * @group User Groups
  * Manage user groups.
  */
 class UserGroupController extends Controller

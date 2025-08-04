@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group User Permission
+ * @group User Permissions
  * Manage user permissions.
  */
 class UserPermissionController extends Controller
