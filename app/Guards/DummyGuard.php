@@ -9,7 +9,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 
-class OidcDummyGuard implements Guard
+class DummyGuard implements Guard
 {
     use GuardHelpers;
 
@@ -51,7 +51,12 @@ class OidcDummyGuard implements Guard
     public function validate(array $credentials = []): bool
     {
         /** @var Authenticatable $user */
-        $user = User::factory()->make();
+        $user = User::where('id', config('auth.dummy_user_id'))
+            ->first();
+
+        if (! $user) {
+            $user = User::factory()->make();
+        }
 
         $this->setUser($user);
 

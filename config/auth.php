@@ -42,7 +42,7 @@ return [
             'provider' => 'users',
         ],
         'dummy' => [
-            'driver' => 'dummy_oidc',
+            'driver' => 'dummy',
             'provider' => 'users',
         ],
     ],
@@ -70,5 +70,7 @@ return [
             'model' => User::class,
         ],
     ],
+
+    'dummy_user_id' => env('AUTH_DUMMY_USER_ID'),
 
 ];
