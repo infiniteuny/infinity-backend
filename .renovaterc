@@ -7,7 +7,7 @@
         ":semanticCommits",
         ":pinAllExceptPeerDependencies"
     ],
-    "baseBranches": [
+    "baseBranchPatterns": [
         "develop"
     ],
     "lockFileMaintenance": {
