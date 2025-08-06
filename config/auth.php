@@ -75,6 +75,6 @@ return [
         ],
     ],
 
-    'dummy_user_id' => env('AUTH_DUMMY_USER_ID', '1'),
+    'dummy_user_id' => env('AUTH_DUMMY_USER_ID'),
 
 ];

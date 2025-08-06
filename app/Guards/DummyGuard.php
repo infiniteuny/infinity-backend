@@ -15,7 +15,7 @@ class DummyGuard implements Guard
 
     protected Request $request;
 
-    protected string $dummyUserId;
+    protected ?string $dummyUserId;
 
     /**
      * Create a new authentication guard.
@@ -25,7 +25,7 @@ class DummyGuard implements Guard
     public function __construct(
         UserProvider $provider,
         Request $request,
-        string $dummyUserId
+        ?string $dummyUserId
     ) {
         $this->request = $request;
         $this->provider = $provider;
