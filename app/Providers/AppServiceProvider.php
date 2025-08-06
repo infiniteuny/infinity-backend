@@ -77,6 +77,7 @@ class AppServiceProvider extends ServiceProvider
             return new DummyGuard(
                 Auth::createUserProvider($config['provider']),
                 $app->make('request'),
+                config('auth.dummy_user_id')
             );
         });
         Http::macro('authentik', function () {

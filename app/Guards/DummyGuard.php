@@ -15,6 +15,8 @@ class DummyGuard implements Guard
 
     protected Request $request;
 
+    protected string $dummyUserId;
+
     /**
      * Create a new authentication guard.
      *
@@ -22,10 +24,12 @@ class DummyGuard implements Guard
      */
     public function __construct(
         UserProvider $provider,
-        Request $request
+        Request $request,
+        string $dummyUserId
     ) {
         $this->request = $request;
         $this->provider = $provider;
+        $this->dummyUserId = $dummyUserId;
         $this->user = null;
     }
 
@@ -51,7 +55,7 @@ class DummyGuard implements Guard
     public function validate(array $credentials = []): bool
     {
         /** @var Authenticatable $user */
-        $user = User::where('id', config('auth.dummy_user_id'))
+        $user = User::where('id', $this->dummyUserId)
             ->first();
 
         if (! $user) {
