@@ -78,7 +78,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2019-05-22T02:39:04+00:00","updated_at":"2020-07-23T09:48:14+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2019-05-22T02:20:16+00:00","updated_at":"2020-07-23T09:29:26+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -135,7 +135,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: STRING
+        example: INTEGER
         type: string
         enumValues:
           - STRING
@@ -148,7 +148,7 @@ endpoints:
         name: is_private
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -157,8 +157,8 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: STRING
-      is_private: true
+      type: INTEGER
+      is_private: false
     fileParameters: []
     responses:
       -
@@ -235,7 +235,7 @@ endpoints:
         name: type
         description: ''
         required: false
-        example: INTEGER
+        example: BOOLEAN
         type: string
         enumValues:
           - STRING
@@ -257,7 +257,7 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: INTEGER
+      type: BOOLEAN
       is_private: true
     fileParameters: []
     responses:
