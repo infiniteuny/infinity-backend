@@ -13,6 +13,7 @@ endpoints:
       title: 'List all team members'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -39,7 +40,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team_members":[{"id":"552fa2ea-329f-373b-b0a9-e3638244e899","name":"Maribel Heller","email_address":"ywalsh@gmail.com","phone_number":"+1-561-287-5514","student_id":"19724203031","major_id":"aa1059c8-efd8-35da-bf21-caf7b1485bb0","links":{"github":"http:\/\/considine.com\/perferendis-alias-voluptatum-et-quod-deserunt-tempora.html","linkedin":"http:\/\/gaylord.biz\/","website":"http:\/\/crooks.info\/cupiditate-ut-aperiam-voluptatum-adipisci-aut-dignissimos-cum.html"},"start_date":"2024-06-14","end_date":"1975-01-29","is_member":false,"is_extraordinary":false,"created_at":"1980-03-30T10:51:58+00:00","updated_at":"2019-09-03T17:20:43+00:00","membership":{"id":"195f16db-f99c-358b-8828-d445370233f8","user_id":"552fa2ea-329f-373b-b0a9-e3638244e899","team_id":"35205a3f-7090-3d2d-8173-aa0757dcbc43","created_at":"2005-07-28T21:52:42+00:00","updated_at":"1982-05-25T11:06:45+00:00"},"is_active":false},{"id":"69d15aec-8f21-3200-8e67-2344b7cd7b42","name":"Gayle Funk","email_address":"fwindler@bode.com","phone_number":"810-596-7819","student_id":"81855073161","major_id":"42e23d46-fe7b-3253-905a-9ad8e6eec74c","links":{"github":"https:\/\/www.schroeder.com\/commodi-nihil-iste-debitis-est-ab-amet-ea","linkedin":"https:\/\/www.kuhlman.info\/quae-provident-et-amet-corporis-aut","website":"http:\/\/mertz.biz\/autem-nihil-quo-saepe-nemo-qui"},"start_date":"2008-07-22","end_date":"2018-06-22","is_member":true,"is_extraordinary":false,"created_at":"2000-06-08T08:23:00+00:00","updated_at":"1986-03-25T13:28:39+00:00","membership":{"id":"5515201e-f0f2-3289-8996-ed9b6dace7e3","user_id":"69d15aec-8f21-3200-8e67-2344b7cd7b42","team_id":"e0fa8db6-da47-37f6-9fd3-934c0ce0948c","created_at":"2001-05-11T06:44:11+00:00","updated_at":"1984-07-11T12:43:02+00:00"},"is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"team_members":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"ferne52@gmail.com","phone_number":"870-215-1024","student_id":"84729902083","major_id":"4ac9147e-bdf0-3914-9dcd-3c6a5c52010c","links":{"github":"https:\/\/labadie.com\/deleniti-distinctio-eum-doloremque-id-aut.html","linkedin":"http:\/\/klocko.com\/dolorem-mollitia-deleniti-nemo","website":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio"},"start_date":"1974-07-31","end_date":"2002-05-26","is_member":true,"is_extraordinary":false,"created_at":"1978-02-21T03:10:37+00:00","updated_at":"1995-01-30T23:03:05+00:00","membership":{"id":"7299053e-5fea-32a4-be53-165db447cc87","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"7bf95f9e-5598-3dfb-aac6-bcd7a2f2f4ae","created_at":"1995-05-02T13:48:20+00:00","updated_at":"1986-12-27T14:37:28+00:00"},"is_active":false},{"id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","name":"Graham Crist V","email_address":"tobin24@yahoo.com","phone_number":"(364) 414-8487","student_id":"87001717076","major_id":"c5c9a208-4ff7-3616-958b-9c7ee2ea5a1e","links":{"github":"http:\/\/collins.net\/ut-aut-deserunt-et-error-neque-recusandae-et.html","linkedin":"https:\/\/hoeger.net\/dicta-vitae-assumenda-consequatur-ut.html","website":"http:\/\/www.feest.info\/repellendus-ut-eaque-alias-ratione-dolores.html"},"start_date":"1997-09-19","end_date":"1993-11-02","is_member":true,"is_extraordinary":false,"created_at":"1999-07-27T03:44:14+00:00","updated_at":"1992-12-15T00:02:30+00:00","membership":{"id":"d227776f-0624-3293-a1f4-42a99347a555","user_id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","team_id":"ed143340-974b-35ee-9ef9-134025b82d5d","created_at":"2015-12-11T15:07:43+00:00","updated_at":"2012-02-28T17:48:22+00:00"},"is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -64,6 +65,7 @@ endpoints:
       title: 'Create a team member'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -101,7 +103,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"team_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"tleuschke@hotmail.com","phone_number":"646-329-5127","student_id":"19238056764","major_id":"7ede3c6a-246e-324b-b30f-8fde291e43b3","links":{"github":"http:\/\/kutch.com\/nemo-odit-quia-officia-est-dignissimos.html","linkedin":"https:\/\/ward.org\/excepturi-doloribus-delectus-fugit-qui-repudiandae-laboriosam.html","website":"http:\/\/franecki.net\/nemo-voluptate-accusamus-ut-et.html"},"start_date":"2005-09-29","end_date":"1990-11-04","is_member":true,"is_extraordinary":false,"created_at":"2018-06-26T20:03:48+00:00","updated_at":"1982-11-20T10:07:35+00:00","membership":{"id":"fbfcb7d8-9709-33e7-b1ee-ad9e734c960c","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","team_id":"1a8f9812-061b-31ad-9fbb-9fcfc1913ef3","created_at":"2010-04-27T21:37:09+00:00","updated_at":"1991-06-17T01:35:03+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"team_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"christian51@leffler.com","phone_number":"+1-559-693-2083","student_id":"55366487659","major_id":"9e13baad-9e20-392f-94ab-6047f7ff6a83","links":{"github":"https:\/\/nitzsche.net\/aliquam-veniam-corporis-dolorem-mollitia-deleniti-nemo.html","linkedin":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio","website":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html"},"start_date":"2006-04-04","end_date":"1995-05-02","is_member":true,"is_extraordinary":true,"created_at":"2024-01-13T01:48:03+00:00","updated_at":"1975-11-24T15:37:19+00:00","membership":{"id":"43fd77a7-5d0e-3206-88ea-5c77b63072ad","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","team_id":"fecaf9fe-6060-39af-b373-7563b93c16ba","created_at":"2018-06-16T15:33:04+00:00","updated_at":"1982-11-10T05:36:51+00:00"},"is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -126,6 +128,7 @@ endpoints:
       title: 'Retrieve a team member'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -152,7 +155,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"modesta58@hotmail.com","phone_number":"831.892.1956","student_id":"90512722294","major_id":"17df4930-f309-3e44-be01-0debd940c19f","links":{"github":"http:\/\/www.robel.com\/corporis-nesciunt-ut-ratione-iure-impedit-molestiae","linkedin":"http:\/\/schimmel.info\/","website":"https:\/\/www.hammes.biz\/sunt-suscipit-doloribus-fugiat-ut-aut-deserunt-et"},"start_date":"2014-12-11","end_date":"2005-10-12","is_member":false,"is_extraordinary":true,"created_at":"1978-08-15T18:51:40+00:00","updated_at":"1998-03-23T00:15:48+00:00","membership":{"id":"d41da34e-bea2-317f-a534-9185f3c20cf5","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"0619a743-b519-3617-8921-b1a778af771b","created_at":"2013-10-17T01:56:59+00:00","updated_at":"1971-02-25T17:39:15+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"team_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"elton.conroy@oreilly.net","phone_number":"269-915-6037","student_id":"69538059950","major_id":"af49b819-28db-33bd-b66b-66e0bad1c5fa","links":{"github":"http:\/\/cassin.com\/perspiciatis-deserunt-ducimus-corrupti-et-dolores-quia.html","linkedin":"https:\/\/thiel.com\/repellat-officiis-corporis-nesciunt-ut.html","website":"http:\/\/corwin.com\/"},"start_date":"2021-02-03","end_date":"1979-06-22","is_member":true,"is_extraordinary":false,"created_at":"2022-01-13T02:28:57+00:00","updated_at":"2021-06-08T15:46:21+00:00","membership":{"id":"8c352249-2535-3e45-8de4-d6620458a778","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"efb45134-b05b-36f6-b20a-f93610c7e46f","created_at":"2009-10-13T12:15:46+00:00","updated_at":"1986-11-14T05:24:09+00:00"},"is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -178,6 +181,7 @@ endpoints:
       title: 'Update a team member'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -215,7 +219,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"tobin24@yahoo.com","phone_number":"(364) 414-8487","student_id":"87001717076","major_id":"c5c9a208-4ff7-3616-958b-9c7ee2ea5a1e","links":{"github":"http:\/\/collins.net\/ut-aut-deserunt-et-error-neque-recusandae-et.html","linkedin":"https:\/\/hoeger.net\/dicta-vitae-assumenda-consequatur-ut.html","website":"http:\/\/www.feest.info\/repellendus-ut-eaque-alias-ratione-dolores.html"},"start_date":"1997-09-29","end_date":"1993-11-12","is_member":true,"is_extraordinary":false,"created_at":"1999-08-06T08:14:58+00:00","updated_at":"1992-12-15T00:02:30+00:00","membership":{"id":"d227776f-0624-3293-a1f4-42a99347a555","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","team_id":"ed143340-974b-35ee-9ef9-134025b82d5d","created_at":"2015-12-21T19:38:27+00:00","updated_at":"2012-03-09T22:19:06+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"team_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"anderson.herbert@roberts.org","phone_number":"+1 (432) 789-7092","student_id":"72199071427","major_id":"3dd3dce1-4b7c-321e-848a-0aab7c899d4a","links":{"github":"http:\/\/www.ullrich.com\/maiores-assumenda-odit-doloribus-repellat","linkedin":"http:\/\/kuhn.info\/ratione-iure-impedit-molestiae-ut-rem","website":"http:\/\/swaniawski.info\/molestiae-sunt-suscipit-doloribus-fugiat-ut-aut"},"start_date":"2004-06-10","end_date":"1986-04-01","is_member":false,"is_extraordinary":false,"created_at":"2005-10-01T23:31:16+00:00","updated_at":"1994-05-03T15:20:20+00:00","membership":{"id":"3e4e87f0-441a-31b1-a134-105274586298","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","team_id":"c0d3c94f-efff-381b-8555-ec7a10e82753","created_at":"1971-08-02T05:36:21+00:00","updated_at":"2001-03-13T12:24:20+00:00"},"is_active":false}}}'
         headers: []
         description: ''
         custom: []
@@ -240,6 +244,7 @@ endpoints:
       title: 'Delete a team member'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -266,7 +271,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"fae.corwin@hotmail.com","phone_number":"341.218.5161","student_id":"71054573914","major_id":"b5765f3d-499a-38df-9c81-0c590f8822c7","links":{"github":"http:\/\/www.orn.com\/recusandae-et-ipsam-dolorem-et-ut-dicta-vitae","linkedin":"https:\/\/crooks.org\/sunt-quisquam-sit-repellendus.html","website":"http:\/\/marquardt.info\/dolores-sed-rem-ea"},"start_date":"1986-10-11","end_date":"1999-08-06","is_member":false,"is_extraordinary":false,"created_at":"1991-08-13T09:01:08+00:00","updated_at":"1990-05-24T06:34:48+00:00","membership":{"id":"90096d86-bae9-3a38-82f3-305e67d3efe5","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"fb4e9a96-8ae8-34e3-9349-fc9386a9928f","created_at":"1979-04-16T20:50:50+00:00","updated_at":"2000-09-06T11:36:48+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"team_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"modesta58@hotmail.com","phone_number":"831.892.1956","student_id":"90512722294","major_id":"17df4930-f309-3e44-be01-0debd940c19f","links":{"github":"http:\/\/www.robel.com\/corporis-nesciunt-ut-ratione-iure-impedit-molestiae","linkedin":"http:\/\/schimmel.info\/","website":"https:\/\/www.hammes.biz\/sunt-suscipit-doloribus-fugiat-ut-aut-deserunt-et"},"start_date":"2014-12-01","end_date":"2005-10-01","is_member":false,"is_extraordinary":true,"created_at":"1978-08-05T14:20:55+00:00","updated_at":"1998-03-23T00:15:48+00:00","membership":{"id":"d41da34e-bea2-317f-a534-9185f3c20cf5","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"0619a743-b519-3617-8921-b1a778af771b","created_at":"2013-10-06T21:26:14+00:00","updated_at":"1971-02-15T13:08:30+00:00"},"is_active":false}}}'
         headers: []
         description: ''
         custom: []

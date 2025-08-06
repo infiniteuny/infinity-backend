@@ -13,6 +13,7 @@ endpoints:
       title: 'List all groups'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -28,7 +29,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"groups":[{"id":"1b8b280a-87e0-3467-94be-afb945c5badd","name":"Ratione","guard_name":"oidc","created_at":"2019-01-13T08:29:27.000000Z","updated_at":"1978-07-16T04:47:11.000000Z"},{"id":"c1541ec1-f7ea-3420-9e77-23fba02f6a4c","name":"Aspernatur","guard_name":"oidc","created_at":"1978-02-05T18:47:42.000000Z","updated_at":"1980-07-11T16:57:49.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Iure","guard_name":"oidc","created_at":"1990-10-13T19:56:45.000000Z","updated_at":"1977-08-15T10:47:14.000000Z"},{"id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","name":"Ipsum","guard_name":"oidc","created_at":"1973-01-05T18:42:45.000000Z","updated_at":"2019-08-03T00:53:04.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -53,6 +54,7 @@ endpoints:
       title: 'Create a group'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -91,7 +93,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2007-06-14T22:21:59.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-11-16T00:24:30.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -116,6 +118,7 @@ endpoints:
       title: 'Retrieve a group'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -142,7 +145,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-11-26T04:55:14.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Autem","guard_name":"oidc","created_at":"2003-07-15T08:01:07.000000Z","updated_at":"2019-08-30T13:55:51.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -168,6 +171,7 @@ endpoints:
       title: 'Update a group'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -217,7 +221,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Autem","guard_name":"oidc","created_at":"2003-07-15T08:01:07.000000Z","updated_at":"2019-08-30T13:55:51.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2014-11-20T01:14:01.000000Z"}}}'
         headers: []
         description: ''
         custom: []
@@ -242,6 +246,7 @@ endpoints:
       title: 'Delete a group'
       description: ''
       authenticated: true
+      deprecated: false
       custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
@@ -268,7 +273,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2014-11-30T05:44:45.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1998-02-28T03:02:38.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"}}}'
         headers: []
         description: ''
         custom: []
