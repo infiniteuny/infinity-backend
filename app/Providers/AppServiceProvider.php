@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Guards\DummyGuard;
+use App\Guards\OidcHeadersGuard;
 use App\Guards\OidcTokenGuard;
 use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
@@ -58,8 +59,15 @@ class AppServiceProvider extends ServiceProvider
                 ),
             );
         });
-        Auth::extend('oidc', function ($app, $name, array $config) {
+        Auth::extend('oidc_token', function ($app, $name, array $config) {
             return new OidcTokenGuard(
+                Auth::createUserProvider($config['provider']),
+                $app->make(OidcService::class),
+                $app->make('request'),
+            );
+        });
+        Auth::extend('oidc_headers', function ($app, $name, array $config) {
+            return new OidcHeadersGuard(
                 Auth::createUserProvider($config['provider']),
                 $app->make(OidcService::class),
                 $app->make('request'),

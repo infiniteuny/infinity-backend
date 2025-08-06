@@ -2458,7 +2458,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function user()
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->user();
         }
 
@@ -2469,7 +2469,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function validate($credentials = [])
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->validate($credentials);
         }
 
@@ -2482,7 +2482,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function authenticate()
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->authenticate();
         }
 
@@ -2494,7 +2494,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function hasUser()
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->hasUser();
         }
 
@@ -2506,7 +2506,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function check()
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->check();
         }
 
@@ -2518,7 +2518,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function guest()
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->guest();
         }
 
@@ -2530,7 +2530,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function id()
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->id();
         }
 
@@ -2538,24 +2538,24 @@ namespace Illuminate\Support\Facades {
          * Set the current user.
          *
          * @param \Illuminate\Contracts\Auth\Authenticatable $user
-         * @return \App\Guards\OidcGuard
+         * @return \App\Guards\OidcHeadersGuard
          * @static
          */
         public static function setUser($user)
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->setUser($user);
         }
 
         /**
          * Forget the current user.
          *
-         * @return \App\Guards\OidcGuard
+         * @return \App\Guards\OidcHeadersGuard
          * @static
          */
         public static function forgetUser()
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->forgetUser();
         }
 
@@ -2567,7 +2567,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function getProvider()
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             return $instance->getProvider();
         }
 
@@ -2580,7 +2580,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function setProvider($provider)
         {
-            /** @var \App\Guards\OidcGuard $instance */
+            /** @var \App\Guards\OidcHeadersGuard $instance */
             $instance->setProvider($provider);
         }
 

@@ -16,7 +16,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'api'),
+        'guard' => env('AUTH_GUARD', 'api_headers'),
     ],
 
     /*
@@ -37,8 +37,12 @@ return [
     */
 
     'guards' => [
-        'api' => [
-            'driver' => 'oidc',
+        'api_token' => [
+            'driver' => 'oidc_token',
+            'provider' => 'users',
+        ],
+        'api_headers' => [
+            'driver' => 'oidc_headers',
             'provider' => 'users',
         ],
         'dummy' => [

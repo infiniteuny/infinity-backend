@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Throwable;
 
-class OidcGuard implements Guard
+class OidcTokenGuard implements Guard
 {
     use GuardHelpers;
 
