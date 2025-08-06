@@ -29,7 +29,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team_divisions":[{"id":"84f18e91-28ae-36f9-91d7-6f3b8efeb1fe","name":"Labore","priority":38,"created_at":"2006-08-14T07:06:36+00:00","updated_at":"1997-11-23T19:23:37+00:00"},{"id":"83711b40-1588-3744-9dcf-7aa69db3294d","name":"Tenetur","priority":46,"created_at":"1984-06-30T15:04:39+00:00","updated_at":"1992-12-26T17:27:08+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"core_team_divisions":[{"id":"e6936b33-2e81-35fa-bda2-0a5a437506be","name":"Fuga","priority":97,"created_at":"2009-12-30T10:48:13+00:00","updated_at":"1984-02-14T02:41:19+00:00"},{"id":"1dc7cc86-e1be-3a76-9a53-85eb9378c78e","name":"Voluptatem","priority":77,"created_at":"1972-11-03T20:55:08+00:00","updated_at":"1992-12-04T04:52:43+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -92,7 +92,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Omnis","priority":28,"created_at":"1982-08-04T05:16:46+00:00","updated_at":"1980-08-30T05:44:10+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Omnis","priority":28,"created_at":"1982-08-04T04:53:18+00:00","updated_at":"1980-08-30T05:20:42+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -144,7 +144,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Commodi","priority":24,"created_at":"1983-05-17T03:07:42+00:00","updated_at":"1990-10-13T19:56:45+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Commodi","priority":24,"created_at":"1983-05-17T03:07:42+00:00","updated_at":"1990-10-13T19:33:17+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -219,7 +219,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Adipisci","priority":1,"created_at":"2015-01-19T20:47:12+00:00","updated_at":"2011-05-28T05:26:47+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Adipisci","priority":1,"created_at":"2015-01-19T20:47:12+00:00","updated_at":"2011-05-28T05:03:19+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -271,7 +271,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Incidunt","priority":121,"created_at":"1990-10-13T19:56:45+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Incidunt","priority":121,"created_at":"1990-10-13T19:33:17+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
         headers: []
         description: ''
         custom: []
