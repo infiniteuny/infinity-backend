@@ -124,4 +124,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'rate_limiter' => [
+        'enabled' => env('RATE_LIMITER_ENABLED', false),
+    ],
+
 ];
