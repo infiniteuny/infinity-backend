@@ -11,6 +11,7 @@ use App\Http\Resources\Achievement\AchievementResource;
 use App\Jobs\DeleteBlob;
 use App\Models\Achievement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\Enums\FilterOperator;

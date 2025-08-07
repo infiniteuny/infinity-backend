@@ -7,6 +7,7 @@ use App\Http\Resources\Token\TokenCollection;
 use App\Http\Resources\Token\TokenResource;
 use App\Models\Token;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -33,7 +34,8 @@ class TokenController extends Controller
      */
     public function index(Request $request)
     {
-        $userId = Auth::guard('oidc_token')->user()->id;
+        $user = Auth::guard('oidc_token')->user();
+        $userId = $user()->id;
         $tokens = QueryBuilder::for(Token::class)
             ->allowedFields([
                 'id',
@@ -65,7 +67,7 @@ class TokenController extends Controller
                 '-id',
             ]);
 
-        if (Auth::guard('oidc_token')->user()->can('read-token')) {
+        if ($user()->can('read-token')) {
             $tokens = $tokens;
         } else {
             $tokens = $tokens->where('user_id', $userId);

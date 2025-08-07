@@ -4,6 +4,7 @@ namespace App\Http\Resources\CommunityGroupAdminMember;
 
 use App\Http\Resources\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommunityGroupAdminMemberResource extends Resource
 {

@@ -4,6 +4,7 @@ namespace App\Http\Resources\CoreTeamMember;
 
 use App\Http\Resources\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CoreTeamMemberResource extends Resource
 {

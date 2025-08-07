@@ -11,6 +11,7 @@ use App\Http\Resources\FundApplication\FundApplicationResource;
 use App\Jobs\DeleteBlob;
 use App\Models\FundApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -36,7 +37,8 @@ class FundApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $userId = Auth::guard('oidc_token')->user()->id;
+        $user = Auth::guard('oidc_token')->user();
+        $userId = $user()->id;
         $fundApplications = QueryBuilder::for(FundApplication::class)
             ->allowedFields([
                 'id',
@@ -88,7 +90,7 @@ class FundApplicationController extends Controller
                 '-id',
             ]);
 
-        if (Auth::guard('oidc_token')->user()->can('read-fund-application')) {
+        if ($user()->can('read-fund-application')) {
             $fundApplications = $fundApplications;
         } else {
             $fundApplications = $fundApplications

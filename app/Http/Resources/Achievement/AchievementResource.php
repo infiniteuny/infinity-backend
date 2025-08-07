@@ -4,6 +4,7 @@ namespace App\Http\Resources\Achievement;
 
 use App\Http\Resources\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AchievementResource extends Resource
 {
