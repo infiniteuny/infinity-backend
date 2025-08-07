@@ -18,7 +18,7 @@ class CoreTeamMemberResource extends Resource
     {
         $user = $this->resource->toArray();
 
-        if (! $request->user()) {
+        if (! Auth::guard('oidc_token')->user()) {
             $classifiedFields = [
                 'email_address',
                 'phone_number',

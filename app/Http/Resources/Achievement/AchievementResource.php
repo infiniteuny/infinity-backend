@@ -18,7 +18,7 @@ class AchievementResource extends Resource
     {
         $achievement = $this->resource->toArray();
 
-        if (! $request->user()) {
+        if (! Auth::guard('oidc_token')->user()) {
             $classifiedFields = [
                 'team_id',
             ];

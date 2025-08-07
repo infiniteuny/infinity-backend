@@ -34,7 +34,7 @@ class TeamController extends Controller
      */
     public function index(Request $request)
     {
-        $userId = $request->user()->id;
+        $userId = Auth::guard('oidc_token')->user()->id;
         $teams = QueryBuilder::for(Team::class)
             ->allowedFields([
                 'id',
@@ -69,7 +69,7 @@ class TeamController extends Controller
                 '-id',
             ]);
 
-        if ($request->user()->can('read-team')) {
+        if (Auth::guard('oidc_token')->user()->can('read-team')) {
             $teams = $teams;
         } else {
             $teams = $teams

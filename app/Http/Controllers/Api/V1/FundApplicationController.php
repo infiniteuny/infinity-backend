@@ -36,7 +36,7 @@ class FundApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $userId = $request->user()->id;
+        $userId = Auth::guard('oidc_token')->user()->id;
         $fundApplications = QueryBuilder::for(FundApplication::class)
             ->allowedFields([
                 'id',
@@ -88,7 +88,7 @@ class FundApplicationController extends Controller
                 '-id',
             ]);
 
-        if ($request->user()->can('read-fund-application')) {
+        if (Auth::guard('oidc_token')->user()->can('read-fund-application')) {
             $fundApplications = $fundApplications;
         } else {
             $fundApplications = $fundApplications
