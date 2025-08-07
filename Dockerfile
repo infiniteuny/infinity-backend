@@ -120,6 +120,7 @@ COPY --link --chown=${UID}:${GID} --from=vendor /tmp/vendor ./vendor
 COPY --link --chown=${UID}:${GID} . .
 
 RUN composer dump-autoload \
+    --optimize \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
