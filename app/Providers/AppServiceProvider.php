@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
     public $singletons = [
         PsrCacheRepository::class => PsrCacheRepositoryImpl::class,
         StorageRepository::class => StorageRepositoryImpl::class,
+        OidcService::class => OidcServiceImpl::class,
         SsoService::class => SsoServiceImpl::class,
     ];
 
@@ -41,14 +42,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(OidcService::class, function (Application $app) {
-            return new OidcServiceImpl(
-                $app->make(PsrCacheRepository::class),
-                config('oidc.configurations_uri'),
-                config('oidc.client_id'),
-                config('oidc.client_secret'),
-            );
-        });
+        //
     }
 
     /**
@@ -92,7 +86,7 @@ class AppServiceProvider extends ServiceProvider
                 ->baseUrl(config('services.authentik.base_url'));
         });
         RateLimiter::for('api', function (Request $request) {
-            if (! config('app.rate_limiter.enabled')) {
+            if (!config('app.rate_limiter.enabled')) {
                 return Limit::none();
             } else {
                 return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());
