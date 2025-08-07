@@ -28,7 +28,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_groups":[{"id":"8529678e-de6b-32f2-9f70-231a0d681563","name":"blanditiis","priority":26,"description":"Maiores assumenda odit doloribus repellat. Corporis nesciunt ut ratione iure impedit molestiae.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2001-03-13T12:24:20+00:00","updated_at":"1979-09-27T10:37:29+00:00"},{"id":"1f6a0119-1571-3d07-bd98-0e258c2f8ff7","name":"sunt","priority":50,"description":"Ut eaque alias ratione dolores sed rem ea ut. Deserunt sint quis in quod. Aspernatur consectetur id a consectetur assumenda eaque neque.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1990-04-25T00:28:45+00:00","updated_at":"1991-08-19T10:58:19+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"community_groups":[{"id":"8529678e-de6b-32f2-9f70-231a0d681563","name":"blanditiis","priority":26,"description":"Maiores assumenda odit doloribus repellat. Corporis nesciunt ut ratione iure impedit molestiae.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2001-03-13T12:24:20+00:00","updated_at":"1979-09-27T10:37:29+00:00"},{"id":"1f6a0119-1571-3d07-bd98-0e258c2f8ff7","name":"sunt","priority":50,"description":"Ut eaque alias ratione dolores sed rem ea ut. Deserunt sint quis in quod. Aspernatur consectetur id a consectetur assumenda eaque neque.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1990-04-24T23:38:00+00:00","updated_at":"1991-08-19T10:58:19+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -76,7 +76,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"quos","priority":108,"description":"Sunt nihil accusantium harum mollitia. Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-08-24T01:15:39+00:00"}}}'
+        content: '{"status":"success","data":{"community_group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"quos","priority":108,"description":"Sunt nihil accusantium harum mollitia. Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-08-24T00:24:53+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -169,7 +169,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"community_group":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"aut","priority":7,"description":"Quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure. Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2008-03-16T16:02:31+00:00","updated_at":"1976-06-12T01:02:48+00:00"}}}'
+        content: '{"status":"success","data":{"community_group":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"aut","priority":7,"description":"Quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure. Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2008-03-16T15:11:46+00:00","updated_at":"1976-06-12T01:02:48+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -277,7 +277,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"ab","priority":36,"description":"Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1988-12-31T18:00:35+00:00","updated_at":"2010-04-02T13:57:03+00:00"}}}'
+        content: '{"status":"success","data":{"community_group":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"ab","priority":36,"description":"Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1988-12-31T17:09:50+00:00","updated_at":"2010-04-02T13:06:18+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -329,7 +329,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"nostrum","priority":31,"description":"Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim. Facere tempora ex voluptatem laboriosam. Quis adipisci molestias fugit deleniti distinctio eum.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1974-07-30T12:21:28+00:00","updated_at":"2002-05-25T20:51:23+00:00"}}}'
+        content: '{"status":"success","data":{"community_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"nostrum","priority":31,"description":"Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim. Facere tempora ex voluptatem laboriosam. Quis adipisci molestias fugit deleniti distinctio eum.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1974-07-30T11:30:43+00:00","updated_at":"2002-05-25T20:00:38+00:00"}}}'
         headers: []
         description: ''
         custom: []

@@ -76,7 +76,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"1973","created_at":"1997-09-16T19:49:24+00:00","updated_at":"2021-04-15T23:10:32+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"1973","created_at":"1997-09-16T18:58:38+00:00","updated_at":"2021-04-15T22:19:46+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -136,7 +136,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"1973","created_at":"1997-09-16T19:49:23+00:00","updated_at":"2021-04-15T23:10:31+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"1973","created_at":"1997-09-16T18:58:38+00:00","updated_at":"2021-04-15T22:19:46+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -211,7 +211,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"1973","created_at":"1997-09-16T19:49:23+00:00","updated_at":"2021-04-15T23:10:31+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"1973","created_at":"1997-09-16T18:58:38+00:00","updated_at":"2021-04-15T22:19:46+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -263,7 +263,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2007","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2011-05-27T04:31:20+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2007","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2011-05-27T03:40:35+00:00"}}}'
         headers: []
         description: ''
         custom: []
