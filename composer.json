@@ -17,7 +17,7 @@
         "knuckleswtf/scribe": "5.3.0",
         "laravel/framework": "12.21.0",
         "laravel/horizon": "5.33.1",
-        "laravel/octane": "2.12.0",
+        "laravel/octane": "2.11.0",
         "laravel/tinker": "2.10.1",
         "league/flysystem-aws-s3-v3": "3.29.0",
         "namoshek/laravel-redis-sentinel": "1.1.0",
