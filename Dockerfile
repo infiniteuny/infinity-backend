@@ -61,6 +61,7 @@ RUN --mount=type=cache,target=/root/.composer \
     --no-interaction \
     --no-ansi \
     --no-dev \
+    --no-scripts \
     --prefer-dist
 
 # Build production image
@@ -119,12 +120,12 @@ COPY --link --chown=${UID}:${GID} --from=vendor /usr/bin/composer /usr/bin/compo
 COPY --link --chown=${UID}:${GID} --from=vendor /tmp/vendor ./vendor
 COPY --link --chown=${UID}:${GID} . .
 
-RUN composer dump-autoload \
-    --optimize \
+RUN composer install \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
     --no-dev && \
+    composer clear-cache && \
     rm -rf /usr/bin/composer
 
 COPY --link --chown=${UID}:${GID} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
