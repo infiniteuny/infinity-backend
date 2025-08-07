@@ -55,8 +55,7 @@ WORKDIR /tmp
 
 COPY --link . .
 
-RUN --mount=type=cache,target=/root/.composer \
-    composer install \
+RUN composer install \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
