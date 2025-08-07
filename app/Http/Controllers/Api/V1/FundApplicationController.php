@@ -37,7 +37,7 @@ class FundApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::guard('oidc_token')->user();
+        $user = Auth::guard('api_token')->user();
         $userId = $user()->id;
         $fundApplications = QueryBuilder::for(FundApplication::class)
             ->allowedFields([

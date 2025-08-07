@@ -35,7 +35,7 @@ class TeamController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::guard('oidc_token')->user();
+        $user = Auth::guard('api_token')->user();
         $userId = $user()->id;
         $teams = QueryBuilder::for(Team::class)
             ->allowedFields([

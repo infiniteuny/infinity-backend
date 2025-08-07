@@ -41,7 +41,7 @@ class AchievementController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::guard('oidc_token')->user();
+        $user = Auth::guard('api_token')->user();
 
         $achievements = QueryBuilder::for(Achievement::class)
             ->allowedFields([

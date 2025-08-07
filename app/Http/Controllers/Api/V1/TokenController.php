@@ -34,7 +34,7 @@ class TokenController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::guard('oidc_token')->user();
+        $user = Auth::guard('api_token')->user();
         $userId = $user()->id;
         $tokens = QueryBuilder::for(Token::class)
             ->allowedFields([
