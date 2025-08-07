@@ -86,7 +86,7 @@ class AppServiceProvider extends ServiceProvider
                 ->baseUrl(config('services.authentik.base_url'));
         });
         RateLimiter::for('api', function (Request $request) {
-            if (!config('app.rate_limiter.enabled')) {
+            if (! config('app.rate_limiter.enabled')) {
                 return Limit::none();
             } else {
                 return Limit::perSecond(100)->by($request->user()?->id ?: $request->ip());

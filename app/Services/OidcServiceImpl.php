@@ -34,13 +34,7 @@ class OidcServiceImpl implements OidcService
 
     public function __construct(
         private PsrCacheRepository $cacheRepository,
-    ) {
-        $this->getIssuer();
-        $this->getClient();
-        $this->getAccessTokenVerifier();
-        $this->getIntrospectionService();
-        $this->getUserInfoService();
-    }
+    ) {}
 
     protected function getMetadataProviderBuilder(): MetadataProviderBuilder
     {
