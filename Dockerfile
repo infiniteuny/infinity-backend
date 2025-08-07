@@ -61,6 +61,7 @@ RUN --mount=type=cache,target=/root/.composer \
     --no-interaction \
     --no-ansi \
     --no-dev \
+    --no-scripts \
     --prefer-dist
 
 # Build production image
@@ -120,7 +121,6 @@ COPY --link --chown=${UID}:${GID} --from=vendor /tmp/vendor ./vendor
 COPY --link --chown=${UID}:${GID} . .
 
 RUN composer dump-autoload \
-    --optimize \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
