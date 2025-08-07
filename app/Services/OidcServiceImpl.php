@@ -34,6 +34,9 @@ class OidcServiceImpl implements OidcService
 
     public function __construct(
         private PsrCacheRepository $cacheRepository,
+        private string $configurationsUri,
+        private string $clientId,
+        private string $clientSecret,
     ) {
         $this->getIssuer();
         $this->getClient();
@@ -76,8 +79,8 @@ class OidcServiceImpl implements OidcService
         $builder = (new ClientBuilder)
             ->setIssuer($this->getIssuer())
             ->setClientMetadata(ClientMetadata::fromArray([
-                'client_id' => config('oidc.client_id'),
-                'client_secret' => config('oidc.client_secret'),
+                'client_id' => $this->clientId,
+                'client_secret' => $this->clientSecret,
             ]));
 
         return $builder;
@@ -115,7 +118,7 @@ class OidcServiceImpl implements OidcService
         }
 
         return $this->issuer = $this->getIssuerBuilder()
-            ->build(config('oidc.configurations_uri'));
+            ->build($this->configurationsUri);
     }
 
     protected function getClient(): ClientInterface
