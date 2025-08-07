@@ -78,7 +78,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2019-05-21T02:37:49+00:00","updated_at":"2020-07-22T09:46:59+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2019-05-21T02:07:05+00:00","updated_at":"2020-07-22T09:16:15+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -135,7 +135,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: BOOLEAN
+        example: STRING
         type: string
         enumValues:
           - STRING
@@ -157,7 +157,7 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: BOOLEAN
+      type: STRING
       is_private: true
     fileParameters: []
     responses:
