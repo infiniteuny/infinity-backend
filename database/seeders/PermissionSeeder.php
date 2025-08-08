@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Guard;
@@ -93,7 +94,7 @@ class PermissionSeeder extends Seeder
             foreach ($permissionActionsWithOwnership as $action) {
                 Permission::firstOrCreate([
                     'name' => $action.'-'.$resource,
-                    'guard_name' => Guard::getDefaultName(Permission::class),
+                    'guard_name' => Guard::getDefaultName(User::class),
                 ]);
             }
         }
@@ -102,7 +103,7 @@ class PermissionSeeder extends Seeder
             foreach ($permissionActionsWithoutOwnership as $action) {
                 Permission::firstOrCreate([
                     'name' => $action.'-'.$resource,
-                    'guard_name' => Guard::getDefaultName(Permission::class),
+                    'guard_name' => Guard::getDefaultName(User::class),
                 ]);
             }
         }
@@ -110,7 +111,7 @@ class PermissionSeeder extends Seeder
         foreach ($specialPermissions as $permission) {
             Permission::firstOrCreate([
                 'name' => $permission,
-                'guard_name' => Guard::getDefaultName(Permission::class),
+                'guard_name' => Guard::getDefaultName(User::class),
             ]);
         }
 

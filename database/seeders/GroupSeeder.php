@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Group;
 use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Guard;
 
 class GroupSeeder extends Seeder
 {
@@ -28,7 +30,10 @@ class GroupSeeder extends Seeder
         ];
 
         foreach ($groups as $group) {
-            Group::firstOrCreate($group);
+            Group::firstOrCreate([
+                ...$group,
+                'guard_name' => Guard::getDefaultName(User::class),
+            ]);
         }
 
         $adminGroup = Group::where('name', 'Administrator')->first();
