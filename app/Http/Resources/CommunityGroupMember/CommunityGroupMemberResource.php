@@ -19,7 +19,7 @@ class CommunityGroupMemberResource extends Resource
     {
         $user = $this->resource->toArray();
 
-        if (! Auth::guard('api_token')->user()) {
+        if (! Auth::guard(config('auth.defaults.semi_public_guard'))->user()) {
             $classifiedFields = [
                 'email_address',
                 'phone_number',
