@@ -50,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        URL::useOrigin(config('app.url'));
         Storage::disk('local')->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
             return URL::to(
                 URL::temporarySignedRoute(
