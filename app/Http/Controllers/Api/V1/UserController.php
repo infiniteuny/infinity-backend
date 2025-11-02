@@ -59,6 +59,8 @@ class UserController extends Controller
             ])
             ->allowedIncludes([
                 'major',
+                'major.degree',
+                'major.faculty',
                 'personas',
                 'groups',
                 'permissions',
@@ -148,6 +150,8 @@ class UserController extends Controller
             ])
             ->allowedIncludes([
                 'major',
+                'major.degree',
+                'major.faculty',
                 'personas',
                 'groups',
                 'permissions',
