@@ -104,7 +104,7 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (HttpException $e) {
-            if ($e->getStatusCode() <= 500) {
+            if ($e->getStatusCode() < 500) {
                 return response()->json(
                     JsendFormatter::fail(
                         $e->getMessage(),
