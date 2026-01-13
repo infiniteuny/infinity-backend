@@ -53,7 +53,7 @@ class TokenController extends Controller
                 'sso_id',
                 AllowedFilter::operator('last_used_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('expires_at', FilterOperator::DYNAMIC),
             ])
             ->allowedSorts([
                 'id',
