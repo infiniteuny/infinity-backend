@@ -21,8 +21,12 @@ init() {
         php "${ROOT}/artisan" db:seed --force
     fi
 
-    mkdir -p "${ROOT}/storage/app/local/{private,public}" \
-    "${ROOT}/storage/framework/{sessions,views,cache,testing}" \
+    mkdir -p "${ROOT}/storage/app/local/private" \
+    "${ROOT}/storage/app/local/public" \
+    "${ROOT}/storage/framework/sessions" \
+    "${ROOT}/storage/framework/views" \
+    "${ROOT}/storage/framework/cache" \
+    "${ROOT}/storage/framework/testing" \
     "${ROOT}/storage/logs" \
     "${ROOT}/bootstrap/cache" && \
     chmod -R a+rw "${ROOT}/storage" && \
