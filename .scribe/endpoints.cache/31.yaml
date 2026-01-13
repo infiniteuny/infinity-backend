@@ -42,7 +42,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"group_permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Eum","guard_name":"oidc","created_at":"1977-07-25T15:43:54.000000Z","updated_at":"1991-06-26T03:25:02.000000Z","entitlement":{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","group_id":"7ede3c6a-246e-324b-b30f-8fde291e43b3","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e","name":"Nemo","guard_name":"oidc","created_at":"2010-01-05T19:23:19.000000Z","updated_at":"1977-02-13T14:42:27.000000Z","entitlement":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","group_id":"8529678e-de6b-32f2-9f70-231a0d681563","permission_id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"group_permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Eum","guard_name":"oidc","created_at":"1977-05-14T04:00:33.000000Z","updated_at":"1991-04-14T15:41:41.000000Z","entitlement":{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","group_id":"7ede3c6a-246e-324b-b30f-8fde291e43b3","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e","name":"Nemo","guard_name":"oidc","created_at":"2009-10-25T07:39:58.000000Z","updated_at":"1976-12-03T02:59:06.000000Z","entitlement":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","group_id":"8529678e-de6b-32f2-9f70-231a0d681563","permission_id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -105,7 +105,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Doloremque","guard_name":"oidc","created_at":"1991-06-26T03:25:02.000000Z","updated_at":"1973-05-31T06:56:03.000000Z","entitlement":{"id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","group_id":"56db1203-2e82-3de6-a828-ead32bd52d27","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Doloremque","guard_name":"oidc","created_at":"1991-04-14T15:41:41.000000Z","updated_at":"1973-03-19T19:12:42.000000Z","entitlement":{"id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","group_id":"56db1203-2e82-3de6-a828-ead32bd52d27","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
         custom: []
@@ -273,7 +273,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dignissimos","guard_name":"oidc","created_at":"2014-08-18T14:21:19.000000Z","updated_at":"2024-11-19T13:08:54.000000Z","entitlement":{"id":"dc407d02-9b9b-35e5-8d69-87904a6787e3","group_id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dignissimos","guard_name":"oidc","created_at":"2014-08-18T14:21:19.000000Z","updated_at":"2024-09-08T01:25:33.000000Z","entitlement":{"id":"dc407d02-9b9b-35e5-8d69-87904a6787e3","group_id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
         custom: []
