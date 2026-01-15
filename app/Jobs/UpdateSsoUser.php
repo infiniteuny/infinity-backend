@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Data\SsoUserData;
 use App\Models\User;
 use App\Services\SsoService;
+use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
