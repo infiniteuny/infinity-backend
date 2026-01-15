@@ -28,7 +28,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_teams":[{"id":"d6fa562b-acd5-35ff-babb-d11194d3737b","year":"2020","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"},{"id":"cd1eb1ea-4697-3b9a-9dd0-988044a83af6","year":"2023","created_at":"2024-11-26T05:07:23+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"core_teams":[{"id":"d6fa562b-acd5-35ff-babb-d11194d3737b","year":"2020","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"},{"id":"cd1eb1ea-4697-3b9a-9dd0-988044a83af6","year":"2023","created_at":"2024-11-26T04:00:57+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -76,7 +76,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-07-14T19:23:37+00:00","updated_at":"1997-04-08T11:47:45+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-07-14T18:17:11+00:00","updated_at":"1997-04-08T10:41:19+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -136,7 +136,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-07-14T19:23:36+00:00","updated_at":"1997-04-08T11:47:44+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-07-14T18:17:10+00:00","updated_at":"1997-04-08T10:41:18+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -211,7 +211,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-07-14T19:23:36+00:00","updated_at":"1997-04-08T11:47:44+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-07-14T18:17:10+00:00","updated_at":"1997-04-08T10:41:18+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -263,7 +263,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-12-16T20:29:41+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-12-16T19:23:15+00:00"}}}'
         headers: []
         description: ''
         custom: []

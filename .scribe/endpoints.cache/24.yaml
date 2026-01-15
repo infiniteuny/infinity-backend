@@ -31,7 +31,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"degrees":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"69","name":"Nostrum","created_at":"2010-12-16T20:29:40+00:00","updated_at":"2023-03-14T16:10:18+00:00"},{"id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","code":"39","name":"Et","created_at":"1982-06-06T15:27:23+00:00","updated_at":"1974-03-17T02:58:46+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"degrees":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"69","name":"Nostrum","created_at":"2010-12-16T19:23:15+00:00","updated_at":"2023-03-14T15:03:53+00:00"},{"id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","code":"39","name":"Et","created_at":"1982-06-06T14:20:58+00:00","updated_at":"1974-03-17T01:52:21+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -94,7 +94,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"degree":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"66","name":"Quos","created_at":"1997-04-08T11:47:43+00:00","updated_at":"2020-11-05T15:08:51+00:00"}}}'
+        content: '{"status":"success","data":{"degree":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"66","name":"Quos","created_at":"1997-04-08T10:41:18+00:00","updated_at":"2020-11-05T14:02:26+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -146,7 +146,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"degree":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"43","name":"Qui","created_at":"2023-03-14T16:10:18+00:00","updated_at":"2020-05-23T06:21:42+00:00"}}}'
+        content: '{"status":"success","data":{"degree":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"43","name":"Qui","created_at":"2023-03-14T15:03:53+00:00","updated_at":"2020-05-23T06:21:42+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -221,7 +221,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"degree":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"81","name":"Velit","created_at":"2020-11-05T15:08:51+00:00","updated_at":"2018-12-10T18:05:24+00:00"}}}'
+        content: '{"status":"success","data":{"degree":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"81","name":"Velit","created_at":"2020-11-05T14:02:26+00:00","updated_at":"2018-12-10T16:58:59+00:00"}}}'
         headers: []
         description: ''
         custom: []
