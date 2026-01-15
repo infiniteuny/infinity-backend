@@ -14,7 +14,7 @@ class StoreFacultyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'unique:majors'],
+            'code' => ['required', 'string', 'unique:faculties'],
             'name' => ['required', 'string'],
         ];
     }

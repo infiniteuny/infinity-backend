@@ -13,8 +13,10 @@ class UpdateCoreTeamRequest extends FormRequest
      */
     public function rules(): array
     {
+        $coreTeamId = $this->route('core_team')->id;
+
         return [
-            'year' => ['sometimes', 'integer', 'unique:core_teams,year'],
+            'year' => ['sometimes', 'integer', 'unique:core_teams,year,'.$coreTeamId],
             'is_active' => ['sometimes', 'accepted'],
         ];
     }

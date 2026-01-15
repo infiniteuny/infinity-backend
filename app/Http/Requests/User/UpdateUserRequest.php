@@ -14,11 +14,13 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('user')->id;
+
         return [
             'name' => ['sometimes', 'string'],
-            'email_address' => ['sometimes', 'email', 'unique:users,email_address'],
-            'phone_number' => ['sometimes', 'string', 'unique:users,phone_number'],
-            'student_id' => ['sometimes', 'string', 'unique:users,student_id'],
+            'email_address' => ['sometimes', 'email', 'unique:users,email_address,'.$userId],
+            'phone_number' => ['sometimes', 'string', 'unique:users,phone_number,'.$userId],
+            'student_id' => ['sometimes', 'string', 'unique:users,student_id,'.$userId],
             'major_id' => ['sometimes', 'uuid', 'exists:majors,id'],
             'links' => ['sometimes', new Associative],
             'links.*' => ['sometimes', 'url'],
