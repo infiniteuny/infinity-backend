@@ -3,6 +3,7 @@
 namespace App\Http\Requests\CommunityGroupAdmin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCommunityGroupAdminRequest extends FormRequest
 {
@@ -13,10 +14,10 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        $communityGroupAdminId = $this->route('community_group_admin');
+        $communityGroupAdmin = $this->route('community_group_admin');
 
         return [
-            'year' => ['sometimes', 'integer', 'unique:community_group_admins,year,'.$communityGroupAdminId],
+            'year' => ['sometimes', 'integer', Rule::unique('community_group_admins', 'year')->ignore($communityGroupAdmin)],
             'is_active' => ['sometimes', 'accepted'],
         ];
     }

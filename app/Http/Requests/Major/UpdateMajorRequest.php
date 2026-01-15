@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Major;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateMajorRequest extends FormRequest
 {
@@ -13,12 +14,12 @@ class UpdateMajorRequest extends FormRequest
      */
     public function rules(): array
     {
-        $majorId = $this->route('major');
+        $major = $this->route('major');
 
         return [
             'degree_id' => ['sometimes', 'uuid', 'exists:degrees,id'],
             'faculty_id' => ['sometimes', 'uuid', 'exists:faculties,id'],
-            'code' => ['sometimes', 'string', 'unique:majors,code,'.$majorId],
+            'code' => ['sometimes', 'string', Rule::unique('majors', 'code')->ignore($major)],
             'name' => ['sometimes', 'string'],
         ];
     }

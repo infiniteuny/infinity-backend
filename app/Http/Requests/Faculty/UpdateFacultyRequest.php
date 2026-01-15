@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Faculty;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateFacultyRequest extends FormRequest
 {
@@ -13,10 +14,10 @@ class UpdateFacultyRequest extends FormRequest
      */
     public function rules(): array
     {
-        $facultyId = $this->route('faculty');
+        $faculty = $this->route('faculty');
 
         return [
-            'code' => ['sometimes', 'string', 'unique:faculties,code,'.$facultyId],
+            'code' => ['sometimes', 'string', Rule::unique('faculties', 'code')->ignore($faculty)],
             'name' => ['sometimes', 'string'],
         ];
     }

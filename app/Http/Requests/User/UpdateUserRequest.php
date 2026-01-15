@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 use App\Rules\Associative;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -14,13 +15,13 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('user');
+        $user = $this->route('user');
 
         return [
             'name' => ['sometimes', 'string'],
-            'email_address' => ['sometimes', 'email', 'unique:users,email_address,'.$userId],
-            'phone_number' => ['sometimes', 'string', 'unique:users,phone_number,'.$userId],
-            'student_id' => ['sometimes', 'string', 'unique:users,student_id,'.$userId],
+            'email_address' => ['sometimes', 'email', Rule::unique('users', 'email_address')->ignore($user)],
+            'phone_number' => ['sometimes', 'string', Rule::unique('users', 'phone_number')->ignore($user)],
+            'student_id' => ['sometimes', 'string', Rule::unique('users', 'student_id')->ignore($user)],
             'major_id' => ['sometimes', 'uuid', 'exists:majors,id'],
             'links' => ['sometimes', new Associative],
             'links.*' => ['sometimes', 'url'],

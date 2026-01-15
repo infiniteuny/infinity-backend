@@ -3,6 +3,7 @@
 namespace App\Http\Requests\CoreTeam;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCoreTeamRequest extends FormRequest
 {
@@ -13,10 +14,10 @@ class UpdateCoreTeamRequest extends FormRequest
      */
     public function rules(): array
     {
-        $coreTeamId = $this->route('core_team');
+        $coreTeam = $this->route('core_team');
 
         return [
-            'year' => ['sometimes', 'integer', 'unique:core_teams,year,'.$coreTeamId],
+            'year' => ['sometimes', 'integer', Rule::unique('core_teams', 'year')->ignore($coreTeam)],
             'is_active' => ['sometimes', 'accepted'],
         ];
     }
