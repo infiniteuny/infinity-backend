@@ -13,7 +13,7 @@ class UpdateDegreeRequest extends FormRequest
      */
     public function rules(): array
     {
-        $degreeId = $this->route('degree')->id;
+        $degreeId = $this->route('degree');
 
         return [
             'code' => ['sometimes', 'string', 'unique:degrees,code,'.$degreeId],

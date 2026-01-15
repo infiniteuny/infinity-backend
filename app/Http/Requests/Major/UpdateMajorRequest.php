@@ -13,7 +13,7 @@ class UpdateMajorRequest extends FormRequest
      */
     public function rules(): array
     {
-        $majorId = $this->route('major')->id;
+        $majorId = $this->route('major');
 
         return [
             'degree_id' => ['sometimes', 'uuid', 'exists:degrees,id'],

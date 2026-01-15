@@ -13,7 +13,7 @@ class UpdateFacultyRequest extends FormRequest
      */
     public function rules(): array
     {
-        $facultyId = $this->route('faculty')->id;
+        $facultyId = $this->route('faculty');
 
         return [
             'code' => ['sometimes', 'string', 'unique:faculties,code,'.$facultyId],

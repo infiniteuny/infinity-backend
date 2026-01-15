@@ -1,11 +1,11 @@
 <?php
 
+use App\Utils\GetFromFormRequest;
 use Knuckles\Scribe\Config\AuthIn;
 use Knuckles\Scribe\Config\Defaults;
 use Knuckles\Scribe\Extracting\Strategies;
 
 use function Knuckles\Scribe\Config\configureStrategy;
-use function Knuckles\Scribe\Config\removeStrategies;
 
 // Only the most common configs are shown. See the
 // https://scribe.knuckles.wtf/laravel/reference/config for all.
@@ -366,7 +366,11 @@ return [
             ...Defaults::QUERY_PARAMETERS_STRATEGIES,
         ],
         'bodyParameters' => [
-            ...Defaults::BODY_PARAMETERS_STRATEGIES,
+            GetFromFormRequest::class,
+            // Strategies\BodyParameters\GetFromFormRequest::class,
+            Strategies\BodyParameters\GetFromInlineValidator::class,
+            Strategies\BodyParameters\GetFromBodyParamAttribute::class,
+            Strategies\BodyParameters\GetFromBodyParamTag::class,
         ],
         'responses' => configureStrategy(
             Defaults::RESPONSES_STRATEGIES,

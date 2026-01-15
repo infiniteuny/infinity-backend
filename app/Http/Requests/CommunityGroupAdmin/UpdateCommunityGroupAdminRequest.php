@@ -13,7 +13,7 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        $communityGroupAdminId = $this->route('community_group_admin')->id;
+        $communityGroupAdminId = $this->route('community_group_admin');
 
         return [
             'year' => ['sometimes', 'integer', 'unique:community_group_admins,year,'.$communityGroupAdminId],
