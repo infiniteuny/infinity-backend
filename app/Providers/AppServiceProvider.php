@@ -90,7 +90,7 @@ class AppServiceProvider extends ServiceProvider
             if (! config('app.rate_limiter.enabled')) {
                 return Limit::none();
             } else {
-                $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user() ?: Auth::guard(config('auth.defaults.semi_public_guard'))->user();
+                $user = Auth::guard()->user() ?: Auth::guard(config('auth.defaults.semi_public_guard'))->user();
 
                 return Limit::perSecond(100)->by($user?->id ?: $request->ip());
             }
