@@ -36,7 +36,7 @@ class TeamController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
-        $userId = $user()->id;
+        $userId = $user->id;
         $teams = QueryBuilder::for(Team::class)
             ->allowedFields([
                 'id',
