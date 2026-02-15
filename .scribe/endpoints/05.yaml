@@ -28,7 +28,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group_admins":[{"id":"5f936efd-e185-3891-a84d-e9ea08ed9d45","year":"2013","created_at":"1977-04-11T09:04:33+00:00","updated_at":"1991-03-12T20:45:41+00:00"},{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","year":"1991","created_at":"1973-03-28T19:49:48+00:00","updated_at":"2023-01-18T12:05:19+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"community_group_admins":[{"id":"5f936efd-e185-3891-a84d-e9ea08ed9d45","year":"2013","created_at":"1977-04-11T08:27:41+00:00","updated_at":"1991-03-12T20:08:49+00:00"},{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","year":"1991","created_at":"1973-03-28T19:12:56+00:00","updated_at":"2023-01-18T11:28:27+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -76,7 +76,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-06-14T02:12:10+00:00","updated_at":"1997-03-08T18:36:18+00:00"}}}'
+        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-06-14T01:35:18+00:00","updated_at":"1997-03-08T17:59:26+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -136,7 +136,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-06-14T02:12:09+00:00","updated_at":"1997-03-08T18:36:17+00:00"}}}'
+        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-06-14T01:35:17+00:00","updated_at":"1997-03-08T17:59:25+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -211,7 +211,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-06-14T02:12:09+00:00","updated_at":"1997-03-08T18:36:17+00:00"}}}'
+        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-06-14T01:35:17+00:00","updated_at":"1997-03-08T17:59:25+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -263,7 +263,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"community_group_admin":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-11-16T03:18:14+00:00"}}}'
+        content: '{"status":"success","data":{"community_group_admin":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-11-16T02:41:22+00:00"}}}'
         headers: []
         description: ''
         custom: []

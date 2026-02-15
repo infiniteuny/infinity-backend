@@ -29,7 +29,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Ex","is_personal":false,"created_at":"2023-08-06T00:38:36+00:00","updated_at":"2002-07-12T17:03:41+00:00"},{"id":"f2726f3d-9044-3663-bede-2a0f37053879","leader_id":"e660ec64-aeea-3ded-bfe4-fb1f468259dc","name":"Distinctio","is_personal":false,"created_at":"1977-04-11T09:04:31+00:00","updated_at":"1991-03-12T20:45:39+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Voluptatem","is_personal":true,"created_at":"2023-08-06T00:38:36+00:00","updated_at":"2002-07-12T16:26:49+00:00"},{"id":"f2726f3d-9044-3663-bede-2a0f37053879","leader_id":"e660ec64-aeea-3ded-bfe4-fb1f468259dc","name":"Distinctio","is_personal":false,"created_at":"1977-04-11T08:27:39+00:00","updated_at":"1991-03-12T20:08:47+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -103,7 +103,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Laboriosam","is_personal":true,"created_at":"2002-07-12T17:03:41+00:00","updated_at":"1975-06-29T20:22:15+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Laboriosam","is_personal":true,"created_at":"2002-07-12T16:26:49+00:00","updated_at":"1975-06-29T19:45:23+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -155,7 +155,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Praesentium","is_personal":true,"created_at":"1975-06-29T20:22:15+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-02-12T23:25:39+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -241,7 +241,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-02-13T00:02:31+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Molestias","is_personal":true,"created_at":"2021-03-22T11:46:10+00:00","updated_at":"2021-06-24T12:58:01+00:00"}}}'
         headers: []
         description: ''
         custom: []
@@ -293,7 +293,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Molestias","is_personal":true,"created_at":"2021-03-22T12:23:02+00:00","updated_at":"2021-06-24T13:34:53+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Fugit","is_personal":false,"created_at":"2021-06-24T12:58:01+00:00","updated_at":"2013-02-14T00:13:02+00:00"}}}'
         headers: []
         description: ''
         custom: []
