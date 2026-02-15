@@ -90,7 +90,7 @@ class FundApplicationController extends Controller
                 '-id',
             ]);
 
-        if ($user()->can('read-fund-application')) {
+        if ($user->can('read-fund-application')) {
             $fundApplications = $fundApplications;
         } else {
             $fundApplications = $fundApplications

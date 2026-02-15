@@ -71,7 +71,7 @@ class TeamController extends Controller
                 '-id',
             ]);
 
-        if ($user()->can('read-team')) {
+        if ($user->can('read-team')) {
             $teams = $teams;
         } else {
             $teams = $teams

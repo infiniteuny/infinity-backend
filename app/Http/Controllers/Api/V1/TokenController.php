@@ -35,7 +35,7 @@ class TokenController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard()->user();
-        $userId = $user()->id;
+        $userId = $user->id;
         $tokens = QueryBuilder::for(Token::class)
             ->allowedFields([
                 'id',
@@ -67,7 +67,7 @@ class TokenController extends Controller
                 '-id',
             ]);
 
-        if ($user()->can('read-token')) {
+        if ($user->can('read-token')) {
             $tokens = $tokens;
         } else {
             $tokens = $tokens->where('user_id', $userId);
