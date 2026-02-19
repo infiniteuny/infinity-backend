@@ -50,6 +50,7 @@ class TeamController extends Controller
             ->allowedIncludes([
                 'leader',
                 'members',
+                AllowedInclude::relationship('team_type', 'teamType'),
                 AllowedInclude::relationship('fundApplications', 'fund_applications'),
                 'achievements',
             ])
@@ -127,6 +128,7 @@ class TeamController extends Controller
             ->allowedIncludes([
                 'leader',
                 'members',
+                AllowedInclude::relationship('team_type', 'teamType'),
                 AllowedInclude::relationship('fundApplications', 'fund_applications'),
                 'achievements',
             ])

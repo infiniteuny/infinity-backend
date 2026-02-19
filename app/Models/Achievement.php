@@ -59,8 +59,8 @@ class Achievement extends Model
     {
         return new Attribute(
             get: function () {
-                $organizerTypePoint = $this->competition->competitionOrganizerType->weight ?? 0;
-                $teamTypePoint = $this->competitionTeamType->weight ?? 0;
+                $organizerTypePoint = $this->competition->organizerType->weight ?? 0;
+                $teamTypePoint = $this->team->teamType->weight ?? 0;
                 $scalePoint = $this->competitionScale->weight ?? 0;
                 $timeRangePoint = $this->competitionTimeRange->weight ?? 0;
                 $outputPoint = $this->competitionOutput->weight ?? 0;
@@ -87,11 +87,6 @@ class Achievement extends Model
     public function competition(): BelongsTo
     {
         return $this->belongsTo(Competition::class);
-    }
-
-    public function competitionTeamType(): BelongsTo
-    {
-        return $this->belongsTo(CompetitionTeamType::class);
     }
 
     public function competitionScale(): BelongsTo

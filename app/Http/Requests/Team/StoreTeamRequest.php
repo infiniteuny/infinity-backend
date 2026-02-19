@@ -15,6 +15,7 @@ class StoreTeamRequest extends FormRequest
     {
         return [
             'leader_id' => ['required', 'uuid', 'exists:users,id'],
+            'team_type_id' => ['required', 'uuid', 'exists:competition_team_types,id'],
             'name' => ['required', 'string'],
             'is_personal' => ['required', 'boolean'],
         ];

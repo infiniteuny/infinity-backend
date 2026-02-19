@@ -16,7 +16,6 @@ class UpdateFundApplicationRequest extends FormRequest
         return [
             'team_id' => ['sometimes', 'uuid', 'exists:teams,id'],
             'competition_id' => ['sometimes', 'uuid', 'exists:competitions,id'],
-            'competition_team_type_id' => ['sometimes', 'uuid', 'exists:competition_team_types,id'],
             'competition_scale_id' => ['sometimes', 'uuid', 'exists:competition_scales,id'],
             'competition_branch' => ['sometimes', 'string'],
             'competition_start_date' => ['sometimes', 'date', 'before_or_equal:competition_end_date'],

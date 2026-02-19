@@ -60,11 +60,6 @@ class FundApplication extends Model
         return $this->belongsTo(Competition::class);
     }
 
-    public function competitionTeamType(): BelongsTo
-    {
-        return $this->belongsTo(CompetitionTeamType::class);
-    }
-
     public function competitionScale(): BelongsTo
     {
         return $this->belongsTo(CompetitionScale::class);

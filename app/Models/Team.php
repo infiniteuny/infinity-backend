@@ -23,6 +23,7 @@ class Team extends Model
         'name',
         'is_personal',
         'leader_id',
+        'team_type_id',
     ];
 
     /**
@@ -45,6 +46,11 @@ class Team extends Model
     public function leader(): BelongsTo
     {
         return $this->belongsTo(User::class, 'leader_id');
+    }
+
+    public function teamType(): BelongsTo
+    {
+        return $this->belongsTo(CompetitionTeamType::class);
     }
 
     public function members(): BelongsToMany

@@ -45,7 +45,7 @@ class Competition extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function competitionOrganizerType(): BelongsTo
+    public function organizerType(): BelongsTo
     {
         return $this->belongsTo(CompetitionOrganizerType::class);
     }

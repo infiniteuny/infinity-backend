@@ -69,7 +69,6 @@ class AchievementController extends Controller
                 ->allowedIncludes([
                     'team',
                     'competition',
-                    AllowedInclude::relationship('competition_team_type', 'competitionTeamType'),
                     AllowedInclude::relationship('competition_scale', 'competitionScale'),
                     AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
                     AllowedInclude::relationship('competition_output', 'competitionOutput'),
@@ -112,7 +111,6 @@ class AchievementController extends Controller
             $achievements = $achievements
                 ->allowedIncludes([
                     'competition',
-                    AllowedInclude::relationship('competition_team_type', 'competitionTeamType'),
                     AllowedInclude::relationship('competition_scale', 'competitionScale'),
                     AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
                     AllowedInclude::relationship('competition_output', 'competitionOutput'),
@@ -229,7 +227,6 @@ class AchievementController extends Controller
             ->allowedIncludes([
                 'team',
                 'competition',
-                AllowedInclude::relationship('competition_team_type', 'competitionTeamType'),
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
                 AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
                 AllowedInclude::relationship('competition_output', 'competitionOutput'),

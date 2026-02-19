@@ -15,6 +15,7 @@ class UpdateTeamRequest extends FormRequest
     {
         return [
             'leader_id' => ['sometimes', 'uuid', 'exists:users,id'],
+            'team_type_id' => ['sometimes', 'uuid', 'exists:competition_team_types,id'],
             'name' => ['sometimes', 'string'],
             'is_personal' => ['sometimes', 'boolean'],
         ];
