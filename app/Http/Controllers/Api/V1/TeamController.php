@@ -42,6 +42,7 @@ class TeamController extends Controller
             ->allowedFields([
                 'id',
                 'leader_id',
+                'team_type_id',
                 'name',
                 'is_personal',
                 'created_at',
@@ -56,6 +57,7 @@ class TeamController extends Controller
             ])
             ->allowedFilters([
                 AllowedFilter::exact('leader_id'),
+                AllowedFilter::exact('team_type_id'),
                 'name',
                 AllowedFilter::exact('is_personal'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
@@ -64,6 +66,7 @@ class TeamController extends Controller
             ->allowedSorts([
                 'id',
                 'leader_id',
+                'team_type_id',
                 'name',
                 'is_personal',
                 'created_at',
@@ -120,6 +123,7 @@ class TeamController extends Controller
             ->allowedFields([
                 'id',
                 'leader_id',
+                'team_type_id',
                 'name',
                 'is_personal',
                 'created_at',
