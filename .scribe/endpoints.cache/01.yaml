@@ -30,7 +30,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"achievements":[{"id":"67fd546e-ff88-35db-be68-bb99ab22d0da","team_id":"27eb63c5-1d7d-329b-a6b0-42e99e7c774b","competition_id":"7b84112b-136c-364e-be04-687070b17ec3","competition_team_type_id":"e5934a35-a645-3363-a2b3-a8f2c0ef9a93","competition_scale_id":"c7e5c406-5245-346b-bb04-e14d65f1e6c1","competition_time_range_id":"fa55af2d-c0e8-337a-927f-712d82e235e5","competition_output_id":"30dccd66-789f-3889-8032-ae62605525df","competition_rank_id":"63a1a561-bf49-34bf-bc0c-3c506197ec30","competition_branch":"Repellendus","competition_start_date":"2017-04-09T00:00:00+00:00","competition_end_date":"2024-03-19T00:00:00+00:00","description":"Perspiciatis corporis voluptatum sit quidem et possimus et. Sint molestias quasi neque corporis.","image":"https:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1771297169&signature=82057461038a4690c625a263cae1392cf2a145c1ca71c9058e4173a77e14844e","status":"REJECTED","created_at":"2007-03-08T07:12:42+00:00","updated_at":"1996-12-16T18:29:29+00:00","point":0,"competition":null,"competition_team_type":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null},{"id":"52e11f52-2a53-3922-8bb8-a88eaeda0d2c","team_id":"12973cfd-f887-3e54-b0d9-e0cf47cb170f","competition_id":"6a2e73c0-51af-3b12-a3de-10e124794a50","competition_team_type_id":"eb77af10-7637-3e74-a2cc-b5db54ed20a8","competition_scale_id":"3f8d8e27-57d1-39b2-b3a4-61c3b70e0114","competition_time_range_id":"a8749ce2-eee4-3a72-9c45-f46432ade58b","competition_output_id":"a0144278-eac9-3d2a-bf25-af46b965627d","competition_rank_id":"087e303e-6d66-31d9-be2a-497dd37722b7","competition_branch":"Quae","competition_start_date":"2003-10-08T00:00:00+00:00","competition_end_date":"2001-07-06T00:00:00+00:00","description":"Ea repudiandae sapiente sapiente reprehenderit. Esse animi aut eos aut qui rem. Ut voluptas accusantium sequi deleniti nobis saepe reprehenderit.","image":"https:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1771297169&signature=82057461038a4690c625a263cae1392cf2a145c1ca71c9058e4173a77e14844e","status":"ACCEPTED","created_at":"1994-09-03T04:42:02+00:00","updated_at":"1987-01-31T08:35:42+00:00","point":0,"competition":null,"competition_team_type":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"achievements":[{"id":"f0974fd4-b13e-3879-b37d-7307338a915d","team_id":"bfd19b62-9ee5-3cc0-80d4-7c73853f9b15","competition_id":"091b518a-d9e3-3cf1-8edc-6fa4ff0fe8ff","competition_team_type_id":"64c28584-cc7a-3ad3-864e-68821d1df558","competition_scale_id":"84c810b1-c749-3d6a-a9cc-c8156ac15f63","competition_time_range_id":"ddf7c457-0962-36b4-99de-6298a2ac4237","competition_output_id":"9218f40e-5c97-3b28-9a7a-b9b1dc77c6b9","competition_rank_id":"24373666-6388-3446-b41e-b01e8f9a3058","competition_branch":"Sit","competition_start_date":"2001-09-11T00:00:00+00:00","competition_end_date":"1973-10-29T00:00:00+00:00","description":"Omnis dolor modi qui ea qui. Consectetur porro sint eveniet laboriosam. Voluptas et animi eos.","image":"https:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1773932496&signature=f441bfeb05bd29b288deade0a4ad936ac08eb03c6fa99a8a636a0454d7d9c42f","status":"REJECTED","created_at":"1986-05-28T03:31:02+00:00","updated_at":"2000-06-14T15:36:33+00:00","point":0,"competition":null,"team":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null},{"id":"9eb0645c-3cac-3d97-a910-48f4127477e9","team_id":"df910fc1-b4fc-37ca-8e25-acae1c2918d4","competition_id":"5a02c777-4346-3686-88dd-f70d3492197a","competition_team_type_id":"352298e1-20c2-3547-987a-cd6b3fe41e7e","competition_scale_id":"77278a2f-58e3-36f9-b4c3-987927a94cca","competition_time_range_id":"94ec90c4-bbd4-3db0-ae62-41c0d6b5fb5a","competition_output_id":"13c9083a-e2af-3f18-abef-4b737209087b","competition_rank_id":"c58ad681-06a5-3b2d-ba45-5172ad8b1c5a","competition_branch":"Quaerat","competition_start_date":"1971-01-28T00:00:00+00:00","competition_end_date":"2000-05-30T00:00:00+00:00","description":"Dolorem aliquam atque doloremque et corporis. Et error officiis culpa impedit et. Facilis quis omnis et.","image":"https:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1773932496&signature=f441bfeb05bd29b288deade0a4ad936ac08eb03c6fa99a8a636a0454d7d9c42f","status":"PENDING","created_at":"2025-08-19T01:59:53+00:00","updated_at":"2025-10-28T19:08:33+00:00","point":0,"competition":null,"team":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
         custom: []
@@ -78,7 +78,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"achievement":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_time_range_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","competition_output_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","competition_rank_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","competition_branch":"Provident","competition_start_date":"1985-10-22T00:00:00+00:00","competition_end_date":"2018-09-13T00:00:00+00:00","description":"Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","image":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1771297169&signature=82057461038a4690c625a263cae1392cf2a145c1ca71c9058e4173a77e14844e","status":"PENDING","created_at":"1976-06-12T01:02:48+00:00","updated_at":"2005-09-21T15:19:48+00:00","point":0,"competition":null,"competition_team_type":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}}}'
+        content: '{"status":"success","data":{"achievement":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_time_range_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","competition_output_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","competition_rank_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","competition_branch":"Provident","competition_start_date":"1985-10-22T00:00:00+00:00","competition_end_date":"2018-09-13T00:00:00+00:00","description":"Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","image":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1773932496&signature=f441bfeb05bd29b288deade0a4ad936ac08eb03c6fa99a8a636a0454d7d9c42f","status":"PENDING","created_at":"1976-06-12T01:02:48+00:00","updated_at":"2005-08-22T03:17:41+00:00","point":0,"competition":null,"team":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}}}'
         headers: []
         description: ''
         custom: []
@@ -131,21 +131,11 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
-      competition_team_type_id:
-        name: competition_team_type_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_team_types table.'
-        required: true
-        example: 977e5426-8d13-3824-86aa-b092f8ae52c5
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
       competition_scale_id:
         name: competition_scale_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_scales table.'
         required: true
-        example: d6fa562b-acd5-35ff-babb-d11194d3737b
+        example: 977e5426-8d13-3824-86aa-b092f8ae52c5
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -155,7 +145,7 @@ endpoints:
         name: competition_time_range_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_time_ranges table.'
         required: true
-        example: 5707ca55-f609-3528-be8b-1baeaee1567e
+        example: d6fa562b-acd5-35ff-babb-d11194d3737b
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -165,7 +155,7 @@ endpoints:
         name: competition_output_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_outputs table.'
         required: true
-        example: 947170af-7488-3f30-a16d-723355a9502f
+        example: 5707ca55-f609-3528-be8b-1baeaee1567e
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -175,7 +165,7 @@ endpoints:
         name: competition_rank_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_ranks table.'
         required: true
-        example: cd1eb1ea-4697-3b9a-9dd0-988044a83af6
+        example: 947170af-7488-3f30-a16d-723355a9502f
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -195,7 +185,7 @@ endpoints:
         name: competition_start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>competition_end_date</code>.'
         required: true
-        example: '2022-03-12'
+        example: '2022-04-12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -205,7 +195,7 @@ endpoints:
         name: competition_end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>competition_start_date</code>.'
         required: true
-        example: '2052-03-11'
+        example: '2052-04-11'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -247,14 +237,13 @@ endpoints:
     cleanBodyParameters:
       team_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       competition_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
-      competition_team_type_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
-      competition_scale_id: d6fa562b-acd5-35ff-babb-d11194d3737b
-      competition_time_range_id: 5707ca55-f609-3528-be8b-1baeaee1567e
-      competition_output_id: 947170af-7488-3f30-a16d-723355a9502f
-      competition_rank_id: cd1eb1ea-4697-3b9a-9dd0-988044a83af6
+      competition_scale_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
+      competition_time_range_id: d6fa562b-acd5-35ff-babb-d11194d3737b
+      competition_output_id: 5707ca55-f609-3528-be8b-1baeaee1567e
+      competition_rank_id: 947170af-7488-3f30-a16d-723355a9502f
       competition_branch: architecto
-      competition_start_date: '2022-03-12'
-      competition_end_date: '2052-03-11'
+      competition_start_date: '2022-04-12'
+      competition_end_date: '2052-04-11'
       description: 'Eius et animi quos velit et.'
       status: REJECTED
     fileParameters:
@@ -262,7 +251,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"status":"success","data":{"achievement":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","team_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","competition_team_type_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","competition_scale_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","competition_time_range_id":"10b3f4c6-2aaf-32e1-a52d-6bf43d9ddd70","competition_output_id":"3b33fac5-d303-3ce9-8d1f-c931158d7dad","competition_rank_id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","competition_branch":"Adipisci","competition_start_date":"2006-11-22T00:00:00+00:00","competition_end_date":"2015-01-19T00:00:00+00:00","description":"Incidunt iure odit et et modi ipsum. Omnis autem et consequatur.","image":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1771297170&signature=64a281331eefca60e7715226e8d6a2089a9b8d500abafb551654d2114e31ce71","status":"REJECTED","created_at":"2009-09-21T03:04:13+00:00","updated_at":"1976-10-29T22:23:21+00:00","point":0,"competition":null,"competition_team_type":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}}}'
+        content: '{"status":"success","data":{"achievement":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","team_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","competition_team_type_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","competition_scale_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","competition_time_range_id":"10b3f4c6-2aaf-32e1-a52d-6bf43d9ddd70","competition_output_id":"3b33fac5-d303-3ce9-8d1f-c931158d7dad","competition_rank_id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","competition_branch":"Adipisci","competition_start_date":"2006-10-22T00:00:00+00:00","competition_end_date":"2015-01-19T00:00:00+00:00","description":"Incidunt iure odit et et modi ipsum. Omnis autem et consequatur.","image":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1773932496&signature=f441bfeb05bd29b288deade0a4ad936ac08eb03c6fa99a8a636a0454d7d9c42f","status":"REJECTED","created_at":"2009-08-21T15:02:07+00:00","updated_at":"1976-09-29T10:21:15+00:00","point":0,"competition":null,"team":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}}}'
         headers: []
         description: ''
         custom: []
@@ -330,21 +319,11 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
-      competition_team_type_id:
-        name: competition_team_type_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_team_types table.'
-        required: false
-        example: 977e5426-8d13-3824-86aa-b092f8ae52c5
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
       competition_scale_id:
         name: competition_scale_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_scales table.'
         required: false
-        example: d6fa562b-acd5-35ff-babb-d11194d3737b
+        example: 977e5426-8d13-3824-86aa-b092f8ae52c5
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -354,7 +333,7 @@ endpoints:
         name: competition_time_range_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_time_ranges table.'
         required: false
-        example: 5707ca55-f609-3528-be8b-1baeaee1567e
+        example: d6fa562b-acd5-35ff-babb-d11194d3737b
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -364,7 +343,7 @@ endpoints:
         name: competition_output_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_outputs table.'
         required: false
-        example: 947170af-7488-3f30-a16d-723355a9502f
+        example: 5707ca55-f609-3528-be8b-1baeaee1567e
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -374,7 +353,7 @@ endpoints:
         name: competition_rank_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_ranks table.'
         required: false
-        example: cd1eb1ea-4697-3b9a-9dd0-988044a83af6
+        example: 947170af-7488-3f30-a16d-723355a9502f
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -394,7 +373,7 @@ endpoints:
         name: competition_start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>competition_end_date</code>.'
         required: false
-        example: '2022-03-12'
+        example: '2022-04-12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -404,7 +383,7 @@ endpoints:
         name: competition_end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>competition_start_date</code>.'
         required: false
-        example: '2052-03-11'
+        example: '2052-04-11'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -446,14 +425,13 @@ endpoints:
     cleanBodyParameters:
       team_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       competition_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
-      competition_team_type_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
-      competition_scale_id: d6fa562b-acd5-35ff-babb-d11194d3737b
-      competition_time_range_id: 5707ca55-f609-3528-be8b-1baeaee1567e
-      competition_output_id: 947170af-7488-3f30-a16d-723355a9502f
-      competition_rank_id: cd1eb1ea-4697-3b9a-9dd0-988044a83af6
+      competition_scale_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
+      competition_time_range_id: d6fa562b-acd5-35ff-babb-d11194d3737b
+      competition_output_id: 5707ca55-f609-3528-be8b-1baeaee1567e
+      competition_rank_id: 947170af-7488-3f30-a16d-723355a9502f
       competition_branch: architecto
-      competition_start_date: '2022-03-12'
-      competition_end_date: '2052-03-11'
+      competition_start_date: '2022-04-12'
+      competition_end_date: '2052-04-11'
       description: 'Eius et animi quos velit et.'
       status: REJECTED
     fileParameters:
@@ -461,7 +439,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"achievement":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","team_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","competition_team_type_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","competition_scale_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","competition_time_range_id":"10b3f4c6-2aaf-32e1-a52d-6bf43d9ddd70","competition_output_id":"3b33fac5-d303-3ce9-8d1f-c931158d7dad","competition_rank_id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","competition_branch":"Adipisci","competition_start_date":"2006-11-22T00:00:00+00:00","competition_end_date":"2015-01-19T00:00:00+00:00","description":"Incidunt iure odit et et modi ipsum. Omnis autem et consequatur.","image":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1771297170&signature=64a281331eefca60e7715226e8d6a2089a9b8d500abafb551654d2114e31ce71","status":"REJECTED","created_at":"2009-09-21T03:04:13+00:00","updated_at":"1976-10-29T22:23:21+00:00","point":0,"competition":null,"competition_team_type":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}}}'
+        content: '{"status":"success","data":{"achievement":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","team_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","competition_team_type_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","competition_scale_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","competition_time_range_id":"10b3f4c6-2aaf-32e1-a52d-6bf43d9ddd70","competition_output_id":"3b33fac5-d303-3ce9-8d1f-c931158d7dad","competition_rank_id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","competition_branch":"Adipisci","competition_start_date":"2006-10-22T00:00:00+00:00","competition_end_date":"2015-01-19T00:00:00+00:00","description":"Incidunt iure odit et et modi ipsum. Omnis autem et consequatur.","image":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1773932496&signature=f441bfeb05bd29b288deade0a4ad936ac08eb03c6fa99a8a636a0454d7d9c42f","status":"REJECTED","created_at":"2009-08-21T15:02:07+00:00","updated_at":"1976-09-29T10:21:15+00:00","point":0,"competition":null,"team":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}}}'
         headers: []
         description: ''
         custom: []
@@ -513,7 +491,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"status":"success","data":{"achievement":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_time_range_id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","competition_output_id":"1cdf7bf0-e381-3a72-a922-e680daa4dd16","competition_rank_id":"013e1265-7fdf-327c-9ed4-fc05e74df42b","competition_branch":"Et","competition_start_date":"2003-07-15T00:00:00+00:00","competition_end_date":"2019-08-30T00:00:00+00:00","description":"Maiores assumenda odit doloribus repellat. Corporis nesciunt ut ratione iure impedit molestiae.","image":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1771297170&signature=64a281331eefca60e7715226e8d6a2089a9b8d500abafb551654d2114e31ce71","status":"ACCEPTED","created_at":"1979-09-27T10:37:29+00:00","updated_at":"2013-03-26T09:37:58+00:00","point":0,"competition":null,"competition_team_type":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}}}'
+        content: '{"status":"success","data":{"achievement":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_time_range_id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","competition_output_id":"1cdf7bf0-e381-3a72-a922-e680daa4dd16","competition_rank_id":"013e1265-7fdf-327c-9ed4-fc05e74df42b","competition_branch":"Et","competition_start_date":"2003-07-15T00:00:00+00:00","competition_end_date":"2019-08-30T00:00:00+00:00","description":"Maiores assumenda odit doloribus repellat. Corporis nesciunt ut ratione iure impedit molestiae.","image":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/achievements\/images\/some-image-id.jpg?expires=1773932496&signature=f441bfeb05bd29b288deade0a4ad936ac08eb03c6fa99a8a636a0454d7d9c42f","status":"ACCEPTED","created_at":"1979-09-27T10:37:29+00:00","updated_at":"2013-02-23T21:35:52+00:00","point":0,"competition":null,"team":null,"competition_scale":null,"competition_time_range":null,"competition_output":null,"competition_rank":null}}}'
         headers: []
         description: ''
         custom: []
