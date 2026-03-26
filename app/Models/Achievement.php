@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class Achievement extends Model
 {
@@ -59,14 +60,22 @@ class Achievement extends Model
     {
         return new Attribute(
             get: function () {
-                $organizerTypePoint = $this->competition->organizerType->weight ?? 0;
-                $teamTypePoint = $this->team->teamType->weight ?? 0;
-                $scalePoint = $this->competitionScale->weight ?? 0;
-                $timeRangePoint = $this->competitionTimeRange->weight ?? 0;
-                $outputPoint = $this->competitionOutput->weight ?? 0;
-                $rankPoint = $this->competitionRank->weight ?? 0;
+                if (! $this->getKey()) {
+                    return 0;
+                }
 
-                return $organizerTypePoint * $teamTypePoint * $scalePoint * $timeRangePoint * $outputPoint * $rankPoint;
+                return (int) (DB::table('achievements as a')
+                    ->leftJoin('competitions as c', 'c.id', '=', 'a.competition_id')
+                    ->leftJoin('competition_organizer_types as cot', 'cot.id', '=', 'c.organizer_type_id')
+                    ->leftJoin('teams as t', 't.id', '=', 'a.team_id')
+                    ->leftJoin('competition_team_types as ctt', 'ctt.id', '=', 't.team_type_id')
+                    ->leftJoin('competition_scales as cs', 'cs.id', '=', 'a.competition_scale_id')
+                    ->leftJoin('competition_time_ranges as ctr', 'ctr.id', '=', 'a.competition_time_range_id')
+                    ->leftJoin('competition_outputs as co', 'co.id', '=', 'a.competition_output_id')
+                    ->leftJoin('competition_ranks as cr', 'cr.id', '=', 'a.competition_rank_id')
+                    ->where('a.id', $this->getKey())
+                    ->selectRaw('COALESCE(cot.weight, 0) * COALESCE(ctt.weight, 0) * COALESCE(cs.weight, 0) * COALESCE(ctr.weight, 0) * COALESCE(co.weight, 0) * COALESCE(cr.weight, 0) as point')
+                    ->value('point') ?? 0);
             },
         );
     }
