@@ -130,7 +130,7 @@ jobs:
 
       - name: Extract metadata for Container
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository }}
           tags: type=semver,pattern={{version}},value=${{ steps.version.outputs.version }}
