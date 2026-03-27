@@ -71,7 +71,7 @@ jobs:
 
       - name: Fail if branch and release type do not match
         if: ${{ steps.guard.outputs.version_mismatch == 'true' }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             core.setFailed('Workflow failed. Did you set the correct version, release type, and pre-release version?');
