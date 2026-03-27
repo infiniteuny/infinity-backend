@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\CommunityGroupAdmin;
 
+use App\Models\CommunityGroupAdmin;
+use App\Rules\CannotDeactivateActive;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -22,7 +24,7 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
             'is_active' => [
                 'sometimes',
                 'accepted',
-                new CannotDeactivateActive($communityGroupAdmin->is_active),
+                new CannotDeactivateActive($communityGroupAdmin->is_active ?? false),
             ],
         ];
     }

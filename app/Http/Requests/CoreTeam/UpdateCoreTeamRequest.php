@@ -24,7 +24,7 @@ class UpdateCoreTeamRequest extends FormRequest
             'is_active' => [
                 'sometimes',
                 'boolean',
-                new CannotDeactivateActive($coreTeam->is_active),
+                new CannotDeactivateActive($coreTeam->is_active ?? false),
             ],
         ];
     }
