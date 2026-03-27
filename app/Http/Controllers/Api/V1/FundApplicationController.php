@@ -58,7 +58,7 @@ class FundApplicationController extends Controller
             ->allowedIncludes([
                 'team',
                 'competition',
-                AllowedInclude::relationship('competitionScale', 'competition_scale'),
+                AllowedInclude::relationship('competition_scale', 'competitionScale'),
             ])
             ->allowedFilters([
                 AllowedFilter::exact('team_id'),
@@ -163,7 +163,7 @@ class FundApplicationController extends Controller
             ->allowedIncludes([
                 'team',
                 'competition',
-                AllowedInclude::relationship('competitionScale', 'competition_scale'),
+                AllowedInclude::relationship('competition_scale', 'competitionScale'),
             ])
             ->firstOrFail();
 
