@@ -2,10 +2,12 @@ name: 'Core Teams'
 description: 'Manage core teams.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: v1/core-teams
     metadata:
+      custom: []
       groupName: 'Core Teams'
       groupDescription: 'Manage core teams.'
       subgroup: ''
@@ -14,7 +16,6 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
@@ -27,22 +28,23 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"core_teams":[{"id":"d6fa562b-acd5-35ff-babb-d11194d3737b","year":"2019","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"},{"id":"cd1eb1ea-4697-3b9a-9dd0-988044a83af6","year":"2022","created_at":"2024-09-24T14:14:05+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"core_teams":[{"id":"d6fa562b-acd5-35ff-babb-d11194d3737b","year":"2019","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"},{"id":"cd1eb1ea-4697-3b9a-9dd0-988044a83af6","year":"2022","created_at":"2024-09-16T06:29:52+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/core-teams/{id}'
     metadata:
+      custom: []
       groupName: 'Core Teams'
       groupDescription: 'Manage core teams.'
       subgroup: ''
@@ -51,12 +53,12 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the core team.'
         required: true
@@ -65,7 +67,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -75,22 +77,23 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-13T04:30:19+00:00","updated_at":"1997-02-04T20:54:27+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T20:46:06+00:00","updated_at":"1997-01-27T13:10:14+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: v1/core-teams
     metadata:
+      custom: []
       groupName: 'Core Teams'
       groupDescription: 'Manage core teams.'
       subgroup: ''
@@ -99,7 +102,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -110,6 +112,7 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters:
       year:
+        custom: []
         name: year
         description: ''
         required: true
@@ -118,28 +121,29 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       is_active:
+        custom: []
         name: is_active
-        description: 'Must be accepted.'
+        description: ''
         required: true
         example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       year: 16
       is_active: true
     fileParameters: []
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-13T04:30:18+00:00","updated_at":"1997-02-04T20:54:26+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T20:46:06+00:00","updated_at":"1997-01-27T13:10:14+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -148,13 +152,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/core-teams/{id}'
     metadata:
+      custom: []
       groupName: 'Core Teams'
       groupDescription: 'Manage core teams.'
       subgroup: ''
@@ -163,13 +168,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the core team.'
         required: true
@@ -178,13 +183,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       year:
+        custom: []
         name: year
         description: ''
         required: false
@@ -193,28 +199,29 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       is_active:
+        custom: []
         name: is_active
-        description: 'Must be accepted.'
-        required: true
-        example: true
+        description: ''
+        required: false
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       year: 16
-      is_active: true
+      is_active: false
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-13T04:30:18+00:00","updated_at":"1997-02-04T20:54:26+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T20:46:06+00:00","updated_at":"1997-01-27T13:10:14+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -223,12 +230,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/core-teams/{id}'
     metadata:
+      custom: []
       groupName: 'Core Teams'
       groupDescription: 'Manage core teams.'
       subgroup: ''
@@ -237,13 +245,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the core team.'
         required: true
@@ -252,7 +260,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -262,11 +270,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-10-15T05:36:23+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-10-06T21:52:11+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -275,4 +283,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

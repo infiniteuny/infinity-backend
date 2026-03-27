@@ -4,10 +4,12 @@ name: 'Core Team Divisions'
 description: 'Manage core team divisions.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: v1/core-team-divisions
     metadata:
+      custom: []
       groupName: 'Core Team Divisions'
       groupDescription: 'Manage core team divisions.'
       subgroup: ''
@@ -16,7 +18,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -30,11 +31,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team_divisions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Commodi","priority":24,"created_at":"1983-05-17T03:07:42+00:00","updated_at":"1990-03-02T20:06:21+00:00"},{"id":"fa253524-dd6a-3fdb-a788-0cabcf134db7","name":"Ipsum","priority":114,"created_at":"2018-12-21T01:02:40+00:00","updated_at":"2009-07-27T04:40:06+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"core_team_divisions":[{"id":"500662af-598e-324f-b5f5-6a12a02a3554","name":"Voluptatem","priority":62,"created_at":"2014-03-05T06:48:24+00:00","updated_at":"2011-10-01T09:24:04+00:00"},{"id":"27a8ae14-f058-3bbb-9cf6-743087d7a867","name":"Excepturi","priority":29,"created_at":"1996-03-20T12:16:24+00:00","updated_at":"2009-02-16T11:14:26+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -43,12 +44,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: v1/core-team-divisions
     metadata:
+      custom: []
       groupName: 'Core Team Divisions'
       groupDescription: 'Manage core team divisions.'
       subgroup: ''
@@ -57,7 +59,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -68,6 +69,7 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: ''
         required: true
@@ -76,8 +78,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       priority:
+        custom: []
         name: priority
         description: 'Must be between 0 and 127.'
         required: true
@@ -86,18 +89,18 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: architecto
       priority: 1
     fileParameters: []
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quo","priority":88,"created_at":"1971-10-04T15:17:12+00:00","updated_at":"1981-12-22T05:26:22+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quo","priority":88,"created_at":"1971-10-04T15:17:12+00:00","updated_at":"1981-12-13T21:42:09+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -106,12 +109,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/core-team-divisions/{id}'
     metadata:
+      custom: []
       groupName: 'Core Team Divisions'
       groupDescription: 'Manage core team divisions.'
       subgroup: ''
@@ -120,13 +124,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the core team division.'
         required: true
@@ -135,7 +139,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -145,11 +149,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Incidunt","priority":121,"created_at":"1990-03-02T20:06:21+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Commodi","priority":24,"created_at":"1983-05-17T03:07:42+00:00","updated_at":"1990-02-22T12:22:08+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -158,13 +162,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/core-team-divisions/{id}'
     metadata:
+      custom: []
       groupName: 'Core Team Divisions'
       groupDescription: 'Manage core team divisions.'
       subgroup: ''
@@ -173,13 +178,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the core team division.'
         required: true
@@ -188,13 +193,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: ''
         required: false
@@ -203,8 +209,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       priority:
+        custom: []
         name: priority
         description: 'Must be between 0 and 127.'
         required: false
@@ -213,18 +220,18 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: architecto
       priority: 1
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Omnis","priority":28,"created_at":"1981-12-22T05:26:22+00:00","updated_at":"1980-01-18T05:53:46+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Omnis","priority":28,"created_at":"1981-12-13T21:42:09+00:00","updated_at":"1980-01-09T22:09:33+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -233,12 +240,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/core-team-divisions/{id}'
     metadata:
+      custom: []
       groupName: 'Core Team Divisions'
       groupDescription: 'Manage core team divisions.'
       subgroup: ''
@@ -247,13 +255,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the core team division.'
         required: true
@@ -262,7 +270,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -272,11 +280,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Iure","priority":123,"created_at":"1977-08-15T10:47:14+00:00","updated_at":"1982-04-05T00:34:06+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Incidunt","priority":121,"created_at":"1990-02-22T12:22:08+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -285,4 +293,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

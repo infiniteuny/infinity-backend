@@ -2,10 +2,12 @@ name: Testimonials
 description: 'Manage testimonials.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: v1/testimonials
     metadata:
+      custom: []
       groupName: Testimonials
       groupDescription: 'Manage testimonials.'
       subgroup: ''
@@ -14,7 +16,6 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
@@ -27,22 +28,23 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"testimonials":[{"id":"f2726f3d-9044-3663-bede-2a0f37053879","name":"Mrs. Abbey Gaylord Md","position":"Environmental Engineer","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Aliquam veniam corporis dolorem mollitia deleniti nemo. Quia officia est dignissimos neque. Odio veritatis excepturi doloribus delectus fugit qui repudiandae. Est alias tenetur ratione.","created_at":"1994-09-19T13:57:57+00:00","updated_at":"1986-05-16T14:47:05+00:00"},{"id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","name":"Fausto Conroy","position":"Casting Machine Operator","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Et tenetur ab reiciendis quia perspiciatis deserunt ducimus. Et dolores quia maiores. Odit doloribus repellat officiis corporis nesciunt ut ratione iure.","created_at":"1998-11-03T09:38:46+00:00","updated_at":"2021-02-03T11:32:02+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"testimonials":[{"id":"f2726f3d-9044-3663-bede-2a0f37053879","name":"Mrs. Abbey Gaylord Md","position":"Environmental Engineer","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Aliquam veniam corporis dolorem mollitia deleniti nemo. Quia officia est dignissimos neque. Odio veritatis excepturi doloribus delectus fugit qui repudiandae. Est alias tenetur ratione.","created_at":"1994-09-11T06:13:44+00:00","updated_at":"1986-05-08T07:02:52+00:00"},{"id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","name":"Fausto Conroy","position":"Casting Machine Operator","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Et tenetur ab reiciendis quia perspiciatis deserunt ducimus. Et dolores quia maiores. Odit doloribus repellat officiis corporis nesciunt ut ratione iure.","created_at":"1998-10-26T01:54:33+00:00","updated_at":"2021-02-03T11:32:02+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/testimonials/{id}'
     metadata:
+      custom: []
       groupName: Testimonials
       groupDescription: 'Manage testimonials.'
       subgroup: ''
@@ -51,12 +53,12 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the testimonial.'
         required: true
@@ -65,7 +67,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -75,22 +77,23 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2018-12-21T01:02:41+00:00"}}}'
+        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2018-12-12T17:18:28+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: v1/testimonials
     metadata:
+      custom: []
       groupName: Testimonials
       groupDescription: 'Manage testimonials.'
       subgroup: ''
@@ -99,7 +102,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: multipart/form-data
@@ -110,6 +112,7 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: ''
         required: true
@@ -118,8 +121,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       position:
+        custom: []
         name: position
         description: 'Must not be greater than 255 characters.'
         required: true
@@ -128,8 +132,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       photo:
+        custom: []
         name: photo
         description: 'Must be a file. Must not be greater than 5120 kilobytes.'
         required: true
@@ -138,8 +143,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       content:
+        custom: []
         name: content
         description: ''
         required: true
@@ -148,7 +154,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: architecto
       position: 'n'
@@ -157,11 +163,11 @@ endpoints:
       photo: null
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2018-12-21T01:02:40+00:00"}}}'
+        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2018-12-12T17:18:28+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -170,13 +176,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/testimonials/{id}'
     metadata:
+      custom: []
       groupName: Testimonials
       groupDescription: 'Manage testimonials.'
       subgroup: ''
@@ -185,13 +192,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: multipart/form-data
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the testimonial.'
         required: true
@@ -200,13 +207,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: ''
         required: false
@@ -215,8 +223,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       position:
+        custom: []
         name: position
         description: 'Must not be greater than 255 characters.'
         required: false
@@ -225,8 +234,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       photo:
+        custom: []
         name: photo
         description: 'Must be a file. Must not be greater than 5120 kilobytes.'
         required: false
@@ -235,8 +245,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       content:
+        custom: []
         name: content
         description: ''
         required: false
@@ -245,7 +256,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: architecto
       position: 'n'
@@ -254,11 +265,11 @@ endpoints:
       photo: null
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2018-12-21T01:02:40+00:00"}}}'
+        content: '{"status":"success","data":{"testimonial":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","position":"Molding and Casting Worker","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2018-12-12T17:18:28+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -267,12 +278,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/testimonials/{id}'
     metadata:
+      custom: []
       groupName: Testimonials
       groupDescription: 'Manage testimonials.'
       subgroup: ''
@@ -281,13 +293,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the testimonial.'
         required: true
@@ -296,7 +308,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -306,11 +318,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
         content: '{"status":"success","data":{"testimonial":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Miss Pearl Hauck","position":"Locomotive Engineer","photo":"https:\/\/api.infiniteuny.id\/infinity\/static\/testimonials\/photos\/some-photo-id.jpg","content":"Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora.","created_at":"2020-03-13T08:10:43+00:00","updated_at":"1985-12-26T03:24:50+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -319,4 +331,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

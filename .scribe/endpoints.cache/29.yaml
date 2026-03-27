@@ -4,10 +4,12 @@ name: Permissions
 description: 'Manage permissions.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: v1/permissions
     metadata:
+      custom: []
       groupName: Permissions
       groupDescription: 'Manage permissions.'
       subgroup: ''
@@ -16,7 +18,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -30,11 +31,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Non","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"},{"id":"b9567dd8-446c-3a6f-8f1a-54673f212a38","name":"Praesentium","guard_name":"oidc","created_at":"2002-06-10T19:21:50.000000Z","updated_at":"1975-05-28T22:40:24.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1997-07-09T19:28:01.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"},{"id":"1937113a-b0a2-3b03-925a-3163292463db","name":"Laboriosam","guard_name":"oidc","created_at":"2023-08-06T00:38:36.000000Z","updated_at":"2002-06-02T11:37:38.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -43,12 +44,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: v1/permissions
     metadata:
+      custom: []
       groupName: Permissions
       groupDescription: 'Manage permissions.'
       subgroup: ''
@@ -57,7 +59,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -68,6 +69,7 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
@@ -76,8 +78,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       guard_name:
+        custom: []
         name: guard_name
         description: ''
         required: true
@@ -87,18 +90,18 @@ endpoints:
           - api
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: b
       guard_name: api
     fileParameters: []
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Facere","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Enim","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -107,12 +110,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/permissions/{id}'
     metadata:
+      custom: []
       groupName: Permissions
       groupDescription: 'Manage permissions.'
       subgroup: ''
@@ -121,13 +125,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the permission.'
         required: true
@@ -136,7 +140,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -146,11 +150,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Tempora","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Non","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -159,13 +163,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/permissions/{id}'
     metadata:
+      custom: []
       groupName: Permissions
       groupDescription: 'Manage permissions.'
       subgroup: ''
@@ -174,13 +179,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the permission.'
         required: true
@@ -189,13 +194,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: 'Must not be greater than 255 characters.'
         required: false
@@ -204,8 +210,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       guard_name:
+        custom: []
         name: guard_name
         description: ''
         required: false
@@ -215,18 +222,18 @@ endpoints:
           - api
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: b
       guard_name: api
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Ex","guard_name":"oidc","created_at":"1985-12-26T03:24:50.000000Z","updated_at":"2023-08-06T00:38:36.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Facere","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -235,12 +242,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/permissions/{id}'
     metadata:
+      custom: []
       groupName: Permissions
       groupDescription: 'Manage permissions.'
       subgroup: ''
@@ -249,13 +257,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the permission.'
         required: true
@@ -264,7 +272,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -274,11 +282,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Voluptatem","guard_name":"oidc","created_at":"2023-08-06T00:38:36.000000Z","updated_at":"2002-06-10T19:21:50.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Tempora","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -287,4 +295,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

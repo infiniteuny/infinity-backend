@@ -4,10 +4,12 @@ name: Users
 description: 'Manage users.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: v1/users
     metadata:
+      custom: []
       groupName: Users
       groupDescription: 'Manage users.'
       subgroup: ''
@@ -16,7 +18,6 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
@@ -29,22 +30,23 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"users":[{"id":"d34becdc-c0c1-3b29-91d0-b8358c864cf4","name":"Henri Mitchell","email_address":"feeney.demarcus@gmail.com","phone_number":"559.897.7788","student_id":"55159266794","major_id":"56db1203-2e82-3de6-a828-ead32bd52d27","links":{"github":"http:\/\/www.schaden.com\/odit-quia-officia-est-dignissimos-neque-blanditiis-odio.html","linkedin":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html","website":"http:\/\/howe.com\/accusamus-ut-et-recusandae.html"},"start_date":"1990-03-14","end_date":"1972-05-01","is_member":false,"is_extraordinary":false,"created_at":"1982-03-30T05:46:28+00:00","updated_at":"1995-05-31T09:42:20+00:00","is_active":false},{"id":"aa7148ea-5fbc-38cb-95a9-bdfc3d462337","name":"Mona Lemke","email_address":"mayert.margaretta@thiel.com","phone_number":"+1 (619) 523-1922","student_id":"19214877433","major_id":"741f623f-132b-3692-ab2c-a09b08acdad6","links":{"github":"http:\/\/brekke.com\/suscipit-doloribus-fugiat-ut-aut-deserunt-et-error","linkedin":"http:\/\/tromp.com\/dolorem-et-ut-dicta","website":"http:\/\/www.lakin.com\/"},"start_date":"2013-02-23","end_date":"1970-07-05","is_member":true,"is_extraordinary":true,"created_at":"2007-09-13T12:23:09+00:00","updated_at":"1970-11-05T15:02:36+00:00","is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"users":[{"id":"d34becdc-c0c1-3b29-91d0-b8358c864cf4","name":"Henri Mitchell","email_address":"feeney.demarcus@gmail.com","phone_number":"559.897.7788","student_id":"55159266794","major_id":"56db1203-2e82-3de6-a828-ead32bd52d27","links":{"github":"http:\/\/www.schaden.com\/odit-quia-officia-est-dignissimos-neque-blanditiis-odio.html","linkedin":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html","website":"http:\/\/howe.com\/accusamus-ut-et-recusandae.html"},"start_date":"1990-03-06","end_date":"1972-04-23","is_member":false,"is_extraordinary":false,"created_at":"1982-03-21T22:02:15+00:00","updated_at":"1995-05-23T01:58:07+00:00","is_active":false},{"id":"aa7148ea-5fbc-38cb-95a9-bdfc3d462337","name":"Mona Lemke","email_address":"mayert.margaretta@thiel.com","phone_number":"+1 (619) 523-1922","student_id":"19214877433","major_id":"741f623f-132b-3692-ab2c-a09b08acdad6","links":{"github":"http:\/\/brekke.com\/suscipit-doloribus-fugiat-ut-aut-deserunt-et-error","linkedin":"http:\/\/tromp.com\/dolorem-et-ut-dicta","website":"http:\/\/www.lakin.com\/"},"start_date":"2013-02-15","end_date":"1970-06-27","is_member":true,"is_extraordinary":true,"created_at":"2007-09-05T04:38:56+00:00","updated_at":"1970-11-05T15:02:36+00:00","is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/users/{id}'
     metadata:
+      custom: []
       groupName: Users
       groupDescription: 'Manage users.'
       subgroup: ''
@@ -53,12 +55,12 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user.'
         required: true
@@ -67,7 +69,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -77,22 +79,23 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jermaine.tillman@yahoo.com","phone_number":"1-820-420-3724","student_id":"43084522821","major_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","links":{"github":"http:\/\/www.baumbach.org\/et-modi-ipsum-nostrum-omnis-autem-et-consequatur","linkedin":"http:\/\/leffler.com\/","website":"http:\/\/vonrueden.com\/"},"start_date":"2020-03-13","end_date":"1985-12-26","is_member":true,"is_extraordinary":true,"created_at":"2002-06-10T19:21:52+00:00","updated_at":"1975-05-28T22:40:26+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jermaine.tillman@yahoo.com","phone_number":"1-820-420-3724","student_id":"43084522821","major_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","links":{"github":"http:\/\/www.baumbach.org\/et-modi-ipsum-nostrum-omnis-autem-et-consequatur","linkedin":"http:\/\/leffler.com\/","website":"http:\/\/vonrueden.com\/"},"start_date":"2020-03-13","end_date":"1985-12-26","is_member":true,"is_extraordinary":true,"created_at":"2002-06-02T11:37:39+00:00","updated_at":"1975-05-20T14:56:13+00:00","is_active":false}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: v1/users
     metadata:
+      custom: []
       groupName: Users
       groupDescription: 'Manage users.'
       subgroup: ''
@@ -101,7 +104,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -112,6 +114,7 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: ''
         required: true
@@ -120,8 +123,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       email_address:
+        custom: []
         name: email_address
         description: 'Must be a valid email address.'
         required: true
@@ -130,8 +134,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       phone_number:
+        custom: []
         name: phone_number
         description: ''
         required: true
@@ -140,8 +145,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       student_id:
+        custom: []
         name: student_id
         description: ''
         required: true
@@ -150,8 +156,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       major_id:
+        custom: []
         name: major_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the majors table.'
         required: true
@@ -160,8 +167,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       links:
+        custom: []
         name: links
         description: ''
         required: true
@@ -173,28 +181,31 @@ endpoints:
         enumValues: []
         exampleWasSpecified: true
         nullable: false
-        custom: []
+        deprecated: false
       start_date:
+        custom: []
         name: start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
         required: false
-        example: '2022-04-12'
+        example: '2022-04-21'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
-        custom: []
+        deprecated: false
       end_date:
+        custom: []
         name: end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
         required: false
-        example: '2052-04-11'
+        example: '2052-04-19'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
-        custom: []
+        deprecated: false
       is_member:
+        custom: []
         name: is_member
         description: ''
         required: true
@@ -203,8 +214,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       is_extraordinary:
+        custom: []
         name: is_extraordinary
         description: ''
         required: true
@@ -213,8 +225,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       'links.*':
+        custom: []
         name: 'links.*'
         description: ''
         required: false
@@ -223,7 +236,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: true
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: architecto
       email_address: zbailey@example.net
@@ -235,18 +248,18 @@ endpoints:
         linkedin: 'https://linkedin.com/company/infiniteuny/'
         website: 'https://infiniteuny.id'
         '*': 'https://example.com'
-      start_date: '2022-04-12'
-      end_date: '2052-04-11'
+      start_date: '2022-04-21'
+      end_date: '2052-04-19'
       is_member: true
       is_extraordinary: true
     fileParameters: []
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"micaela88@yahoo.com","phone_number":"+1 (878) 642-3669","student_id":"78281414653","major_id":"0733da06-3f67-3b0d-b923-684c336397e5","links":{"github":"https:\/\/beier.com\/delectus-fugit-qui-repudiandae-laboriosam.html","linkedin":"http:\/\/franecki.net\/nemo-voluptate-accusamus-ut-et.html","website":"http:\/\/kovacek.info\/"},"start_date":"2014-11-13","end_date":"2017-11-03","is_member":false,"is_extraordinary":true,"created_at":"1985-03-25T07:07:18+00:00","updated_at":"1981-01-06T21:28:39+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"micaela88@yahoo.com","phone_number":"+1 (878) 642-3669","student_id":"78281414653","major_id":"0733da06-3f67-3b0d-b923-684c336397e5","links":{"github":"https:\/\/beier.com\/delectus-fugit-qui-repudiandae-laboriosam.html","linkedin":"http:\/\/franecki.net\/nemo-voluptate-accusamus-ut-et.html","website":"http:\/\/kovacek.info\/"},"start_date":"2014-11-13","end_date":"2017-10-26","is_member":false,"is_extraordinary":true,"created_at":"1985-03-25T07:07:18+00:00","updated_at":"1981-01-06T21:28:39+00:00","is_active":false}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -255,13 +268,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/users/{id}'
     metadata:
+      custom: []
       groupName: Users
       groupDescription: 'Manage users.'
       subgroup: ''
@@ -270,13 +284,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user.'
         required: true
@@ -285,13 +299,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: ''
         required: false
@@ -300,8 +315,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       email_address:
+        custom: []
         name: email_address
         description: 'Must be a valid email address.'
         required: false
@@ -310,8 +326,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       phone_number:
+        custom: []
         name: phone_number
         description: ''
         required: false
@@ -320,8 +337,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       student_id:
+        custom: []
         name: student_id
         description: ''
         required: false
@@ -330,8 +348,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       major_id:
+        custom: []
         name: major_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the majors table.'
         required: false
@@ -340,8 +359,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       links:
+        custom: []
         name: links
         description: ''
         required: false
@@ -353,28 +373,31 @@ endpoints:
         enumValues: []
         exampleWasSpecified: true
         nullable: false
-        custom: []
+        deprecated: false
       start_date:
+        custom: []
         name: start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
         required: false
-        example: '2022-04-12'
+        example: '2022-04-21'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
-        custom: []
+        deprecated: false
       end_date:
+        custom: []
         name: end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
         required: false
-        example: '2052-04-11'
+        example: '2052-04-19'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
-        custom: []
+        deprecated: false
       is_member:
+        custom: []
         name: is_member
         description: ''
         required: false
@@ -383,18 +406,20 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       is_extraordinary:
+        custom: []
         name: is_extraordinary
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       'links.*':
+        custom: []
         name: 'links.*'
         description: ''
         required: false
@@ -403,7 +428,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: true
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: architecto
       email_address: zbailey@example.net
@@ -415,18 +440,18 @@ endpoints:
         linkedin: 'https://linkedin.com/company/infiniteuny/'
         website: 'https://infiniteuny.id'
         '*': 'https://example.com'
-      start_date: '2022-04-12'
-      end_date: '2052-04-11'
+      start_date: '2022-04-21'
+      end_date: '2052-04-19'
       is_member: true
-      is_extraordinary: false
+      is_extraordinary: true
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"madisen51@hotmail.com","phone_number":"+1 (216) 979-0089","student_id":"50937833468","major_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","links":{"github":"https:\/\/www.green.com\/alias-tenetur-ratione-nemo-voluptate-accusamus-ut-et","linkedin":"http:\/\/kovacek.info\/","website":"http:\/\/www.crist.com\/tenetur-ab-reiciendis-quia-perspiciatis"},"start_date":"1992-04-28","end_date":"1970-12-03","is_member":false,"is_extraordinary":false,"created_at":"2014-08-30T10:37:42+00:00","updated_at":"1978-04-13T07:58:21+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"madisen51@hotmail.com","phone_number":"+1 (216) 979-0089","student_id":"50937833468","major_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","links":{"github":"https:\/\/www.green.com\/alias-tenetur-ratione-nemo-voluptate-accusamus-ut-et","linkedin":"http:\/\/kovacek.info\/","website":"http:\/\/www.crist.com\/tenetur-ab-reiciendis-quia-perspiciatis"},"start_date":"1992-04-28","end_date":"1970-12-03","is_member":false,"is_extraordinary":false,"created_at":"2014-08-30T10:37:42+00:00","updated_at":"1978-04-05T00:14:08+00:00","is_active":false}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -435,12 +460,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/users/{id}'
     metadata:
+      custom: []
       groupName: Users
       groupDescription: 'Manage users.'
       subgroup: ''
@@ -449,13 +475,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user.'
         required: true
@@ -464,7 +490,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -474,11 +500,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"ferne52@gmail.com","phone_number":"870-215-1024","student_id":"84729902083","major_id":"4ac9147e-bdf0-3914-9dcd-3c6a5c52010c","links":{"github":"https:\/\/labadie.com\/deleniti-distinctio-eum-doloremque-id-aut.html","linkedin":"http:\/\/klocko.com\/dolorem-mollitia-deleniti-nemo","website":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio"},"start_date":"1973-12-18","end_date":"2001-10-13","is_member":true,"is_extraordinary":false,"created_at":"1978-02-21T03:10:37+00:00","updated_at":"1995-01-30T23:03:05+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"ferne52@gmail.com","phone_number":"870-215-1024","student_id":"84729902083","major_id":"4ac9147e-bdf0-3914-9dcd-3c6a5c52010c","links":{"github":"https:\/\/labadie.com\/deleniti-distinctio-eum-doloremque-id-aut.html","linkedin":"http:\/\/klocko.com\/dolorem-mollitia-deleniti-nemo","website":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio"},"start_date":"1973-12-10","end_date":"2001-10-05","is_member":true,"is_extraordinary":false,"created_at":"1978-02-21T03:10:37+00:00","updated_at":"1995-01-30T23:03:05+00:00","is_active":false}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -487,4 +513,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

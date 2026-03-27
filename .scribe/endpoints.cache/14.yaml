@@ -4,10 +4,12 @@ name: 'User Permissions'
 description: 'Manage user permissions.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/users/{user_id}/permissions'
     metadata:
+      custom: []
       groupName: 'User Permissions'
       groupDescription: 'Manage user permissions.'
       subgroup: ''
@@ -16,12 +18,12 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       user_id:
+        custom: []
         name: user_id
         description: 'The ID of the user.'
         required: true
@@ -30,7 +32,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       user_id: architecto
     queryParameters: []
@@ -40,22 +42,23 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user_permissions":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Fugiat","guard_name":"oidc","created_at":"2019-12-11T10:21:18.000000Z","updated_at":"2007-02-06T15:39:03.000000Z","entitlement":{"id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","user_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","permission_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0"}},{"id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","name":"Provident","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z","entitlement":{"id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","user_id":"d03cceb8-0e59-3c26-8133-808072ac8a4c","permission_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"user_permissions":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Fugiat","guard_name":"oidc","created_at":"2019-12-03T02:37:05.000000Z","updated_at":"2007-02-06T15:39:03.000000Z","entitlement":{"id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","user_id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","permission_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0"}},{"id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","name":"Provident","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z","entitlement":{"id":"581cd32c-8f34-3eef-a581-d2ae1a3d17b6","user_id":"d03cceb8-0e59-3c26-8133-808072ac8a4c","permission_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/user-permissions/{id}'
     metadata:
+      custom: []
       groupName: 'User Permissions'
       groupDescription: 'Manage user permissions.'
       subgroup: ''
@@ -64,12 +67,12 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user permission.'
         required: true
@@ -78,7 +81,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -88,22 +91,23 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
         content: '{"status":"success","data":{"user_permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Accusantium","guard_name":"oidc","created_at":"1990-07-03T04:54:01.000000Z","updated_at":"2007-08-18T02:42:34.000000Z","entitlement":{"id":"51c7cf5e-fac2-3ac6-8ef8-61e6050503af","user_id":"d207102d-bce0-31f9-8c36-aa9cf4cfe75a","permission_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0"}}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: 'v1/users/{user_id}/permissions'
     metadata:
+      custom: []
       groupName: 'User Permissions'
       groupDescription: 'Manage user permissions.'
       subgroup: ''
@@ -112,13 +116,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       user_id:
+        custom: []
         name: user_id
         description: 'The ID of the user.'
         required: true
@@ -127,13 +131,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       user_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       permission_id:
+        custom: []
         name: permission_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the permissions table.'
         required: true
@@ -142,17 +147,17 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       permission_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Distinctio","guard_name":"oidc","created_at":"2013-02-14T00:13:02.000000Z","updated_at":"1977-03-10T11:22:40.000000Z","entitlement":{"id":"1e9be565-c31b-3b43-8646-66a4d676e89f","user_id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Deleniti","guard_name":"oidc","created_at":"2021-05-15T08:08:50.000000Z","updated_at":"2013-02-14T00:13:02.000000Z","entitlement":{"id":"f0b41b1f-4d8e-3b0d-b54e-b367d8431199","user_id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -161,13 +166,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/user-permissions/{id}'
     metadata:
+      custom: []
       groupName: 'User Permissions'
       groupDescription: 'Manage user permissions.'
       subgroup: ''
@@ -176,13 +182,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user permission.'
         required: true
@@ -191,13 +197,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       permission_id:
+        custom: []
         name: permission_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the permissions table.'
         required: false
@@ -206,17 +213,17 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       permission_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Veniam","guard_name":"oidc","created_at":"2022-12-17T14:23:26.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","user_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Aliquam","guard_name":"oidc","created_at":"1973-02-16T14:23:42.000000Z","updated_at":"2022-12-09T06:39:13.000000Z","entitlement":{"id":"45e62725-5da9-35c7-82db-977f64d08292","user_id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -225,12 +232,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/user-permissions/{id}'
     metadata:
+      custom: []
       groupName: 'User Permissions'
       groupDescription: 'Manage user permissions.'
       subgroup: ''
@@ -239,13 +247,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user permission.'
         required: true
@@ -254,7 +262,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -264,11 +272,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Corporis","guard_name":"oidc","created_at":"2022-12-17T14:23:26.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","user_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"user_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Veniam","guard_name":"oidc","created_at":"2022-12-09T06:39:13.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","user_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -277,4 +285,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

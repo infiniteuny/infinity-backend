@@ -2,10 +2,12 @@ name: Groups
 description: 'Manage groups.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: v1/groups
     metadata:
+      custom: []
       groupName: Groups
       groupDescription: 'Manage groups.'
       subgroup: ''
@@ -14,7 +16,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -28,11 +29,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-04-05T00:34:05.000000Z"},{"id":"665a39c0-48af-31f1-a546-aa4f41372488","name":"Autem","guard_name":"oidc","created_at":"2003-07-15T08:01:07.000000Z","updated_at":"2019-08-30T13:55:51.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Iure","guard_name":"oidc","created_at":"1990-02-22T12:22:08.000000Z","updated_at":"1977-08-15T10:47:14.000000Z"},{"id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","name":"Ipsum","guard_name":"oidc","created_at":"1973-01-05T18:42:45.000000Z","updated_at":"2018-12-12T17:18:27.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -41,12 +42,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: v1/groups
     metadata:
+      custom: []
       groupName: Groups
       groupDescription: 'Manage groups.'
       subgroup: ''
@@ -55,7 +57,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -66,6 +67,7 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
@@ -74,8 +76,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       guard_name:
+        custom: []
         name: guard_name
         description: ''
         required: true
@@ -85,18 +88,18 @@ endpoints:
           - api
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: b
       guard_name: api
     fileParameters: []
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2006-10-22T18:00:50.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2006-10-14T10:16:38.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -105,12 +108,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/groups/{id}'
     metadata:
+      custom: []
       groupName: Groups
       groupDescription: 'Manage groups.'
       subgroup: ''
@@ -119,13 +123,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the group.'
         required: true
@@ -134,7 +138,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -144,11 +148,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2014-04-09T01:23:36.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-03-27T16:49:53.000000Z"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -157,13 +161,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/groups/{id}'
     metadata:
+      custom: []
       groupName: Groups
       groupDescription: 'Manage groups.'
       subgroup: ''
@@ -172,13 +177,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the group.'
         required: true
@@ -187,13 +192,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
         description: 'Must not be greater than 255 characters.'
         required: false
@@ -202,8 +208,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       guard_name:
+        custom: []
         name: guard_name
         description: ''
         required: false
@@ -213,18 +220,18 @@ endpoints:
           - api
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       name: b
       guard_name: api
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Dolores","guard_name":"oidc","created_at":"1997-07-18T03:12:13.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Autem","guard_name":"oidc","created_at":"2003-07-15T08:01:07.000000Z","updated_at":"2019-08-30T13:55:51.000000Z"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -233,12 +240,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/groups/{id}'
     metadata:
+      custom: []
       groupName: Groups
       groupDescription: 'Manage groups.'
       subgroup: ''
@@ -247,13 +255,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the group.'
         required: true
@@ -262,7 +270,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -272,11 +280,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Enim","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2014-03-31T17:39:24.000000Z"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -285,4 +293,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

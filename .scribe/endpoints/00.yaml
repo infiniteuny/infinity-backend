@@ -2,10 +2,12 @@ name: Leaderboards
 description: 'Retrieve leaderboards.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: v1/leaderboards/achievements
     metadata:
+      custom: []
       groupName: Leaderboards
       groupDescription: 'Retrieve leaderboards.'
       subgroup: ''
@@ -14,7 +16,6 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
@@ -27,24 +28,25 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 500
         content: '{"status":"error","message":"Internal server error.","code":"42P01"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
         description: null
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/leaderboards/achievements/{id}'
     metadata:
+      custom: []
       groupName: Leaderboards
       groupDescription: 'Retrieve leaderboards.'
       subgroup: ''
@@ -53,12 +55,12 @@ endpoints:
       description: ''
       authenticated: false
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the achievement.'
         required: true
@@ -67,7 +69,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -77,16 +79,15 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 500
         content: '{"status":"error","message":"Internal server error.","code":"42P01"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
         description: null
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []

@@ -4,10 +4,12 @@ name: 'Fund Applications'
 description: 'Manage fund applications.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: v1/fund-applications
     metadata:
+      custom: []
       groupName: 'Fund Applications'
       groupDescription: 'Manage fund applications.'
       subgroup: ''
@@ -16,7 +18,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
@@ -30,11 +31,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"fund_applications":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1974-01-13T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1773932497&signature=b74f87be4771c8200f77e328e7e06ea5271ed10991ff13df1091fe72d66816a8","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1773932497&signature=064ab0d62bfef2df5a4a7d9d0ba9994759ebe0868dd45b99afa9b20e0b661f8c","status":"PENDING","created_at":"2018-12-21T01:02:40+00:00","updated_at":"2009-07-27T04:40:06+00:00"},{"id":"5eae1826-9491-3035-95e2-2524f6abb8b3","team_id":"ac9e0973-adfe-32df-ade4-9b9752e8c6ad","competition_id":"62b13b25-7887-3a6d-933d-9f63b76646b2","competition_team_type_id":"c71cb930-01f3-381c-9172-e1c70e63388f","competition_scale_id":"502eabbf-311f-3542-a47b-b2a14f5de904","competition_branch":"Laboriosam","competition_start_date":"2023-08-06T00:00:00+00:00","competition_end_date":"2002-06-10T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1773932497&signature=b74f87be4771c8200f77e328e7e06ea5271ed10991ff13df1091fe72d66816a8","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1773932497&signature=064ab0d62bfef2df5a4a7d9d0ba9994759ebe0868dd45b99afa9b20e0b661f8c","status":"PENDING","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-01-12T02:20:41+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"fund_applications":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1974-01-05T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1774651550&signature=9c60a2798ef66f6cdb03e7340f24850775915759d12410ec950f8c4578f395db","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1774651550&signature=0caed6b51c04a321d562ee7972f15e8fd29ff57b2f69e079f0466652a00ff086","status":"PENDING","created_at":"2018-12-12T17:18:27+00:00","updated_at":"2009-07-27T04:40:06+00:00"},{"id":"5eae1826-9491-3035-95e2-2524f6abb8b3","team_id":"ac9e0973-adfe-32df-ade4-9b9752e8c6ad","competition_id":"62b13b25-7887-3a6d-933d-9f63b76646b2","competition_team_type_id":"c71cb930-01f3-381c-9172-e1c70e63388f","competition_scale_id":"502eabbf-311f-3542-a47b-b2a14f5de904","competition_branch":"Laboriosam","competition_start_date":"2023-08-06T00:00:00+00:00","competition_end_date":"2002-06-02T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1774651550&signature=9c60a2798ef66f6cdb03e7340f24850775915759d12410ec950f8c4578f395db","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1774651550&signature=0caed6b51c04a321d562ee7972f15e8fd29ff57b2f69e079f0466652a00ff086","status":"PENDING","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1987-01-03T18:36:28+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -43,12 +44,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: v1/fund-applications
     metadata:
+      custom: []
       groupName: 'Fund Applications'
       groupDescription: 'Manage fund applications.'
       subgroup: ''
@@ -57,7 +59,6 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: multipart/form-data
@@ -68,6 +69,7 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters:
       team_id:
+        custom: []
         name: team_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the teams table.'
         required: true
@@ -76,8 +78,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_id:
+        custom: []
         name: competition_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competitions table.'
         required: true
@@ -86,8 +89,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_scale_id:
+        custom: []
         name: competition_scale_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_scales table.'
         required: true
@@ -96,8 +100,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_branch:
+        custom: []
         name: competition_branch
         description: ''
         required: true
@@ -106,28 +111,31 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_start_date:
+        custom: []
         name: competition_start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>competition_end_date</code>.'
         required: true
-        example: '2022-04-12'
+        example: '2022-04-21'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_end_date:
+        custom: []
         name: competition_end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>competition_start_date</code>.'
         required: true
-        example: '2052-04-11'
+        example: '2052-04-19'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       letter_of_acceptance:
+        custom: []
         name: letter_of_acceptance
         description: 'Must be a file. Must not be greater than 20480 kilobytes.'
         required: true
@@ -136,8 +144,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       proposal:
+        custom: []
         name: proposal
         description: 'Must be a file. Must not be greater than 20480 kilobytes.'
         required: true
@@ -146,8 +155,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       status:
+        custom: []
         name: status
         description: ''
         required: true
@@ -159,25 +169,25 @@ endpoints:
           - ACCEPTED
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       team_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       competition_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       competition_scale_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
       competition_branch: architecto
-      competition_start_date: '2022-04-12'
-      competition_end_date: '2052-04-11'
+      competition_start_date: '2022-04-21'
+      competition_end_date: '2052-04-19'
       status: REJECTED
     fileParameters:
       letter_of_acceptance: null
       proposal: null
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"fund_application":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_branch":"Harum","competition_start_date":"2007-08-18T00:00:00+00:00","competition_end_date":"1997-01-07T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1773932497&signature=b74f87be4771c8200f77e328e7e06ea5271ed10991ff13df1091fe72d66816a8","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1773932497&signature=064ab0d62bfef2df5a4a7d9d0ba9994759ebe0868dd45b99afa9b20e0b661f8c","status":"PENDING","created_at":"2024-09-24T14:14:04+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
+        content: '{"status":"success","data":{"fund_application":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_branch":"Harum","competition_start_date":"2007-08-18T00:00:00+00:00","competition_end_date":"1997-01-07T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1774651550&signature=9c60a2798ef66f6cdb03e7340f24850775915759d12410ec950f8c4578f395db","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1774651550&signature=0caed6b51c04a321d562ee7972f15e8fd29ff57b2f69e079f0466652a00ff086","status":"PENDING","created_at":"2024-09-16T06:29:51+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -186,12 +196,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/fund-applications/{id}'
     metadata:
+      custom: []
       groupName: 'Fund Applications'
       groupDescription: 'Manage fund applications.'
       subgroup: ''
@@ -200,13 +211,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the fund application.'
         required: true
@@ -215,7 +226,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -225,11 +236,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"fund_application":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1974-01-13T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1773932497&signature=b74f87be4771c8200f77e328e7e06ea5271ed10991ff13df1091fe72d66816a8","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1773932497&signature=064ab0d62bfef2df5a4a7d9d0ba9994759ebe0868dd45b99afa9b20e0b661f8c","status":"PENDING","created_at":"2018-12-21T01:02:40+00:00","updated_at":"2009-07-27T04:40:06+00:00"}}}'
+        content: '{"status":"success","data":{"fund_application":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1974-01-05T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1774651550&signature=9c60a2798ef66f6cdb03e7340f24850775915759d12410ec950f8c4578f395db","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1774651550&signature=0caed6b51c04a321d562ee7972f15e8fd29ff57b2f69e079f0466652a00ff086","status":"PENDING","created_at":"2018-12-12T17:18:27+00:00","updated_at":"2009-07-27T04:40:06+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -238,13 +249,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/fund-applications/{id}'
     metadata:
+      custom: []
       groupName: 'Fund Applications'
       groupDescription: 'Manage fund applications.'
       subgroup: ''
@@ -253,13 +265,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: multipart/form-data
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the fund application.'
         required: true
@@ -268,13 +280,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       team_id:
+        custom: []
         name: team_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the teams table.'
         required: false
@@ -283,8 +296,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_id:
+        custom: []
         name: competition_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competitions table.'
         required: false
@@ -293,8 +307,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_scale_id:
+        custom: []
         name: competition_scale_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_scales table.'
         required: false
@@ -303,8 +318,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_branch:
+        custom: []
         name: competition_branch
         description: ''
         required: false
@@ -313,28 +329,31 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_start_date:
+        custom: []
         name: competition_start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>competition_end_date</code>.'
         required: false
-        example: '2022-04-12'
+        example: '2022-04-21'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       competition_end_date:
+        custom: []
         name: competition_end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>competition_start_date</code>.'
         required: false
-        example: '2052-04-11'
+        example: '2052-04-19'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       letter_of_acceptance:
+        custom: []
         name: letter_of_acceptance
         description: 'Must be a file. Must not be greater than 20480 kilobytes.'
         required: false
@@ -343,8 +362,9 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       proposal:
+        custom: []
         name: proposal
         description: 'Must be a file. Must not be greater than 20480 kilobytes.'
         required: false
@@ -353,12 +373,13 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       status:
+        custom: []
         name: status
         description: ''
         required: false
-        example: ACCEPTED
+        example: PENDING
         type: string
         enumValues:
           - PENDING
@@ -366,25 +387,25 @@ endpoints:
           - ACCEPTED
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       team_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       competition_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       competition_scale_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
       competition_branch: architecto
-      competition_start_date: '2022-04-12'
-      competition_end_date: '2052-04-11'
-      status: ACCEPTED
+      competition_start_date: '2022-04-21'
+      competition_end_date: '2052-04-19'
+      status: PENDING
     fileParameters:
       letter_of_acceptance: null
       proposal: null
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"fund_application":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_branch":"Harum","competition_start_date":"2007-08-18T00:00:00+00:00","competition_end_date":"1997-01-07T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1773932497&signature=b74f87be4771c8200f77e328e7e06ea5271ed10991ff13df1091fe72d66816a8","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1773932497&signature=064ab0d62bfef2df5a4a7d9d0ba9994759ebe0868dd45b99afa9b20e0b661f8c","status":"PENDING","created_at":"2024-09-24T14:14:04+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
+        content: '{"status":"success","data":{"fund_application":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_branch":"Harum","competition_start_date":"2007-08-18T00:00:00+00:00","competition_end_date":"1997-01-07T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1774651550&signature=9c60a2798ef66f6cdb03e7340f24850775915759d12410ec950f8c4578f395db","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1774651550&signature=0caed6b51c04a321d562ee7972f15e8fd29ff57b2f69e079f0466652a00ff086","status":"PENDING","created_at":"2024-09-16T06:29:51+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -393,12 +414,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/fund-applications/{id}'
     metadata:
+      custom: []
       groupName: 'Fund Applications'
       groupDescription: 'Manage fund applications.'
       subgroup: ''
@@ -407,13 +429,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the fund application.'
         required: true
@@ -422,7 +444,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -432,11 +454,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"fund_application":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1974-01-13T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1773932498&signature=19287d7fa580376f5c8dc0c949b9747139d429621677457ac51d84546b0bb9c6","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1773932498&signature=5208d1f00dc9ed73f8c1af7b9cf338f8a440eadb9b5d969328a5bf43b9372225","status":"PENDING","created_at":"2018-12-21T01:02:39+00:00","updated_at":"2009-07-27T04:40:06+00:00"}}}'
+        content: '{"status":"success","data":{"fund_application":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1974-01-05T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1774651550&signature=9c60a2798ef66f6cdb03e7340f24850775915759d12410ec950f8c4578f395db","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1774651550&signature=0caed6b51c04a321d562ee7972f15e8fd29ff57b2f69e079f0466652a00ff086","status":"PENDING","created_at":"2018-12-12T17:18:27+00:00","updated_at":"2009-07-27T04:40:06+00:00"}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -445,4 +467,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

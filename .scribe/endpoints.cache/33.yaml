@@ -4,10 +4,12 @@ name: 'User Groups'
 description: 'Manage user groups.'
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/users/{user_id}/groups'
     metadata:
+      custom: []
       groupName: 'User Groups'
       groupDescription: 'Manage user groups.'
       subgroup: ''
@@ -16,13 +18,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       user_id:
+        custom: []
         name: user_id
         description: 'The ID of the user.'
         required: true
@@ -31,7 +33,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       user_id: architecto
     queryParameters: []
@@ -41,11 +43,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user_groups":[{"id":"41adf4cf-d920-390f-a9b9-c71371ad9848","name":"Culpa","guard_name":"oidc","created_at":"2022-01-30T20:28:50.000000Z","updated_at":"1979-04-10T07:37:31.000000Z","entitlement":{"id":"bcf9b374-9eb8-341d-a365-999b16e60f77","user_id":"a142e87a-cf86-38bf-8b03-b1a232fec49b","group_id":"41adf4cf-d920-390f-a9b9-c71371ad9848"}},{"id":"0ec07396-c878-31be-ae53-9940c659c821","name":"Est","guard_name":"oidc","created_at":"1993-06-24T18:26:44.000000Z","updated_at":"2021-03-04T17:14:32.000000Z","entitlement":{"id":"77ff7b66-cc63-3758-95c4-1cd604b45a59","user_id":"1bd354e6-bf23-342a-8180-7407d711494d","group_id":"0ec07396-c878-31be-ae53-9940c659c821"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"user_groups":[{"id":"6ddf8ba5-5dfd-35d2-85a1-b81009643b57","name":"Corporis","guard_name":"oidc","created_at":"1994-10-31T04:19:24.000000Z","updated_at":"2004-07-29T22:54:57.000000Z","entitlement":{"id":"f6957f24-de6c-31be-ae9e-ff88ef1359b2","user_id":"ee1fbfb8-378b-38e3-a91c-6f28111e84cb","group_id":"6ddf8ba5-5dfd-35d2-85a1-b81009643b57"}},{"id":"efb7851e-e128-3fa6-94b4-fff03027d124","name":"Dolor","guard_name":"oidc","created_at":"1979-09-23T13:32:58.000000Z","updated_at":"2013-04-16T04:17:06.000000Z","entitlement":{"id":"410d71a7-5692-3f65-9af8-ff18b0602e57","user_id":"ef3e3ffc-7a31-3d1b-9425-4f4f9279b53c","group_id":"efb7851e-e128-3fa6-94b4-fff03027d124"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -54,12 +56,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
     uri: 'v1/users/{user_id}/groups'
     metadata:
+      custom: []
       groupName: 'User Groups'
       groupDescription: 'Manage user groups.'
       subgroup: ''
@@ -68,13 +71,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       user_id:
+        custom: []
         name: user_id
         description: 'The ID of the user.'
         required: true
@@ -83,13 +86,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       user_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       group_id:
+        custom: []
         name: group_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the groups table.'
         required: true
@@ -98,17 +102,17 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       group_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses:
       -
+        custom: []
         status: 201
-        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Aliquam","guard_name":"oidc","created_at":"1973-02-24T22:07:55.000000Z","updated_at":"2022-12-17T14:23:26.000000Z","entitlement":{"id":"45e62725-5da9-35c7-82db-977f64d08292","user_id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Libero","guard_name":"oidc","created_at":"1991-04-10T05:44:11.000000Z","updated_at":"1973-02-16T14:23:42.000000Z","entitlement":{"id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e","user_id":"45e62725-5da9-35c7-82db-977f64d08292","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -117,12 +121,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
     uri: 'v1/user-groups/{id}'
     metadata:
+      custom: []
       groupName: 'User Groups'
       groupDescription: 'Manage user groups.'
       subgroup: ''
@@ -131,13 +136,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user group.'
         required: true
@@ -146,7 +151,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -156,11 +161,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odio","guard_name":"oidc","created_at":"1973-12-18T13:26:30.000000Z","updated_at":"2001-10-13T21:56:25.000000Z","entitlement":{"id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","user_id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Neque","guard_name":"oidc","created_at":"2024-06-27T01:03:27.000000Z","updated_at":"1973-12-10T05:42:17.000000Z","entitlement":{"id":"54df41cd-f321-3c8c-bee8-8f345f900166","user_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -169,13 +174,14 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
     uri: 'v1/user-groups/{id}'
     metadata:
+      custom: []
       groupName: 'User Groups'
       groupDescription: 'Manage user groups.'
       subgroup: ''
@@ -184,13 +190,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user group.'
         required: true
@@ -199,13 +205,14 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       group_id:
+        custom: []
         name: group_id
         description: 'Must be a valid UUID. The <code>id</code> of an existing record in the groups table.'
         required: false
@@ -214,17 +221,17 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
       group_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Veritatis","guard_name":"oidc","created_at":"2001-10-13T21:56:25.000000Z","updated_at":"1976-06-15T13:59:48.000000Z","entitlement":{"id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","user_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Odio","guard_name":"oidc","created_at":"1973-12-10T05:42:17.000000Z","updated_at":"2001-10-05T14:12:12.000000Z","entitlement":{"id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","user_id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -233,12 +240,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
     uri: 'v1/user-groups/{id}'
     metadata:
+      custom: []
       groupName: 'User Groups'
       groupDescription: 'Manage user groups.'
       subgroup: ''
@@ -247,13 +255,13 @@ endpoints:
       description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the user group.'
         required: true
@@ -262,7 +270,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: architecto
     queryParameters: []
@@ -272,11 +280,11 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Excepturi","guard_name":"oidc","created_at":"1976-06-15T13:59:48.000000Z","updated_at":"1978-02-21T03:10:37.000000Z","entitlement":{"id":"d6795ffc-5469-39cc-b8a3-ff26d1b1d12a","user_id":"7299053e-5fea-32a4-be53-165db447cc87","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Veritatis","guard_name":"oidc","created_at":"2001-10-05T14:12:12.000000Z","updated_at":"1976-06-15T13:59:48.000000Z","entitlement":{"id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","user_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
-        custom: []
     responseFields: []
     auth:
       - headers
@@ -285,4 +293,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
