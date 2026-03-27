@@ -6,9 +6,9 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "4.1.11",
-        "laravel-vite-plugin": "2.0.0",
-        "tailwindcss": "4.1.11",
-        "vite": "7.0.6"
+        "@tailwindcss/vite": "4.2.2",
+        "laravel-vite-plugin": "2.1.0",
+        "tailwindcss": "4.2.2",
+        "vite": "7.3.1"
     }
 }
