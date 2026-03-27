@@ -178,7 +178,7 @@ jobs:
 
       - name: Commit docs and version change
         if: ${{ inputs.release_type == 'prod' }}
-        uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore: Update docs and version to v${{ steps.version.outputs.version }}"
 
