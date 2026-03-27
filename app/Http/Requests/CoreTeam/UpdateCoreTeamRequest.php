@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\CoreTeam;
 
+use App\Models\CoreTeam;
+use App\Rules\CannotDeactivateActive;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -14,23 +16,16 @@ class UpdateCoreTeamRequest extends FormRequest
      */
     public function rules(): array
     {
-        $coreTeam = $this->route('core_team');
+        $coreTeamId = $this->route('core_team');
+        $coreTeam = CoreTeam::find($coreTeamId);
 
         return [
-            'year' => ['sometimes', 'integer', Rule::unique('core_teams', 'year')->ignore($coreTeam)],
-            'is_active' => ['sometimes', 'accepted'],
-        ];
-    }
-
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'is_active.accepted' => 'The is active field must be true.',
+            'year' => ['sometimes', 'integer', Rule::unique('core_teams', 'year')->ignore($coreTeamId)],
+            'is_active' => [
+                'sometimes',
+                'boolean',
+                new CannotDeactivateActive($coreTeam->is_active),
+            ],
         ];
     }
 }

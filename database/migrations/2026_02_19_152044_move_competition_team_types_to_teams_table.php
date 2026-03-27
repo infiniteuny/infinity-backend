@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('teams', function (Blueprint $table) {
             $table->foreignUuid('team_type_id')->constrained('competition_team_types')->restrictOnUpdate()->restrictOnDelete();
-            });
+        });
         Schema::table('fund_applications', function (Blueprint $table) {
             $table->dropForeign(['competition_team_type_id']);
             $table->dropColumn('competition_team_type_id');
