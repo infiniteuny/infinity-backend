@@ -3,7 +3,7 @@
     "extends": [
         "config:recommended",
         "schedule:weekends",
-        "npm:unpublishSafe",
+        "security:minimumReleaseAgeNpm",
         ":semanticCommits",
         ":pinAllExceptPeerDependencies"
     ],
