@@ -41,7 +41,7 @@ class CompetitionController extends Controller
     public function index(Request $request)
     {
         $competitions = QueryBuilder::for(Competition::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'description',
@@ -51,11 +51,9 @@ class CompetitionController extends Controller
                 'logo',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
-                AllowedInclude::relationship('organizer_type', 'organizerType'),
-            ])
-            ->allowedFilters([
+            )
+            ->allowedIncludes(AllowedInclude::relationship('organizer_type', 'organizerType'))
+            ->allowedFilters(
                 'name',
                 'description',
                 'url',
@@ -63,18 +61,16 @@ class CompetitionController extends Controller
                 AllowedFilter::exact('organizer_type_id'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'organizer',
                 'organizer_type_id',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ])
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CompetitionCollection($competitions);
@@ -110,7 +106,7 @@ class CompetitionController extends Controller
     public function show(Competition $competition)
     {
         $competition = QueryBuilder::for(Competition::where('id', $competition->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'description',
@@ -120,10 +116,8 @@ class CompetitionController extends Controller
                 'logo',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
-                AllowedInclude::relationship('organizer_type', 'organizerType'),
-            ])
+            )
+            ->allowedIncludes(AllowedInclude::relationship('organizer_type', 'organizerType'))
             ->firstOrFail();
 
         return new CompetitionResource($competition);

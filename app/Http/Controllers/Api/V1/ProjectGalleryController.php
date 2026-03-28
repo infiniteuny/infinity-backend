@@ -39,7 +39,7 @@ class ProjectGalleryController extends Controller
     public function index(Request $request)
     {
         $projectGalleries = QueryBuilder::for(ProjectGallery::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'title',
                 'description',
@@ -47,21 +47,19 @@ class ProjectGalleryController extends Controller
                 'image',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'title',
                 'description',
                 'url',
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'title',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ])
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new ProjectGalleryCollection($projectGalleries);
@@ -101,7 +99,7 @@ class ProjectGalleryController extends Controller
     public function show(ProjectGallery $projectGallery)
     {
         $projectGallery = QueryBuilder::for(ProjectGallery::where('id', $projectGallery->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'title',
                 'description',
@@ -109,7 +107,7 @@ class ProjectGalleryController extends Controller
                 'image',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new ProjectGalleryResource($projectGallery);

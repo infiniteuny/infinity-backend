@@ -34,29 +34,27 @@ class PermissionController extends Controller
     public function index(Request $request)
     {
         $permissions = QueryBuilder::for(Permission::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'guard_name',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('guard_name'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'guard_name',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ])
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new PermissionCollection($permissions);
@@ -86,13 +84,13 @@ class PermissionController extends Controller
     public function show(Permission $permission)
     {
         $permission = QueryBuilder::for(Permission::where('id', $permission->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'guard_name',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new PermissionResource($permission);

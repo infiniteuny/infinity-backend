@@ -26,12 +26,8 @@ class AchievementLeaderboardController extends Controller
     {
         $years = QueryBuilder::for(AchievementLeaderboard::query()
             ->selectRaw('DISTINCT year'))
-            ->allowedSorts([
-                'year',
-            ])
-            ->defaultSorts([
-                '-year',
-            ])
+            ->allowedSorts('year')
+            ->defaultSorts('-year')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new AchievementLeaderboardYearCollection($years);
@@ -45,33 +41,29 @@ class AchievementLeaderboardController extends Controller
     public function show(Request $request, string $achievement)
     {
         $achievementLeaderboards = QueryBuilder::for(AchievementLeaderboard::where('year', $achievement))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'user_id',
                 'year',
                 'total_points',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
-                'user',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedIncludes('user')
+            ->allowedFilters(
                 'user_id',
                 AllowedFilter::operator('total_points', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'user_id',
                 'total_points',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-total_points',
-            ])
+            )
+            ->defaultSorts('-total_points')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new AchievementLeaderboardCollection($achievementLeaderboards);

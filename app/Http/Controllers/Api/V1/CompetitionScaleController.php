@@ -34,30 +34,30 @@ class CompetitionScaleController extends Controller
     public function index(Request $request)
     {
         $competitionScales = QueryBuilder::for(CompetitionScale::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('weight'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
+            )
+            ->defaultSorts(
                 'weight',
                 '-id',
-            ])
+            )
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CompetitionScaleCollection($competitionScales);
@@ -87,13 +87,13 @@ class CompetitionScaleController extends Controller
     public function show(CompetitionScale $competitionScale)
     {
         $competitionScale = QueryBuilder::for(CompetitionScale::where('id', $competitionScale->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new CompetitionScaleResource($competitionScale);

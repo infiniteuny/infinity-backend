@@ -40,29 +40,27 @@ class CommunityGroupAdminController extends Controller
     public function index(Request $request)
     {
         $communityGroupAdmins = QueryBuilder::for(CommunityGroupAdmin::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'year',
                 'is_active',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 AllowedFilter::exact('year'),
                 AllowedFilter::exact('is_active'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'year',
                 'is_active',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSort([
-                '-id',
-            ])
+            )
+            ->defaultSort('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CommunityGroupAdminCollection($communityGroupAdmins);
@@ -109,13 +107,13 @@ class CommunityGroupAdminController extends Controller
     public function show(CommunityGroupAdmin $communityGroupAdmin)
     {
         $communityGroupAdmin = QueryBuilder::for(CommunityGroupAdmin::where('id', $communityGroupAdmin->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'year',
                 'is_active',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new CommunityGroupAdminResource($communityGroupAdmin);

@@ -34,30 +34,30 @@ class CompetitionRankController extends Controller
     public function index(Request $request)
     {
         $competitionRanks = QueryBuilder::for(CompetitionRank::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('weight'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
+            )
+            ->defaultSorts(
                 'weight',
                 '-id',
-            ])
+            )
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CompetitionRankCollection($competitionRanks);
@@ -87,13 +87,13 @@ class CompetitionRankController extends Controller
     public function show(CompetitionRank $competitionRank)
     {
         $competitionRank = QueryBuilder::for(CompetitionRank::where('id', $competitionRank->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new CompetitionRankResource($competitionRank);

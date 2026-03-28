@@ -34,30 +34,30 @@ class CompetitionOutputController extends Controller
     public function index(Request $request)
     {
         $competitionOutputs = QueryBuilder::for(CompetitionOutput::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('weight'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
+            )
+            ->defaultSorts(
                 'weight',
                 '-id',
-            ])
+            )
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CompetitionOutputCollection($competitionOutputs);
@@ -87,13 +87,13 @@ class CompetitionOutputController extends Controller
     public function show(CompetitionOutput $competitionOutput)
     {
         $competitionOutput = QueryBuilder::for(CompetitionOutput::where('id', $competitionOutput->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new CompetitionOutputResource($competitionOutput);

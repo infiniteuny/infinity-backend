@@ -41,7 +41,7 @@ class CommunityGroupController extends Controller
     public function index(Request $request)
     {
         $communityGroups = QueryBuilder::for(CommunityGroup::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'priority',
@@ -50,27 +50,27 @@ class CommunityGroupController extends Controller
                 'is_active',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('priority'),
                 'description',
                 AllowedFilter::exact('is_active'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'priority',
                 'is_active',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSort([
+            )
+            ->defaultSort(
                 'priority',
                 '-id',
-            ])
+            )
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CommunityGroupCollection($communityGroups);
@@ -110,7 +110,7 @@ class CommunityGroupController extends Controller
     public function show(CommunityGroup $communityGroup)
     {
         $communityGroup = QueryBuilder::for(CommunityGroup::where('id', $communityGroup->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'priority',
@@ -119,7 +119,7 @@ class CommunityGroupController extends Controller
                 'is_active',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new CommunityGroupResource($communityGroup);

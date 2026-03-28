@@ -37,35 +37,31 @@ class TokenController extends Controller
         $user = Auth::guard()->user();
         $userId = $user->id;
         $tokens = QueryBuilder::for(Token::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'user_id',
                 'sso_id',
                 'last_used_at',
                 'created_at',
                 'expires_at',
-            ])
-            ->allowedIncludes([
-                'user',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedIncludes('user')
+            ->allowedFilters(
                 AllowedFilter::exact('user_id'),
                 'sso_id',
                 AllowedFilter::operator('last_used_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('expires_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'user_id',
                 'sso_id',
                 'last_used_at',
                 'created_at',
                 'expires_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ]);
+            )
+            ->defaultSorts('-id');
 
         if ($user->can('read-token')) {
             $tokens = $tokens;
@@ -88,17 +84,15 @@ class TokenController extends Controller
     public function show(Token $token)
     {
         $token = QueryBuilder::for(Token::where('id', $token->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'user_id',
                 'sso_id',
                 'last_used_at',
                 'created_at',
                 'expires_at',
-            ])
-            ->allowedIncludes([
-                'user',
-            ])
+            )
+            ->allowedIncludes('user')
             ->firstOrFail();
 
         return new TokenResource($token);

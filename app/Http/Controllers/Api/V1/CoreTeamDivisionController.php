@@ -34,30 +34,30 @@ class CoreTeamDivisionController extends Controller
     public function index(Request $request)
     {
         $coreTeamDivisions = QueryBuilder::for(CoreTeamDivision::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'priority',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('priority'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'priority',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
+            )
+            ->defaultSorts(
                 'priority',
                 '-id',
-            ])
+            )
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CoreTeamDivisionCollection($coreTeamDivisions);
@@ -87,13 +87,13 @@ class CoreTeamDivisionController extends Controller
     public function show(CoreTeamDivision $coreTeamDivision)
     {
         $coreTeamDivision = QueryBuilder::for(CoreTeamDivision::where('id', $coreTeamDivision->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'priority',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new CoreTeamDivisionResource($coreTeamDivision);

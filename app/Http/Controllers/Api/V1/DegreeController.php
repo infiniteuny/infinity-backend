@@ -34,29 +34,27 @@ class DegreeController extends Controller
     public function index(Request $request)
     {
         $degrees = QueryBuilder::for(Degree::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'code',
                 'name',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 AllowedFilter::exact('code'),
                 'name',
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'code',
                 'name',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                'code',
-            ])
+            )
+            ->defaultSorts('code')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new DegreeCollection($degrees);
@@ -86,13 +84,13 @@ class DegreeController extends Controller
     public function show(Degree $degree)
     {
         $degree = QueryBuilder::for(Degree::where('id', $degree->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'code',
                 'name',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new DegreeResource($degree);

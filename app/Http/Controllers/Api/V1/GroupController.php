@@ -37,29 +37,27 @@ class GroupController extends Controller
     public function index(Request $request)
     {
         $groups = QueryBuilder::for(Group::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'guard_name',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('guard_name'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'guard_name',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ])
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new GroupCollection($groups);
@@ -91,13 +89,13 @@ class GroupController extends Controller
     public function show(Group $group)
     {
         $group = QueryBuilder::for(Group::where('id', $group->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'guard_name',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new GroupResource($group);

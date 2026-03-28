@@ -41,7 +41,7 @@ class PersonaController extends Controller
     public function index(Request $request)
     {
         $personas = QueryBuilder::for(Persona::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'priority',
@@ -49,25 +49,25 @@ class PersonaController extends Controller
                 'logo',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('priority'),
                 'description',
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'priority',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
+            )
+            ->defaultSorts(
                 'priority',
                 '-id',
-            ])
+            )
             ->cursorPaginate($request->query('per_page', 10));
 
         return new PersonaCollection($personas);
@@ -107,7 +107,7 @@ class PersonaController extends Controller
     public function show(Persona $persona)
     {
         $persona = QueryBuilder::for(Persona::where('id', $persona->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'priority',
@@ -115,7 +115,7 @@ class PersonaController extends Controller
                 'logo',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new PersonaResource($persona);

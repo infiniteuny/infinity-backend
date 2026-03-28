@@ -41,7 +41,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = QueryBuilder::for(User::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'sso_id',
                 'name',
@@ -56,16 +56,16 @@ class UserController extends Controller
                 'is_extraordinary',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
+            )
+            ->allowedIncludes(
                 'major',
                 'major.degree',
                 'major.faculty',
                 'personas',
                 'groups',
                 'permissions',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 AllowedFilter::exact('sso_id'),
                 'name',
                 'email_address',
@@ -78,8 +78,8 @@ class UserController extends Controller
                 AllowedFilter::exact('is_extraordinary'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'email_address',
@@ -92,10 +92,8 @@ class UserController extends Controller
                 'is_extraordinary',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ])
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new UserCollection($users);
@@ -132,7 +130,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user = QueryBuilder::for(User::where('id', $user->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'sso_id',
                 'name',
@@ -147,15 +145,15 @@ class UserController extends Controller
                 'is_extraordinary',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
+            )
+            ->allowedIncludes(
                 'major',
                 'major.degree',
                 'major.faculty',
                 'personas',
                 'groups',
                 'permissions',
-            ])
+            )
             ->firstOrFail();
 
         return new UserResource($user);

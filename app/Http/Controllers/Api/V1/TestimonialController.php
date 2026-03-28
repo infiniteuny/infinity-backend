@@ -41,7 +41,7 @@ class TestimonialController extends Controller
     public function index(Request $request)
     {
         $testimonials = QueryBuilder::for(Testimonial::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'position',
@@ -49,23 +49,21 @@ class TestimonialController extends Controller
                 'content',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 'position',
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'position',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ])
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new TestimonialCollection($testimonials);
@@ -105,7 +103,7 @@ class TestimonialController extends Controller
     public function show(Testimonial $testimonial)
     {
         $testimonial = QueryBuilder::for(Testimonial::where('id', $testimonial->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'position',
@@ -113,7 +111,7 @@ class TestimonialController extends Controller
                 'content',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new TestimonialResource($testimonial);

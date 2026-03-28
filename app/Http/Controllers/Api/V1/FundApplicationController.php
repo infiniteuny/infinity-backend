@@ -39,8 +39,9 @@ class FundApplicationController extends Controller
     {
         $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
         $userId = $user->id;
+
         $fundApplications = QueryBuilder::for(FundApplication::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'team_id',
                 'competition_id',
@@ -54,13 +55,13 @@ class FundApplicationController extends Controller
                 'status',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
+            )
+            ->allowedIncludes(
                 'team',
                 'competition',
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 AllowedFilter::exact('team_id'),
                 AllowedFilter::exact('competition_id'),
                 AllowedFilter::exact('competition_team_type_id'),
@@ -71,8 +72,8 @@ class FundApplicationController extends Controller
                 AllowedFilter::exact('status'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'team_id',
                 'competition_id',
@@ -84,14 +85,10 @@ class FundApplicationController extends Controller
                 'status',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ]);
+            )
+            ->defaultSorts('-id');
 
-        if ($user->can('read-fund-application')) {
-            $fundApplications = $fundApplications;
-        } else {
+        if (! $user->can('read-fund-application')) {
             $fundApplications = $fundApplications
                 ->whereHas('team', function ($query) use ($userId) {
                     $query->where('leader_id', $userId);
@@ -101,8 +98,7 @@ class FundApplicationController extends Controller
                 });
         }
 
-        $fundApplications = $fundApplications
-            ->cursorPaginate($request->query('per_page', 10));
+        $fundApplications = $fundApplications->cursorPaginate($request->query('per_page', 10));
 
         return new FundApplicationCollection($fundApplications);
     }
@@ -145,7 +141,7 @@ class FundApplicationController extends Controller
     public function show(FundApplication $fundApplication)
     {
         $fundApplication = QueryBuilder::for(FundApplication::where('id', $fundApplication->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'team_id',
                 'competition_id',
@@ -159,12 +155,12 @@ class FundApplicationController extends Controller
                 'status',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
+            )
+            ->allowedIncludes(
                 'team',
                 'competition',
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
-            ])
+            )
             ->firstOrFail();
 
         return new FundApplicationResource($fundApplication);

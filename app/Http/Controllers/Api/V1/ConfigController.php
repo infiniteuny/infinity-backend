@@ -39,8 +39,40 @@ class ConfigController extends Controller
      */
     public function index(Request $request)
     {
+        if (Auth::check()) {
+            $filters = [
+                'key',
+                AllowedFilter::exact('type'),
+                AllowedFilter::exact('is_private'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            ];
+            $sorts = [
+                'id',
+                'key',
+                'type',
+                'is_private',
+                'created_at',
+                'updated_at',
+            ];
+        } else {
+            $filters = [
+                'key',
+                AllowedFilter::exact('type'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            ];
+            $sorts = [
+                'id',
+                'key',
+                'type',
+                'created_at',
+                'updated_at',
+            ];
+        }
+
         $configs = QueryBuilder::for(Config::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'key',
                 'value',
@@ -48,48 +80,16 @@ class ConfigController extends Controller
                 'is_private',
                 'created_at',
                 'updated_at',
-            ]);
+            )
+            ->allowedFilters(...$filters)
+            ->allowedSorts(...$sorts)
+            ->defaultSorts('-id');
 
-        if (Auth::check()) {
-            $configs = $configs
-                ->allowedFilters([
-                    'key',
-                    AllowedFilter::exact('type'),
-                    AllowedFilter::exact('is_private'),
-                    AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                    AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-                ])
-                ->allowedSorts([
-                    'id',
-                    'key',
-                    'type',
-                    'is_private',
-                    'created_at',
-                    'updated_at',
-                ]);
-        } else {
-            $configs = $configs
-                ->allowedFilters([
-                    'key',
-                    AllowedFilter::exact('type'),
-                    AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                    AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-                ])
-                ->allowedSorts([
-                    'id',
-                    'key',
-                    'type',
-                    'created_at',
-                    'updated_at',
-                ])
-                ->where('is_private', false);
+        if (! Auth::check()) {
+            $configs = $configs->where('is_private', false);
         }
 
-        $configs = $configs
-            ->defaultSorts([
-                '-id',
-            ])
-            ->cursorPaginate($request->query('per_page', 10));
+        $configs = $configs->cursorPaginate($request->query('per_page', 10));
 
         return new ConfigCollection($configs);
     }
@@ -126,7 +126,7 @@ class ConfigController extends Controller
         }
 
         $config = QueryBuilder::for(Config::where('id', $config->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'key',
                 'value',
@@ -134,7 +134,7 @@ class ConfigController extends Controller
                 'is_private',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new ConfigResource($config);

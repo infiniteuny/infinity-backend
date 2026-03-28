@@ -53,7 +53,7 @@ trait HasGroups
         return $this->scopeRole($query, $roles, $guard, $without);
     }
 
-    public function scopeWithoutGroup(Builder $query, string|int|array|Role|Collection|\BackedEnum $roles, ?string $guard = null): Builder
+    public function scopeWithoutGroup(Builder $query, string|int|array|Role|Collection|BackedEnum $roles, ?string $guard = null): Builder
     {
         return $this->scopeGroup($query, $roles, $guard, true);
     }

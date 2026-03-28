@@ -34,7 +34,7 @@ class MajorController extends Controller
     public function index(Request $request)
     {
         $majors = QueryBuilder::for(Major::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'degree_id',
                 'faculty_id',
@@ -42,20 +42,20 @@ class MajorController extends Controller
                 'name',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
+            )
+            ->allowedIncludes(
                 'degree',
                 'faculty',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 AllowedFilter::exact('degree_id'),
                 AllowedFilter::exact('faculty_id'),
                 AllowedFilter::exact('code'),
                 'name',
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'degree_id',
                 'faculty_id',
@@ -63,10 +63,8 @@ class MajorController extends Controller
                 'name',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                'code',
-            ])
+            )
+            ->defaultSorts('code')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new MajorCollection($majors);
@@ -96,7 +94,7 @@ class MajorController extends Controller
     public function show(Major $major)
     {
         $major = QueryBuilder::for(Major::where('id', $major->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'degree_id',
                 'faculty_id',
@@ -104,11 +102,11 @@ class MajorController extends Controller
                 'name',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
+            )
+            ->allowedIncludes(
                 'degree',
                 'faculty',
-            ])
+            )
             ->firstOrFail();
 
         return new MajorResource($major);

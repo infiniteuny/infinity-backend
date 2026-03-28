@@ -34,30 +34,30 @@ class CompetitionTimeRangeController extends Controller
     public function index(Request $request)
     {
         $competitionTimeRanges = QueryBuilder::for(CompetitionTimeRange::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 'name',
                 AllowedFilter::exact('weight'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
+            )
+            ->defaultSorts(
                 'weight',
                 '-id',
-            ])
+            )
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CompetitionTimeRangeCollection($competitionTimeRanges);
@@ -87,13 +87,13 @@ class CompetitionTimeRangeController extends Controller
     public function show(CompetitionTimeRange $competitionTimeRange)
     {
         $competitionTimeRange = QueryBuilder::for(CompetitionTimeRange::where('id', $competitionTimeRange->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'name',
                 'weight',
                 'created_at',
                 'updated_at',
-            ])
+            )
             ->firstOrFail();
 
         return new CompetitionTimeRangeResource($competitionTimeRange);

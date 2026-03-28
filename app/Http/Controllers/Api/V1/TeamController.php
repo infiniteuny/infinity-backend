@@ -38,8 +38,9 @@ class TeamController extends Controller
     {
         $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
         $userId = $user->id;
+
         $teams = QueryBuilder::for(Team::class)
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'leader_id',
                 'team_type_id',
@@ -47,23 +48,23 @@ class TeamController extends Controller
                 'is_personal',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
+            )
+            ->allowedIncludes(
                 'leader',
                 'members',
                 AllowedInclude::relationship('team_type', 'teamType'),
                 AllowedInclude::relationship('fundApplications', 'fund_applications'),
                 'achievements',
-            ])
-            ->allowedFilters([
+            )
+            ->allowedFilters(
                 AllowedFilter::exact('leader_id'),
                 AllowedFilter::exact('team_type_id'),
                 'name',
                 AllowedFilter::exact('is_personal'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            ])
-            ->allowedSorts([
+            )
+            ->allowedSorts(
                 'id',
                 'leader_id',
                 'team_type_id',
@@ -71,10 +72,8 @@ class TeamController extends Controller
                 'is_personal',
                 'created_at',
                 'updated_at',
-            ])
-            ->defaultSorts([
-                '-id',
-            ]);
+            )
+            ->defaultSorts('-id');
 
         if ($user->can('read-team')) {
             $teams = $teams;
@@ -120,7 +119,7 @@ class TeamController extends Controller
     public function show(Team $team)
     {
         $team = QueryBuilder::for(Team::where('id', $team->id))
-            ->allowedFields([
+            ->allowedFields(
                 'id',
                 'leader_id',
                 'team_type_id',
@@ -128,14 +127,14 @@ class TeamController extends Controller
                 'is_personal',
                 'created_at',
                 'updated_at',
-            ])
-            ->allowedIncludes([
+            )
+            ->allowedIncludes(
                 'leader',
                 'members',
                 AllowedInclude::relationship('team_type', 'teamType'),
                 AllowedInclude::relationship('fundApplications', 'fund_applications'),
                 'achievements',
-            ])
+            )
             ->firstOrFail();
 
         return new TeamResource($team);
