@@ -32,7 +32,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"core_teams":[{"id":"d6fa562b-acd5-35ff-babb-d11194d3737b","year":"2019","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"},{"id":"cd1eb1ea-4697-3b9a-9dd0-988044a83af6","year":"2022","created_at":"2024-09-16T06:29:52+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"core_teams":[{"id":"d6fa562b-acd5-35ff-babb-d11194d3737b","year":"2019","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"},{"id":"cd1eb1ea-4697-3b9a-9dd0-988044a83af6","year":"2022","created_at":"2024-09-15T16:06:47+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -81,7 +81,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T20:46:06+00:00","updated_at":"1997-01-27T13:10:14+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T06:23:01+00:00","updated_at":"1997-01-26T22:47:09+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -129,7 +129,7 @@ endpoints:
         name: is_active
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -137,13 +137,13 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       year: 16
-      is_active: true
+      is_active: false
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T20:46:06+00:00","updated_at":"1997-01-27T13:10:14+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T06:23:01+00:00","updated_at":"1997-01-26T22:47:09+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -221,7 +221,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T20:46:06+00:00","updated_at":"1997-01-27T13:10:14+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2025","created_at":"1973-05-04T06:23:01+00:00","updated_at":"1997-01-26T22:47:09+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -274,7 +274,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"core_team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-10-06T21:52:11+00:00"}}}'
+        content: '{"status":"success","data":{"core_team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-10-06T07:29:06+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
