@@ -33,6 +33,7 @@
         },
         {
             "groupName": "non-major dependencies",
+            "groupSlug": "non-major-dependencies",
             "matchManagers": [
                 "composer",
                 "npm"
@@ -49,6 +50,7 @@
         },
         {
             "groupName": "major dependencies",
+            "groupSlug": "dependencies",
             "matchManagers": [
                 "composer",
                 "npm"
