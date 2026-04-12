@@ -3,9 +3,28 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\UserPermission;
 
 class UserPermissionPolicy
 {
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user, User $model): bool
+    {
+        return $user->can('read-user-permission') ||
+            ($user->can('read-own-user-permission') && $user->id === $model->id);
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, UserPermission $userPermission): bool
+    {
+        return $user->can('read-user-permission') ||
+            ($user->can('read-own-user-permission') && $user->id === $userPermission->user_id);
+    }
+
     /**
      * Determine whether the user can create models.
      */

@@ -20,7 +20,9 @@ class UserPermissionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:create,'.UserPermission::class)->only('store');
+        $this->middleware('can:viewAny,'.UserPermission::class.',user')->only('index');
+        $this->middleware('can:view,user_permission')->only('show');
+        $this->middleware('can:create,'.UserPermission::class.',user')->only('store');
         $this->middleware('can:update,user_permission')->only('update');
         $this->middleware('can:delete,user_permission')->only('destroy');
     }
