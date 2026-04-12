@@ -38,8 +38,7 @@ class UserPermissionController extends Controller
      */
     public function index(User $user, Request $request)
     {
-        $userPermission = QueryBuilder::for($user->groups())
-            ->cursorPaginate($request->query('per_page', 10));
+        $userPermission = $user->getAllPermissions();
 
         return new UserPermissionCollection($userPermission);
     }
