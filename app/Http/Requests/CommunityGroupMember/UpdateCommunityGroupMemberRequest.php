@@ -14,8 +14,14 @@ class UpdateCommunityGroupMemberRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userIdRules = ['sometimes', 'uuid', 'exists:users,id'];
+
+        if ($this->user()?->cannot('create-community-group-member')) {
+            $userIdRules[] = 'in:'.$this->user()->id;
+        }
+
         return [
-            'user_id' => ['sometimes', 'uuid', 'exists:users,id'],
+            'user_id' => $userIdRules,
         ];
     }
 }

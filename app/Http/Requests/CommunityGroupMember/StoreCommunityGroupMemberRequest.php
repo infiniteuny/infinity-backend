@@ -14,8 +14,14 @@ class StoreCommunityGroupMemberRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userIdRules = ['required', 'uuid', 'exists:users,id'];
+
+        if ($this->user()?->cannot('create-community-group-member')) {
+            $userIdRules[] = 'in:'.$this->user()->id;
+        }
+
         return [
-            'user_id' => ['required', 'uuid', 'exists:users,id'],
+            'user_id' => $userIdRules,
         ];
     }
 }
