@@ -86,7 +86,6 @@ Route::group([
         'community-groups.members' => CommunityGroupMemberController::class,
         'community-group-admins.members' => CommunityGroupAdminMemberController::class,
         'core-teams.members' => CoreTeamMemberController::class,
-        'users.permissions' => UserPermissionController::class,
         'users.personas' => UserPersonaController::class,
     ], [
         'only' => ['index'],
@@ -95,7 +94,6 @@ Route::group([
         'community-group-members' => CommunityGroupMemberController::class,
         'community-group-admin-members' => CommunityGroupAdminMemberController::class,
         'core-team-members' => CoreTeamMemberController::class,
-        'user-permissions' => UserPermissionController::class,
         'user-personas' => UserPersonaController::class,
     ], [
         'only' => ['show'],
@@ -140,7 +138,6 @@ Route::group([
             'community-groups.members' => CommunityGroupMemberController::class,
             'community-group-admins.members' => CommunityGroupAdminMemberController::class,
             'core-teams.members' => CoreTeamMemberController::class,
-            'users.permissions' => UserPermissionController::class,
             'users.personas' => UserPersonaController::class,
         ], [
             'only' => ['store'],
@@ -149,6 +146,7 @@ Route::group([
             'groups.permissions' => GroupPermissionController::class,
             'teams.members' => TeamMemberController::class,
             'users.groups' => UserGroupController::class,
+            'users.permissions' => UserPermissionController::class,
         ], [
             'only' => ['index', 'store'],
         ]);
@@ -156,7 +154,6 @@ Route::group([
             'community-group-members' => CommunityGroupMemberController::class,
             'community-group-admin-members' => CommunityGroupAdminMemberController::class,
             'core-team-members' => CoreTeamMemberController::class,
-            'user-permissions' => UserPermissionController::class,
             'user-personas' => UserPersonaController::class,
         ], [
             'only' => ['update', 'destroy'],
@@ -165,6 +162,7 @@ Route::group([
             'group-permissions' => GroupPermissionController::class,
             'team-members' => TeamMemberController::class,
             'user-groups' => UserGroupController::class,
+            'user-permissions' => UserPermissionController::class,
         ], [
             'only' => ['show', 'update', 'destroy'],
         ]);
