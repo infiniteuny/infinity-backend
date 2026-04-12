@@ -20,7 +20,11 @@ class TeamMemberController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(TeamMember::class, 'team_member');
+        $this->middleware('can:viewAny,'.TeamMember::class.',team')->only('index');
+        $this->middleware('can:view,team_member')->only('show');
+        $this->middleware('can:create,'.TeamMember::class.',team')->only('store');
+        $this->middleware('can:update,team_member')->only('update');
+        $this->middleware('can:delete,team_member')->only('destroy');
     }
 
     /**

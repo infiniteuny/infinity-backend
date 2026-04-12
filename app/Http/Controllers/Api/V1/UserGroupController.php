@@ -9,7 +9,7 @@ use App\Http\Resources\UserGroup\UserGroupCollection;
 use App\Http\Resources\UserGroup\UserGroupResource;
 use App\Models\User;
 use App\Models\UserGroup;
-use Request;
+use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -20,7 +20,11 @@ class UserGroupController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(UserGroup::class, 'user_group');
+        $this->middleware('can:viewAny,'.UserGroup::class.',user')->only('index');
+        $this->middleware('can:view,user_group')->only('show');
+        $this->middleware('can:create,'.UserGroup::class.',user')->only('store');
+        $this->middleware('can:update,user_group')->only('update');
+        $this->middleware('can:delete,user_group')->only('destroy');
     }
 
     /**

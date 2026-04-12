@@ -20,7 +20,7 @@ class UserPersonaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:create,'.UserPersona::class)->only('store');
+        $this->middleware('can:create,'.UserPersona::class.',user')->only('store');
         $this->middleware('can:update,user_persona')->only('update');
         $this->middleware('can:delete,user_persona')->only('destroy');
     }

@@ -20,7 +20,11 @@ class GroupPermissionController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(GroupPermission::class, 'group_permission');
+        $this->middleware('can:viewAny,'.GroupPermission::class)->only('index');
+        $this->middleware('can:view,group_permission')->only('show');
+        $this->middleware('can:create,'.GroupPermission::class)->only('store');
+        $this->middleware('can:update,group_permission')->only('update');
+        $this->middleware('can:delete,group_permission')->only('destroy');
     }
 
     /**
