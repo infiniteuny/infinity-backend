@@ -1,5 +1,5 @@
 # Get tool to install PHP extensions
-FROM mlocati/php-extension-installer:2.8.5 AS php-ext-installer
+FROM mlocati/php-extension-installer:2.10.18 AS php-ext-installer
 
 # Install PHP extensions for base image
 FROM php:8.4.10-cli-alpine AS base
