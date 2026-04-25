@@ -1,8 +1,23 @@
-# Get tool to install PHP extensions
-FROM mlocati/php-extension-installer:2.8.5 AS php-ext-installer
+FROM caddy:2.11.2-builder-alpine AS caddy-builder
 
-# Install PHP extensions for base image
-FROM php:8.4.10-cli-alpine AS base
+FROM dunglas/frankenphp:1.12.2-builder-php8.4.20-alpine AS upstream
+
+COPY --link --from=caddy-builder /usr/bin/xcaddy /usr/bin/xcaddy
+
+RUN CGO_ENABLED=1 \
+    XCADDY_SETCAP=1 \
+    XCADDY_GO_BUILD_FLAGS="-ldflags='-w -s' -tags=nobadger,nomysql,nopgx" \
+    CGO_CFLAGS=$(php-config --includes) \
+    CGO_LDFLAGS="$(php-config --ldflags) $(php-config --libs)" \
+    xcaddy build \
+    --output /usr/local/bin/frankenphp \
+    --with github.com/dunglas/frankenphp=./ \
+    --with github.com/dunglas/frankenphp/caddy=./caddy/ \
+    --with github.com/dunglas/caddy-cbrotli
+
+FROM dunglas/frankenphp:1.12.2-php8.4.20-alpine AS base
+
+COPY --link --from=upstream /usr/local/bin/frankenphp /usr/local/bin/frankenphp
 
 RUN apk add --no-cache \
     curl \
@@ -12,15 +27,13 @@ RUN apk add --no-cache \
     procps \
     ncdu \
     unzip \
-    git \
     supervisor \
     libsodium-dev \
     brotli
 
-COPY --link --from=php-ext-installer /usr/bin/install-php-extensions /usr/local/bin/
-
 RUN install-php-extensions \
     bcmath \
+    apcu \
     bz2 \
     exif \
     gd \
@@ -35,10 +48,10 @@ RUN install-php-extensions \
     redis \
     sockets \
     vips \
+    ffi \
     zip
 
 RUN install-php-extensions \
-    swoole \
     uv
 
 RUN docker-php-source delete && \
@@ -73,7 +86,7 @@ ARG UID=1000 \
 
 ENV USER=octane \
     ROOT=/var/www/html \
-    OCTANE_SERVER=swoole \
+    OCTANE_SERVER=frankenphp \
     TZ=${TZ} \
     TERM=xterm-color \
     WITH_HORIZON=false \
@@ -122,12 +135,14 @@ COPY --link --chown=${UID}:${GID} . .
 RUN composer dump-autoload \
     --optimize \
     --classmap-authoritative \
+    --apcu \
     --no-interaction \
     --no-ansi \
     --no-dev && \
     rm -rf /usr/bin/composer
 
 COPY --link --chown=${UID}:${GID} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
+COPY --link --chown=${UID}:${GID} deployment/Caddyfile ${ROOT}/deployment/Caddyfile
 COPY --link --chown=${UID}:${GID} deployment/supervisord.conf /etc/supervisor/
 COPY --link --chown=${UID}:${GID} deployment/supervisord.*.conf /etc/supervisor/conf.d/
 COPY --link --chown=${UID}:${GID} deployment/healthcheck /usr/local/bin/healthcheck
@@ -135,7 +150,7 @@ COPY --link --chown=${UID}:${GID} deployment/start-container /usr/local/bin/star
 
 RUN chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
 
-EXPOSE 8000 8080
+EXPOSE 8000 2019 8080
 
 HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD healthcheck || exit 1
 
