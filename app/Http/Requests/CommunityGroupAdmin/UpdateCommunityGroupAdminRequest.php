@@ -21,9 +21,14 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
         $communityGroupAdmin = $routeCommunityGroupAdmin instanceof CommunityGroupAdmin
             ? $routeCommunityGroupAdmin
             : CommunityGroupAdmin::find($routeCommunityGroupAdmin);
+        $yearUniqueRule = Rule::unique('community_group_admins', 'year');
+
+        if ($communityGroupAdmin?->id) {
+            $yearUniqueRule->ignore($communityGroupAdmin->id);
+        }
 
         return [
-            'year' => ['sometimes', 'integer', Rule::unique('community_group_admins', 'year')->ignore($communityGroupAdmin->id)],
+            'year' => ['sometimes', 'integer', $yearUniqueRule],
             'is_active' => [
                 'sometimes',
                 'accepted',

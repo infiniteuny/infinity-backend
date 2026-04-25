@@ -21,9 +21,14 @@ class UpdateCoreTeamRequest extends FormRequest
         $coreTeam = $routeCoreTeam instanceof CoreTeam
             ? $routeCoreTeam
             : CoreTeam::find($routeCoreTeam);
+        $yearUniqueRule = Rule::unique('core_teams', 'year');
+
+        if ($coreTeam?->id) {
+            $yearUniqueRule->ignore($coreTeam->id);
+        }
 
         return [
-            'year' => ['sometimes', 'integer', Rule::unique('core_teams', 'year')->ignore($coreTeam->id)],
+            'year' => ['sometimes', 'integer', $yearUniqueRule],
             'is_active' => [
                 'sometimes',
                 'boolean',
