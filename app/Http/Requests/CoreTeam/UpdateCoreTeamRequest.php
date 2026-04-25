@@ -17,11 +17,13 @@ class UpdateCoreTeamRequest extends FormRequest
      */
     public function rules(): array
     {
-        $coreTeamId = $this->route('core_team');
-        $coreTeam = CoreTeam::find($coreTeamId);
+        $routeCoreTeam = $this->route('core_team');
+        $coreTeam = $routeCoreTeam instanceof CoreTeam
+            ? $routeCoreTeam
+            : CoreTeam::find($routeCoreTeam);
 
         return [
-            'year' => ['sometimes', 'integer', Rule::unique('core_teams', 'year')->ignore($coreTeamId)],
+            'year' => ['sometimes', 'integer', Rule::unique('core_teams', 'year')->ignore($coreTeam->id)],
             'is_active' => [
                 'sometimes',
                 'boolean',

@@ -17,11 +17,13 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        $communityGroupAdminId = $this->route('community_group_admin');
-        $communityGroupAdmin = CommunityGroupAdmin::find($communityGroupAdminId);
+        $routeCommunityGroupAdmin = $this->route('community_group_admin');
+        $communityGroupAdmin = $routeCommunityGroupAdmin instanceof CommunityGroupAdmin
+            ? $routeCommunityGroupAdmin
+            : CommunityGroupAdmin::find($routeCommunityGroupAdmin);
 
         return [
-            'year' => ['sometimes', 'integer', Rule::unique('community_group_admins', 'year')->ignore($communityGroupAdminId)],
+            'year' => ['sometimes', 'integer', Rule::unique('community_group_admins', 'year')->ignore($communityGroupAdmin->id)],
             'is_active' => [
                 'sometimes',
                 'accepted',
