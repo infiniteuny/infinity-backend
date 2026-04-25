@@ -31,6 +31,7 @@ use App\Http\Controllers\Api\V1\TeamMemberController;
 use App\Http\Controllers\Api\V1\TestimonialController;
 use App\Http\Controllers\Api\V1\TokenController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\UserCommunityGroupController;
 use App\Http\Controllers\Api\V1\UserGroupController;
 use App\Http\Controllers\Api\V1\UserPermissionController;
 use App\Http\Controllers\Api\V1\UserPersonaController;
@@ -86,6 +87,7 @@ Route::group([
         'community-groups.members' => CommunityGroupMemberController::class,
         'community-group-admins.members' => CommunityGroupAdminMemberController::class,
         'core-teams.members' => CoreTeamMemberController::class,
+        'users.community-groups' => UserCommunityGroupController::class,
         'users.personas' => UserPersonaController::class,
     ], [
         'only' => ['index'],
