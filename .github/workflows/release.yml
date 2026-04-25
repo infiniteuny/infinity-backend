@@ -108,7 +108,7 @@ jobs:
         uses: sigstore/cosign-installer@v3
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v3
+        uses: ramsey/composer-install@3.2.1
         with:
           composer-options: "--ignore-platform-reqs --optimize-autoloader"
 
