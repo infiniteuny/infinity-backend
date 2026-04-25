@@ -1,18 +1,18 @@
-name: Degrees
-description: 'Manage degrees.'
+name: 'Core Team Divisions'
+description: 'Manage core team divisions.'
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: v1/degrees
+    uri: v1/core-team-divisions
     metadata:
       custom: []
-      groupName: Degrees
-      groupDescription: 'Manage degrees.'
+      groupName: 'Core Team Divisions'
+      groupDescription: 'Manage core team divisions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all degrees'
+      title: 'List all core team divisions'
       description: ''
       authenticated: true
       deprecated: false
@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"degrees":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"69","name":"Nostrum","created_at":"2010-10-06T07:29:05+00:00","updated_at":"2023-01-02T03:09:43+00:00"},{"id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","code":"39","name":"Et","created_at":"1982-03-27T02:26:48+00:00","updated_at":"1974-01-04T13:58:11+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"core_team_divisions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Commodi","priority":24,"created_at":"1983-05-17T03:07:42+00:00","updated_at":"1990-01-24T15:36:30+00:00"},{"id":"fa253524-dd6a-3fdb-a788-0cabcf134db7","name":"Ipsum","priority":114,"created_at":"2018-11-13T20:32:49+00:00","updated_at":"2009-07-27T04:40:06+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -46,14 +46,14 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: v1/degrees
+    uri: v1/core-team-divisions
     metadata:
       custom: []
-      groupName: Degrees
-      groupDescription: 'Manage degrees.'
+      groupName: 'Core Team Divisions'
+      groupDescription: 'Manage core team divisions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a degree'
+      title: 'Create a core team division'
       description: ''
       authenticated: true
       deprecated: false
@@ -66,17 +66,6 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      code:
-        custom: []
-        name: code
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       name:
         custom: []
         name: name
@@ -88,15 +77,26 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      priority:
+        custom: []
+        name: priority
+        description: 'Must be between 0 and 127.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      code: architecto
       name: architecto
+      priority: 1
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"degree":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"66","name":"Quos","created_at":"1997-01-26T22:47:08+00:00","updated_at":"2020-08-26T02:08:16+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Ab","priority":36,"created_at":"1985-10-22T05:49:42+00:00","updated_at":"2018-09-13T04:38:18+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -111,14 +111,14 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'v1/degrees/{id}'
+    uri: 'v1/core-team-divisions/{id}'
     metadata:
       custom: []
-      groupName: Degrees
-      groupDescription: 'Manage degrees.'
+      groupName: 'Core Team Divisions'
+      groupDescription: 'Manage core team divisions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Retrieve a degree'
+      title: 'Retrieve a core team division'
       description: ''
       authenticated: true
       deprecated: false
@@ -130,7 +130,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the degree.'
+        description: 'The ID of the core team division.'
         required: true
         example: architecto
         type: string
@@ -149,7 +149,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"degree":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"43","name":"Qui","created_at":"2023-01-02T03:09:43+00:00","updated_at":"2020-05-23T06:21:42+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Incidunt","priority":121,"created_at":"1990-01-24T15:36:30+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -165,14 +165,14 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'v1/degrees/{id}'
+    uri: 'v1/core-team-divisions/{id}'
     metadata:
       custom: []
-      groupName: Degrees
-      groupDescription: 'Manage degrees.'
+      groupName: 'Core Team Divisions'
+      groupDescription: 'Manage core team divisions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a degree'
+      title: 'Update a core team division'
       description: ''
       authenticated: true
       deprecated: false
@@ -184,7 +184,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the degree.'
+        description: 'The ID of the core team division.'
         required: true
         example: architecto
         type: string
@@ -197,17 +197,6 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      code:
-        custom: []
-        name: code
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       name:
         custom: []
         name: name
@@ -219,15 +208,26 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      priority:
+        custom: []
+        name: priority
+        description: 'Must be between 0 and 127.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      code: architecto
       name: architecto
+      priority: 1
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"degree":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"81","name":"Velit","created_at":"2020-08-26T02:08:16+00:00","updated_at":"2018-09-30T05:04:49+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Provident","priority":93,"created_at":"1985-10-22T05:49:42+00:00","updated_at":"2018-09-13T04:38:18+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -242,14 +242,14 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'v1/degrees/{id}'
+    uri: 'v1/core-team-divisions/{id}'
     metadata:
       custom: []
-      groupName: Degrees
-      groupDescription: 'Manage degrees.'
+      groupName: 'Core Team Divisions'
+      groupDescription: 'Manage core team divisions.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a degree'
+      title: 'Delete a core team division'
       description: ''
       authenticated: true
       deprecated: false
@@ -261,7 +261,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the degree.'
+        description: 'The ID of the core team division.'
         required: true
         example: architecto
         type: string
@@ -280,7 +280,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"degree":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"95","name":"Commodi","created_at":"2020-05-23T06:21:42+00:00","updated_at":"1983-05-17T03:07:42+00:00"}}}'
+        content: '{"status":"success","data":{"core_team_division":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Iure","priority":123,"created_at":"1977-08-15T10:47:14+00:00","updated_at":"1982-02-26T20:04:15+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

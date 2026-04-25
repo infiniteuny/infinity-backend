@@ -1,18 +1,18 @@
-name: 'Group Permissions'
-description: 'Manage group permissions.'
+name: Teams
+description: 'Manage teams.'
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: 'v1/groups/{group_id}/permissions'
+    uri: v1/teams
     metadata:
       custom: []
-      groupName: 'Group Permissions'
-      groupDescription: 'Manage group permissions.'
+      groupName: Teams
+      groupDescription: 'Manage teams.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all group permissions'
+      title: 'List all teams'
       description: ''
       authenticated: true
       deprecated: false
@@ -20,20 +20,8 @@ endpoints:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      group_id:
-        custom: []
-        name: group_id
-        description: 'The ID of the group.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      group_id: architecto
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -43,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Doloremque","guard_name":"oidc","created_at":"1991-01-31T00:56:31.000000Z","updated_at":"1973-01-05T04:27:32.000000Z","entitlement":{"id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","group_id":"56db1203-2e82-3de6-a828-ead32bd52d27","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"ea57fb8f-9953-354e-9184-d01c4ec16bb0","name":"Nemo","guard_name":"oidc","created_at":"2009-08-12T16:54:48.000000Z","updated_at":"1976-09-20T12:13:56.000000Z","entitlement":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","group_id":"8529678e-de6b-32f2-9f70-231a0d681563","permission_id":"ea57fb8f-9953-354e-9184-d01c4ec16bb0"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Tempora","is_personal":true,"created_at":"1985-12-26T03:24:50+00:00","updated_at":"2023-08-06T00:38:36+00:00"},{"id":"46779b45-df80-30c6-ad3c-320d08b0f185","leader_id":"b1acb002-2839-312b-9bbc-3ecc71af48bf","name":"Deleniti","is_personal":false,"created_at":"2013-02-14T00:13:02+00:00","updated_at":"1977-02-01T06:52:50+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -58,14 +46,14 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'v1/groups/{group_id}/permissions'
+    uri: v1/teams
     metadata:
       custom: []
-      groupName: 'Group Permissions'
-      groupDescription: 'Manage group permissions.'
+      groupName: Teams
+      groupDescription: 'Manage teams.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a group permission'
+      title: 'Create a team'
       description: ''
       authenticated: true
       deprecated: false
@@ -73,27 +61,15 @@ endpoints:
       Authorization: 'Bearer {YOUR_ACCESS_TOKEN}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      group_id:
-        custom: []
-        name: group_id
-        description: 'The ID of the group.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      group_id: architecto
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      permission_id:
+      leader_id:
         custom: []
-        name: permission_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the permissions table.'
+        name: leader_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the users table.'
         required: true
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -101,14 +77,50 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      team_type_id:
+        custom: []
+        name: team_type_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_team_types table.'
+        required: true
+        example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      is_personal:
+        custom: []
+        name: is_personal
+        description: ''
+        required: true
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      permission_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      team_type_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+      name: architecto
+      is_personal: true
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Id","guard_name":"oidc","created_at":"1973-01-05T04:27:32.000000Z","updated_at":"1991-04-09T15:21:07.000000Z","entitlement":{"id":"56db1203-2e82-3de6-a828-ead32bd52d27","group_id":"ea57fb8f-9953-354e-9184-d01c4ec16bb0","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Ex","is_personal":false,"created_at":"2023-08-06T00:38:36+00:00","updated_at":"2002-05-04T14:52:00+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -123,14 +135,14 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'v1/group-permissions/{id}'
+    uri: 'v1/teams/{id}'
     metadata:
       custom: []
-      groupName: 'Group Permissions'
-      groupDescription: 'Manage group permissions.'
+      groupName: Teams
+      groupDescription: 'Manage teams.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Retrieve a group permission'
+      title: 'Retrieve a team'
       description: ''
       authenticated: true
       deprecated: false
@@ -142,7 +154,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the group permission.'
+        description: 'The ID of the team.'
         required: true
         example: architecto
         type: string
@@ -161,7 +173,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dignissimos","guard_name":"oidc","created_at":"2014-08-18T14:21:19.000000Z","updated_at":"2024-06-26T10:40:23.000000Z","entitlement":{"id":"dc407d02-9b9b-35e5-8d69-87904a6787e3","group_id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Laboriosam","is_personal":true,"created_at":"2002-05-04T14:52:00+00:00","updated_at":"1975-04-21T18:10:34+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -177,14 +189,14 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'v1/group-permissions/{id}'
+    uri: 'v1/teams/{id}'
     metadata:
       custom: []
-      groupName: 'Group Permissions'
-      groupDescription: 'Manage group permissions.'
+      groupName: Teams
+      groupDescription: 'Manage teams.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a group permission'
+      title: 'Update a team'
       description: ''
       authenticated: true
       deprecated: false
@@ -196,7 +208,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the group permission.'
+        description: 'The ID of the team.'
         required: true
         example: architecto
         type: string
@@ -209,10 +221,10 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      permission_id:
+      leader_id:
         custom: []
-        name: permission_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the permissions table.'
+        name: leader_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the users table.'
         required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -220,14 +232,50 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      team_type_id:
+        custom: []
+        name: team_type_id
+        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_team_types table.'
+        required: false
+        example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      is_personal:
+        custom: []
+        name: is_personal
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      permission_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      team_type_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+      name: architecto
+      is_personal: false
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Neque","guard_name":"oidc","created_at":"2024-06-26T10:40:23.000000Z","updated_at":"1973-12-09T15:19:13.000000Z","entitlement":{"id":"54df41cd-f321-3c8c-bee8-8f345f900166","group_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Praesentium","is_personal":true,"created_at":"1975-04-21T18:10:34+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -242,14 +290,14 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'v1/group-permissions/{id}'
+    uri: 'v1/teams/{id}'
     metadata:
       custom: []
-      groupName: 'Group Permissions'
-      groupDescription: 'Manage group permissions.'
+      groupName: Teams
+      groupDescription: 'Manage teams.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a group permission'
+      title: 'Delete a team'
       description: ''
       authenticated: true
       deprecated: false
@@ -261,7 +309,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the group permission.'
+        description: 'The ID of the team.'
         required: true
         example: architecto
         type: string
@@ -280,7 +328,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odio","guard_name":"oidc","created_at":"1973-12-09T15:19:13.000000Z","updated_at":"2001-10-04T23:49:08.000000Z","entitlement":{"id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","group_id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-12-05T21:50:50+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

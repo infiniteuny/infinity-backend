@@ -1,18 +1,18 @@
-name: Majors
-description: 'Manage majors.'
+name: Groups
+description: 'Manage groups.'
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: v1/majors
+    uri: v1/groups
     metadata:
       custom: []
-      groupName: Majors
-      groupDescription: 'Manage majors.'
+      groupName: Groups
+      groupDescription: 'Manage groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all majors'
+      title: 'List all groups'
       description: ''
       authenticated: true
       deprecated: false
@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"majors":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"9946","name":"Iure","created_at":"1990-02-21T21:59:03+00:00","updated_at":"1977-08-15T10:47:14+00:00"},{"id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","degree_id":"1cdf7bf0-e381-3a72-a922-e680daa4dd16","faculty_id":"013e1265-7fdf-327c-9ed4-fc05e74df42b","code":"4026","name":"Consequatur","created_at":"2019-08-30T13:55:51+00:00","updated_at":"2014-03-31T03:16:19+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-02-26T20:04:15.000000Z"},{"id":"665a39c0-48af-31f1-a546-aa4f41372488","name":"Omnis","guard_name":"oidc","created_at":"2009-07-27T04:40:06.000000Z","updated_at":"2003-07-15T08:01:07.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -46,14 +46,14 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: v1/majors
+    uri: v1/groups
     metadata:
       custom: []
-      groupName: Majors
-      groupDescription: 'Manage majors.'
+      groupName: Groups
+      groupDescription: 'Manage groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a major'
+      title: 'Create a group'
       description: ''
       authenticated: true
       deprecated: false
@@ -66,61 +66,38 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      degree_id:
-        custom: []
-        name: degree_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the degrees table.'
-        required: true
-        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      faculty_id:
-        custom: []
-        name: faculty_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the faculties table.'
-        required: true
-        example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      code:
-        custom: []
-        name: code
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Must not be greater than 255 characters.'
         required: true
-        example: architecto
+        example: b
         type: string
         enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      guard_name:
+        custom: []
+        name: guard_name
+        description: ''
+        required: true
+        example: api
+        type: string
+        enumValues:
+          - api
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      degree_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      faculty_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
-      code: architecto
-      name: architecto
+      name: b
+      guard_name: api
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"major":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","degree_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","faculty_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","code":"8002","name":"Sunt","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Perspiciatis","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -135,14 +112,14 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'v1/majors/{id}'
+    uri: 'v1/groups/{id}'
     metadata:
       custom: []
-      groupName: Majors
-      groupDescription: 'Manage majors.'
+      groupName: Groups
+      groupDescription: 'Manage groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Retrieve a major'
+      title: 'Retrieve a group'
       description: ''
       authenticated: true
       deprecated: false
@@ -154,7 +131,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the major.'
+        description: 'The ID of the group.'
         required: true
         example: architecto
         type: string
@@ -173,7 +150,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"4492","name":"Odit","created_at":"1977-08-15T10:47:14+00:00","updated_at":"1982-03-27T02:26:48+00:00"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Autem","guard_name":"oidc","created_at":"2003-07-15T08:01:07.000000Z","updated_at":"2019-08-30T13:55:51.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -189,14 +166,14 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'v1/majors/{id}'
+    uri: 'v1/groups/{id}'
     metadata:
       custom: []
-      groupName: Majors
-      groupDescription: 'Manage majors.'
+      groupName: Groups
+      groupDescription: 'Manage groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a major'
+      title: 'Update a group'
       description: ''
       authenticated: true
       deprecated: false
@@ -208,7 +185,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the major.'
+        description: 'The ID of the group.'
         required: true
         example: architecto
         type: string
@@ -221,61 +198,38 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      degree_id:
-        custom: []
-        name: degree_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the degrees table.'
-        required: false
-        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      faculty_id:
-        custom: []
-        name: faculty_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the faculties table.'
-        required: false
-        example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      code:
-        custom: []
-        name: code
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Must not be greater than 255 characters.'
         required: false
-        example: architecto
+        example: b
         type: string
         enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      guard_name:
+        custom: []
+        name: guard_name
+        description: ''
+        required: false
+        example: api
+        type: string
+        enumValues:
+          - api
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      degree_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      faculty_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
-      code: architecto
-      name: architecto
+      name: b
+      guard_name: api
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"major":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","degree_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","faculty_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","code":"0591","name":"Nihil","created_at":"2007-02-06T15:39:03+00:00","updated_at":"1990-07-03T04:54:01+00:00"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Quo","guard_name":"oidc","created_at":"2018-09-13T04:38:18.000000Z","updated_at":"1971-10-04T15:17:12.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -290,14 +244,14 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'v1/majors/{id}'
+    uri: 'v1/groups/{id}'
     metadata:
       custom: []
-      groupName: Majors
-      groupDescription: 'Manage majors.'
+      groupName: Groups
+      groupDescription: 'Manage groups.'
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a major'
+      title: 'Delete a group'
       description: ''
       authenticated: true
       deprecated: false
@@ -309,7 +263,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the major.'
+        description: 'The ID of the group.'
         required: true
         example: architecto
         type: string
@@ -328,7 +282,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"major":{"id":"8f95f6b5-eb2f-3e65-92c9-9314c357b83a","degree_id":"b3da5848-3b3d-34fa-ace7-57ac8ccbbee4","faculty_id":"5dba6a62-bcaf-39b5-b1e1-0af23d0405da","code":"9297","name":"Magnam","created_at":"2025-05-03T12:24:26+00:00","updated_at":"1973-11-18T15:43:58+00:00"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2014-03-02T20:53:46.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
