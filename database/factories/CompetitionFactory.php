@@ -30,15 +30,6 @@ class CompetitionFactory extends Factory
             'id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->name()),
             'description' => $this->faker->text(),
-            'url' => $this->faker->url(),
-            'organizer' => $this->faker->company(),
-            'organizer_type_id' => $this->faker->uuid(),
-            'logo' => json_encode([
-                'disk' => 'local',
-                'visibility' => 'private',
-                'path' => 'competitions/logos',
-                'name' => 'some-logo-id.jpg',
-            ]),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

@@ -44,7 +44,7 @@ class FundApplicationController extends Controller
             ->allowedFields(
                 'id',
                 'team_id',
-                'competition_id',
+                'competition_instance_id',
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_branch',
@@ -58,12 +58,12 @@ class FundApplicationController extends Controller
             )
             ->allowedIncludes(
                 'team',
-                'competition',
+                AllowedInclude::relationship('competition_instance', 'competitionInstance'),
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
             )
             ->allowedFilters(
                 AllowedFilter::exact('team_id'),
-                AllowedFilter::exact('competition_id'),
+                AllowedFilter::exact('competition_instance_id'),
                 AllowedFilter::exact('competition_team_type_id'),
                 AllowedFilter::exact('competition_scale_id'),
                 'competition_branch',
@@ -76,7 +76,7 @@ class FundApplicationController extends Controller
             ->allowedSorts(
                 'id',
                 'team_id',
-                'competition_id',
+                'competition_instance_id',
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_branch',
@@ -144,7 +144,7 @@ class FundApplicationController extends Controller
             ->allowedFields(
                 'id',
                 'team_id',
-                'competition_id',
+                'competition_instance_id',
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_branch',
@@ -158,7 +158,7 @@ class FundApplicationController extends Controller
             )
             ->allowedIncludes(
                 'team',
-                'competition',
+                AllowedInclude::relationship('competition_instance', 'competitionInstance'),
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
             )
             ->firstOrFail();

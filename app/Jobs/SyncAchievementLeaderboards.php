@@ -45,11 +45,11 @@ class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
                 DB::raw('EXTRACT(YEAR FROM a.competition_start_date) as year'),
                 DB::raw('SUM(COALESCE(cot.weight,0) * COALESCE(ctt.weight,0) * COALESCE(cs.weight,0) * COALESCE(ctr.weight,0) * COALESCE(co.weight,0) * COALESCE(cr.weight,0)) as total_points'),
             ])
-            ->join('competitions as c', 'a.competition_id', '=', 'c.id')
+            ->join('competition_instances as ci', 'a.competition_instance_id', '=', 'ci.id')
             ->join('teams as t', 'a.team_id', '=', 't.id')
             ->join('team_members as tm', 't.id', '=', 'tm.team_id')
             ->join('users', 'tm.user_id', '=', 'users.id')
-            ->leftJoin('competition_organizer_types as cot', 'c.organizer_type_id', '=', 'cot.id')
+            ->leftJoin('competition_organizer_types as cot', 'ci.organizer_type_id', '=', 'cot.id')
             ->leftJoin('competition_team_types as ctt', 't.team_type_id', '=', 'ctt.id')
             ->leftJoin('competition_scales as cs', 'a.competition_scale_id', '=', 'cs.id')
             ->leftJoin('competition_time_ranges as ctr', 'a.competition_time_range_id', '=', 'ctr.id')

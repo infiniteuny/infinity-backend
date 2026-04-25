@@ -16,7 +16,7 @@ class UpdateAchievementRequest extends FormRequest
     {
         return [
             'team_id' => ['sometimes', 'uuid', 'exists:teams,id'],
-            'competition_id' => ['sometimes', 'uuid', 'exists:competitions,id'],
+            'competition_instance_id' => ['sometimes', 'uuid', 'exists:competition_instances,id'],
             'competition_scale_id' => ['sometimes', 'uuid', 'exists:competition_scales,id'],
             'competition_time_range_id' => ['sometimes', 'uuid', 'exists:competition_time_ranges,id'],
             'competition_output_id' => ['sometimes', 'uuid', 'exists:competition_outputs,id'],

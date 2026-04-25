@@ -47,7 +47,7 @@ class AchievementController extends Controller
         if ($user) {
             $includes = [
                 'team',
-                'competition',
+                AllowedInclude::relationship('competition_instance', 'competitionInstance'),
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
                 AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
                 AllowedInclude::relationship('competition_output', 'competitionOutput'),
@@ -55,7 +55,7 @@ class AchievementController extends Controller
             ];
             $filters = [
                 AllowedFilter::exact('team_id'),
-                AllowedFilter::exact('competition_id'),
+                AllowedFilter::exact('competition_instance_id'),
                 AllowedFilter::exact('competition_team_type_id'),
                 AllowedFilter::exact('competition_scale_id'),
                 AllowedFilter::exact('competition_time_range_id'),
@@ -72,7 +72,7 @@ class AchievementController extends Controller
             $sorts = [
                 'id',
                 'team_id',
-                'competition_id',
+                'competition_instance_id',
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_time_range_id',
@@ -88,14 +88,14 @@ class AchievementController extends Controller
             ];
         } else {
             $includes = [
-                'competition',
+                AllowedInclude::relationship('competition_instance', 'competitionInstance'),
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
                 AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
                 AllowedInclude::relationship('competition_output', 'competitionOutput'),
                 AllowedInclude::relationship('competition_rank', 'competitionRank'),
             ];
             $filters = [
-                AllowedFilter::exact('competition_id'),
+                AllowedFilter::exact('competition_instance_id'),
                 AllowedFilter::exact('competition_team_type_id'),
                 AllowedFilter::exact('competition_scale_id'),
                 AllowedFilter::exact('competition_time_range_id'),
@@ -111,7 +111,7 @@ class AchievementController extends Controller
             ];
             $sorts = [
                 'id',
-                'competition_id',
+                'competition_instance_id',
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_time_range_id',
@@ -132,7 +132,7 @@ class AchievementController extends Controller
                 'id',
                 'name',
                 'team_id',
-                'competition_id',
+                'competition_instance_id',
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_time_range_id',
@@ -203,7 +203,7 @@ class AchievementController extends Controller
                 'id',
                 'name',
                 'team_id',
-                'competition_id',
+                'competition_instance_id',
                 'competition_team_type_id',
                 'competition_scale_id',
                 'competition_time_range_id',
@@ -220,7 +220,7 @@ class AchievementController extends Controller
             )
             ->allowedIncludes(
                 'team',
-                'competition',
+                AllowedInclude::relationship('competition_instance', 'competitionInstance'),
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
                 AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
                 AllowedInclude::relationship('competition_output', 'competitionOutput'),

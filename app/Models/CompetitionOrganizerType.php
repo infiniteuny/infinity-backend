@@ -31,8 +31,8 @@ class CompetitionOrganizerType extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function competitions(): HasMany
+    public function competitionInstances(): HasMany
     {
-        return $this->hasMany(Competition::class);
+        return $this->hasMany(CompetitionInstance::class, 'organizer_type_id');
     }
 }

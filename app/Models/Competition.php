@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Casts\Blob;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Competition extends Model
 {
@@ -22,19 +21,6 @@ class Competition extends Model
     protected $fillable = [
         'name',
         'description',
-        'url',
-        'organizer',
-        'organizer_type_id',
-        'logo',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'logo' => Blob::class,
     ];
 
     /**
@@ -45,18 +31,32 @@ class Competition extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function organizerType(): BelongsTo
+    public function competitionInstances(): HasMany
     {
-        return $this->belongsTo(CompetitionOrganizerType::class);
+        return $this->hasMany(CompetitionInstance::class);
     }
 
-    public function fundApplications(): HasMany
+    public function fundApplications(): HasManyThrough
     {
-        return $this->hasMany(FundApplication::class);
+        return $this->hasManyThrough(
+            FundApplication::class,
+            CompetitionInstance::class,
+            'competition_id',
+            'competition_instance_id',
+            'id',
+            'id',
+        );
     }
 
-    public function achievements(): HasMany
+    public function achievements(): HasManyThrough
     {
-        return $this->hasMany(Achievement::class);
+        return $this->hasManyThrough(
+            Achievement::class,
+            CompetitionInstance::class,
+            'competition_id',
+            'competition_instance_id',
+            'id',
+            'id',
+        );
     }
 }

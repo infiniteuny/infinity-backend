@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\CommunityGroupAdminMemberController;
 use App\Http\Controllers\Api\V1\CommunityGroupController;
 use App\Http\Controllers\Api\V1\CommunityGroupMemberController;
 use App\Http\Controllers\Api\V1\CompetitionController;
+use App\Http\Controllers\Api\V1\CompetitionInstanceController;
 use App\Http\Controllers\Api\V1\CompetitionOrganizerTypeController;
 use App\Http\Controllers\Api\V1\CompetitionOutputController;
 use App\Http\Controllers\Api\V1\CompetitionRankController;
@@ -73,6 +74,7 @@ Route::group([
         'achievements' => AchievementController::class,
         'configs' => ConfigController::class,
         'competitions' => CompetitionController::class,
+        'competition-instances' => CompetitionInstanceController::class,
         'community-groups' => CommunityGroupController::class,
         'community-group-admins' => CommunityGroupAdminController::class,
         'core-teams' => CoreTeamController::class,
@@ -110,6 +112,7 @@ Route::group([
             'achievements' => AchievementController::class,
             'configs' => ConfigController::class,
             'competitions' => CompetitionController::class,
+            'competition-instances' => CompetitionInstanceController::class,
             'community-groups' => CommunityGroupController::class,
             'community-group-admins' => CommunityGroupAdminController::class,
             'core-teams' => CoreTeamController::class,

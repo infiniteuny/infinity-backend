@@ -20,7 +20,7 @@ class FundApplication extends Model
      */
     protected $fillable = [
         'team_id',
-        'competition_id',
+        'competition_instance_id',
         'competition_team_type_id',
         'competition_scale_id',
         'competition_branch',
@@ -56,9 +56,9 @@ class FundApplication extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function competition(): BelongsTo
+    public function competitionInstance(): BelongsTo
     {
-        return $this->belongsTo(Competition::class);
+        return $this->belongsTo(CompetitionInstance::class);
     }
 
     public function competitionScale(): BelongsTo

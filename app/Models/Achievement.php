@@ -22,7 +22,7 @@ class Achievement extends Model
      */
     protected $fillable = [
         'team_id',
-        'competition_id',
+        'competition_instance_id',
         'competition_team_type_id',
         'competition_scale_id',
         'competition_time_range_id',
@@ -65,8 +65,8 @@ class Achievement extends Model
                 }
 
                 return (int) (DB::table('achievements as a')
-                    ->leftJoin('competitions as c', 'c.id', '=', 'a.competition_id')
-                    ->leftJoin('competition_organizer_types as cot', 'cot.id', '=', 'c.organizer_type_id')
+                    ->leftJoin('competition_instances as ci', 'ci.id', '=', 'a.competition_instance_id')
+                    ->leftJoin('competition_organizer_types as cot', 'cot.id', '=', 'ci.organizer_type_id')
                     ->leftJoin('teams as t', 't.id', '=', 'a.team_id')
                     ->leftJoin('competition_team_types as ctt', 'ctt.id', '=', 't.team_type_id')
                     ->leftJoin('competition_scales as cs', 'cs.id', '=', 'a.competition_scale_id')
@@ -93,9 +93,9 @@ class Achievement extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function competition(): BelongsTo
+    public function competitionInstance(): BelongsTo
     {
-        return $this->belongsTo(Competition::class);
+        return $this->belongsTo(CompetitionInstance::class);
     }
 
     public function competitionScale(): BelongsTo

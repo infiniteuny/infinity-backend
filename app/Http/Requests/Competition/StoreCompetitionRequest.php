@@ -17,10 +17,6 @@ class StoreCompetitionRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'url' => ['nullable', 'string', 'url:http,https'],
-            'organizer' => ['required', 'string'],
-            'organizer_type_id' => ['required', 'uuid', 'exists:competition_organizer_types,id'],
-            'logo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }
 }

@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Competition\StoreCompetitionRequest;
 use App\Http\Requests\Competition\UpdateCompetitionRequest;
 use App\Http\Resources\Competition\CompetitionCollection;
 use App\Http\Resources\Competition\CompetitionResource;
-use App\Jobs\DeleteBlob;
 use App\Models\Competition;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -45,28 +42,18 @@ class CompetitionController extends Controller
                 'id',
                 'name',
                 'description',
-                'url',
-                'organizer',
-                'organizer_type_id',
-                'logo',
                 'created_at',
                 'updated_at',
             )
-            ->allowedIncludes(AllowedInclude::relationship('organizer_type', 'organizerType'))
             ->allowedFilters(
                 'name',
                 'description',
-                'url',
-                'organizer',
-                AllowedFilter::exact('organizer_type_id'),
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             )
             ->allowedSorts(
                 'id',
                 'name',
-                'organizer',
-                'organizer_type_id',
                 'created_at',
                 'updated_at',
             )
@@ -85,11 +72,7 @@ class CompetitionController extends Controller
      */
     public function store(StoreCompetitionRequest $request)
     {
-        $manifest = Storage::store($request->file('logo'), 'competitions/logos');
-
-        $competition = Competition::create(
-            array_replace($request->validated(), ['logo' => $manifest])
-        );
+        $competition = Competition::create($request->validated());
 
         return new CompetitionResource($competition);
     }
@@ -110,14 +93,9 @@ class CompetitionController extends Controller
                 'id',
                 'name',
                 'description',
-                'url',
-                'organizer',
-                'organizer_type_id',
-                'logo',
                 'created_at',
                 'updated_at',
             )
-            ->allowedIncludes(AllowedInclude::relationship('organizer_type', 'organizerType'))
             ->firstOrFail();
 
         return new CompetitionResource($competition);
@@ -132,21 +110,7 @@ class CompetitionController extends Controller
      */
     public function update(UpdateCompetitionRequest $request, Competition $competition)
     {
-        $hasLogo = $request->has('logo');
-
-        if ($hasLogo) {
-            $oldManifest = $competition->getRawOriginal('logo');
-
-            DeleteBlob::dispatch($oldManifest);
-
-            $manifest = Storage::store($request->file('logo'), 'competitions/logos');
-        }
-
-        $competition->update(
-            $hasLogo
-                ? array_replace($request->validated(), ['logo' => $manifest])
-                : $request->validated()
-        );
+        $competition->update($request->validated());
 
         return new CompetitionResource($competition);
     }
@@ -160,10 +124,6 @@ class CompetitionController extends Controller
      */
     public function destroy(Competition $competition)
     {
-        $manifest = $competition->getRawOriginal('logo');
-
-        DeleteBlob::dispatch($manifest);
-
         $competition->delete();
 
         return new CompetitionResource($competition);
