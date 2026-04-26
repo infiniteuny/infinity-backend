@@ -10,6 +10,8 @@ use App\Http\Resources\UserPersona\UserPersonaResource;
 use App\Models\User;
 use App\Models\UserPersona;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -37,6 +39,24 @@ class UserPersonaController extends Controller
     public function index(User $user, Request $request)
     {
         $userPersona = QueryBuilder::for($user->groups())
+            ->allowedFilters(
+                'name',
+                AllowedFilter::exact('priority'),
+                'description',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            )
+            ->allowedSorts(
+                'id',
+                'name',
+                'priority',
+                'created_at',
+                'updated_at',
+            )
+            ->defaultSorts(
+                'priority',
+                '-id',
+            )
             ->cursorPaginate($request->query('per_page', 10));
 
         return new UserPersonaCollection($userPersona);

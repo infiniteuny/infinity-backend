@@ -13,6 +13,8 @@ use App\Jobs\DeleteBlob;
 use App\Models\CommunityGroupAdmin;
 use App\Models\CommunityGroupAdminMember;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -40,6 +42,43 @@ class CommunityGroupAdminMemberController extends Controller
     public function index(CommunityGroupAdmin $communityGroupAdmin, Request $request)
     {
         $communityGroupAdminMembers = QueryBuilder::for($communityGroupAdmin->members())
+            ->allowedIncludes(
+                'major',
+                'major.degree',
+                'major.faculty',
+                'personas',
+                'groups',
+                'permissions',
+            )
+            ->allowedFilters(
+                AllowedFilter::exact('sso_id'),
+                'name',
+                'email_address',
+                'phone_number',
+                'student_id',
+                AllowedFilter::exact('major_id'),
+                AllowedFilter::operator('start_date', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('end_date', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('is_member'),
+                AllowedFilter::exact('is_extraordinary'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            )
+            ->allowedSorts(
+                'id',
+                'name',
+                'email_address',
+                'phone_number',
+                'student_id',
+                'major_id',
+                'start_date',
+                'end_date',
+                'is_member',
+                'is_extraordinary',
+                'created_at',
+                'updated_at',
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CommunityGroupAdminMemberCollection($communityGroupAdminMembers);
@@ -102,6 +141,14 @@ class CommunityGroupAdminMemberController extends Controller
             ->wherePivot('id', $communityGroupAdminMemberId);
 
         $communityGroupAdminMember = QueryBuilder::for($communityGroupAdminMember)
+            ->allowedIncludes(
+                'major',
+                'major.degree',
+                'major.faculty',
+                'personas',
+                'groups',
+                'permissions',
+            )
             ->firstOrFail();
 
         return new CommunityGroupAdminMemberResource($communityGroupAdminMember);

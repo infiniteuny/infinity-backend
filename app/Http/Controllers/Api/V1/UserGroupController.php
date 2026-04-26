@@ -10,6 +10,8 @@ use App\Http\Resources\UserGroup\UserGroupResource;
 use App\Models\User;
 use App\Models\UserGroup;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -37,6 +39,20 @@ class UserGroupController extends Controller
     public function index(User $user, Request $request)
     {
         $userGroup = QueryBuilder::for($user->groups())
+            ->allowedFilters(
+                'name',
+                AllowedFilter::exact('guard_name'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            )
+            ->allowedSorts(
+                'id',
+                'name',
+                'guard_name',
+                'created_at',
+                'updated_at',
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new UserGroupCollection($userGroup);

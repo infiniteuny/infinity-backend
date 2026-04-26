@@ -10,6 +10,8 @@ use App\Http\Resources\GroupPermission\GroupPermissionResource;
 use App\Models\Group;
 use App\Models\GroupPermission;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -37,6 +39,20 @@ class GroupPermissionController extends Controller
     public function index(Group $group, Request $request)
     {
         $groupPermission = QueryBuilder::for($group->groups())
+            ->allowedFilters(
+                'name',
+                AllowedFilter::exact('guard_name'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            )
+            ->allowedSorts(
+                'id',
+                'name',
+                'guard_name',
+                'created_at',
+                'updated_at',
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new GroupPermissionCollection($groupPermission);

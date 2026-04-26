@@ -10,6 +10,8 @@ use App\Http\Resources\TeamMember\TeamMemberResource;
 use App\Models\Team;
 use App\Models\TeamMember;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -37,6 +39,43 @@ class TeamMemberController extends Controller
     public function index(Team $team, Request $request)
     {
         $teamMembers = QueryBuilder::for($team->members())
+            ->allowedIncludes(
+                'major',
+                'major.degree',
+                'major.faculty',
+                'personas',
+                'groups',
+                'permissions',
+            )
+            ->allowedFilters(
+                AllowedFilter::exact('sso_id'),
+                'name',
+                'email_address',
+                'phone_number',
+                'student_id',
+                AllowedFilter::exact('major_id'),
+                AllowedFilter::operator('start_date', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('end_date', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('is_member'),
+                AllowedFilter::exact('is_extraordinary'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            )
+            ->allowedSorts(
+                'id',
+                'name',
+                'email_address',
+                'phone_number',
+                'student_id',
+                'major_id',
+                'start_date',
+                'end_date',
+                'is_member',
+                'is_extraordinary',
+                'created_at',
+                'updated_at',
+            )
+            ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new TeamMemberCollection($teamMembers);
@@ -77,6 +116,14 @@ class TeamMemberController extends Controller
             ->wherePivot('id', $teamMemberId);
 
         $teamMember = QueryBuilder::for($teamMember)
+            ->allowedIncludes(
+                'major',
+                'major.degree',
+                'major.faculty',
+                'personas',
+                'groups',
+                'permissions',
+            )
             ->firstOrFail();
 
         return new TeamMemberResource($teamMember);
