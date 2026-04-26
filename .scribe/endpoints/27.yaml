@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"fund_applications":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_instance_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1973-12-07T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777161597&signature=da7bb8dd1c7b2fbc28669bcfb8248e4af9d0775cfe473f6640c4932d60c454b6","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777161597&signature=7ed5026ad882433bd01bb3001988fb6fb00d80f47387f7a1259f43e18a33cc82","status":"PENDING","created_at":"2018-11-13T16:04:20+00:00","updated_at":"2009-07-27T04:40:06+00:00"},{"id":"5eae1826-9491-3035-95e2-2524f6abb8b3","team_id":"ac9e0973-adfe-32df-ade4-9b9752e8c6ad","competition_instance_id":"62b13b25-7887-3a6d-933d-9f63b76646b2","competition_team_type_id":"c71cb930-01f3-381c-9172-e1c70e63388f","competition_scale_id":"502eabbf-311f-3542-a47b-b2a14f5de904","competition_branch":"Laboriosam","competition_start_date":"2023-08-06T00:00:00+00:00","competition_end_date":"2002-05-04T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777161597&signature=da7bb8dd1c7b2fbc28669bcfb8248e4af9d0775cfe473f6640c4932d60c454b6","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777161597&signature=7ed5026ad882433bd01bb3001988fb6fb00d80f47387f7a1259f43e18a33cc82","status":"PENDING","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-12-05T17:22:21+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"fund_applications":[{"id":"99ff6862-8be8-3ac7-b605-a965959eb17d","team_id":"1cee0009-6189-3a01-9146-e563d7e54f52","competition_instance_id":"ac6ed0b5-7358-378a-b2ee-aa2893a167ea","competition_team_type_id":"0ec710eb-455a-3d5c-b7cf-ef6a17a21a0f","competition_scale_id":"52ade35b-368d-3faf-bc98-97777f75b14b","competition_branch":"Similique","competition_start_date":"1996-06-05T00:00:00+00:00","competition_end_date":"2021-10-13T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777247949&signature=470e55420b488b2dee2088d49a2475c2f22c8897ec3166e910e9f453eedb3112","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777247949&signature=8d5d0a1ba7092abba60a139bb780c739ea0c86a86962cb972cee065f07f5237b","status":"PENDING","created_at":"1977-04-17T18:33:41+00:00","updated_at":"1972-08-12T09:17:15+00:00"},{"id":"a4f07ca2-30fb-3d18-971c-1141011f38b2","team_id":"7f401d69-db27-38e2-84f7-50e5071fcbc9","competition_instance_id":"d30a667d-7fb4-3b96-9ffa-0975ac4380d2","competition_team_type_id":"5d8add0c-b256-3a3c-8c06-c5e4651c4df7","competition_scale_id":"89be759c-4223-3178-8270-ab640096c0a8","competition_branch":"Commodi","competition_start_date":"1984-12-24T00:00:00+00:00","competition_end_date":"2025-02-17T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777247949&signature=470e55420b488b2dee2088d49a2475c2f22c8897ec3166e910e9f453eedb3112","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777247949&signature=8d5d0a1ba7092abba60a139bb780c739ea0c86a86962cb972cee065f07f5237b","status":"PENDING","created_at":"2024-06-06T06:08:53+00:00","updated_at":"2005-05-03T04:58:37+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -115,7 +115,7 @@ endpoints:
         name: competition_start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>competition_end_date</code>.'
         required: true
-        example: '2022-05-20'
+        example: '2022-05-21'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -126,7 +126,7 @@ endpoints:
         name: competition_end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>competition_start_date</code>.'
         required: true
-        example: '2052-05-18'
+        example: '2052-05-19'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -159,7 +159,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: PENDING
+        example: ACCEPTED
         type: string
         enumValues:
           - PENDING
@@ -173,9 +173,9 @@ endpoints:
       competition_instance_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       competition_scale_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
       competition_branch: architecto
-      competition_start_date: '2022-05-20'
-      competition_end_date: '2052-05-18'
-      status: PENDING
+      competition_start_date: '2022-05-21'
+      competition_end_date: '2052-05-19'
+      status: ACCEPTED
     fileParameters:
       letter_of_acceptance: null
       proposal: null
@@ -183,7 +183,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"fund_application":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_instance_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_branch":"Harum","competition_start_date":"2007-08-18T00:00:00+00:00","competition_end_date":"1997-01-07T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777161597&signature=da7bb8dd1c7b2fbc28669bcfb8248e4af9d0775cfe473f6640c4932d60c454b6","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777161597&signature=7ed5026ad882433bd01bb3001988fb6fb00d80f47387f7a1259f43e18a33cc82","status":"PENDING","created_at":"2024-08-18T05:15:44+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
+        content: '{"status":"success","data":{"fund_application":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_instance_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_branch":"Harum","competition_start_date":"2007-08-18T00:00:00+00:00","competition_end_date":"1997-01-07T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777247949&signature=470e55420b488b2dee2088d49a2475c2f22c8897ec3166e910e9f453eedb3112","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777247949&signature=8d5d0a1ba7092abba60a139bb780c739ea0c86a86962cb972cee065f07f5237b","status":"PENDING","created_at":"2024-08-17T05:16:32+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -236,7 +236,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"fund_application":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_instance_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1973-12-07T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777161597&signature=da7bb8dd1c7b2fbc28669bcfb8248e4af9d0775cfe473f6640c4932d60c454b6","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777161597&signature=7ed5026ad882433bd01bb3001988fb6fb00d80f47387f7a1259f43e18a33cc82","status":"PENDING","created_at":"2018-11-13T16:04:20+00:00","updated_at":"2009-07-27T04:40:06+00:00"}}}'
+        content: '{"status":"success","data":{"fund_application":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_instance_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1973-12-06T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777247949&signature=470e55420b488b2dee2088d49a2475c2f22c8897ec3166e910e9f453eedb3112","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777247949&signature=8d5d0a1ba7092abba60a139bb780c739ea0c86a86962cb972cee065f07f5237b","status":"PENDING","created_at":"2018-11-12T16:05:08+00:00","updated_at":"2009-07-27T04:40:06+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -333,7 +333,7 @@ endpoints:
         name: competition_start_date
         description: 'Must be a valid date. Must be a date before or equal to <code>competition_end_date</code>.'
         required: false
-        example: '2022-05-20'
+        example: '2022-05-21'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -344,7 +344,7 @@ endpoints:
         name: competition_end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>competition_start_date</code>.'
         required: false
-        example: '2052-05-18'
+        example: '2052-05-19'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -391,8 +391,8 @@ endpoints:
       competition_instance_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       competition_scale_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
       competition_branch: architecto
-      competition_start_date: '2022-05-20'
-      competition_end_date: '2052-05-18'
+      competition_start_date: '2022-05-21'
+      competition_end_date: '2052-05-19'
       status: PENDING
     fileParameters:
       letter_of_acceptance: null
@@ -401,7 +401,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"fund_application":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_instance_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_branch":"Harum","competition_start_date":"2007-08-18T00:00:00+00:00","competition_end_date":"1997-01-07T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777161597&signature=da7bb8dd1c7b2fbc28669bcfb8248e4af9d0775cfe473f6640c4932d60c454b6","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777161597&signature=7ed5026ad882433bd01bb3001988fb6fb00d80f47387f7a1259f43e18a33cc82","status":"PENDING","created_at":"2024-08-18T05:15:44+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
+        content: '{"status":"success","data":{"fund_application":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","team_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","competition_instance_id":"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f","competition_team_type_id":"21c4122b-d554-3723-966c-6d723ea5293f","competition_scale_id":"add3503c-ebff-3875-93af-b8c6a695762b","competition_branch":"Harum","competition_start_date":"2007-08-18T00:00:00+00:00","competition_end_date":"1997-01-07T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777247949&signature=470e55420b488b2dee2088d49a2475c2f22c8897ec3166e910e9f453eedb3112","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777247949&signature=8d5d0a1ba7092abba60a139bb780c739ea0c86a86962cb972cee065f07f5237b","status":"PENDING","created_at":"2024-08-17T05:16:32+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -454,7 +454,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"fund_application":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_instance_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1973-12-07T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777161597&signature=da7bb8dd1c7b2fbc28669bcfb8248e4af9d0775cfe473f6640c4932d60c454b6","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777161597&signature=7ed5026ad882433bd01bb3001988fb6fb00d80f47387f7a1259f43e18a33cc82","status":"PENDING","created_at":"2018-11-13T16:04:20+00:00","updated_at":"2009-07-27T04:40:06+00:00"}}}'
+        content: '{"status":"success","data":{"fund_application":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","team_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","competition_instance_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","competition_team_type_id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","competition_scale_id":"d9be5934-80e7-34a9-a136-841b5f0aea83","competition_branch":"Et","competition_start_date":"1973-12-06T00:00:00+00:00","competition_end_date":"1971-11-16T00:00:00+00:00","letter_of_acceptance":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/letters-of-acceptances\/some-loa-id.pdf?expires=1777247949&signature=470e55420b488b2dee2088d49a2475c2f22c8897ec3166e910e9f453eedb3112","proposal":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/fund-applications\/proposals\/some-proposal-id.pdf?expires=1777247949&signature=8d5d0a1ba7092abba60a139bb780c739ea0c86a86962cb972cee065f07f5237b","status":"PENDING","created_at":"2018-11-12T16:05:08+00:00","updated_at":"2009-07-27T04:40:06+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
