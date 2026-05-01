@@ -68,11 +68,11 @@ class UserGroupController extends Controller
      */
     public function store(User $user, StoreUserGroupRequest $request)
     {
-        $user->groups()->attach($request->safe()->only('group_id'));
+        $user->groups()->attach($request->validated('group_id'));
 
         $userGroup = $user
             ->groups()
-            ->wherePivot('group_id', $request->safe()->only('group_id'))
+            ->wherePivot('group_id', $request->validated('group_id'))
             ->first();
 
         return new UserGroupResource($userGroup);

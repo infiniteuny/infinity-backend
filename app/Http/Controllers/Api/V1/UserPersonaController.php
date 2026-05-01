@@ -72,11 +72,11 @@ class UserPersonaController extends Controller
      */
     public function store(User $user, StoreUserPersonaRequest $request)
     {
-        $user->personas()->attach($request->safe()->only('persona_id'));
+        $user->personas()->attach($request->validated('persona_id'));
 
         $userPersona = $user
             ->personas()
-            ->wherePivot('persona_id', $request->safe()->only('persona_id'))
+            ->wherePivot('persona_id', $request->validated('persona_id'))
             ->first();
 
         return new UserPersonaResource($userPersona);

@@ -68,11 +68,11 @@ class GroupPermissionController extends Controller
      */
     public function store(Group $group, StoreGroupPermissionRequest $request)
     {
-        $group->permissions()->attach($request->safe()->only('permission_id'));
+        $group->permissions()->attach($request->validated('permission_id'));
 
         $groupPermission = $group
             ->permissions()
-            ->wherePivot('permission_id', $request->safe()->only('permission_id'))
+            ->wherePivot('permission_id', $request->validated('permission_id'))
             ->first();
 
         return new GroupPermissionResource($groupPermission);

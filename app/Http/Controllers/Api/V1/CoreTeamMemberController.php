@@ -110,15 +110,15 @@ class CoreTeamMemberController extends Controller
             );
         }
 
-        $coreTeam->members()->attach($request->safe()->only('user_id'), [
-            'core_team_division_id' => $request->safe()->only('core_team_division_id'),
+        $coreTeam->members()->attach($request->validated('user_id'), [
+            'core_team_division_id' => $request->validated('core_team_division_id'),
             'photo' => $photoManifest,
             'animation' => $hasAnimation ? $animationManifest : null,
         ]);
 
         $coreTeamMember = $coreTeam
             ->members()
-            ->wherePivot('user_id', $request->safe()->only('user_id'))
+            ->wherePivot('user_id', $request->validated('user_id'))
             ->first();
 
         return new CoreTeamMemberResource($coreTeamMember);

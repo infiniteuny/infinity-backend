@@ -77,7 +77,7 @@ class CommunityGroupAdminController extends Controller
     {
         DB::transaction(function () use ($request, &$communityGroupAdmin) {
             $group = Group::create([
-                'name' => 'Community '.$request->safe()->only(['year'])['year'],
+                'name' => 'Community '.$request->validated('year'),
                 'guard_name' => 'api',
                 'is_managed' => true,
             ]);

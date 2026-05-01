@@ -76,11 +76,11 @@ class UserPermissionController extends Controller
      */
     public function store(User $user, StoreUserPermissionRequest $request)
     {
-        $user->permissions()->attach($request->safe()->only('permission_id'));
+        $user->permissions()->attach($request->validated('permission_id'));
 
         $userPermission = $user
             ->permissions()
-            ->wherePivot('permission_id', $request->safe()->only('permission_id'))
+            ->wherePivot('permission_id', $request->validated('permission_id'))
             ->first();
 
         return new UserPermissionResource($userPermission);

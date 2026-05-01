@@ -110,15 +110,15 @@ class CommunityGroupAdminMemberController extends Controller
             );
         }
 
-        $communityGroupAdmin->members()->attach($request->safe()->only('user_id'), [
-            'community_group_id' => $request->safe()->only('community_group_id'),
+        $communityGroupAdmin->members()->attach($request->validated('user_id'), [
+            'community_group_id' => $request->validated('community_group_id'),
             'photo' => $photoManifest,
             'animation' => $hasAnimation ? $animationManifest : null,
         ]);
 
         $communityGroupAdminMember = $communityGroupAdmin
             ->members()
-            ->wherePivot('user_id', $request->safe()->only('user_id'))
+            ->wherePivot('user_id', $request->validated('user_id'))
             ->first();
 
         return new CommunityGroupAdminMemberResource($communityGroupAdminMember);

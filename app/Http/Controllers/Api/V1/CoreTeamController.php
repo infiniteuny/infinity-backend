@@ -77,7 +77,7 @@ class CoreTeamController extends Controller
     {
         DB::transaction(function () use ($request, &$coreTeam) {
             $group = Group::create([
-                'name' => 'Core '.$request->safe()->only(['year'])['year'],
+                'name' => 'Core '.$request->validated('year'),
                 'guard_name' => 'api',
                 'is_managed' => true,
             ]);

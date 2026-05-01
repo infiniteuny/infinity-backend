@@ -91,11 +91,11 @@ class CommunityGroupMemberController extends Controller
      */
     public function store(CommunityGroup $communityGroup, StoreCommunityGroupMemberRequest $request)
     {
-        $communityGroup->members()->attach($request->safe()->only('user_id'));
+        $communityGroup->members()->attach($request->validated('user_id'));
 
         $communityGroupMember = $communityGroup
             ->members()
-            ->wherePivot('user_id', $request->safe()->only('user_id'))
+            ->wherePivot('user_id', $request->validated('user_id'))
             ->first();
 
         return new CommunityGroupMemberResource($communityGroupMember);
