@@ -38,7 +38,7 @@ class GroupPermissionController extends Controller
      */
     public function index(Group $group, Request $request)
     {
-        $groupPermission = QueryBuilder::for($group->groups())
+        $groupPermission = QueryBuilder::for($group->permissions())
             ->allowedFilters(
                 'name',
                 AllowedFilter::exact('guard_name'),
