@@ -11,6 +11,7 @@ use App\Models\Group;
 use App\Models\GroupPermission;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -40,19 +41,19 @@ class GroupPermissionController extends Controller
     {
         $groupPermission = QueryBuilder::for($group->permissions())
             ->allowedFilters(
-                'name',
-                AllowedFilter::exact('guard_name'),
-                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('name', 'permissions.name'),
+                AllowedFilter::exact('guard_name', 'permissions.guard_name'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC, 'and', 'permissions.created_at'),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC, 'and', 'permissions.updated_at'),
             )
             ->allowedSorts(
-                'id',
-                'name',
-                'guard_name',
-                'created_at',
-                'updated_at',
+                AllowedSort::field('id', 'permissions.id'),
+                AllowedSort::field('name', 'permissions.name'),
+                AllowedSort::field('guard_name', 'permissions.guard_name'),
+                AllowedSort::field('created_at', 'permissions.created_at'),
+                AllowedSort::field('updated_at', 'permissions.updated_at'),
             )
-            ->defaultSorts('-id')
+            ->defaultSorts('-permissions.id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new GroupPermissionCollection($groupPermission);

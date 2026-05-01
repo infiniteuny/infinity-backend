@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserGroup;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -40,19 +41,19 @@ class UserGroupController extends Controller
     {
         $userGroup = QueryBuilder::for($user->groups())
             ->allowedFilters(
-                'name',
-                AllowedFilter::exact('guard_name'),
-                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('name', 'groups.name'),
+                AllowedFilter::exact('guard_name', 'groups.guard_name'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC, 'and', 'groups.created_at'),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC, 'and', 'groups.updated_at'),
             )
             ->allowedSorts(
-                'id',
-                'name',
-                'guard_name',
-                'created_at',
-                'updated_at',
+                AllowedSort::field('id', 'groups.id'),
+                AllowedSort::field('name', 'groups.name'),
+                AllowedSort::field('guard_name', 'groups.guard_name'),
+                AllowedSort::field('created_at', 'groups.created_at'),
+                AllowedSort::field('updated_at', 'groups.updated_at'),
             )
-            ->defaultSorts('-id')
+            ->defaultSorts('-groups.id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new UserGroupCollection($userGroup);

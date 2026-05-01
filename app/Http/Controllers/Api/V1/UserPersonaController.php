@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserPersona;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -40,22 +41,22 @@ class UserPersonaController extends Controller
     {
         $userPersona = QueryBuilder::for($user->personas())
             ->allowedFilters(
-                'name',
-                AllowedFilter::exact('priority'),
-                'description',
-                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+                AllowedFilter::partial('name', 'personas.name'),
+                AllowedFilter::exact('priority', 'personas.priority'),
+                AllowedFilter::partial('description', 'personas.description'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC, 'and', 'personas.created_at'),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC, 'and', 'personas.updated_at'),
             )
             ->allowedSorts(
-                'id',
-                'name',
-                'priority',
-                'created_at',
-                'updated_at',
+                AllowedSort::field('id', 'personas.id'),
+                AllowedSort::field('name', 'personas.name'),
+                AllowedSort::field('priority', 'personas.priority'),
+                AllowedSort::field('created_at', 'personas.created_at'),
+                AllowedSort::field('updated_at', 'personas.updated_at'),
             )
             ->defaultSorts(
-                'priority',
-                '-id',
+                'personas.priority',
+                '-personas.id',
             )
             ->cursorPaginate($request->query('per_page', 10));
 

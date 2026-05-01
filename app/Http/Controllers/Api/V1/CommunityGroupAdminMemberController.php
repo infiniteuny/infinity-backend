@@ -14,6 +14,7 @@ use App\Models\CommunityGroupAdmin;
 use App\Models\CommunityGroupAdminMember;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -51,34 +52,34 @@ class CommunityGroupAdminMemberController extends Controller
                 'permissions',
             )
             ->allowedFilters(
-                AllowedFilter::exact('sso_id'),
-                'name',
-                'email_address',
-                'phone_number',
-                'student_id',
-                AllowedFilter::exact('major_id'),
-                AllowedFilter::operator('start_date', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('end_date', FilterOperator::DYNAMIC),
-                AllowedFilter::exact('is_member'),
-                AllowedFilter::exact('is_extraordinary'),
-                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('sso_id', 'users.sso_id'),
+                AllowedFilter::partial('name', 'users.name'),
+                AllowedFilter::partial('email_address', 'users.email_address'),
+                AllowedFilter::partial('phone_number', 'users.phone_number'),
+                AllowedFilter::partial('student_id', 'users.student_id'),
+                AllowedFilter::exact('major_id', 'users.major_id'),
+                AllowedFilter::operator('start_date', FilterOperator::DYNAMIC, 'and', 'users.start_date'),
+                AllowedFilter::operator('end_date', FilterOperator::DYNAMIC, 'and', 'users.end_date'),
+                AllowedFilter::exact('is_member', 'users.is_member'),
+                AllowedFilter::exact('is_extraordinary', 'users.is_extraordinary'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC, 'and', 'users.created_at'),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC, 'and', 'users.updated_at'),
             )
             ->allowedSorts(
-                'id',
-                'name',
-                'email_address',
-                'phone_number',
-                'student_id',
-                'major_id',
-                'start_date',
-                'end_date',
-                'is_member',
-                'is_extraordinary',
-                'created_at',
-                'updated_at',
+                AllowedSort::field('id', 'users.id'),
+                AllowedSort::field('name', 'users.name'),
+                AllowedSort::field('email_address', 'users.email_address'),
+                AllowedSort::field('phone_number', 'users.phone_number'),
+                AllowedSort::field('student_id', 'users.student_id'),
+                AllowedSort::field('major_id', 'users.major_id'),
+                AllowedSort::field('start_date', 'users.start_date'),
+                AllowedSort::field('end_date', 'users.end_date'),
+                AllowedSort::field('is_member', 'users.is_member'),
+                AllowedSort::field('is_extraordinary', 'users.is_extraordinary'),
+                AllowedSort::field('created_at', 'users.created_at'),
+                AllowedSort::field('updated_at', 'users.updated_at'),
             )
-            ->defaultSorts('-id')
+            ->defaultSorts('-users.id')
             ->cursorPaginate($request->query('per_page', 10));
 
         return new CommunityGroupAdminMemberCollection($communityGroupAdminMembers);
