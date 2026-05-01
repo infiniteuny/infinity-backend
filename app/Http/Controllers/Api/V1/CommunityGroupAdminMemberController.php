@@ -12,10 +12,14 @@ use App\Http\Resources\CommunityGroupAdminMember\CommunityGroupAdminMemberResour
 use App\Jobs\DeleteBlob;
 use App\Models\CommunityGroupAdmin;
 use App\Models\CommunityGroupAdminMember;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
+use Spatie\QueryBuilder\Includes\IncludeInterface;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -50,6 +54,13 @@ class CommunityGroupAdminMemberController extends Controller
                 'personas',
                 'groups',
                 'permissions',
+                AllowedInclude::custom('membership.community_group', new class implements IncludeInterface
+                {
+                    public function __invoke(Builder $query, string $include): void
+                    {
+                        // Handled manually after pagination
+                    }
+                }),
             )
             ->allowedFilters(
                 AllowedFilter::exact('sso_id', 'users.sso_id'),
@@ -81,6 +92,12 @@ class CommunityGroupAdminMemberController extends Controller
             )
             ->defaultSorts('-users.id')
             ->cursorPaginate($request->query('per_page', 10));
+
+        if (in_array('membership.community_group', explode(',', $request->query('includes', '')))) {
+            Collection::make(
+                $communityGroupAdminMembers->getCollection()->pluck('membership')->filter()
+            )->load('communityGroup');
+        }
 
         return new CommunityGroupAdminMemberCollection($communityGroupAdminMembers);
     }
@@ -149,8 +166,21 @@ class CommunityGroupAdminMemberController extends Controller
                 'personas',
                 'groups',
                 'permissions',
+                AllowedInclude::custom('membership.community_group', new class implements IncludeInterface
+                {
+                    public function __invoke(Builder $query, string $include): void
+                    {
+                        // Handled manually
+                    }
+                }),
             )
             ->firstOrFail();
+
+        if (in_array('membership.community_group', explode(',', request()->query('includes', '')))) {
+            if ($communityGroupAdminMember->membership) {
+                $communityGroupAdminMember->membership->load('communityGroup');
+            }
+        }
 
         return new CommunityGroupAdminMemberResource($communityGroupAdminMember);
     }

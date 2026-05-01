@@ -12,10 +12,14 @@ use App\Http\Resources\CoreTeamMember\CoreTeamMemberResource;
 use App\Jobs\DeleteBlob;
 use App\Models\CoreTeam;
 use App\Models\CoreTeamMember;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
+use Spatie\QueryBuilder\Includes\IncludeInterface;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -50,6 +54,13 @@ class CoreTeamMemberController extends Controller
                 'personas',
                 'groups',
                 'permissions',
+                AllowedInclude::custom('membership.core_team_division', new class implements IncludeInterface
+                {
+                    public function __invoke(Builder $query, string $include): void
+                    {
+                        // Handled manually after pagination
+                    }
+                }),
             )
             ->allowedFilters(
                 AllowedFilter::exact('sso_id', 'users.sso_id'),
@@ -81,6 +92,12 @@ class CoreTeamMemberController extends Controller
             )
             ->defaultSorts('-users.id')
             ->cursorPaginate($request->query('per_page', 10));
+
+        if (in_array('membership.core_team_division', explode(',', $request->query('includes', '')))) {
+            Collection::make(
+                $coreTeamMembers->getCollection()->pluck('membership')->filter()
+            )->load('coreTeamDivision');
+        }
 
         return new CoreTeamMemberCollection($coreTeamMembers);
     }
@@ -149,8 +166,21 @@ class CoreTeamMemberController extends Controller
                 'personas',
                 'groups',
                 'permissions',
+                AllowedInclude::custom('membership.core_team_division', new class implements IncludeInterface
+                {
+                    public function __invoke(Builder $query, string $include): void
+                    {
+                        // Handled manually
+                    }
+                }),
             )
             ->firstOrFail();
+
+        if (in_array('membership.core_team_division', explode(',', request()->query('includes', '')))) {
+            if ($coreTeamMember->membership) {
+                $coreTeamMember->membership->load('coreTeamDivision');
+            }
+        }
 
         return new CoreTeamMemberResource($coreTeamMember);
     }
