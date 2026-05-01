@@ -79,7 +79,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","description":"Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-11-29T17:21:49+00:00"}}}'
+        content: '{"status":"success","data":{"competition":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","description":"Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-11-29T16:48:12+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -141,7 +141,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"competition":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"Belle Dickens","description":"Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.","created_at":"2009-07-09T06:03:13+00:00","updated_at":"1976-08-17T01:22:21+00:00"}}}'
+        content: '{"status":"success","data":{"competition":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"Belle Dickens","description":"Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.","created_at":"2009-07-09T05:29:36+00:00","updated_at":"1976-08-17T00:48:44+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -219,7 +219,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"Belle Dickens","description":"Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.","created_at":"2009-07-09T06:03:13+00:00","updated_at":"1976-08-17T01:22:21+00:00"}}}'
+        content: '{"status":"success","data":{"competition":{"id":"21c4122b-d554-3723-966c-6d723ea5293f","name":"Belle Dickens","description":"Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.","created_at":"2009-07-09T05:29:36+00:00","updated_at":"1976-08-17T00:48:44+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -272,7 +272,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Miss Pearl Hauck","description":"Odit et et modi. Nostrum omnis autem et consequatur aut. Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id.","created_at":"1994-08-07T04:59:03+00:00","updated_at":"1986-04-03T05:48:11+00:00"}}}'
+        content: '{"status":"success","data":{"competition":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Miss Pearl Hauck","description":"Odit et et modi. Nostrum omnis autem et consequatur aut. Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id.","created_at":"1994-08-07T04:25:26+00:00","updated_at":"1986-04-03T05:14:34+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

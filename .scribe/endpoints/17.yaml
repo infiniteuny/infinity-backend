@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"tokens":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1990-01-18T11:07:29+00:00"},{"id":"fa253524-dd6a-3fdb-a788-0cabcf134db7","sso_id":"665a39c0-48af-31f1-a546-aa4f41372488","user_id":"d98239dc-1582-3bf2-b93a-df3a18e121d1","last_used_at":"2009-07-27T04:40:06+00:00","created_at":"2003-07-15T08:01:07+00:00","expires_at":"2019-08-30T13:55:51+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"tokens":[{"id":"41fdbf1b-1c09-36d2-b241-f48bfac96551","sso_id":"77f7b32c-6337-3acb-a8c8-767020f00656","user_id":"b6857c9b-7ce8-31e4-8374-dfb86239a944","last_used_at":"1990-03-25T10:38:55+00:00","created_at":"2014-07-04T13:10:33+00:00","expires_at":"1996-05-13T10:28:55+00:00"},{"id":"8b0432a7-d5bb-391b-893f-cc64cad163a9","sso_id":"4ad58d53-a55c-36f3-84c0-42a5cee7949a","user_id":"ec8be6c2-6a7f-3e0a-a2b3-88970f9e9235","last_used_at":"2021-04-25T10:36:53+00:00","created_at":"1987-01-24T12:13:02+00:00","expires_at":"1983-02-18T13:09:20+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -84,7 +84,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"token":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1990-01-18T11:07:29+00:00"}}}'
+        content: '{"status":"success","data":{"token":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1990-01-18T10:33:51+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -137,7 +137,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"token":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1990-01-18T11:07:29+00:00"}}}'
+        content: '{"status":"success","data":{"token":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1990-01-18T10:33:51+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

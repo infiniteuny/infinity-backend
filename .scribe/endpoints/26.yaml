@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"faculties":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"40","name":"Incidunt","created_at":"1983-05-17T03:07:42+00:00","updated_at":"1990-01-18T11:07:28+00:00"},{"id":"fa253524-dd6a-3fdb-a788-0cabcf134db7","code":"86","name":"Ipsum","created_at":"1973-01-05T18:42:45+00:00","updated_at":"2018-11-07T16:03:47+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"faculties":[{"id":"223d0e3e-d760-3c2b-97e6-dbc8409cc6a2","code":"59","name":"Nihil","created_at":"1975-07-15T13:18:48+00:00","updated_at":"2010-09-20T05:59:58+00:00"},{"id":"229e89a1-0357-3808-b6fa-d4e82e57d137","code":"63","name":"Hic","created_at":"1978-03-06T01:53:54+00:00","updated_at":"1974-08-27T13:23:57+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -96,7 +96,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"faculty":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"26","name":"Et","created_at":"2018-08-26T18:13:14+00:00","updated_at":"2019-10-29T01:22:24+00:00"}}}'
+        content: '{"status":"success","data":{"faculty":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","code":"26","name":"Et","created_at":"2018-08-26T17:39:37+00:00","updated_at":"2019-10-29T00:48:47+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -149,7 +149,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"faculty":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"79","name":"Iure","created_at":"1990-01-18T11:07:28+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
+        content: '{"status":"success","data":{"faculty":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"40","name":"Incidunt","created_at":"1983-05-17T03:07:42+00:00","updated_at":"1990-01-18T10:33:51+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -280,7 +280,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"faculty":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"76","name":"Odit","created_at":"1977-08-15T10:47:14+00:00","updated_at":"1982-02-20T15:35:13+00:00"}}}'
+        content: '{"status":"success","data":{"faculty":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","code":"79","name":"Iure","created_at":"1990-01-18T10:33:51+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

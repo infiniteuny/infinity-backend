@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Tempora","is_personal":true,"created_at":"1985-12-26T03:24:50+00:00","updated_at":"2023-08-06T00:38:36+00:00"},{"id":"46779b45-df80-30c6-ad3c-320d08b0f185","leader_id":"b1acb002-2839-312b-9bbc-3ecc71af48bf","name":"Deleniti","is_personal":false,"created_at":"2013-02-14T00:13:02+00:00","updated_at":"1977-01-26T02:23:47+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"teams":[{"id":"4a22f0c4-7cd1-34cb-b19b-37007628ce18","leader_id":"3fd4fc83-ab19-3c38-8f41-44ece9694c90","name":"Iusto","is_personal":false,"created_at":"2003-08-04T12:08:34+00:00","updated_at":"2006-01-26T20:02:15+00:00"},{"id":"309c7f3c-1419-3476-a4ef-c4355daf4118","leader_id":"671bc834-892c-3d34-965d-d53e2b9d7da6","name":"Natus","is_personal":true,"created_at":"2019-07-12T07:38:40+00:00","updated_at":"2019-03-07T16:27:35+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -120,7 +120,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Ex","is_personal":false,"created_at":"2023-08-06T00:38:36+00:00","updated_at":"2002-04-28T10:22:57+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Tempora","is_personal":true,"created_at":"1985-12-26T03:24:50+00:00","updated_at":"2023-08-06T00:38:36+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -173,7 +173,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Laboriosam","is_personal":true,"created_at":"2002-04-28T10:22:57+00:00","updated_at":"1975-04-15T13:41:31+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Ex","is_personal":false,"created_at":"2023-08-06T00:38:36+00:00","updated_at":"2002-04-28T09:49:20+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -259,7 +259,7 @@ endpoints:
         name: is_personal
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -269,13 +269,13 @@ endpoints:
       leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       team_type_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       name: architecto
-      is_personal: false
+      is_personal: true
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Praesentium","is_personal":true,"created_at":"1975-04-15T13:41:31+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Laboriosam","is_personal":true,"created_at":"2002-04-28T09:49:20+00:00","updated_at":"1975-04-15T13:07:54+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -328,7 +328,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-11-29T17:21:47+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Praesentium","is_personal":true,"created_at":"1975-04-15T13:07:54+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
