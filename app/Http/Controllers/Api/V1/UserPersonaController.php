@@ -38,7 +38,7 @@ class UserPersonaController extends Controller
      */
     public function index(User $user, Request $request)
     {
-        $userPersona = QueryBuilder::for($user->groups())
+        $userPersona = QueryBuilder::for($user->personas())
             ->allowedFilters(
                 'name',
                 AllowedFilter::exact('priority'),
