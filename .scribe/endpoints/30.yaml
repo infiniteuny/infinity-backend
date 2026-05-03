@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"permissions":[{"id":"6b1e53f6-73d9-3498-82cc-fe2f035dcd85","name":"Esse","guard_name":"oidc","created_at":"2023-04-26T20:04:58.000000Z","updated_at":"1972-09-09T19:21:42.000000Z"},{"id":"c924ef15-c8c6-34ec-96e2-0c7d6c49bdd9","name":"Reprehenderit","guard_name":"oidc","created_at":"2006-10-29T14:05:36.000000Z","updated_at":"1970-11-05T02:05:32.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"permissions":[{"id":"7d3ee4d9-7d91-3c24-a0db-0a5df8577499","name":"Voluptates","guard_name":"oidc","created_at":"1993-12-22T18:53:30.000000Z","updated_at":"2013-05-18T16:29:54.000000Z"},{"id":"4e4cf3a7-4718-32fe-a520-9b23dedbd0a6","name":"Maiores","guard_name":"oidc","created_at":"2015-12-28T08:03:13.000000Z","updated_at":"1981-01-15T20:00:45.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -150,7 +150,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1997-06-03T01:48:21.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1997-06-03T01:19:20.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -229,7 +229,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2006-09-07T16:36:58.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2006-09-07T16:07:57.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []

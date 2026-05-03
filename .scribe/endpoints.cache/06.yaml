@@ -32,7 +32,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group_admins":[{"id":"5f936efd-e185-3891-a84d-e9ea08ed9d45","year":"2013","created_at":"1977-01-24T09:58:50+00:00","updated_at":"1990-12-25T21:39:58+00:00"},{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","year":"1991","created_at":"1973-01-10T20:44:05+00:00","updated_at":"2022-11-02T12:59:36+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"community_group_admins":[{"id":"5f936efd-e185-3891-a84d-e9ea08ed9d45","year":"2013","created_at":"1977-01-24T09:29:48+00:00","updated_at":"1990-12-25T21:10:56+00:00"},{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","year":"1991","created_at":"1973-01-10T20:15:03+00:00","updated_at":"2022-11-02T12:30:34+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -81,7 +81,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2024","created_at":"1973-03-29T03:06:27+00:00","updated_at":"1996-12-21T19:30:35+00:00"}}}'
+        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2024","created_at":"1973-03-29T02:37:25+00:00","updated_at":"1996-12-21T19:01:33+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -129,7 +129,7 @@ endpoints:
         name: is_active
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -137,13 +137,13 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       year: 16
-      is_active: false
+      is_active: true
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2024","created_at":"1973-03-29T03:06:26+00:00","updated_at":"1996-12-21T19:30:34+00:00"}}}'
+        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2024","created_at":"1973-03-29T02:37:25+00:00","updated_at":"1996-12-21T19:01:33+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -221,7 +221,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2024","created_at":"1973-03-29T03:06:26+00:00","updated_at":"1996-12-21T19:30:34+00:00"}}}'
+        content: '{"status":"success","data":{"community_group_admin":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","year":"2024","created_at":"1973-03-29T02:37:25+00:00","updated_at":"1996-12-21T19:01:33+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -274,7 +274,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group_admin":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-08-31T04:12:31+00:00"}}}'
+        content: '{"status":"success","data":{"community_group_admin":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","year":"2006","created_at":"2015-01-19T20:47:12+00:00","updated_at":"2010-08-31T03:43:30+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

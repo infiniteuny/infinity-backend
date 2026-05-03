@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_organizer_types":[{"id":"159596b0-74ee-385c-b80f-8840db9aa921","name":"Quo","weight":449138773,"created_at":"1992-02-21T11:30:02+00:00","updated_at":"2002-05-11T04:12:47+00:00"},{"id":"10078b68-b2cd-3d99-b739-45a925353788","name":"Animi","weight":1417955090,"created_at":"2024-04-01T19:05:38+00:00","updated_at":"2025-08-27T21:51:58+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"competition_organizer_types":[{"id":"de9bb296-7a60-341b-93e4-5f8eea086196","name":"Consequatur","weight":2105419961,"created_at":"1996-03-03T19:19:13+00:00","updated_at":"2000-06-29T23:36:41+00:00"},{"id":"50799e24-8cd9-3a9d-bc06-a286bfcf64d5","name":"Molestiae","weight":480825599,"created_at":"1970-04-20T07:03:19+00:00","updated_at":"1973-11-19T02:54:39+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -96,7 +96,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"competition_organizer_type":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quos","weight":481516916,"created_at":"2020-07-20T22:51:42+00:00","updated_at":"2018-08-25T01:48:15+00:00"}}}'
+        content: '{"status":"success","data":{"competition_organizer_type":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quos","weight":481516916,"created_at":"2020-07-20T22:22:41+00:00","updated_at":"2018-08-25T01:19:14+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -149,7 +149,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_organizer_type":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-31T04:12:31+00:00","updated_at":"2022-11-26T23:53:09+00:00"}}}'
+        content: '{"status":"success","data":{"competition_organizer_type":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-31T03:43:30+00:00","updated_at":"2022-11-26T23:24:08+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -227,7 +227,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_organizer_type":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quos","weight":481516916,"created_at":"2020-07-20T22:51:42+00:00","updated_at":"2018-08-25T01:48:15+00:00"}}}'
+        content: '{"status":"success","data":{"competition_organizer_type":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quos","weight":481516916,"created_at":"2020-07-20T22:22:41+00:00","updated_at":"2018-08-25T01:19:14+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -280,7 +280,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_organizer_type":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-31T04:12:31+00:00","updated_at":"2022-11-26T23:53:09+00:00"}}}'
+        content: '{"status":"success","data":{"competition_organizer_type":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-31T03:43:30+00:00","updated_at":"2022-11-26T23:24:08+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

@@ -30,7 +30,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"configs":[{"id":"2da616f3-ce5e-38f4-9369-f1be3919879d","key":"voluptate","value":"accusamus","type":"STRING","is_private":true,"created_at":"2005-09-29T05:08:01+00:00","updated_at":"1990-01-28T13:19:53+00:00"},{"id":"fecaf9fe-6060-39af-b373-7563b93c16ba","key":"repellendus","value":"assumenda","type":"STRING","is_private":true,"created_at":"1981-01-06T21:28:39+00:00","updated_at":"1996-04-21T07:52:43+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"configs":[{"id":"2da616f3-ce5e-38f4-9369-f1be3919879d","key":"voluptate","value":"accusamus","type":"STRING","is_private":true,"created_at":"2005-09-29T05:08:01+00:00","updated_at":"1990-01-28T12:50:51+00:00"},{"id":"fecaf9fe-6060-39af-b373-7563b93c16ba","key":"repellendus","value":"assumenda","type":"STRING","is_private":true,"created_at":"1981-01-06T21:28:39+00:00","updated_at":"1996-04-21T07:23:41+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -79,7 +79,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2018-08-25T01:48:16+00:00","updated_at":"2019-10-27T08:57:26+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2018-08-25T01:19:14+00:00","updated_at":"2019-10-27T08:28:24+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -138,7 +138,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: INTEGER
+        example: BOOLEAN
         type: string
         enumValues:
           - STRING
@@ -161,14 +161,14 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: INTEGER
+      type: BOOLEAN
       is_private: false
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"nihil","value":"accusantium","type":"INTEGER","is_private":false,"created_at":"1997-01-07T10:06:22+00:00","updated_at":"2022-10-19T20:20:33+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"nihil","value":"accusantium","type":"INTEGER","is_private":false,"created_at":"1997-01-07T10:06:22+00:00","updated_at":"2022-10-19T19:51:32+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -243,7 +243,7 @@ endpoints:
         name: type
         description: ''
         required: false
-        example: STRING
+        example: BOOLEAN
         type: string
         enumValues:
           - STRING
@@ -257,7 +257,7 @@ endpoints:
         name: is_private
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -266,14 +266,14 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: STRING
-      is_private: true
+      type: BOOLEAN
+      is_private: false
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"accusantium","value":"harum","type":"INTEGER","is_private":false,"created_at":"2022-10-19T20:20:33+00:00","updated_at":"2024-08-10T12:50:12+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"accusantium","value":"harum","type":"INTEGER","is_private":false,"created_at":"2022-10-19T19:51:32+00:00","updated_at":"2024-08-10T12:21:11+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
