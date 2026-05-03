@@ -145,7 +145,7 @@ RUN composer dump-autoload \
 
 COPY --link --chown=${UID}:${GID} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
 COPY --link --chown=${UID}:${GID} deployment/Caddyfile ${ROOT}/deployment/Caddyfile
-COPY --link --chown=${UID}:${GID} deployment/supervisord.conf /etc/supervisor/
+COPY --link --chown=${UID}:${GID} deployment/supervisord.conf /etc/
 COPY --link --chown=${UID}:${GID} deployment/supervisord.*.conf /etc/supervisor/conf.d/
 COPY --link --chown=${UID}:${GID} deployment/healthcheck /usr/local/bin/healthcheck
 COPY --link --chown=${UID}:${GID} deployment/start-container /usr/local/bin/start-container
