@@ -66,7 +66,6 @@ Dockerfile*
 # Sensitive or unnecessary configuration files
 .editorconfig
 auth.json
-/deployment
 /storage/*.key
 
 # OS-specific junk
