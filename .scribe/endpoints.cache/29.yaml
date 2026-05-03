@@ -33,7 +33,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"majors":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"9946","name":"Iure","created_at":"1990-01-16T18:13:27+00:00","updated_at":"1977-08-15T10:47:14+00:00"},{"id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","degree_id":"1cdf7bf0-e381-3a72-a922-e680daa4dd16","faculty_id":"013e1265-7fdf-327c-9ed4-fc05e74df42b","code":"4026","name":"Consequatur","created_at":"2019-08-30T13:55:51+00:00","updated_at":"2014-02-22T23:30:43+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"majors":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"9946","name":"Iure","created_at":"1990-01-16T10:59:36+00:00","updated_at":"1977-08-15T10:47:14+00:00"},{"id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","degree_id":"1cdf7bf0-e381-3a72-a922-e680daa4dd16","faculty_id":"013e1265-7fdf-327c-9ed4-fc05e74df42b","code":"4026","name":"Consequatur","created_at":"2019-08-30T13:55:51+00:00","updated_at":"2014-02-22T16:16:52+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -175,7 +175,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"4492","name":"Odit","created_at":"1977-08-15T10:47:14+00:00","updated_at":"1982-02-18T22:41:12+00:00"}}}'
+        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"4492","name":"Odit","created_at":"1977-08-15T10:47:14+00:00","updated_at":"1982-02-18T15:27:21+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -330,7 +330,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"1971","name":"Et","created_at":"1982-02-18T22:41:12+00:00","updated_at":"1973-11-29T10:12:35+00:00"}}}'
+        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"1971","name":"Et","created_at":"1982-02-18T15:27:21+00:00","updated_at":"1973-11-29T02:58:44+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
