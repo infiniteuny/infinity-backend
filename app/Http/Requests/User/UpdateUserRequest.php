@@ -18,7 +18,7 @@ class UpdateUserRequest extends FormRequest
     {
         $user = $this->route('user');
 
-        return [
+        $rules = [
             'name' => ['sometimes', 'string'],
             'email_address' => ['sometimes', 'email', Rule::unique('users', 'email_address')->ignore($user)],
             'phone_number' => ['sometimes', 'string', Rule::unique('users', 'phone_number')->ignore($user)],
@@ -31,5 +31,32 @@ class UpdateUserRequest extends FormRequest
             'is_member' => ['sometimes', 'boolean'],
             'is_extraordinary' => ['sometimes', 'boolean'],
         ];
+
+        if (! $this->user()->can('manage-user-membership')) {
+            unset(
+                $rules['start_date'],
+                $rules['end_date'],
+                $rules['is_member'],
+                $rules['is_extraordinary'],
+            );
+        }
+
+        return $rules;
+    }
+
+    public function validated($key = null, $default = null): array
+    {
+        $validated = parent::validated($key, $default);
+
+        if (! $this->user()->can('manage-user-membership')) {
+            unset(
+                $validated['start_date'],
+                $validated['end_date'],
+                $validated['is_member'],
+                $validated['is_extraordinary'],
+            );
+        }
+
+        return $validated;
     }
 }

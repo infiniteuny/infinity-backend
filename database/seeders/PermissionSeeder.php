@@ -78,6 +78,7 @@ class PermissionSeeder extends Seeder
             'update-own-user',
             'delete-user',
             'delete-own-user',
+            'manage-user-membership',
             'create-user-persona',
             'create-own-user-persona',
             'update-user-persona',

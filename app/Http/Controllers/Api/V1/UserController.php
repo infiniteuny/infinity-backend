@@ -111,7 +111,11 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $user = User::create($request->validated());
+        $data = $request->validated();
+        $data['is_member'] ??= false;
+        $data['is_extraordinary'] ??= false;
+
+        $user = User::create($data);
 
         CreateSsoUser::dispatch($user);
 

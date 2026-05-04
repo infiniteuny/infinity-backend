@@ -15,7 +15,7 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => ['required', 'string'],
             'email_address' => ['required', 'email', 'unique:users,email_address'],
             'phone_number' => ['required', 'string', 'unique:users,phone_number'],
@@ -28,5 +28,32 @@ class StoreUserRequest extends FormRequest
             'is_member' => ['required', 'boolean'],
             'is_extraordinary' => ['required', 'boolean'],
         ];
+
+        if (! $this->user()->can('manage-user-membership')) {
+            unset(
+                $rules['start_date'],
+                $rules['end_date'],
+                $rules['is_member'],
+                $rules['is_extraordinary'],
+            );
+        }
+
+        return $rules;
+    }
+
+    public function validated($key = null, $default = null): array
+    {
+        $validated = parent::validated($key, $default);
+
+        if (! $this->user()->can('manage-user-membership')) {
+            unset(
+                $validated['start_date'],
+                $validated['end_date'],
+                $validated['is_member'],
+                $validated['is_extraordinary'],
+            );
+        }
+
+        return $validated;
     }
 }
