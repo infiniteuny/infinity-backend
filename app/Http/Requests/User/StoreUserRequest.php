@@ -29,7 +29,7 @@ class StoreUserRequest extends FormRequest
             'is_extraordinary' => ['required', 'boolean'],
         ];
 
-        if (! $this->user()->can('manage-user-membership')) {
+        if (! $this->user()?->can('manage-user-membership')) {
             unset(
                 $rules['start_date'],
                 $rules['end_date'],
@@ -45,7 +45,7 @@ class StoreUserRequest extends FormRequest
     {
         $validated = parent::validated($key, $default);
 
-        if (! $this->user()->can('manage-user-membership')) {
+        if (! $this->user()?->can('manage-user-membership')) {
             unset(
                 $validated['start_date'],
                 $validated['end_date'],

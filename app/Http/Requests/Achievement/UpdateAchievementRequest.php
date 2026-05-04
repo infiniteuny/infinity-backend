@@ -14,7 +14,7 @@ class UpdateAchievementRequest extends FormRequest
      */
     public function rules(): array
     {
-        $statusValues = $this->user()->can('approve-achievement')
+        $statusValues = $this->user()?->can('approve-achievement')
             ? 'PENDING,REJECTED,ACCEPTED'
             : 'PENDING';
 

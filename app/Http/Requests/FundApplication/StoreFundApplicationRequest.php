@@ -14,7 +14,7 @@ class StoreFundApplicationRequest extends FormRequest
      */
     public function rules(): array
     {
-        $statusValues = $this->user()->can('approve-fund-application')
+        $statusValues = $this->user()?->can('approve-fund-application')
             ? 'PENDING,REJECTED,ACCEPTED'
             : 'PENDING';
 
