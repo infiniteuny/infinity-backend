@@ -10,6 +10,7 @@ use App\Http\Resources\TeamMember\TeamMemberResource;
 use App\Models\Team;
 use App\Models\TeamMember;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -142,6 +143,12 @@ class TeamMemberController extends Controller
         $teamMemberId = $teamMember->id;
         $team = $teamMember->team;
 
+        if ($team->leader_id === $teamMember->user_id) {
+            throw ValidationException::withMessages([
+                'user_id' => ['The team leader cannot be modified. Please assign a new leader before updating this member.'],
+            ]);
+        }
+
         $teamMember->update($request->validated());
         $teamMember = $team
             ->members()
@@ -166,6 +173,12 @@ class TeamMemberController extends Controller
             ->members()
             ->wherePivot('id', $teamMemberId)
             ->firstOrFail();
+
+        if ($team->leader_id === $teamMember->user_id) {
+            throw ValidationException::withMessages([
+                'user_id' => ['The team leader cannot be removed from the team. Please assign a new leader before removing this member.'],
+            ]);
+        }
 
         $team->members()->detach($teamMember->id);
 
