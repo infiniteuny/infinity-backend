@@ -68,6 +68,8 @@ class PermissionSeeder extends Seeder
             'project-gallery',
         ];
         $specialPermissions = [
+            'approve-achievement',
+            'approve-fund-application',
             'create-config',
             'update-config',
             'delete-config',

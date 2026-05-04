@@ -14,6 +14,10 @@ class UpdateAchievementRequest extends FormRequest
      */
     public function rules(): array
     {
+        $statusValues = $this->user()->can('approve-achievement')
+            ? 'PENDING,REJECTED,ACCEPTED'
+            : 'PENDING';
+
         return [
             'team_id' => ['sometimes', 'uuid', 'exists:teams,id'],
             'competition_instance_id' => ['sometimes', 'uuid', 'exists:competition_instances,id'],
@@ -26,7 +30,7 @@ class UpdateAchievementRequest extends FormRequest
             'competition_end_date' => ['sometimes', 'date', 'after_or_equal:competition_start_date'],
             'description' => ['sometimes', 'string'],
             'image' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'status' => ['sometimes', 'string', 'in:PENDING,REJECTED,ACCEPTED'],
+            'status' => ['sometimes', 'string', 'in:'.$statusValues],
         ];
     }
 }

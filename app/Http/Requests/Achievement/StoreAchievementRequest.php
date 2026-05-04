@@ -14,6 +14,10 @@ class StoreAchievementRequest extends FormRequest
      */
     public function rules(): array
     {
+        $statusValues = $this->user()->can('approve-achievement')
+            ? 'PENDING,REJECTED,ACCEPTED'
+            : 'PENDING';
+
         return [
             'team_id' => ['required', 'uuid', 'exists:teams,id'],
             'competition_instance_id' => ['required', 'uuid', 'exists:competition_instances,id'],
@@ -26,7 +30,7 @@ class StoreAchievementRequest extends FormRequest
             'competition_end_date' => ['required', 'date', 'after_or_equal:competition_start_date'],
             'description' => ['required', 'string'],
             'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'status' => ['required', 'string', 'in:PENDING,REJECTED,ACCEPTED'],
+            'status' => ['required', 'string', 'in:'.$statusValues],
         ];
     }
 }

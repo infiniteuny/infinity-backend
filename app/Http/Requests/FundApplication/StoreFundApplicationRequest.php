@@ -14,6 +14,10 @@ class StoreFundApplicationRequest extends FormRequest
      */
     public function rules(): array
     {
+        $statusValues = $this->user()->can('approve-fund-application')
+            ? 'PENDING,REJECTED,ACCEPTED'
+            : 'PENDING';
+
         return [
             'team_id' => ['required', 'uuid', 'exists:teams,id'],
             'competition_instance_id' => ['required', 'uuid', 'exists:competition_instances,id'],
@@ -23,7 +27,7 @@ class StoreFundApplicationRequest extends FormRequest
             'competition_end_date' => ['required', 'date', 'after_or_equal:competition_start_date'],
             'letter_of_acceptance' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png,webp', 'max:20480'],
             'proposal' => ['required', 'file', 'mimes:doc,docx', 'max:20480'],
-            'status' => ['required', 'string', 'in:PENDING,REJECTED,ACCEPTED'],
+            'status' => ['required', 'string', 'in:'.$statusValues],
         ];
     }
 }
