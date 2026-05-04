@@ -31,8 +31,8 @@ use App\Http\Controllers\Api\V1\TeamController;
 use App\Http\Controllers\Api\V1\TeamMemberController;
 use App\Http\Controllers\Api\V1\TestimonialController;
 use App\Http\Controllers\Api\V1\TokenController;
-use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\UserCommunityGroupController;
+use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\UserGroupController;
 use App\Http\Controllers\Api\V1\UserPermissionController;
 use App\Http\Controllers\Api\V1\UserPersonaController;
@@ -106,6 +106,8 @@ Route::group([
     Route::group([
         'middleware' => ['auth'],
     ], function () {
+        Route::post('users/{user}/extend', [UserController::class, 'extendMembership'])
+            ->name('users.extend');
         Route::apiResource('tokens', TokenController::class)
             ->only(['index', 'show', 'destroy']);
         Route::apiResources([

@@ -10,11 +10,14 @@ use App\Http\Resources\User\UserResource;
 use App\Jobs\CreateSsoUser;
 use App\Jobs\DeleteSsoUser;
 use App\Jobs\UpdateSsoUser;
+use App\Models\Config;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @group Users
@@ -199,6 +202,56 @@ class UserController extends Controller
 
         if ($user->sso_id) {
             DeleteSsoUser::dispatch($user->sso_id);
+        }
+
+        return new UserResource($user);
+    }
+
+    /**
+     * Extend a user's membership
+     *
+     * @apiResource App\Http\Resources\User\UserResource
+     *
+     * @apiResourceModel App\Models\User
+     */
+    public function extendMembership(User $user)
+    {
+        if (! $user->is_member) {
+            throw new AccessDeniedHttpException('User is not a member.');
+        }
+
+        $allowReregistration = Config::where('key', 'allow_reregistration')->first();
+        $startPeriod = Config::where('key', 'start_reregistration_date')->first();
+        $endPeriod = Config::where('key', 'end_reregistration_date')->first();
+        $now = Carbon::now();
+
+        if (! $startPeriod || ! $endPeriod) {
+            throw new AccessDeniedHttpException('Reregistration period is not configured.');
+        }
+
+        if (! $allowReregistration || $allowReregistration->value !== 'true' || $now->lt(Carbon::parse($startPeriod->value)) || $now->gt(Carbon::parse($endPeriod->value))) {
+            throw new AccessDeniedHttpException('Reregistration is currently disabled.');
+        }
+
+        if ($user->end_date) {
+            $allowExpiredReregistration = Config::where('key', 'allow_expired_reregistration')->first();
+
+            if (
+                (! $allowExpiredReregistration || $allowExpiredReregistration->value !== 'true')
+                && Carbon::parse($user->end_date)->lt($now)
+            ) {
+                throw new AccessDeniedHttpException('Membership has expired and expired member\'s reregistration is not allowed.');
+            }
+        }
+
+        $newEndDate = Carbon::parse($endPeriod->value)->addYear();
+
+        $user->update(['end_date' => $newEndDate->toDateString()]);
+
+        if ($user->sso_id) {
+            UpdateSsoUser::dispatch($user);
+        } else {
+            CreateSsoUser::dispatch($user);
         }
 
         return new UserResource($user);
