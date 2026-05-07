@@ -10,6 +10,7 @@ use App\Http\Resources\GroupPermission\GroupPermissionResource;
 use App\Models\Group;
 use App\Models\GroupPermission;
 use Illuminate\Http\Request;
+use Spatie\Permission\PermissionRegistrar;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -69,6 +70,7 @@ class GroupPermissionController extends Controller
     public function store(Group $group, StoreGroupPermissionRequest $request)
     {
         $group->permissions()->attach($request->validated('permission_id'));
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $groupPermission = $group
             ->permissions()
@@ -112,6 +114,7 @@ class GroupPermissionController extends Controller
         $group = $groupPermission->group;
 
         $groupPermission->update($request->validated());
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
         $groupPermission = $group
             ->permissions()
             ->wherePivot('id', $groupPermissionId)
@@ -137,6 +140,7 @@ class GroupPermissionController extends Controller
             ->firstOrFail();
 
         $group->permissions()->detach($groupPermission->id);
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         return new GroupPermissionResource($groupPermission);
     }

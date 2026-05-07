@@ -10,6 +10,7 @@ use App\Http\Resources\UserPermission\UserPermissionResource;
 use App\Models\User;
 use App\Models\UserPermission;
 use Illuminate\Http\Request;
+use Spatie\Permission\PermissionRegistrar;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -77,6 +78,7 @@ class UserPermissionController extends Controller
     public function store(User $user, StoreUserPermissionRequest $request)
     {
         $user->permissions()->attach($request->validated('permission_id'));
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $userPermission = $user
             ->permissions()
@@ -122,6 +124,7 @@ class UserPermissionController extends Controller
         $user = $userPermission->user;
 
         $userPermission->update($request->validated());
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
         $userPermission = $user
             ->permissions()
             ->wherePivot('id', $userPermissionId)
@@ -147,6 +150,7 @@ class UserPermissionController extends Controller
             ->firstOrFail();
 
         $user->permissions()->detach($userPermission->id);
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         return new UserPermissionResource($userPermission);
     }
