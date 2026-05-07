@@ -115,6 +115,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
+        $data['links'] = $data['links'] ?? [];
         $data['is_member'] ??= false;
         $data['is_extraordinary'] ??= false;
 

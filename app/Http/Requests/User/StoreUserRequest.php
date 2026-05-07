@@ -17,12 +17,13 @@ class StoreUserRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'string'],
+            'username' => ['required', 'string', 'unique:users,username'],
             'email_address' => ['required', 'email', 'unique:users,email_address'],
             'phone_number' => ['required', 'string', 'unique:users,phone_number'],
             'student_id' => ['required', 'string', 'unique:users,student_id'],
             'major_id' => ['required', 'uuid', 'exists:majors,id'],
-            'links' => ['required', new Associative],
-            'links.*' => ['required', 'url'],
+            'links' => ['sometimes', 'nullable', new Associative],
+            'links.*' => ['string'],
             'start_date' => ['sometimes', 'nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['sometimes', 'nullable', 'date', 'after_or_equal:start_date'],
             'is_member' => ['required', 'boolean'],

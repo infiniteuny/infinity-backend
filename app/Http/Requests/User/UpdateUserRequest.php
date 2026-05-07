@@ -20,12 +20,13 @@ class UpdateUserRequest extends FormRequest
 
         $rules = [
             'name' => ['sometimes', 'string'],
+            'username' => ['sometimes', 'string', Rule::unique('users', 'username')->ignore($user)],
             'email_address' => ['sometimes', 'email', Rule::unique('users', 'email_address')->ignore($user)],
             'phone_number' => ['sometimes', 'string', Rule::unique('users', 'phone_number')->ignore($user)],
             'student_id' => ['sometimes', 'string', Rule::unique('users', 'student_id')->ignore($user)],
             'major_id' => ['sometimes', 'uuid', 'exists:majors,id'],
-            'links' => ['sometimes', new Associative],
-            'links.*' => ['sometimes', 'url'],
+            'links' => ['sometimes', 'nullable', new Associative],
+            'links.*' => ['string'],
             'start_date' => ['sometimes', 'nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['sometimes', 'nullable', 'date', 'after_or_equal:start_date'],
             'is_member' => ['sometimes', 'boolean'],
