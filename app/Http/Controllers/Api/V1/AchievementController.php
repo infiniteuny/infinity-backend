@@ -47,6 +47,7 @@ class AchievementController extends Controller
         if ($user) {
             $includes = [
                 'team',
+                'team.members',
                 AllowedInclude::relationship('competition_instance', 'competitionInstance'),
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
                 AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
@@ -151,18 +152,6 @@ class AchievementController extends Controller
             ->allowedFilters(...$filters)
             ->allowedSorts(...$sorts)
             ->defaultSorts('-id');
-
-        if ($user) {
-            if (! $user->can('read-achievement')) {
-                $achievements = $achievements
-                    ->whereHas('team', function ($query) use ($userId) {
-                        $query->where('leader_id', $userId);
-                    })
-                    ->orWhereHas('team.members', function ($query) use ($userId) {
-                        $query->where('team_members.id', $userId);
-                    });
-            }
-        }
 
         $achievements = $achievements->cursorPaginate($request->query('per_page', 10));
 
