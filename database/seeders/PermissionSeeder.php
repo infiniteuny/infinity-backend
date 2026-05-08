@@ -61,7 +61,7 @@ class PermissionSeeder extends Seeder
             'competition-scale',
             'competition-time-range',
             'competition-team-type',
-            'testimonal',
+            'testimonial',
             'project-gallery',
         ];
         $specialPermissions = [

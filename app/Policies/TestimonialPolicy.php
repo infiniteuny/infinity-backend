@@ -11,7 +11,7 @@ class TestimonialPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-testimonal');
+        return $user->can('create-testimonial');
     }
 
     /**
@@ -19,7 +19,7 @@ class TestimonialPolicy
      */
     public function update(User $user): bool
     {
-        return $user->can('update-testimonal');
+        return $user->can('update-testimonial');
     }
 
     /**
@@ -27,6 +27,6 @@ class TestimonialPolicy
      */
     public function delete(User $user): bool
     {
-        return $user->can('delete-testimonal');
+        return $user->can('delete-testimonial');
     }
 }
