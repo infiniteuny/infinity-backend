@@ -58,6 +58,7 @@ class FundApplicationController extends Controller
             )
             ->allowedIncludes(
                 'team',
+                'team.members',
                 AllowedInclude::relationship('competition_instance', 'competitionInstance'),
                 AllowedInclude::relationship('competition_scale', 'competitionScale'),
             )
