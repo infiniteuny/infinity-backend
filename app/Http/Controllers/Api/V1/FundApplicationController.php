@@ -37,7 +37,7 @@ class FundApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
+        $user = Auth::guard()->user();
         $userId = $user->id;
 
         $fundApplications = QueryBuilder::for(FundApplication::class)
