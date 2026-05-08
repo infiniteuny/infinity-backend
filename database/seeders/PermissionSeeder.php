@@ -39,7 +39,6 @@ class PermissionSeeder extends Seeder
             'team',
             'team-member',
             'fund-application',
-            'achievement',
         ];
         $permissionResourcesWithoutOwnership = [
             'degree',
@@ -93,6 +92,12 @@ class PermissionSeeder extends Seeder
             'read-own-user-permission',
             'update-user-permission',
             'delete-user-permission',
+            'create-achievement',
+            'create-own-achievement',
+            'update-achievement',
+            'update-own-achievement',
+            'delete-achievement',
+            'delete-own-achievement',
             'read-token',
             'read-own-token',
             'delete-token',
