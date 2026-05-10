@@ -48,6 +48,7 @@ class UserController extends Controller
                 'id',
                 'sso_id',
                 'name',
+                'username',
                 'email_address',
                 'phone_number',
                 'student_id',
@@ -71,6 +72,7 @@ class UserController extends Controller
             ->allowedFilters(
                 AllowedFilter::exact('sso_id'),
                 'name',
+                'username',
                 'email_address',
                 'phone_number',
                 'student_id',
@@ -85,6 +87,7 @@ class UserController extends Controller
             ->allowedSorts(
                 'id',
                 'name',
+                'username',
                 'email_address',
                 'phone_number',
                 'student_id',
@@ -142,6 +145,7 @@ class UserController extends Controller
                 'id',
                 'sso_id',
                 'name',
+                'username',
                 'email_address',
                 'phone_number',
                 'student_id',
