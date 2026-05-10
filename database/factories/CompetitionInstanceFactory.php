@@ -30,6 +30,7 @@ class CompetitionInstanceFactory extends Factory
             'id' => $this->faker->uuid(),
             'competition_id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->name()),
+            'shortname' => Str::upper($this->faker->lexify('???')),
             'description' => $this->faker->text(),
             'url' => $this->faker->url(),
             'organizer' => $this->faker->company(),

@@ -16,6 +16,7 @@ class StoreCompetitionRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
+            'shortname' => ['nullable', 'string'],
             'description' => ['required', 'string'],
         ];
     }

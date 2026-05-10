@@ -17,6 +17,7 @@ class UpdateCompetitionInstanceRequest extends FormRequest
         return [
             'competition_id' => ['sometimes', 'uuid', 'exists:competitions,id'],
             'name' => ['sometimes', 'string'],
+            'shortname' => ['sometimes', 'nullable', 'string'],
             'description' => ['sometimes', 'string'],
             'url' => ['sometimes', 'nullable', 'string', 'url:http,https'],
             'organizer' => ['sometimes', 'string'],

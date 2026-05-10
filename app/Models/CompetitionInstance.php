@@ -22,6 +22,7 @@ class CompetitionInstance extends Model
     protected $fillable = [
         'competition_id',
         'name',
+        'shortname',
         'description',
         'url',
         'organizer',

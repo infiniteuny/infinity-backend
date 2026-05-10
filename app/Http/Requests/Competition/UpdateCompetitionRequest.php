@@ -16,6 +16,7 @@ class UpdateCompetitionRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string'],
+            'shortname' => ['sometimes', 'nullable', 'string'],
             'description' => ['sometimes', 'string'],
         ];
     }

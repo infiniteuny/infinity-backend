@@ -41,12 +41,14 @@ class CompetitionController extends Controller
             ->allowedFields(
                 'id',
                 'name',
+                'shortname',
                 'description',
                 'created_at',
                 'updated_at',
             )
             ->allowedFilters(
                 'name',
+                'shortname',
                 'description',
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
@@ -54,6 +56,7 @@ class CompetitionController extends Controller
             ->allowedSorts(
                 'id',
                 'name',
+                'shortname',
                 'created_at',
                 'updated_at',
             )
@@ -92,6 +95,7 @@ class CompetitionController extends Controller
             ->allowedFields(
                 'id',
                 'name',
+                'shortname',
                 'description',
                 'created_at',
                 'updated_at',

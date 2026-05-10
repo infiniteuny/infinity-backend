@@ -17,6 +17,7 @@ class StoreCompetitionInstanceRequest extends FormRequest
         return [
             'competition_id' => ['required', 'uuid', 'exists:competitions,id'],
             'name' => ['required', 'string'],
+            'shortname' => ['nullable', 'string'],
             'description' => ['required', 'string'],
             'url' => ['nullable', 'string', 'url:http,https'],
             'organizer' => ['required', 'string'],
