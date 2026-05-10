@@ -18,7 +18,7 @@ class UpdateCommunityGroupAdminMemberRequest extends FormRequest
             'user_id' => ['sometimes', 'uuid', 'exists:users,id'],
             'community_group_id' => ['sometimes', 'uuid', 'exists:community_groups,id'],
             'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'animation' => ['sometimes', 'nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'animation' => ['sometimes', 'nullable', 'file', 'mimes:gif,apng,webp', 'max:5120'],
         ];
     }
 }

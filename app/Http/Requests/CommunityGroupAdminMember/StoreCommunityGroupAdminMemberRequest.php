@@ -18,7 +18,7 @@ class StoreCommunityGroupAdminMemberRequest extends FormRequest
             'user_id' => ['required', 'uuid', 'exists:users,id'],
             'community_group_id' => ['required', 'uuid', 'exists:community_groups,id'],
             'photo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'animation' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'animation' => ['nullable', 'file', 'mimes:gif,apng,webp', 'max:5120'],
         ];
     }
 }

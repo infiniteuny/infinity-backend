@@ -18,7 +18,7 @@ class UpdateCoreTeamMemberRequest extends FormRequest
             'user_id' => ['sometimes', 'uuid', 'exists:users,id'],
             'core_team_division_id' => ['sometimes', 'uuid', 'exists:core_team_divisions,id'],
             'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'animation' => ['sometimes', 'nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'animation' => ['sometimes', 'nullable', 'file', 'mimes:gif,apng,webp', 'max:5120'],
         ];
     }
 }
