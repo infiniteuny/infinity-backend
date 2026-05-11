@@ -27,6 +27,7 @@ return [
     */
 
     'path' => env('HORIZON_PATH', 'horizon'),
+    'proxy_path' => env('HORIZON_PROXY_PATH'),
 
     /*
     |--------------------------------------------------------------------------
