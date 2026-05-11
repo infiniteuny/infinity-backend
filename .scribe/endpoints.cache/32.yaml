@@ -45,7 +45,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permissions":[{"id":"e8de34bb-4c62-34d2-a5e2-78f40f7c9cd3","name":"Aperiam","guard_name":"oidc","created_at":"1992-06-02T22:17:14.000000Z","updated_at":"2026-03-13T00:48:11.000000Z","entitlement":{"id":"90cddabd-3045-3ff1-9507-b0ca5297e714","group_id":"397fcd8f-fe9b-3b76-a4fa-a4a6e8721ad9","permission_id":"e8de34bb-4c62-34d2-a5e2-78f40f7c9cd3"}},{"id":"e6578b25-c185-3d6a-86a2-3d079bdbd1a9","name":"Error","guard_name":"oidc","created_at":"1984-08-05T07:40:52.000000Z","updated_at":"1984-08-02T11:08:32.000000Z","entitlement":{"id":"91bc85be-35e4-3a10-a04b-815e67106804","group_id":"5bbbd9c7-dce2-365f-8ea3-c69d496fe5dc","permission_id":"e6578b25-c185-3d6a-86a2-3d079bdbd1a9"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"group_permissions":[{"id":"abed1ba6-31d5-38b9-9b2d-6318535ddc43","name":"Alias","guard_name":"oidc","created_at":"1976-08-27T17:13:26.000000Z","updated_at":"2018-08-19T03:53:26.000000Z","entitlement":{"id":"cc77292d-0161-3cca-8ac4-c598422f68e3","group_id":"a2837729-c5e1-327d-b148-d7df30992ec9","permission_id":"abed1ba6-31d5-38b9-9b2d-6318535ddc43"}},{"id":"6f2e6e0b-97df-3372-8ec0-7824c4ac3568","name":"A","guard_name":"oidc","created_at":"1993-05-16T02:35:05.000000Z","updated_at":"1971-05-19T05:32:48.000000Z","entitlement":{"id":"eb1d3ff3-9ec2-30c3-b20c-8b34665bb098","group_id":"5bb5d0fc-0324-370a-8c65-0a9acfcc29e2","permission_id":"6f2e6e0b-97df-3372-8ec0-7824c4ac3568"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -110,7 +110,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Deleniti","guard_name":"oidc","created_at":"2021-04-04T08:35:19.000000Z","updated_at":"2013-02-14T00:13:02.000000Z","entitlement":{"id":"f0b41b1f-4d8e-3b0d-b54e-b367d8431199","group_id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Distinctio","guard_name":"oidc","created_at":"2013-02-14T00:13:02.000000Z","updated_at":"1977-01-16T19:47:13.000000Z","entitlement":{"id":"1e9be565-c31b-3b43-8646-66a4d676e89f","group_id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -163,7 +163,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Corporis","guard_name":"oidc","created_at":"2022-10-29T07:05:43.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","group_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Corporis","guard_name":"oidc","created_at":"2022-10-25T22:47:59.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","group_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -229,7 +229,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Nemo","guard_name":"oidc","created_at":"2009-07-03T07:44:22.000000Z","updated_at":"1976-08-11T03:03:30.000000Z","entitlement":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","group_id":"8529678e-de6b-32f2-9f70-231a0d681563","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Dolorem","guard_name":"oidc","created_at":"1975-07-10T01:22:31.000000Z","updated_at":"1989-07-26T16:30:05.000000Z","entitlement":{"id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","group_id":"29635f5e-45e3-3a71-90b8-942cfd8ffe97","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
