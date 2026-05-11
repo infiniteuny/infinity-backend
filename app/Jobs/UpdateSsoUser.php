@@ -19,9 +19,10 @@ class UpdateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function __construct(
         public User $user,
-        public bool $isActive = true,
-        public string $path = 'infiniteuny.id',
-        public string $type = 'internal',
+        public string $memberPath = 'infiniteuny.id',
+        public string $memberType = 'internal',
+        public string $nonMemberPath = 'uny.ac.id',
+        public string $nonMemberType = 'external',
     ) {}
 
     /**
@@ -57,9 +58,8 @@ class UpdateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
     public function handle(SsoService $ssoService): void
     {
         $ssoUser = SsoUserData::fromModel($this->user)->additional([
-            'is_active' => $this->isActive,
-            'path' => $this->path,
-            'type' => $this->type,
+            'path' => $this->user->is_member ? $this->memberPath : $this->nonMemberPath,
+            'type' => $this->user->is_member ? $this->memberType : $this->nonMemberType,
         ]);
         $ssoUser = $ssoService->updateUser($this->user->sso_id, $ssoUser);
 
