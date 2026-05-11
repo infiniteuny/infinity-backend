@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"majors":[{"id":"38b7bf90-0100-3b51-b162-0a7bc257dccf","degree_id":"22d63854-551b-3e2b-82f5-8c9cfa24a3be","faculty_id":"3eb43775-7761-3b7b-ad53-d058241248d8","code":"4186","name":"Officia","created_at":"2006-07-04T02:07:27+00:00","updated_at":"2007-08-24T17:06:51+00:00"},{"id":"c4b1dfd8-53ad-35cb-857a-befabc8e7380","degree_id":"d8b41d14-a941-3d69-be7d-eee9d79aa2d7","faculty_id":"e7d93227-136b-364f-97de-83b92fb95d7e","code":"2813","name":"Nostrum","created_at":"1978-03-12T02:04:14+00:00","updated_at":"2009-01-26T08:32:40+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"majors":[{"id":"3bedc292-eaaa-3486-9e10-ffd86c77d420","degree_id":"f955dee4-a00b-3f8d-9c88-04572793bc1f","faculty_id":"1a233655-7b1e-3042-af44-64a9d2b70030","code":"2097","name":"Quia","created_at":"2015-10-03T14:00:46+00:00","updated_at":"1970-11-10T07:07:40+00:00"},{"id":"dba95c74-807c-3c40-a519-e94ca1117223","degree_id":"b97b901a-2848-3008-81ad-0efc5a36ab54","faculty_id":"f1fff6cd-75d1-3a50-914d-7e7cce169112","code":"7414","name":"Sunt","created_at":"1974-10-15T02:03:55+00:00","updated_at":"2024-12-06T05:53:45+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -173,7 +173,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"9946","name":"Iure","created_at":"1990-01-09T04:30:53+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
+        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"9946","name":"Iure","created_at":"1990-01-09T03:41:19+00:00","updated_at":"1977-08-15T10:47:14+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -328,7 +328,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"4492","name":"Odit","created_at":"1977-08-15T10:47:14+00:00","updated_at":"1982-02-11T08:58:38+00:00"}}}'
+        content: '{"status":"success","data":{"major":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","degree_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","faculty_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","code":"4492","name":"Odit","created_at":"1977-08-15T10:47:14+00:00","updated_at":"1982-02-11T08:09:04+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
