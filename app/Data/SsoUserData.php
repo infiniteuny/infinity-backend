@@ -12,6 +12,7 @@ class SsoUserData extends Data
         #[MapName('pk')]
         public string|null|Optional $sso_id,
         public string|Optional $name,
+        public string|Optional $username,
         #[MapName('email')]
         public string|Optional $email_address,
         public bool|Optional $is_active,
@@ -24,6 +25,7 @@ class SsoUserData extends Data
         return new self(
             sso_id: $user->sso_id,
             name: $user->name,
+            username: $user->username,
             email_address: $user->email,
             is_active: Optional::create(),
             path: Optional::create(),
