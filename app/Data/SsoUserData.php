@@ -27,7 +27,7 @@ class SsoUserData extends Data
             name: $user->name,
             username: $user->username,
             email_address: $user->email,
-            is_active: Optional::create(),
+            is_active: $user->is_member,
             path: Optional::create(),
             type: Optional::create(),
         );
