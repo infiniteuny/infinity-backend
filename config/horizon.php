@@ -30,6 +30,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Horizon Dashboard Access
+    |--------------------------------------------------------------------------
+    |
+    | This is the boolean value that indicates whether the Horizon dashboard
+    | should be accessible. You may disable this dashboard in production
+    | environments if you do not need it. If disabled, all Horizon routes
+    | will return a 403 response.
+    |
+    */
+
+    'enabled' => env('HORIZON_ENABLED', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Horizon Redis Connection
     |--------------------------------------------------------------------------
     |
