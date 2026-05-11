@@ -14,15 +14,19 @@ class UpdateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
 
+    public string $memberPath = 'infiniteuny.id';
+
+    public string $memberType = 'internal';
+
+    public string $nonMemberPath = 'uny.ac.id';
+
+    public string $nonMemberType = 'external';
+
     /**
      * Create a new job instance.
      */
     public function __construct(
         public User $user,
-        public string $memberPath = 'infiniteuny.id',
-        public string $memberType = 'internal',
-        public string $nonMemberPath = 'uny.ac.id',
-        public string $nonMemberType = 'external',
     ) {}
 
     /**
