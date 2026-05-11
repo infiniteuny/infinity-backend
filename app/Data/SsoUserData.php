@@ -10,7 +10,7 @@ class SsoUserData extends Data
 {
     public function __construct(
         #[MapName('pk')]
-        public string|Optional $sso_id,
+        public string|null|Optional $sso_id,
         public string|Optional $name,
         #[MapName('email')]
         public string|Optional $email_address,

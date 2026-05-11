@@ -10,7 +10,7 @@ class SsoGroupData extends Data
 {
     public function __construct(
         #[MapName('pk')]
-        public string|Optional $sso_id,
+        public string|null|Optional $sso_id,
         #[MapName('parent')]
         public string|Optional $sso_parent_id,
         public string|Optional $name,
