@@ -17,7 +17,7 @@ return [
 
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'api_headers'),
-        'semi_public_guard' => env('AUTH_SEMI_PUBLIC_GUARD', 'api_token'),
+        'semi_public_guard' => env('AUTH_SEMI_PUBLIC_GUARD', 'api_headers'),
     ],
 
     /*
