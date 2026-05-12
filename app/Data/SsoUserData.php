@@ -3,6 +3,7 @@
 namespace App\Data;
 
 use App\Models\User;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 

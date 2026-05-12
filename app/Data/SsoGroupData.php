@@ -3,8 +3,9 @@
 namespace App\Data;
 
 use App\Models\Group;
-use Illuminate\Support\Optional;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
 class SsoGroupData extends Data
 {
