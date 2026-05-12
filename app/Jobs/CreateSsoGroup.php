@@ -70,9 +70,8 @@ class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             $ssoGroup = $ssoService->createGroup($ssoGroup);
         }
 
-        $this->group->update([
-            'sso_id' => $ssoGroup->sso_id,
-            'sso_last_synced_at' => now(),
-        ]);
+        $this->group->sso_id = $ssoGroup->sso_id;
+        $this->group->sso_last_synced_at = now();
+        $this->group->save();
     }
 }

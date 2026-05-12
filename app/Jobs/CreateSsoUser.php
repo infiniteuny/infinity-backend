@@ -75,9 +75,8 @@ class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
             $ssoUser = $ssoService->createUser($ssoUser);
         }
 
-        $this->user->update([
-            'sso_id' => $ssoUser->sso_id,
-            'sso_last_synced_at' => now(),
-        ]);
+        $this->user->sso_id = (string) $ssoUser->sso_id;
+        $this->user->sso_last_synced_at = now();
+        $this->user->save();
     }
 }
