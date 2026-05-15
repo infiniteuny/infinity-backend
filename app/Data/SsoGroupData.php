@@ -12,22 +12,23 @@ class SsoGroupData extends Data
     public function __construct(
         #[MapName('pk')]
         public string|null|Optional $sso_id,
-        #[MapName('parent')]
-        public string|Optional $sso_parent_id,
-        public string|Optional $name,
-        public bool|Optional $is_superuser,
+        #[MapName('parents')]
+        public array|Optional $sso_parent_ids,
+        #[MapName('users')]
         /** @var string[] */
         public array $user_ids,
+        public string|Optional $name,
+        public bool|Optional $is_superuser,
     ) {}
 
     public static function fromModel(Group $group): self
     {
         return new self(
             sso_id: $group->sso_id,
-            sso_parent_id: Optional::create(),
+            sso_parent_ids: Optional::create(),
+            user_ids: $group->users->pluck('sso_id')->map('intval')->toArray(),
             name: $group->name,
             is_superuser: Optional::create(),
-            user_ids: $group->users->pluck('sso_id')->toArray(),
         );
     }
 }

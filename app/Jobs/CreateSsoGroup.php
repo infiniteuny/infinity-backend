@@ -20,7 +20,8 @@ class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function __construct(
         public Group $group,
-        public ?string $ssoParentId = null,
+        /** @var string[] */
+        public ?array $ssoParentIds = null,
         public ?bool $isSuperuser = null,
     ) {}
 
@@ -64,7 +65,7 @@ class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             $ssoGroup = $ssoGroups->first();
         } else {
             $ssoGroup = SsoGroupData::fromModel($this->group)->additional([
-                'sso_parent_id' => $this->ssoParentId ?? Optional::create(),
+                'sso_parent_ids' => $this->ssoParentIds ?? Optional::create(),
                 'is_superuser' => $this->isSuperuser ?? false,
             ]);
             $ssoGroup = $ssoService->createGroup($ssoGroup);
