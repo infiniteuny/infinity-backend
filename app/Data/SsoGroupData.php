@@ -16,7 +16,7 @@ class SsoGroupData extends Data
         public array|Optional $sso_parent_ids,
         #[MapName('users')]
         /** @var string[] */
-        public array $user_ids,
+        public array|Optional $user_ids,
         public string|Optional $name,
         public bool|Optional $is_superuser,
     ) {}
