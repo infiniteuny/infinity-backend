@@ -13,11 +13,11 @@ interface SsoService
      */
     public function listUsers(array $filters = []): Collection;
 
-    public function createUser(SsoUserData $SsoUserData): SsoUserData;
+    public function createUser(SsoUserData $ssoUserData): SsoUserData;
 
     public function getUser(string $userId): SsoUserData;
 
-    public function updateUser(string $userId, SsoUserData $SsoUserData): SsoUserData;
+    public function updateUser(string $userId, SsoUserData $ssoUserData): SsoUserData;
 
     public function deleteUser(string $userId): bool;
 
@@ -26,11 +26,11 @@ interface SsoService
      */
     public function listGroups(array $filters = []): Collection;
 
-    public function createGroup(SsoGroupData $SsoGroupData): SsoGroupData;
+    public function createGroup(SsoGroupData $ssoGroupData): SsoGroupData;
 
     public function getGroup(string $groupId): SsoGroupData;
 
-    public function updateGroup(string $groupId, SsoGroupData $SsoGroupData): SsoGroupData;
+    public function updateGroup(string $groupId, SsoGroupData $ssoGroupData): SsoGroupData;
 
     public function deleteGroup(string $groupId): bool;
 }

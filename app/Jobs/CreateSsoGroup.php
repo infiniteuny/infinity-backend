@@ -65,7 +65,7 @@ class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             $ssoGroup = $ssoGroups->first();
         } else {
             $ssoGroup = SsoGroupData::fromModel($this->group)->additional([
-                'sso_parent_ids' => $this->ssoParentIds ?? Optional::create(),
+                'parents' => $this->ssoParentIds ?? Optional::create(),
                 'is_superuser' => $this->isSuperuser ?? false,
             ]);
             $ssoGroup = $ssoService->createGroup($ssoGroup);

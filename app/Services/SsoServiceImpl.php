@@ -19,10 +19,10 @@ class SsoServiceImpl implements SsoService
         return $users;
     }
 
-    public function createUser(SsoUserData $SsoUserData): SsoUserData
+    public function createUser(SsoUserData $ssoUserData): SsoUserData
     {
         $response = Http::authentik()
-            ->post('/api/v3/core/users/', $SsoUserData->toArray());
+            ->post('/api/v3/core/users/', $ssoUserData->toArray());
 
         return SsoUserData::from($response->json());
     }
@@ -35,10 +35,10 @@ class SsoServiceImpl implements SsoService
         return SsoUserData::from($response->json());
     }
 
-    public function updateUser(string $userId, SsoUserData $SsoUserData): SsoUserData
+    public function updateUser(string $userId, SsoUserData $ssoUserData): SsoUserData
     {
         $response = Http::authentik()
-            ->patch("/api/v3/core/users/$userId/", $SsoUserData->toArray());
+            ->patch("/api/v3/core/users/$userId/", $ssoUserData->toArray());
 
         return SsoUserData::from($response->json());
     }
@@ -61,10 +61,10 @@ class SsoServiceImpl implements SsoService
         return $groups;
     }
 
-    public function createGroup(SsoGroupData $SsoGroupData): SsoGroupData
+    public function createGroup(SsoGroupData $ssoGroupData): SsoGroupData
     {
         $response = Http::authentik()
-            ->post('/api/v3/core/groups/', $SsoGroupData->toArray());
+            ->post('/api/v3/core/groups/', $ssoGroupData->toArray());
 
         return SsoGroupData::from($response->json());
     }
@@ -77,10 +77,10 @@ class SsoServiceImpl implements SsoService
         return SsoGroupData::from($response->json());
     }
 
-    public function updateGroup(string $groupId, SsoGroupData $SsoGroupData): SsoGroupData
+    public function updateGroup(string $groupId, SsoGroupData $ssoGroupData): SsoGroupData
     {
         $response = Http::authentik()
-            ->patch("/api/v3/core/groups/$groupId/", $SsoGroupData->toArray());
+            ->patch("/api/v3/core/groups/$groupId/", $ssoGroupData->toArray());
 
         return SsoGroupData::from($response->json());
     }
