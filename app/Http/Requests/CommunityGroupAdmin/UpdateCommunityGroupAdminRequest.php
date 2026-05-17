@@ -31,7 +31,7 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
             'year' => ['sometimes', 'integer', $yearUniqueRule],
             'is_active' => [
                 'sometimes',
-                'accepted',
+                'boolean',
                 new CannotDeactivateActive($communityGroupAdmin->is_active ?? false),
             ],
         ];
