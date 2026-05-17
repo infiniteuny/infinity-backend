@@ -69,13 +69,13 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->job(new SyncAchievementLeaderboards(Date::now()->year))->daily();
-        $schedule->job(new SyncCoreTeamMembersGroup)->daily();
-        $schedule->job(new SyncCGAdminMembersGroup)->daily();
-        $schedule->job(new SyncSsoUsers)->daily();
-        $schedule->job(new SyncCoreTeamSsoGroups)->daily();
-        $schedule->job(new SyncCGAdminSsoGroups)->daily();
-        $schedule->job(new SyncXCoreTeamSsoGroups)->daily();
-        $schedule->job(new SyncXCGAdminSsoGroups)->daily();
+        $schedule->job(new SyncCoreTeamMembersGroup)->hourly();
+        $schedule->job(new SyncCGAdminMembersGroup)->hourly();
+        $schedule->job(new SyncSsoUsers)->hourly();
+        $schedule->job(new SyncCoreTeamSsoGroups)->hourly();
+        $schedule->job(new SyncCGAdminSsoGroups)->hourly();
+        $schedule->job(new SyncXCoreTeamSsoGroups)->hourly();
+        $schedule->job(new SyncXCGAdminSsoGroups)->hourly();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {
