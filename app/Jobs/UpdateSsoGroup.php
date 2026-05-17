@@ -58,8 +58,8 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
     public function handle(SsoService $ssoService): void
     {
         $ssoGroup = SsoGroupData::fromModel($this->group)->additional([
-            'parents' => $this->ssoParentIds ?? Optional::create(),
-            'is_superuser' => $this->isSuperuser ?? Optional::create(),
+            'parents' => $this->ssoParentIds ?? [],
+            'is_superuser' => $this->isSuperuser ?? false,
         ]);
         $ssoGroup = $ssoService->updateGroup($this->group->sso_id, $ssoGroup);
 
