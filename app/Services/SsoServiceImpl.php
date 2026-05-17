@@ -38,7 +38,7 @@ class SsoServiceImpl implements SsoService
     public function updateUser(string $userId, SsoUserData $SsoUserData): SsoUserData
     {
         $response = Http::authentik()
-            ->patch("/api/v3/core/users/{$userId}/", $SsoUserData->toArray());
+            ->patch("/api/v3/core/users/$userId/", $SsoUserData->toArray());
 
         return SsoUserData::from($response->json());
     }
@@ -80,7 +80,7 @@ class SsoServiceImpl implements SsoService
     public function updateGroup(string $groupId, SsoGroupData $SsoGroupData): SsoGroupData
     {
         $response = Http::authentik()
-            ->patch("/api/v3/core/groups/{$groupId}/", $SsoGroupData->toArray());
+            ->patch("/api/v3/core/groups/$groupId/", $SsoGroupData->toArray());
 
         return SsoGroupData::from($response->json());
     }
