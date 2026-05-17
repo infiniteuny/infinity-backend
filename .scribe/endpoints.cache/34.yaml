@@ -45,7 +45,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"user_groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Eum","guard_name":"oidc","created_at":"1977-01-10T09:54:58.000000Z","updated_at":"1990-12-11T21:36:06.000000Z","entitlement":{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","user_id":"7ede3c6a-246e-324b-b30f-8fde291e43b3","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e","name":"Nemo","guard_name":"oidc","created_at":"2009-06-23T13:34:23.000000Z","updated_at":"1976-08-01T08:53:31.000000Z","entitlement":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","user_id":"8529678e-de6b-32f2-9f70-231a0d681563","group_id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"user_groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Doloremque","guard_name":"oidc","created_at":"1990-12-11T20:46:02.000000Z","updated_at":"1972-11-16T00:17:03.000000Z","entitlement":{"id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","user_id":"56db1203-2e82-3de6-a828-ead32bd52d27","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"ea57fb8f-9953-354e-9184-d01c4ec16bb0","name":"Nemo","guard_name":"oidc","created_at":"2009-06-23T12:44:19.000000Z","updated_at":"1976-08-01T08:03:27.000000Z","entitlement":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","user_id":"8529678e-de6b-32f2-9f70-231a0d681563","group_id":"ea57fb8f-9953-354e-9184-d01c4ec16bb0"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -110,7 +110,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Doloremque","guard_name":"oidc","created_at":"1990-12-11T21:36:06.000000Z","updated_at":"1972-11-16T01:07:07.000000Z","entitlement":{"id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","user_id":"56db1203-2e82-3de6-a828-ead32bd52d27","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Id","guard_name":"oidc","created_at":"1972-11-16T00:17:03.000000Z","updated_at":"1991-02-18T11:10:38.000000Z","entitlement":{"id":"56db1203-2e82-3de6-a828-ead32bd52d27","user_id":"ea57fb8f-9953-354e-9184-d01c4ec16bb0","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -163,7 +163,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Neque","guard_name":"oidc","created_at":"2024-05-07T07:19:58.000000Z","updated_at":"1973-10-20T11:58:48.000000Z","entitlement":{"id":"54df41cd-f321-3c8c-bee8-8f345f900166","user_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Neque","guard_name":"oidc","created_at":"2024-05-07T06:29:53.000000Z","updated_at":"1973-10-20T11:08:43.000000Z","entitlement":{"id":"54df41cd-f321-3c8c-bee8-8f345f900166","user_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -229,7 +229,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Blanditiis","guard_name":"oidc","created_at":"2024-05-07T07:19:58.000000Z","updated_at":"1973-10-20T11:58:48.000000Z","entitlement":{"id":"54df41cd-f321-3c8c-bee8-8f345f900166","user_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Blanditiis","guard_name":"oidc","created_at":"2024-05-07T06:29:53.000000Z","updated_at":"1973-10-20T11:08:43.000000Z","entitlement":{"id":"54df41cd-f321-3c8c-bee8-8f345f900166","user_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","group_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -282,7 +282,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odio","guard_name":"oidc","created_at":"1973-10-20T11:58:48.000000Z","updated_at":"2001-08-15T20:28:43.000000Z","entitlement":{"id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","user_id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"user_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odio","guard_name":"oidc","created_at":"1973-10-20T11:08:43.000000Z","updated_at":"2001-08-15T19:38:38.000000Z","entitlement":{"id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","user_id":"0ec2755a-a1f6-3599-a3ca-5a888c400d24","group_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
     responseFields: []
