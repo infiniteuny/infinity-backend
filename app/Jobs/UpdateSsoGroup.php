@@ -9,7 +9,6 @@ use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
-use Spatie\LaravelData\Optional;
 
 class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
