@@ -15,7 +15,7 @@ class SsoGroupData extends Data
         #[MapName('parents')]
         public array|Optional $sso_parent_ids,
         #[MapName('users')]
-        /** @var string[] */
+        /** @var int[] */
         public array|Optional $user_ids,
         public string|Optional $name,
         public bool|Optional $is_superuser,
@@ -26,7 +26,7 @@ class SsoGroupData extends Data
         return new self(
             sso_id: $group->sso_id,
             sso_parent_ids: Optional::create(),
-            user_ids: $group->users->pluck('sso_id')->map('intval')->toArray(),
+            user_ids: $group->users->pluck('sso_id')->map(fn (string $id) => (int) $id)->values()->toArray(),
             name: $group->name,
             is_superuser: Optional::create(),
         );
