@@ -6,10 +6,13 @@ use App\Models\Group;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
-class SyncActiveInactiveMemberSsoGroups implements ShouldQueue
+class SyncActiveInactiveMemberSsoGroup implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * Execute the job.
+     */
     public function handle(): void
     {
         $ssoParentId = config('services.authentik.member_group_id');

@@ -10,6 +10,9 @@ class SyncMemberSsoGroup implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * Execute the job.
+     */
     public function handle(): void
     {
         $ssoId = config('services.authentik.member_group_id');

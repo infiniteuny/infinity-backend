@@ -2,8 +2,8 @@
 
 use App\Http\Middleware\ForceJsonResponse;
 use App\Jobs\SyncAchievementLeaderboards;
-use App\Jobs\SyncActiveInactiveMember;
-use App\Jobs\SyncActiveInactiveMemberSsoGroups;
+use App\Jobs\SyncActiveInactiveMemberGroup;
+use App\Jobs\SyncActiveInactiveMemberSsoGroup;
 use App\Jobs\SyncAdminSsoGroup;
 use App\Jobs\SyncCGAdminMembersGroup;
 use App\Jobs\SyncCGAdminSsoGroups;
@@ -75,7 +75,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withSchedule(function (Schedule $schedule) {
         $schedule->job(new SyncAchievementLeaderboards(Date::now()->year))->daily();
         $schedule->job(new SyncMemberGroup)->hourly();
-        $schedule->job(new SyncActiveInactiveMember)->hourly();
+        $schedule->job(new SyncActiveInactiveMemberGroup)->hourly();
         $schedule->job(new SyncCoreTeamMembersGroup)->hourly();
         $schedule->job(new SyncCGAdminMembersGroup)->hourly();
         $schedule->job(new SyncSsoUsers)->hourly();
@@ -85,7 +85,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->job(new SyncXCGAdminSsoGroups)->hourly();
         $schedule->job(new SyncMemberSsoGroup)->hourly();
         $schedule->job(new SyncAdminSsoGroup)->hourly();
-        $schedule->job(new SyncActiveInactiveMemberSsoGroups)->hourly();
+        $schedule->job(new SyncActiveInactiveMemberSsoGroup)->hourly();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {

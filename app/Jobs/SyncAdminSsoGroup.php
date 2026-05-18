@@ -10,6 +10,9 @@ class SyncAdminSsoGroup implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * Execute the job.
+     */
     public function handle(): void
     {
         $ssoId = config('services.authentik.admin_group_id');

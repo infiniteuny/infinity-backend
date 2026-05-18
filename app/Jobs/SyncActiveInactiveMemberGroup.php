@@ -8,10 +8,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Carbon;
 
-class SyncActiveInactiveMember implements ShouldQueue
+class SyncActiveInactiveMemberGroup implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * Execute the job.
+     */
     public function handle(): void
     {
         $activeGroup = Group::where('name', 'Active Member')->first();

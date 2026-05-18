@@ -11,6 +11,9 @@ class SyncMemberGroup implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * Execute the job.
+     */
     public function handle(): void
     {
         $group = Group::where('name', 'Member')->first();
