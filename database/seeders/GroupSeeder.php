@@ -27,6 +27,14 @@ class GroupSeeder extends Seeder
                 'name' => 'Member',
                 'is_managed' => true,
             ],
+            [
+                'name' => 'Active Member',
+                'is_managed' => true,
+            ],
+            [
+                'name' => 'Inactive Member',
+                'is_managed' => true,
+            ],
         ];
 
         foreach ($groups as $group) {
