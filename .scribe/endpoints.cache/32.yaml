@@ -45,7 +45,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permissions":[{"id":"c9301834-8e06-3e5c-bdbb-5b1800a941e7","name":"Optio","guard_name":"oidc","created_at":"2022-01-20T04:21:28.000000Z","updated_at":"2006-07-20T06:48:51.000000Z","entitlement":{"id":"c22287ba-3c17-3448-9a46-54c1a85ff193","group_id":"b9724c44-3b7d-3156-a074-12d3bb0e23e6","permission_id":"c9301834-8e06-3e5c-bdbb-5b1800a941e7"}},{"id":"d9d99bac-f2a7-31b3-8b37-3a7ee2b107b5","name":"Nisi","guard_name":"oidc","created_at":"2019-12-26T23:01:30.000000Z","updated_at":"2010-10-22T19:17:01.000000Z","entitlement":{"id":"be280414-827e-391f-a5cb-ee217a7eb503","group_id":"e04c314a-c9d2-3edc-8887-d8481d1669ae","permission_id":"d9d99bac-f2a7-31b3-8b37-3a7ee2b107b5"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"group_permissions":[{"id":"d19c49e0-fb8f-343d-961e-7802e08823ff","name":"Necessitatibus","guard_name":"oidc","created_at":"1982-04-22T22:44:48.000000Z","updated_at":"1987-06-24T14:11:55.000000Z","entitlement":{"id":"77a3d6f4-8b4e-30cf-99a8-999ee7ecd760","group_id":"b4b117be-d120-3b29-8e26-19741da4a4e3","permission_id":"d19c49e0-fb8f-343d-961e-7802e08823ff"}},{"id":"0b2808ff-eabc-3a04-b797-c8c518706aee","name":"Sed","guard_name":"oidc","created_at":"2019-08-23T16:52:57.000000Z","updated_at":"2021-06-22T07:05:31.000000Z","entitlement":{"id":"0b608863-a17e-343d-b30e-b6124baf9152","group_id":"0c7c4336-3c7b-3c3f-b02d-f72e322392cc","permission_id":"0b2808ff-eabc-3a04-b797-c8c518706aee"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -110,7 +110,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Distinctio","guard_name":"oidc","created_at":"2013-02-14T00:13:02.000000Z","updated_at":"1977-01-09T16:27:02.000000Z","entitlement":{"id":"1e9be565-c31b-3b43-8646-66a4d676e89f","group_id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Distinctio","guard_name":"oidc","created_at":"2013-02-14T00:13:02.000000Z","updated_at":"1977-01-08T05:27:17.000000Z","entitlement":{"id":"1e9be565-c31b-3b43-8646-66a4d676e89f","group_id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -163,7 +163,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Corporis","guard_name":"oidc","created_at":"2022-10-18T19:27:48.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","group_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Corporis","guard_name":"oidc","created_at":"2022-10-17T08:28:03.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","group_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
     responseFields: []
