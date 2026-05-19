@@ -265,7 +265,10 @@ class CommunityGroupAdminMemberController extends Controller
         $animationManifest = $communityGroupAdminMember->getRawOriginal('animation');
 
         DeleteBlob::dispatch($photoManifest);
-        DeleteBlob::dispatch($animationManifest);
+
+        if ($animationManifest) {
+            DeleteBlob::dispatch($animationManifest);
+        }
 
         $communityGroupAdmin->members()->detach($communityGroupAdminMember->id);
 
