@@ -216,7 +216,9 @@ class CommunityGroupAdminMemberController extends Controller
         if ($hasAnimation) {
             $oldAnimationManifest = $communityGroupAdminMember->getRawOriginal('animation');
 
-            DeleteBlob::dispatch($oldAnimationManifest);
+            if ($oldAnimationManifest) {
+                DeleteBlob::dispatch($oldAnimationManifest);
+            }
 
             if ($hasFileAnimation) {
                 $animationManifest = Storage::store(

@@ -214,10 +214,10 @@ class CoreTeamMemberController extends Controller
         }
 
         if ($hasAnimation) {
-            $animationManifest = $coreTeamMember->getRawOriginal('animation');
+            $oldAnimationManifest = $coreTeamMember->getRawOriginal('animation');
 
-            if ($animationManifest) {
-                DeleteBlob::dispatch($animationManifest);
+            if ($oldAnimationManifest) {
+                DeleteBlob::dispatch($oldAnimationManifest);
             }
 
             if ($hasFileAnimation) {
