@@ -1,3 +1,13 @@
+## [1.12.1](https://github.com/infiniteuny/infinity-backend/compare/v1.12.0...v1.12.1) (2026-05-19)
+
+
+### Bug Fixes
+
+* **controller:** Correct blob manifest retrieval on destroy method in CommunityGroupAdminMemberController and CoreTeamMemberController ([8742965](https://github.com/infiniteuny/infinity-backend/commit/8742965d6143a202346401a57bd42752615e1f15))
+* **controller:** Correct user ID retrieval on leader checking  in TeamMemberController ([0cc160d](https://github.com/infiniteuny/infinity-backend/commit/0cc160ddbc4f1253d4c1603ec6d9d10bb1143945))
+
+
+
 # [1.12.0](https://github.com/infiniteuny/infinity-backend/compare/v1.11.18...v1.12.0) (2026-05-19)
 
 
@@ -41,15 +51,6 @@
 ### Bug Fixes
 
 * **job:** Replace Optional::create() with default values for 'parents' and 'is_superuser' in SsoGroupData ([5836bad](https://github.com/infiniteuny/infinity-backend/commit/5836bad80f1091993db01f2cfbac2dabccdb63b4))
-
-
-
-## [1.11.15](https://github.com/infiniteuny/infinity-backend/compare/v1.11.14...v1.11.15) (2026-05-17)
-
-
-### Bug Fixes
-
-* **job:** Rename 'sso_parent_ids' to 'parents' for additional SsoGroupData ([6d56690](https://github.com/infiniteuny/infinity-backend/commit/6d56690cb85ed5403639acec88ccaf47125b06b8))
 
 
 
