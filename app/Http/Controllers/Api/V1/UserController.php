@@ -219,8 +219,14 @@ class UserController extends Controller
      *
      * @apiResourceModel App\Models\User
      */
-    public function extendMembership(User $user)
+    public function extendMembership(Request $request, User $user)
     {
+        $authUser = $request->user();
+
+        if ($authUser->id !== $user->id && ! $authUser->can('create-user') && ! $authUser->can('update-user')) {
+            throw new AccessDeniedHttpException('Extending other user\'s membership is not allowed.');
+        }
+
         if (! $user->is_member) {
             throw new AccessDeniedHttpException('User is not a member.');
         }
