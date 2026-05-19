@@ -174,7 +174,7 @@ class TeamMemberController extends Controller
             ->wherePivot('id', $teamMemberId)
             ->firstOrFail();
 
-        if ($team->leader_id === $teamMember->user_id) {
+        if ($team->leader_id === $teamMember->id) {
             throw ValidationException::withMessages([
                 'user_id' => ['The team leader cannot be removed from the team. Please assign a new leader before removing this member.'],
             ]);
