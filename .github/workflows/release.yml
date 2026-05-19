@@ -92,6 +92,8 @@ jobs:
 
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -127,6 +129,18 @@ jobs:
           DB_DATABASE: postgres
           DB_USERNAME: postgres
           DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+
+      - name: Generate changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          skip-commit: "true"
+          skip-tag: "true"
+          skip-git-pull: "true"
+          skip-version-file: "true"
+          output-file: "CHANGELOG.md"
+          tag-prefix: "v"
 
       - name: Extract metadata for Container
         id: meta
@@ -192,3 +206,4 @@ jobs:
           target_commitish: ${{ github.ref_name }}
           prerelease: ${{ inputs.release_type != 'prod' }}
           make_latest: "${{ inputs.release_type == 'prod' }}"
+          body: ${{ steps.changelog.outputs.clean_changelog }}
