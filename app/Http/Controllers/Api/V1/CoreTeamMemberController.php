@@ -256,13 +256,6 @@ class CoreTeamMemberController extends Controller
      */
     public function destroy(CoreTeamMember $coreTeamMember)
     {
-        $coreTeamMemberId = $coreTeamMember->id;
-        $coreTeam = $coreTeamMember->coreTeam;
-        $coreTeamMember = $coreTeam
-            ->members()
-            ->wherePivot('id', $coreTeamMemberId)
-            ->firstOrFail();
-
         $photoManifest = $coreTeamMember->getRawOriginal('photo');
         $animationManifest = $coreTeamMember->getRawOriginal('animation');
 
@@ -271,6 +264,13 @@ class CoreTeamMemberController extends Controller
         if ($animationManifest) {
             DeleteBlob::dispatch($animationManifest);
         }
+
+        $coreTeamMemberId = $coreTeamMember->id;
+        $coreTeam = $coreTeamMember->coreTeam;
+        $coreTeamMember = $coreTeam
+            ->members()
+            ->wherePivot('id', $coreTeamMemberId)
+            ->firstOrFail();
 
         $coreTeam->members()->detach($coreTeamMember->id);
 

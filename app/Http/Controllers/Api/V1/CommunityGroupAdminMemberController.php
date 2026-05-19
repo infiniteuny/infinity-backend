@@ -256,13 +256,6 @@ class CommunityGroupAdminMemberController extends Controller
      */
     public function destroy(CommunityGroupAdminMember $communityGroupAdminMember)
     {
-        $communityGroupAdminMemberId = $communityGroupAdminMember->id;
-        $communityGroupAdmin = $communityGroupAdminMember->communityGroupAdmin;
-        $communityGroupAdminMember = $communityGroupAdmin
-            ->members()
-            ->wherePivot('id', $communityGroupAdminMemberId)
-            ->firstOrFail();
-
         $photoManifest = $communityGroupAdminMember->getRawOriginal('photo');
         $animationManifest = $communityGroupAdminMember->getRawOriginal('animation');
 
@@ -271,6 +264,13 @@ class CommunityGroupAdminMemberController extends Controller
         if ($animationManifest) {
             DeleteBlob::dispatch($animationManifest);
         }
+
+        $communityGroupAdminMemberId = $communityGroupAdminMember->id;
+        $communityGroupAdmin = $communityGroupAdminMember->communityGroupAdmin;
+        $communityGroupAdminMember = $communityGroupAdmin
+            ->members()
+            ->wherePivot('id', $communityGroupAdminMemberId)
+            ->firstOrFail();
 
         $communityGroupAdmin->members()->detach($communityGroupAdminMember->id);
 
