@@ -75,13 +75,11 @@ class TeamController extends Controller
             )
             ->defaultSorts('-id');
 
-        if ($user->can('read-team')) {
-            $teams = $teams;
-        } else {
+        if (! $user->can('read-team')) {
             $teams = $teams
                 ->where('leader_id', $userId)
                 ->orWhereHas('members', function ($query) use ($userId) {
-                    $query->where('id', $userId);
+                    $query->where('users.id', $userId);
                 });
         }
 

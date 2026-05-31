@@ -63,9 +63,7 @@ class TokenController extends Controller
             )
             ->defaultSorts('-id');
 
-        if ($user->can('read-token')) {
-            $tokens = $tokens;
-        } else {
+        if (! $user->can('read-token')) {
             $tokens = $tokens->where('user_id', $userId);
         }
 
