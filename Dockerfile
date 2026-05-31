@@ -56,7 +56,7 @@ RUN CGO_ENABLED=1 \
     --with github.com/dunglas/caddy-cbrotli
 
 # Install dependencies
-FROM composer:2.9.7 AS vendor
+FROM composer:2.10.0 AS vendor
 
 ENV COMPOSER_FUND=0 \
     COMPOSER_MAX_PARALLEL_HTTP=24 \
