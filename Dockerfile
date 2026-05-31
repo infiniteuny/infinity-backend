@@ -38,7 +38,7 @@ RUN install-php-extensions \
 RUN docker-php-source delete && \
     rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
-FROM caddy:2.11.2-builder-alpine AS caddy-builder
+FROM caddy:2.11.3-builder-alpine AS caddy-builder
 
 FROM dunglas/frankenphp:1.12.2-builder-php8.4.20-alpine AS upstream
 
