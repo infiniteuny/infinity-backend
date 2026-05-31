@@ -1,3 +1,14 @@
+## [1.12.2](https://github.com/infiniteuny/infinity-backend/compare/v1.12.1...v1.12.2) (2026-05-31)
+
+
+### Bug Fixes
+
+* **controller:** Add authorization check for extending other user membership ([730b506](https://github.com/infiniteuny/infinity-backend/commit/730b5064530a1cf87026e2bff9a5cd6e0746bed7))
+* **controller:** Fix ambigous id filter ([792b59f](https://github.com/infiniteuny/infinity-backend/commit/792b59f2030f18f51bc932c28f263968f9788848))
+* **deps:** update non-major dependencies ([4bb0924](https://github.com/infiniteuny/infinity-backend/commit/4bb0924f552b8c61da07f074e39ca2c44359aeed))
+
+
+
 ## [1.12.1](https://github.com/infiniteuny/infinity-backend/compare/v1.12.0...v1.12.1) (2026-05-19)
 
 
@@ -42,15 +53,6 @@
 
 * **job:** Add job to sync active and inactive member to group and SSO ([c1cdd0e](https://github.com/infiniteuny/infinity-backend/commit/c1cdd0ea9a9eb1193f01234c86a668f9bcf87922))
 * **job:** Add job to sync member and admin group to SSO ([16e4484](https://github.com/infiniteuny/infinity-backend/commit/16e44847f42db7f5fbd7f60de5b347f65e935784))
-
-
-
-## [1.11.16](https://github.com/infiniteuny/infinity-backend/compare/v1.11.15...v1.11.16) (2026-05-17)
-
-
-### Bug Fixes
-
-* **job:** Replace Optional::create() with default values for 'parents' and 'is_superuser' in SsoGroupData ([5836bad](https://github.com/infiniteuny/infinity-backend/commit/5836bad80f1091993db01f2cfbac2dabccdb63b4))
 
 
 
