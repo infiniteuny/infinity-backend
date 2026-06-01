@@ -223,7 +223,7 @@ class UserController extends Controller
     {
         $authUser = $request->user();
 
-        if ($authUser->id !== $user->id && ! $authUser->can('create-user') && ! $authUser->can('update-user')) {
+        if ($authUser->id !== $user->id && ! $authUser->can('manage-user-membership')) {
             throw new AccessDeniedHttpException('Extending other user\'s membership is not allowed.');
         }
 
