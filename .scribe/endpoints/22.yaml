@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_team_types":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-02T23:42:10+00:00","updated_at":"2022-10-29T19:22:48+00:00"},{"id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","name":"Odit","weight":240490034,"created_at":"1982-01-21T18:39:53+00:00","updated_at":"1973-11-01T06:11:16+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"competition_team_types":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-02T06:20:32+00:00","updated_at":"2022-10-29T02:01:10+00:00"},{"id":"deea2dce-ea5d-340f-90ce-c06cddd4c879","name":"Odit","weight":240490034,"created_at":"1982-01-21T01:18:15+00:00","updated_at":"1973-10-31T12:49:38+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -96,7 +96,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"competition_team_type":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quos","weight":481516916,"created_at":"2020-06-22T18:21:21+00:00","updated_at":"2018-07-27T21:17:54+00:00"}}}'
+        content: '{"status":"success","data":{"competition_team_type":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quos","weight":481516916,"created_at":"2020-06-22T00:59:43+00:00","updated_at":"2018-07-27T03:56:16+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -149,7 +149,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_team_type":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-02T23:42:10+00:00","updated_at":"2022-10-29T19:22:48+00:00"}}}'
+        content: '{"status":"success","data":{"competition_team_type":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-02T06:20:32+00:00","updated_at":"2022-10-29T02:01:10+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -227,7 +227,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_team_type":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quos","weight":481516916,"created_at":"2020-06-22T18:21:21+00:00","updated_at":"2018-07-27T21:17:54+00:00"}}}'
+        content: '{"status":"success","data":{"competition_team_type":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Quos","weight":481516916,"created_at":"2020-06-22T00:59:43+00:00","updated_at":"2018-07-27T03:56:16+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -280,7 +280,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_team_type":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-02T23:42:10+00:00","updated_at":"2022-10-29T19:22:48+00:00"}}}'
+        content: '{"status":"success","data":{"competition_team_type":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quidem","weight":1421700432,"created_at":"2010-08-02T06:20:32+00:00","updated_at":"2022-10-29T02:01:10+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

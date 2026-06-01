@@ -33,7 +33,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1997-05-05T21:18:01.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"},{"id":"1937113a-b0a2-3b03-925a-3163292463db","name":"Voluptatem","guard_name":"oidc","created_at":"2023-08-06T00:38:36.000000Z","updated_at":"2002-03-29T13:27:38.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1997-05-05T03:56:23.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"},{"id":"1937113a-b0a2-3b03-925a-3163292463db","name":"Voluptatem","guard_name":"oidc","created_at":"2023-08-06T00:38:36.000000Z","updated_at":"2002-03-28T20:06:00.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -99,7 +99,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2006-08-10T12:06:38.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2006-08-09T18:45:00.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []

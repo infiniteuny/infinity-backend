@@ -1,3 +1,12 @@
+## [1.12.3](https://github.com/infiniteuny/infinity-backend/compare/v1.12.2...v1.12.3) (2026-06-01)
+
+
+### Bug Fixes
+
+* **controller:** Change permission checking on extend user membership to check for manage-user-membership ([b74cfd7](https://github.com/infiniteuny/infinity-backend/commit/b74cfd7719ddccf385ea2a4c9d0a12b0fea681d5))
+
+
+
 ## [1.12.2](https://github.com/infiniteuny/infinity-backend/compare/v1.12.1...v1.12.2) (2026-05-31)
 
 
@@ -43,16 +52,6 @@
 * **data:** Correct SsoGroupData user IDs string int convertion function ([9397033](https://github.com/infiniteuny/infinity-backend/commit/9397033f8d74405af03a093ae1e723d210459318))
 * **job:** Correct sync job name ([aef5180](https://github.com/infiniteuny/infinity-backend/commit/aef5180f3efe333d652526f30ddb507746d7d94f))
 * **job:** Fix file name typo ([75b3408](https://github.com/infiniteuny/infinity-backend/commit/75b3408fd70adbcc291d22e7954e4be182fb999e))
-
-
-
-## [1.11.17](https://github.com/infiniteuny/infinity-backend/compare/v1.11.16...v1.11.17) (2026-05-18)
-
-
-### Features
-
-* **job:** Add job to sync active and inactive member to group and SSO ([c1cdd0e](https://github.com/infiniteuny/infinity-backend/commit/c1cdd0ea9a9eb1193f01234c86a668f9bcf87922))
-* **job:** Add job to sync member and admin group to SSO ([16e4484](https://github.com/infiniteuny/infinity-backend/commit/16e44847f42db7f5fbd7f60de5b347f65e935784))
 
 
 
