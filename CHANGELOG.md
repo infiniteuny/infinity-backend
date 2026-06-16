@@ -1,3 +1,12 @@
+# [1.13.0](https://github.com/infiniteuny/infinity-backend/compare/v1.12.8...v1.13.0) (2026-06-16)
+
+
+### Features
+
+* **app:** Handle foreign key constraint violations gracefully ([24b7554](https://github.com/infiniteuny/infinity-backend/commit/24b7554f0fb4fa34ffafb69f65fe31891e9e23d5))
+
+
+
 ## [1.12.8](https://github.com/infiniteuny/infinity-backend/compare/v1.12.7...v1.12.8) (2026-06-16)
 
 
@@ -33,15 +42,6 @@
 
 * **controller:** Fix core team and CGAdmin deletetion order ([006beac](https://github.com/infiniteuny/infinity-backend/commit/006beac0915bd9122efeb6bea0ab15a082074820))
 * **model:** Add missing is_active to community group fillable ([f2abd64](https://github.com/infiniteuny/infinity-backend/commit/f2abd647841a11ca594f38c171678f99e4d7977b))
-
-
-
-## [1.12.3](https://github.com/infiniteuny/infinity-backend/compare/v1.12.2...v1.12.3) (2026-06-01)
-
-
-### Bug Fixes
-
-* **controller:** Change permission checking on extend user membership to check for manage-user-membership ([b74cfd7](https://github.com/infiniteuny/infinity-backend/commit/b74cfd7719ddccf385ea2a4c9d0a12b0fea681d5))
 
 
 
