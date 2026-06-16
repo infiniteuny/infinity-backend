@@ -197,7 +197,7 @@ class CoreTeamMemberController extends Controller
         $coreTeamMemberId = $coreTeamMember->id;
         $coreTeam = $coreTeamMember->coreTeam;
 
-        $hasPhoto = $request->has('image');
+        $hasPhoto = $request->has('photo');
         $hasAnimation = $request->has('animation');
         $hasFileAnimation = $request->hasFile('animation');
 

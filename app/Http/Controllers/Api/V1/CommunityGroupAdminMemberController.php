@@ -197,7 +197,7 @@ class CommunityGroupAdminMemberController extends Controller
         $communityGroupAdminMemberId = $communityGroupAdminMember->id;
         $communityGroupAdmin = $communityGroupAdminMember->communityGroupAdmin;
 
-        $hasPhoto = $request->has('image');
+        $hasPhoto = $request->has('photo');
         $hasAnimation = $request->has('animation');
         $hasFileAnimation = $request->hasFile('animation');
 
