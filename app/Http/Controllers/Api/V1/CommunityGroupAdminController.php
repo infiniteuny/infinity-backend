@@ -158,6 +158,7 @@ class CommunityGroupAdminController extends Controller
             $group = $communityGroupAdmin->group;
             $communityGroupAdmin->delete();
             $group->delete();
+            unset($communityGroupAdmin->group);
         });
 
         return new CommunityGroupAdminResource($communityGroupAdmin);

@@ -133,7 +133,6 @@ class CoreTeamController extends Controller
 
             if ($request->has('year')) {
                 $coreTeam->group->update(['name' => 'Core Team '.$coreTeam->year]);
-                // Prevent the group from being serialized
                 unset($coreTeam->group);
             }
 
@@ -159,6 +158,7 @@ class CoreTeamController extends Controller
             $group = $coreTeam->group;
             $coreTeam->delete();
             $group->delete();
+            unset($coreTeam->group);
         });
 
         return new CoreTeamResource($coreTeam);
