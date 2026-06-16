@@ -1,4 +1,16 @@
-# [1.13.0](https://github.com/infiniteuny/infinity-backend/compare/v1.12.8...v1.13.0) (2026-06-16)
+## [1.12.10](https://github.com/infiniteuny/infinity-backend/compare/v1.12.9...v1.12.10) (2026-06-16)
+
+
+### Bug Fixes
+
+* **controller:** Unset group on core and CG admin delete ([10f4159](https://github.com/infiniteuny/infinity-backend/commit/10f415944c295bf82c284dcac0cd612805b96b9b))
+* **controller:** Update core and CG admin group name ([809dc1e](https://github.com/infiniteuny/infinity-backend/commit/809dc1e390d9e06cbaa82203e30324cbf42a3480))
+* **job:** Sync core and CG admin member to current and ex group ([31a549c](https://github.com/infiniteuny/infinity-backend/commit/31a549cd3f74324cffe527a04da21543a9e1e270))
+* **model:** Touch group last updated on core and CG admin ([d584c3c](https://github.com/infiniteuny/infinity-backend/commit/d584c3caefed687c56a9e7034f066e06b557779f))
+
+
+
+## [1.12.9](https://github.com/infiniteuny/infinity-backend/compare/v1.12.8...v1.12.9) (2026-06-16)
 
 
 ### Features
@@ -32,16 +44,6 @@
 ### Bug Fixes
 
 * **request:** Prepare boolean for validation ([dd6578e](https://github.com/infiniteuny/infinity-backend/commit/dd6578e2ca071c094dfd466789797dd8373ab50c))
-
-
-
-## [1.12.5](https://github.com/infiniteuny/infinity-backend/compare/v1.12.3...v1.12.5) (2026-06-16)
-
-
-### Bug Fixes
-
-* **controller:** Fix core team and CGAdmin deletetion order ([006beac](https://github.com/infiniteuny/infinity-backend/commit/006beac0915bd9122efeb6bea0ab15a082074820))
-* **model:** Add missing is_active to community group fillable ([f2abd64](https://github.com/infiniteuny/infinity-backend/commit/f2abd647841a11ca594f38c171678f99e4d7977b))
 
 
 

@@ -32,7 +32,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competitions":[{"id":"add3503c-ebff-3875-93af-b8c6a695762b","name":"Misael Runte","shortname":"HWA","description":"Quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure. Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","created_at":"2007-05-08T14:47:41+00:00","updated_at":"1976-06-12T01:02:48+00:00"},{"id":"7bf95f9e-5598-3dfb-aac6-bcd7a2f2f4ae","name":"Vickie Casper","shortname":"GLR","description":"Sint aut molestiae sunt suscipit. Fugiat ut aut deserunt et error neque recusandae. Ipsam dolorem et ut dicta vitae assumenda consequatur. Et sunt quisquam sit repellendus ut.","created_at":"1993-05-03T17:21:06+00:00","updated_at":"1990-11-27T07:43:51+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"competitions":[{"id":"add3503c-ebff-3875-93af-b8c6a695762b","name":"Misael Runte","shortname":"HWA","description":"Quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure. Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","created_at":"2007-05-08T09:28:18+00:00","updated_at":"1976-06-12T01:02:48+00:00"},{"id":"7bf95f9e-5598-3dfb-aac6-bcd7a2f2f4ae","name":"Vickie Casper","shortname":"GLR","description":"Sint aut molestiae sunt suscipit. Fugiat ut aut deserunt et error neque recusandae. Ipsam dolorem et ut dicta vitae assumenda consequatur. Et sunt quisquam sit repellendus ut.","created_at":"1993-05-03T17:21:06+00:00","updated_at":"1990-11-27T02:24:28+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -81,7 +81,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","shortname":"VDL","description":"Laboriosam praesentium quis adipisci molestias fugit deleniti distinctio. Doloremque id aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia.","created_at":"2005-05-25T00:57:47+00:00","updated_at":"1994-06-22T11:38:03+00:00"}}}'
+        content: '{"status":"success","data":{"competition":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Macey Rempel Phd","shortname":"VDL","description":"Laboriosam praesentium quis adipisci molestias fugit deleniti distinctio. Doloremque id aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia.","created_at":"2005-05-24T19:38:24+00:00","updated_at":"1994-06-22T06:18:40+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -298,7 +298,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Miss Pearl Hauck","shortname":"QWR","description":"Modi ipsum nostrum omnis autem et. Aut dolores enim non facere tempora ex voluptatem. Praesentium quis adipisci molestias fugit. Distinctio eum doloremque id aut libero aliquam veniam corporis.","created_at":"1976-06-12T01:02:48+00:00","updated_at":"2005-05-25T00:57:46+00:00"}}}'
+        content: '{"status":"success","data":{"competition":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Miss Pearl Hauck","shortname":"QWR","description":"Modi ipsum nostrum omnis autem et. Aut dolores enim non facere tempora ex voluptatem. Praesentium quis adipisci molestias fugit. Distinctio eum doloremque id aut libero aliquam veniam corporis.","created_at":"1976-06-12T01:02:48+00:00","updated_at":"2005-05-24T19:38:23+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
