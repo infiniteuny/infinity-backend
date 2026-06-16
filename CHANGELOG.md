@@ -1,4 +1,13 @@
-## [1.12.4](https://github.com/infiniteuny/infinity-backend/compare/v1.12.3...v1.12.4) (2026-06-16)
+## [1.12.6](https://github.com/infiniteuny/infinity-backend/compare/v1.12.5...v1.12.6) (2026-06-16)
+
+
+### Bug Fixes
+
+* **request:** Prepare boolean for validation ([dd6578e](https://github.com/infiniteuny/infinity-backend/commit/dd6578e2ca071c094dfd466789797dd8373ab50c))
+
+
+
+## [1.12.5](https://github.com/infiniteuny/infinity-backend/compare/v1.12.3...v1.12.5) (2026-06-16)
 
 
 ### Bug Fixes
@@ -35,22 +44,6 @@
 
 * **controller:** Correct blob manifest retrieval on destroy method in CommunityGroupAdminMemberController and CoreTeamMemberController ([8742965](https://github.com/infiniteuny/infinity-backend/commit/8742965d6143a202346401a57bd42752615e1f15))
 * **controller:** Correct user ID retrieval on leader checking  in TeamMemberController ([0cc160d](https://github.com/infiniteuny/infinity-backend/commit/0cc160ddbc4f1253d4c1603ec6d9d10bb1143945))
-
-
-
-# [1.12.0](https://github.com/infiniteuny/infinity-backend/compare/v1.11.18...v1.12.0) (2026-05-19)
-
-
-### Bug Fixes
-
-* **controller:** Also prevent dispatching DeleteBlob for null animation manifests on CommunityGroupAdminMember ([d9fbaff](https://github.com/infiniteuny/infinity-backend/commit/d9fbaff79b3aae8e9340c670e16c89ed260dc866))
-* **controller:** Prevent dispatching DeleteBlob for null animation manifests ([a4ea892](https://github.com/infiniteuny/infinity-backend/commit/a4ea8922a454d968ecca4c9cbf6b20c0a900a5c0))
-* **seeder:** Move seeder for entity permission with public read to other permissions ([d4413da](https://github.com/infiniteuny/infinity-backend/commit/d4413da0e7e2732945b779583003730ad0d7f472))
-
-
-### Features
-
-* **workflow:** Add changelog generation step to release workflow ([7b58908](https://github.com/infiniteuny/infinity-backend/commit/7b589084de61212d03888d35ea5acb26f7b1c85f))
 
 
 
