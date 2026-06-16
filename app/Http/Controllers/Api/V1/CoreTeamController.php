@@ -77,7 +77,7 @@ class CoreTeamController extends Controller
     {
         DB::transaction(function () use ($request, &$coreTeam) {
             $group = Group::create([
-                'name' => 'Core '.$request->validated('year'),
+                'name' => 'Core Team '.$request->validated('year'),
                 'guard_name' => 'api',
                 'is_managed' => true,
             ]);
@@ -132,7 +132,7 @@ class CoreTeamController extends Controller
             $coreTeam->update($request->validated());
 
             if ($request->has('year')) {
-                $coreTeam->group->update(['name' => 'Core '.$coreTeam->year]);
+                $coreTeam->group->update(['name' => 'Core Team '.$coreTeam->year]);
                 // Prevent the group from being serialized
                 unset($coreTeam->group);
             }

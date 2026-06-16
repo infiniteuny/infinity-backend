@@ -77,7 +77,7 @@ class CommunityGroupAdminController extends Controller
     {
         DB::transaction(function () use ($request, &$communityGroupAdmin) {
             $group = Group::create([
-                'name' => 'Community '.$request->validated('year'),
+                'name' => 'CG Admin '.$request->validated('year'),
                 'guard_name' => 'api',
                 'is_managed' => true,
             ]);
@@ -132,7 +132,7 @@ class CommunityGroupAdminController extends Controller
             $communityGroupAdmin->update($request->validated());
 
             if ($request->has('year')) {
-                $communityGroupAdmin->group->update(['name' => 'Community '.$communityGroupAdmin->year]);
+                $communityGroupAdmin->group->update(['name' => 'CG Admin '.$communityGroupAdmin->year]);
                 unset($communityGroupAdmin->group);
             }
 
