@@ -33,7 +33,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"tokens":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1989-12-03T12:27:04+00:00"},{"id":"fa253524-dd6a-3fdb-a788-0cabcf134db7","sso_id":"665a39c0-48af-31f1-a546-aa4f41372488","user_id":"d98239dc-1582-3bf2-b93a-df3a18e121d1","last_used_at":"2009-07-27T04:40:06+00:00","created_at":"2003-07-15T08:01:07+00:00","expires_at":"2019-08-30T13:55:51+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"tokens":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1989-12-03T10:52:03+00:00"},{"id":"fa253524-dd6a-3fdb-a788-0cabcf134db7","sso_id":"665a39c0-48af-31f1-a546-aa4f41372488","user_id":"d98239dc-1582-3bf2-b93a-df3a18e121d1","last_used_at":"2009-07-27T04:40:06+00:00","created_at":"2003-07-15T08:01:07+00:00","expires_at":"2019-08-30T13:55:51+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -86,7 +86,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"token":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1989-12-03T12:27:04+00:00"}}}'
+        content: '{"status":"success","data":{"token":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1989-12-03T10:52:03+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -139,7 +139,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"token":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1989-12-03T12:27:04+00:00"}}}'
+        content: '{"status":"success","data":{"token":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","sso_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","user_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","last_used_at":"2020-05-23T06:21:42+00:00","created_at":"1983-05-17T03:07:42+00:00","expires_at":"1989-12-03T10:52:03+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

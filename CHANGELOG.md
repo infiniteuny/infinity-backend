@@ -1,3 +1,12 @@
+## [1.12.11](https://github.com/infiniteuny/infinity-backend/compare/v1.12.10...v1.12.11) (2026-06-16)
+
+
+### Bug Fixes
+
+* **job:** Use users relation instead of polymorphic assignToModels for group sync ([3aca254](https://github.com/infiniteuny/infinity-backend/commit/3aca254001a37e3152122fce4f2ab2801fa74c1d))
+
+
+
 ## [1.12.10](https://github.com/infiniteuny/infinity-backend/compare/v1.12.9...v1.12.10) (2026-06-16)
 
 
@@ -35,15 +44,6 @@
 
 * **controller:** Correct wrong input field for photo ([b311dbc](https://github.com/infiniteuny/infinity-backend/commit/b311dbc51acad0b0fcd67d3bbaa64ecd00723f3e))
 * **request:** Fix operator placement typo ([269b290](https://github.com/infiniteuny/infinity-backend/commit/269b290d491862eed2c7f73f503f0d4f90c061fe))
-
-
-
-## [1.12.6](https://github.com/infiniteuny/infinity-backend/compare/v1.12.5...v1.12.6) (2026-06-16)
-
-
-### Bug Fixes
-
-* **request:** Prepare boolean for validation ([dd6578e](https://github.com/infiniteuny/infinity-backend/commit/dd6578e2ca071c094dfd466789797dd8373ab50c))
 
 
 
