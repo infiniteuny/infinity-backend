@@ -156,11 +156,9 @@ class CoreTeamController extends Controller
     public function destroy(CoreTeam $coreTeam)
     {
         DB::transaction(function () use ($coreTeam) {
-            $coreTeam->group->delete();
-            // Prevent the group from being serialized
-            unset($coreTeam->group);
-
+            $group = $coreTeam->group;
             $coreTeam->delete();
+            $group->delete();
         });
 
         return new CoreTeamResource($coreTeam);

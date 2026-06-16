@@ -155,9 +155,9 @@ class CommunityGroupAdminController extends Controller
     public function destroy(CommunityGroupAdmin $communityGroupAdmin)
     {
         DB::transaction(function () use ($communityGroupAdmin) {
-            $communityGroupAdmin->group->delete();
-            unset($communityGroupAdmin->group);
+            $group = $communityGroupAdmin->group;
             $communityGroupAdmin->delete();
+            $group->delete();
         });
 
         return new CommunityGroupAdminResource($communityGroupAdmin);
