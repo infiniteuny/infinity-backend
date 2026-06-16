@@ -24,6 +24,7 @@ class CommunityGroup extends Model
         'priority',
         'description',
         'logo',
+        'is_active',
     ];
 
     /**
