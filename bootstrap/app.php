@@ -17,6 +17,7 @@ use App\Jobs\SyncXCoreTeamSsoGroups;
 use App\Utils\JsendFormatter;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -103,6 +104,17 @@ return Application::configure(basePath: dirname(__DIR__))
                 ),
                 $e->status ?? 422,
             );
+        });
+
+        $exceptions->render(function (QueryException $e) {
+            if ($e->getCode() === '23503') {
+                return response()->json(
+                    JsendFormatter::fail(
+                        'Operation cannot be completed due to a foreign key constraint, which usually means that the record is still referenced by other records.',
+                    ),
+                    409,
+                );
+            }
         });
 
         $exceptions->render(function (AccessDeniedHttpException $e) {
