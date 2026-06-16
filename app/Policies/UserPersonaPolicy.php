@@ -30,7 +30,7 @@ class UserPersonaPolicy
      */
     public function delete(User $user, UserPersona $userPersona): bool
     {
-        return $user->can('delete-user-persona' ||
-            ($user->can('delete-own-user-persona') && $user->id === $userPersona->user_id));
+        return $user->can('delete-user-persona') ||
+            ($user->can('delete-own-user-persona') && $user->id === $userPersona->user_id);
     }
 }
