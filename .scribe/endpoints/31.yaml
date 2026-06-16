@@ -31,7 +31,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Tempora","is_personal":true,"created_at":"1985-12-26T03:24:50+00:00","updated_at":"2023-08-06T00:38:36+00:00"},{"id":"46779b45-df80-30c6-ad3c-320d08b0f185","leader_id":"b1acb002-2839-312b-9bbc-3ecc71af48bf","name":"Deleniti","is_personal":false,"created_at":"2013-02-14T00:13:02+00:00","updated_at":"1976-12-26T12:06:50+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"teams":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Laboriosam","is_personal":true,"created_at":"2002-03-13T20:41:59+00:00","updated_at":"1975-03-01T00:00:33+00:00"},{"id":"b1acb002-2839-312b-9bbc-3ecc71af48bf","leader_id":"5f936efd-e185-3891-a84d-e9ea08ed9d45","name":"Eum","is_personal":false,"created_at":"1990-11-12T00:23:57+00:00","updated_at":"1972-10-17T03:54:58+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -120,7 +120,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Laboriosam","is_personal":true,"created_at":"2002-03-28T20:06:00+00:00","updated_at":"1975-03-15T23:24:34+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Praesentium","is_personal":true,"created_at":"1975-03-01T00:00:33+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -173,7 +173,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Praesentium","is_personal":true,"created_at":"1975-03-15T23:24:34+00:00","updated_at":"2024-01-23T01:08:03+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-10-15T03:40:49+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -259,7 +259,7 @@ endpoints:
         name: is_personal
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -269,13 +269,13 @@ endpoints:
       leader_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       team_type_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       name: architecto
-      is_personal: false
+      is_personal: true
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Quis","is_personal":true,"created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-10-30T03:04:50+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","leader_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Molestias","is_personal":true,"created_at":"2020-11-21T16:01:20+00:00","updated_at":"2021-02-23T17:13:11+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -328,7 +328,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Molestias","is_personal":true,"created_at":"2020-12-06T15:25:21+00:00","updated_at":"2021-03-10T16:37:12+00:00"}}}'
+        content: '{"status":"success","data":{"team":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","leader_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Fugit","is_personal":false,"created_at":"2021-02-23T17:13:11+00:00","updated_at":"2013-02-14T00:13:02+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

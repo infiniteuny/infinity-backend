@@ -1,3 +1,13 @@
+## [1.12.4](https://github.com/infiniteuny/infinity-backend/compare/v1.12.3...v1.12.4) (2026-06-16)
+
+
+### Bug Fixes
+
+* **controller:** Fix core team and CGAdmin deletetion order ([006beac](https://github.com/infiniteuny/infinity-backend/commit/006beac0915bd9122efeb6bea0ab15a082074820))
+* **model:** Add missing is_active to community group fillable ([f2abd64](https://github.com/infiniteuny/infinity-backend/commit/f2abd647841a11ca594f38c171678f99e4d7977b))
+
+
+
 ## [1.12.3](https://github.com/infiniteuny/infinity-backend/compare/v1.12.2...v1.12.3) (2026-06-01)
 
 
@@ -41,17 +51,6 @@
 ### Features
 
 * **workflow:** Add changelog generation step to release workflow ([7b58908](https://github.com/infiniteuny/infinity-backend/commit/7b589084de61212d03888d35ea5acb26f7b1c85f))
-
-
-
-## [1.11.18](https://github.com/infiniteuny/infinity-backend/compare/v1.11.17...v1.11.18) (2026-05-18)
-
-
-### Bug Fixes
-
-* **data:** Correct SsoGroupData user IDs string int convertion function ([9397033](https://github.com/infiniteuny/infinity-backend/commit/9397033f8d74405af03a093ae1e723d210459318))
-* **job:** Correct sync job name ([aef5180](https://github.com/infiniteuny/infinity-backend/commit/aef5180f3efe333d652526f30ddb507746d7d94f))
-* **job:** Fix file name typo ([75b3408](https://github.com/infiniteuny/infinity-backend/commit/75b3408fd70adbcc291d22e7954e4be182fb999e))
 
 
 
