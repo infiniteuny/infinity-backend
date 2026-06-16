@@ -26,19 +26,19 @@ class SyncCoreTeamMembersGroup implements ShouldQueue
 
             if ($coreTeam->is_active) {
                 if ($activeGroup) {
-                    $activeGroup->assignToModels($userIds);
+                    $activeGroup->users()->syncWithoutDetaching($userIds);
                 }
 
                 if ($inactiveGroup) {
-                    $inactiveGroup->removeFromModels($userIds);
+                    $inactiveGroup->users()->detach($userIds);
                 }
             } else {
                 if ($activeGroup) {
-                    $activeGroup->removeFromModels($userIds);
+                    $activeGroup->users()->detach($userIds);
                 }
 
                 if ($inactiveGroup) {
-                    $inactiveGroup->assignToModels($userIds);
+                    $inactiveGroup->users()->syncWithoutDetaching($userIds);
                 }
             }
 

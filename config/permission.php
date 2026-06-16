@@ -2,6 +2,8 @@
 
 use App\Models\Group;
 use App\Models\Permission;
+use App\Models\User;
+use Spatie\Permission\DefaultTeamResolver;
 
 return [
 
@@ -38,6 +40,31 @@ return [
 
         'role' => Group::class,
 
+        /*
+        |-----------------------------------------------------------------------
+        | Team Model
+        |-----------------------------------------------------------------------
+        |
+        | When using the "Teams" feature from this package, we need to know which
+        | Eloquent model should be used to retrieve your teams. Of course, it
+        | is often just the "Team" model but you may use whatever you like.
+        |
+        */
+
+        'team' => null,
+
+        /*
+        |-----------------------------------------------------------------------
+        | Default Model
+        |-----------------------------------------------------------------------
+        |
+        | When using the "HasModels" trait and passing raw IDs to syncModels,
+        | attachModels, or detachModels, this model class will be used to
+        | resolve those IDs. If null, defaults to the guard's model.
+        |
+        */
+
+        'default_model' => User::class,
     ],
 
     'table_names' => [
@@ -176,6 +203,23 @@ return [
 
     /*
     |---------------------------------------------------------------------------
+    | Events
+    |---------------------------------------------------------------------------
+    |
+    | Events will fire when a role or permission is assigned/unassigned:
+    | \Spatie\Permission\Events\RoleAttachedEvent
+    | \Spatie\Permission\Events\RoleDetachedEvent
+    | \Spatie\Permission\Events\PermissionAttachedEvent
+    | \Spatie\Permission\Events\PermissionDetachedEvent
+    |
+    | To enable, set to true, and then create listeners to watch these events.
+    |
+    */
+
+    'events_enabled' => false,
+
+    /*
+    |---------------------------------------------------------------------------
     | Teams Feature
     |---------------------------------------------------------------------------
     |
@@ -189,6 +233,17 @@ return [
     */
 
     'teams' => false,
+
+    /*
+    |---------------------------------------------------------------------------
+    | Team Resolver
+    |---------------------------------------------------------------------------
+    |
+    | The class to use to resolve the permissions team id
+    |
+    */
+
+    'team_resolver' => DefaultTeamResolver::class,
 
     /*
     |---------------------------------------------------------------------------
@@ -248,7 +303,8 @@ return [
     | If you need to modify delimiters, override the class and specify its name here.
     |
     */
-    // 'permission.wildcard_permission' => Spatie\Permission\WildcardPermission::class,
+
+    // 'wildcard_permission' => Spatie\Permission\WildcardPermission::class,
 
     'cache' => [
 
