@@ -1,3 +1,12 @@
+## [1.12.8](https://github.com/infiniteuny/infinity-backend/compare/v1.12.7...v1.12.8) (2026-06-16)
+
+
+### Bug Fixes
+
+* **controller:** Allow team members include on show single achievement and fund application ([6d9a11a](https://github.com/infiniteuny/infinity-backend/commit/6d9a11a96d706eb8cda9dc15c77ca8845ca9ea90))
+
+
+
 ## [1.12.7](https://github.com/infiniteuny/infinity-backend/compare/v1.12.6...v1.12.7) (2026-06-16)
 
 
@@ -33,17 +42,6 @@
 ### Bug Fixes
 
 * **controller:** Change permission checking on extend user membership to check for manage-user-membership ([b74cfd7](https://github.com/infiniteuny/infinity-backend/commit/b74cfd7719ddccf385ea2a4c9d0a12b0fea681d5))
-
-
-
-## [1.12.2](https://github.com/infiniteuny/infinity-backend/compare/v1.12.1...v1.12.2) (2026-05-31)
-
-
-### Bug Fixes
-
-* **controller:** Add authorization check for extending other user membership ([730b506](https://github.com/infiniteuny/infinity-backend/commit/730b5064530a1cf87026e2bff9a5cd6e0746bed7))
-* **controller:** Fix ambigous id filter ([792b59f](https://github.com/infiniteuny/infinity-backend/commit/792b59f2030f18f51bc932c28f263968f9788848))
-* **deps:** update non-major dependencies ([4bb0924](https://github.com/infiniteuny/infinity-backend/commit/4bb0924f552b8c61da07f074e39ca2c44359aeed))
 
 
 
