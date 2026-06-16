@@ -10,6 +10,20 @@ use Illuminate\Validation\Rule;
 class UpdateUserRequest extends FormRequest
 {
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        foreach (['is_member', 'is_extraordinary'] as $field) {
+            if ($this->has($field)) {
+                $this->merge([
+                    $field => filter_var($this->input($field), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
+                ]);
+            }
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array<mixed>|string>

@@ -11,6 +11,18 @@ use Illuminate\Validation\Rule;
 class UpdateCommunityGroupAdminRequest extends FormRequest
 {
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('is_active')) {
+            $this->merge([
+                'is_active' => filter_var($this->input('is_active'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
+            ]);
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array<mixed>|string>
