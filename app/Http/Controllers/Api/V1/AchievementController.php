@@ -187,6 +187,29 @@ class AchievementController extends Controller
      */
     public function show(Achievement $achievement)
     {
+        $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
+        $userId = $user->id;
+
+        if ($user) {
+            $includes = [
+                'team',
+                'team.members',
+                AllowedInclude::relationship('competition_instance', 'competitionInstance'),
+                AllowedInclude::relationship('competition_scale', 'competitionScale'),
+                AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
+                AllowedInclude::relationship('competition_output', 'competitionOutput'),
+                AllowedInclude::relationship('competition_rank', 'competitionRank'),
+            ];
+        } else {
+            $includes = [
+                AllowedInclude::relationship('competition_instance', 'competitionInstance'),
+                AllowedInclude::relationship('competition_scale', 'competitionScale'),
+                AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
+                AllowedInclude::relationship('competition_output', 'competitionOutput'),
+                AllowedInclude::relationship('competition_rank', 'competitionRank'),
+            ];
+        }
+
         $achievement = QueryBuilder::for(Achievement::where('id', $achievement->id))
             ->allowedFields(
                 'id',
@@ -207,14 +230,7 @@ class AchievementController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->allowedIncludes(
-                'team',
-                AllowedInclude::relationship('competition_instance', 'competitionInstance'),
-                AllowedInclude::relationship('competition_scale', 'competitionScale'),
-                AllowedInclude::relationship('competition_time_range', 'competitionTimeRange'),
-                AllowedInclude::relationship('competition_output', 'competitionOutput'),
-                AllowedInclude::relationship('competition_rank', 'competitionRank'),
-            )
+            ->allowedIncludes(...$includes)
             ->firstOrFail();
 
         return new AchievementResource($achievement);
