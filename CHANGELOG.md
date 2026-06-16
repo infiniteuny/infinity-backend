@@ -1,3 +1,13 @@
+## [1.12.7](https://github.com/infiniteuny/infinity-backend/compare/v1.12.6...v1.12.7) (2026-06-16)
+
+
+### Bug Fixes
+
+* **controller:** Correct wrong input field for photo ([b311dbc](https://github.com/infiniteuny/infinity-backend/commit/b311dbc51acad0b0fcd67d3bbaa64ecd00723f3e))
+* **request:** Fix operator placement typo ([269b290](https://github.com/infiniteuny/infinity-backend/commit/269b290d491862eed2c7f73f503f0d4f90c061fe))
+
+
+
 ## [1.12.6](https://github.com/infiniteuny/infinity-backend/compare/v1.12.5...v1.12.6) (2026-06-16)
 
 
@@ -34,16 +44,6 @@
 * **controller:** Add authorization check for extending other user membership ([730b506](https://github.com/infiniteuny/infinity-backend/commit/730b5064530a1cf87026e2bff9a5cd6e0746bed7))
 * **controller:** Fix ambigous id filter ([792b59f](https://github.com/infiniteuny/infinity-backend/commit/792b59f2030f18f51bc932c28f263968f9788848))
 * **deps:** update non-major dependencies ([4bb0924](https://github.com/infiniteuny/infinity-backend/commit/4bb0924f552b8c61da07f074e39ca2c44359aeed))
-
-
-
-## [1.12.1](https://github.com/infiniteuny/infinity-backend/compare/v1.12.0...v1.12.1) (2026-05-19)
-
-
-### Bug Fixes
-
-* **controller:** Correct blob manifest retrieval on destroy method in CommunityGroupAdminMemberController and CoreTeamMemberController ([8742965](https://github.com/infiniteuny/infinity-backend/commit/8742965d6143a202346401a57bd42752615e1f15))
-* **controller:** Correct user ID retrieval on leader checking  in TeamMemberController ([0cc160d](https://github.com/infiniteuny/infinity-backend/commit/0cc160ddbc4f1253d4c1603ec6d9d10bb1143945))
 
 
 
