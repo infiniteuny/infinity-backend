@@ -14,6 +14,15 @@ class CoreTeam extends Model
     use HasFactory, HasUuids;
 
     /**
+     * All of the relationships to be touched.
+     *
+     * @var array
+     */
+    protected $touches = [
+        'group',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

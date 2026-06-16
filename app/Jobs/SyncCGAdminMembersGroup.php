@@ -41,6 +41,8 @@ class SyncCGAdminMembersGroup implements ShouldQueue
                     $inactiveGroup->assignToModels($userIds);
                 }
             }
+
+            $cgAdmin->group->touch();
         }
     }
 }
