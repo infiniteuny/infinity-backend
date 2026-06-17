@@ -1,16 +1,34 @@
-FROM dunglas/frankenphp:1.12.2-php8.4.20-alpine AS base
+FROM caddy:2.11.3-builder-alpine AS caddy-builder
 
-RUN apk add --no-cache \
+FROM dunglas/frankenphp:1.12.2-builder-php8.4.20 AS upstream
+
+COPY --link --from=caddy-builder /usr/bin/xcaddy /usr/bin/xcaddy
+
+RUN CGO_ENABLED=1 \
+    XCADDY_SETCAP=1 \
+    XCADDY_GO_BUILD_FLAGS="-ldflags='-w -s' -tags=nobadger,nomysql,nopgx" \
+    CGO_CFLAGS=$(php-config --includes) \
+    CGO_LDFLAGS="$(php-config --ldflags) $(php-config --libs)" \
+    xcaddy build \
+    --output /usr/local/bin/frankenphp \
+    --with github.com/dunglas/frankenphp=./ \
+    --with github.com/dunglas/frankenphp/caddy=./caddy/ \
+    --with github.com/dunglas/caddy-cbrotli
+
+FROM dunglas/frankenphp:1.12.2-php8.4.20 AS base
+
+RUN apt-get update && \
+    apt-get install -yqq --no-install-recommends \
     curl \
     wget \
     ca-certificates \
-    tzdata \
     procps \
-    ncdu \
     unzip \
     supervisor \
-    libsodium-dev \
-    brotli
+    libsodium-dev && \
+    apt-get autoremove -yqq && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/log/lastlog /var/log/faillog
 
 RUN install-php-extensions \
     bcmath \
@@ -30,41 +48,20 @@ RUN install-php-extensions \
     sockets \
     vips \
     ffi \
-    zip
-
-RUN install-php-extensions \
-    uv
-
-RUN docker-php-source delete && \
-    rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
-
-FROM caddy:2.11.3-builder-alpine AS caddy-builder
-
-FROM dunglas/frankenphp:1.12.2-builder-php8.4.20-alpine AS upstream
-
-COPY --link --from=caddy-builder /usr/bin/xcaddy /usr/bin/xcaddy
-
-RUN CGO_ENABLED=1 \
-    XCADDY_SETCAP=1 \
-    XCADDY_GO_BUILD_FLAGS="-ldflags='-w -s' -tags=nobadger,nomysql,nopgx" \
-    CGO_CFLAGS=$(php-config --includes) \
-    CGO_LDFLAGS="$(php-config --ldflags) $(php-config --libs)" \
-    xcaddy build \
-    --output /usr/local/bin/frankenphp \
-    --with github.com/dunglas/frankenphp=./ \
-    --with github.com/dunglas/frankenphp/caddy=./caddy/ \
-    --with github.com/dunglas/caddy-cbrotli
+    zip && \
+    docker-php-source delete && \
+    rm -rf /tmp/* /var/tmp/*
 
 # Install dependencies
 FROM composer:2.10.0 AS vendor
 
 ENV COMPOSER_FUND=0 \
-    COMPOSER_MAX_PARALLEL_HTTP=24 \
+    COMPOSER_MAX_PARALLEL_HTTP=48 \
     COMPOSER_IGNORE_PLATFORM_REQS=1
 
 WORKDIR /tmp
 
-COPY --link . .
+COPY --link composer.* ./
 
 RUN composer install \
     --classmap-authoritative \
@@ -82,26 +79,32 @@ COPY --link --from=upstream /usr/local/bin/frankenphp /usr/local/bin/frankenphp
 ARG UID=1000 \
     GID=1000 \
     TZ=UTC \
-    APP_ENV=prod
+    APP_ENV=production
 
 ENV USER=octane \
     ROOT=/var/www/html \
     OCTANE_SERVER=frankenphp \
     TZ=${TZ} \
     TERM=xterm-color \
+    LANG=C.UTF-8 \
     WITH_HORIZON=false \
     WITH_REVERB=false \
     WITH_SCHEDULER=false \
     APP_ENV=${APP_ENV} \
-    APP_DEBUG=false
+    APP_DEBUG=false \
+    COMPOSER_FUND=0 \
+    COMPOSER_MAX_PARALLEL_HTTP=48 \
+    GODEBUG=cgocheck=0 \
+    GOMEMLIMIT=512MiB
 
-ENV XDG_CONFIG_HOME=${ROOT}/.config XDG_DATA_HOME=${ROOT}/.data
+ENV XDG_CONFIG_HOME=${ROOT}/.config \
+    XDG_DATA_HOME=${ROOT}/.data
 
 WORKDIR ${ROOT}
 
-SHELL ["/bin/sh", "-eou", "pipefail", "-c"]
+SHELL ["/bin/bash", "-eou", "pipefail", "-c"]
 
-RUN arch="$(apk --print-arch)" && \
+RUN arch="$(uname -m)" && \
     case "$arch" in \
     armhf) _cronic_fname="supercronic-linux-arm" ;; \
     aarch64) _cronic_fname="supercronic-linux-arm64" ;; \
@@ -109,7 +112,7 @@ RUN arch="$(apk --print-arch)" && \
     x86) _cronic_fname="supercronic-linux-386" ;; \
     *) echo >&2 "error: unsupported architecture: $arch"; exit 1 ;; \
     esac && \
-    wget -q "https://github.com/aptible/supercronic/releases/latest/download/${_cronic_fname}" \
+    wget -q "https://github.com/aptible/supercronic/releases/download/v0.2.46/${_cronic_fname}" \
     -O /usr/bin/supercronic && \
     chmod +x /usr/bin/supercronic && \
     mkdir -p /etc/supercronic && \
@@ -118,8 +121,10 @@ RUN arch="$(apk --print-arch)" && \
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
     echo ${TZ} > /etc/timezone
 
-RUN addgroup -g ${GID} ${USER} && \
-    adduser -D -h ${ROOT} -G ${USER} -u ${UID} -s /bin/sh ${USER}
+
+RUN userdel --remove --force www-data 2>/dev/null || true && \
+    groupadd --force -g ${GID} ${USER} && \
+    useradd -ms /bin/bash --no-log-init --no-user-group -g ${GID} -u ${UID} ${USER}
 
 RUN mkdir -p /var/log/supervisor /var/run/supervisor && \
     chown -R ${UID}:${GID} ${ROOT} /var/log /var/run && \
@@ -127,9 +132,12 @@ RUN mkdir -p /var/log/supervisor /var/run/supervisor && \
 
 # Use the default production configuration
 RUN cp ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
-
-USER ${USER}
-
+COPY --link --chown=${UID}:${GID} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
+COPY --link --chown=${UID}:${GID} deployment/Caddyfile ${ROOT}/deployment/Caddyfile
+COPY --link --chown=${UID}:${GID} deployment/supervisord.conf /etc/
+COPY --link --chown=${UID}:${GID} deployment/supervisord.*.conf /etc/supervisor/conf.d/
+COPY --link --chown=${UID}:${GID} deployment/healthcheck /usr/local/bin/healthcheck
+COPY --link --chown=${UID}:${GID} deployment/start-container /usr/local/bin/start-container
 COPY --link --chown=${UID}:${GID} --from=vendor /usr/bin/composer /usr/bin/composer
 COPY --link --chown=${UID}:${GID} --from=vendor /tmp/vendor ./vendor
 COPY --link --chown=${UID}:${GID} . .
@@ -138,22 +146,14 @@ RUN composer dump-autoload \
     --optimize \
     --classmap-authoritative \
     --apcu \
-    --no-interaction \
-    --no-ansi \
     --no-dev && \
-    rm -rf /usr/bin/composer
+    rm -f /usr/bin/composer && \
+    chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
 
-COPY --link --chown=${UID}:${GID} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
-COPY --link --chown=${UID}:${GID} deployment/Caddyfile ${ROOT}/deployment/Caddyfile
-COPY --link --chown=${UID}:${GID} deployment/supervisord.conf /etc/
-COPY --link --chown=${UID}:${GID} deployment/supervisord.*.conf /etc/supervisor/conf.d/
-COPY --link --chown=${UID}:${GID} deployment/healthcheck /usr/local/bin/healthcheck
-COPY --link --chown=${UID}:${GID} deployment/start-container /usr/local/bin/start-container
-
-RUN chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
+USER ${USER}
 
 EXPOSE 8000 2019 8080
 
-HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD healthcheck || exit 1
+HEALTHCHECK --start-period=5s --interval=1s --timeout=3s --retries=10 CMD healthcheck || exit 1
 
 ENTRYPOINT ["start-container"]
