@@ -1,3 +1,12 @@
+## [1.12.14](https://github.com/infiniteuny/infinity-backend/compare/v1.12.13...v1.12.14) (2026-06-17)
+
+
+### Bug Fixes
+
+* **docker:** Correct permissions and ownership setup ([184f2f2](https://github.com/infiniteuny/infinity-backend/commit/184f2f2350b8bebcc083a4c1fc901ad5dd317d14))
+
+
+
 ## [1.12.13](https://github.com/infiniteuny/infinity-backend/compare/v1.12.12...v1.12.13) (2026-06-17)
 
 
@@ -39,15 +48,6 @@
 * **controller:** Update core and CG admin group name ([809dc1e](https://github.com/infiniteuny/infinity-backend/commit/809dc1e390d9e06cbaa82203e30324cbf42a3480))
 * **job:** Sync core and CG admin member to current and ex group ([31a549c](https://github.com/infiniteuny/infinity-backend/commit/31a549cd3f74324cffe527a04da21543a9e1e270))
 * **model:** Touch group last updated on core and CG admin ([d584c3c](https://github.com/infiniteuny/infinity-backend/commit/d584c3caefed687c56a9e7034f066e06b557779f))
-
-
-
-## [1.12.9](https://github.com/infiniteuny/infinity-backend/compare/v1.12.8...v1.12.9) (2026-06-16)
-
-
-### Features
-
-* **app:** Handle foreign key constraint violations gracefully ([24b7554](https://github.com/infiniteuny/infinity-backend/commit/24b7554f0fb4fa34ffafb69f65fe31891e9e23d5))
 
 
 

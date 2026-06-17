@@ -30,7 +30,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_groups":[{"id":"cd7c94c7-777c-3bc2-ab81-c1d1c184670a","name":"ex","priority":2,"description":"Tenetur ab reiciendis quia perspiciatis. Ducimus corrupti et dolores quia maiores assumenda. Doloribus repellat officiis corporis nesciunt ut ratione iure. Molestiae ut rem est esse.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2001-03-13T12:24:20+00:00","updated_at":"1979-09-27T10:37:29+00:00"},{"id":"1f6a0119-1571-3d07-bd98-0e258c2f8ff7","name":"et","priority":89,"description":"Repellendus ut eaque alias ratione dolores. Rem ea ut aut deserunt. Quis in quod id aspernatur.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1990-01-11T05:01:04+00:00","updated_at":"2017-05-29T06:29:03+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"community_groups":[{"id":"cd7c94c7-777c-3bc2-ab81-c1d1c184670a","name":"ex","priority":2,"description":"Tenetur ab reiciendis quia perspiciatis. Ducimus corrupti et dolores quia maiores assumenda. Doloribus repellat officiis corporis nesciunt ut ratione iure. Molestiae ut rem est esse.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2001-03-13T12:24:20+00:00","updated_at":"1979-09-27T10:37:29+00:00"},{"id":"1f6a0119-1571-3d07-bd98-0e258c2f8ff7","name":"et","priority":89,"description":"Repellendus ut eaque alias ratione dolores. Rem ea ut aut deserunt. Quis in quod id aspernatur.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1990-01-11T05:01:04+00:00","updated_at":"2017-05-29T05:29:38+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -79,7 +79,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"quos","priority":108,"description":"Sunt nihil accusantium harum mollitia. Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-10-13T18:41:30+00:00"}}}'
+        content: '{"status":"success","data":{"community_group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"quos","priority":108,"description":"Sunt nihil accusantium harum mollitia. Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"2024-01-23T01:08:03+00:00","updated_at":"1986-10-13T17:42:05+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -344,7 +344,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"nostrum","priority":31,"description":"Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim. Facere tempora ex voluptatem laboriosam. Quis adipisci molestias fugit deleniti distinctio eum.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1973-09-19T05:47:20+00:00","updated_at":"2001-07-15T14:17:15+00:00"}}}'
+        content: '{"status":"success","data":{"community_group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"nostrum","priority":31,"description":"Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim. Facere tempora ex voluptatem laboriosam. Quis adipisci molestias fugit deleniti distinctio eum.","logo":"https:\/\/api.infiniteuny.id\/infinity\/static\/community-groups\/logos\/some-logo-id.jpg","created_at":"1973-09-19T04:47:54+00:00","updated_at":"2001-07-15T13:17:49+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
