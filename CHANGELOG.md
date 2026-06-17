@@ -1,3 +1,17 @@
+# [1.13.0](https://github.com/infiniteuny/infinity-backend/compare/v1.12.11...v1.13.0) (2026-06-17)
+
+
+
+## 1.12.12-alpha.1 (2026-06-17)
+
+
+### Features
+
+* **docker:** Revamp dockerfile and switch to non alpine ([a8b4bb6](https://github.com/infiniteuny/infinity-backend/commit/a8b4bb667ca697b953d72623befa00150fa0fd8b))
+* **workflow:** Use multijob with matrix for native arm64 docker build ([85319ef](https://github.com/infiniteuny/infinity-backend/commit/85319ef39169ad1c681d13953a63db72deae786e))
+
+
+
 ## [1.12.11](https://github.com/infiniteuny/infinity-backend/compare/v1.12.10...v1.12.11) (2026-06-16)
 
 
@@ -34,16 +48,6 @@
 ### Bug Fixes
 
 * **controller:** Allow team members include on show single achievement and fund application ([6d9a11a](https://github.com/infiniteuny/infinity-backend/commit/6d9a11a96d706eb8cda9dc15c77ca8845ca9ea90))
-
-
-
-## [1.12.7](https://github.com/infiniteuny/infinity-backend/compare/v1.12.6...v1.12.7) (2026-06-16)
-
-
-### Bug Fixes
-
-* **controller:** Correct wrong input field for photo ([b311dbc](https://github.com/infiniteuny/infinity-backend/commit/b311dbc51acad0b0fcd67d3bbaa64ecd00723f3e))
-* **request:** Fix operator placement typo ([269b290](https://github.com/infiniteuny/infinity-backend/commit/269b290d491862eed2c7f73f503f0d4f90c061fe))
 
 
 

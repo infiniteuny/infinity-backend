@@ -33,7 +33,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"groups":[{"id":"2b861a0d-ca37-3c05-87d1-d16b8e225b3d","name":"Asperiores","guard_name":"oidc","created_at":"2009-01-09T15:21:27.000000Z","updated_at":"1983-10-30T00:06:01.000000Z"},{"id":"58dabb3e-d10a-327c-b67f-e7b3973a7ee8","name":"A","guard_name":"oidc","created_at":"1986-09-01T20:15:04.000000Z","updated_at":"1976-01-01T10:41:02.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"groups":[{"id":"bb8f96b7-44ad-31c5-ad9d-4be665988a91","name":"Consectetur","guard_name":"oidc","created_at":"1982-08-08T10:19:43.000000Z","updated_at":"2016-10-10T01:24:31.000000Z"},{"id":"aa6968aa-8d80-3a1b-ae04-d200afedaa6c","name":"Consequuntur","guard_name":"oidc","created_at":"2015-07-17T05:21:23.000000Z","updated_at":"2003-06-02T15:36:58.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -152,7 +152,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-01-05T15:19:47.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1982-01-04T18:16:32.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -231,7 +231,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Omnis","guard_name":"oidc","created_at":"1971-10-04T15:17:12.000000Z","updated_at":"1981-09-23T20:12:03.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Omnis","guard_name":"oidc","created_at":"1971-10-04T15:17:12.000000Z","updated_at":"1981-09-22T23:08:48.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
