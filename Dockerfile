@@ -120,13 +120,19 @@ RUN arch="$(uname -m)" && \
 
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
     echo ${TZ} > /etc/timezone
-
 RUN userdel --remove --force www-data 2>/dev/null || true && \
     groupadd --force -g ${GID} ${USER} && \
     useradd -ms /bin/bash --no-log-init --no-user-group -g ${GID} -u ${UID} ${USER}
 
+RUN mkdir -p ${XDG_CONFIG_HOME} ${XDG_DATA_HOME} /var/log/supervisor /var/run/supervisor && \
+    chown -R ${UID}:${GID} ${ROOT} /var/log /var/run && \
+    chmod -R a+rw ${ROOT} /var/log /var/run && \
+    find / -perm /6000 -type f -exec chmod a-s {} + 2>/dev/null || true
+
 # Use the default production configuration
 RUN cp ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
+
+USER ${USER}
 
 COPY --link --chown=${UID}:${GID} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
 COPY --link --chown=${UID}:${GID} deployment/Caddyfile ${ROOT}/deployment/Caddyfile
@@ -138,20 +144,13 @@ COPY --link --chown=${UID}:${GID} --from=vendor /usr/bin/composer /usr/bin/compo
 COPY --link --chown=${UID}:${GID} --from=vendor /tmp/vendor ./vendor
 COPY --link --chown=${UID}:${GID} . .
 
-RUN mkdir -p ${XDG_CONFIG_HOME} ${XDG_DATA_HOME} /var/log/supervisor /var/run/supervisor && \
-    chown -R ${UID}:${GID} ${ROOT} /var/log /var/run && \
-    chmod -R a+rw ${ROOT} /var/log /var/run
-
 RUN composer dump-autoload \
     --optimize \
     --classmap-authoritative \
     --apcu \
     --no-dev && \
     rm -f /usr/bin/composer && \
-    chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck && \
-    find / -perm /6000 -type f -exec chmod a-s {} + 2>/dev/null || true
-
-USER ${USER}
+    chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
 
 EXPOSE 8000 2019 8080
 
