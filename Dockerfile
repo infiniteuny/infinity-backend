@@ -1,4 +1,4 @@
-FROM caddy:2.11.3-builder-alpine AS caddy-builder
+FROM caddy:2.11.4-builder-alpine AS caddy-builder
 
 FROM dunglas/frankenphp:1.12.2-builder-php8.4.20 AS upstream
 
