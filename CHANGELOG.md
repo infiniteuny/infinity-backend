@@ -1,4 +1,13 @@
-# [1.13.0](https://github.com/infiniteuny/infinity-backend/compare/v1.12.11...v1.13.0) (2026-06-17)
+## [1.12.13](https://github.com/infiniteuny/infinity-backend/compare/v1.12.12...v1.12.13) (2026-06-17)
+
+
+### Bug Fixes
+
+* **docker:** Correct folder creation and perm change order ([99add7e](https://github.com/infiniteuny/infinity-backend/commit/99add7e850379831a3af4dea2a2da2c0f8ce960e))
+
+
+
+## [1.12.12](https://github.com/infiniteuny/infinity-backend/compare/v1.12.11...v1.12.12) (2026-06-17)
 
 
 
@@ -39,15 +48,6 @@
 ### Features
 
 * **app:** Handle foreign key constraint violations gracefully ([24b7554](https://github.com/infiniteuny/infinity-backend/commit/24b7554f0fb4fa34ffafb69f65fe31891e9e23d5))
-
-
-
-## [1.12.8](https://github.com/infiniteuny/infinity-backend/compare/v1.12.7...v1.12.8) (2026-06-16)
-
-
-### Bug Fixes
-
-* **controller:** Allow team members include on show single achievement and fund application ([6d9a11a](https://github.com/infiniteuny/infinity-backend/commit/6d9a11a96d706eb8cda9dc15c77ca8845ca9ea90))
 
 
 
