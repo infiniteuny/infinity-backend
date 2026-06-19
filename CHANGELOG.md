@@ -1,3 +1,12 @@
+# [1.13.0](https://github.com/infiniteuny/infinity-backend/compare/v1.12.14...v1.13.0) (2026-06-19)
+
+
+### Features
+
+* **deployment:** Explicitly pass log level to octane ([c9b53d7](https://github.com/infiniteuny/infinity-backend/commit/c9b53d73d4a7797dc4552ed680a186a89b051c1a))
+
+
+
 ## [1.12.14](https://github.com/infiniteuny/infinity-backend/compare/v1.12.13...v1.12.14) (2026-06-17)
 
 
@@ -36,18 +45,6 @@
 ### Bug Fixes
 
 * **job:** Use users relation instead of polymorphic assignToModels for group sync ([3aca254](https://github.com/infiniteuny/infinity-backend/commit/3aca254001a37e3152122fce4f2ab2801fa74c1d))
-
-
-
-## [1.12.10](https://github.com/infiniteuny/infinity-backend/compare/v1.12.9...v1.12.10) (2026-06-16)
-
-
-### Bug Fixes
-
-* **controller:** Unset group on core and CG admin delete ([10f4159](https://github.com/infiniteuny/infinity-backend/commit/10f415944c295bf82c284dcac0cd612805b96b9b))
-* **controller:** Update core and CG admin group name ([809dc1e](https://github.com/infiniteuny/infinity-backend/commit/809dc1e390d9e06cbaa82203e30324cbf42a3480))
-* **job:** Sync core and CG admin member to current and ex group ([31a549c](https://github.com/infiniteuny/infinity-backend/commit/31a549cd3f74324cffe527a04da21543a9e1e270))
-* **model:** Touch group last updated on core and CG admin ([d584c3c](https://github.com/infiniteuny/infinity-backend/commit/d584c3caefed687c56a9e7034f066e06b557779f))
 
 
 

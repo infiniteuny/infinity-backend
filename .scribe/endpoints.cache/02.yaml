@@ -32,7 +32,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"configs":[{"id":"2da616f3-ce5e-38f4-9369-f1be3919879d","key":"voluptate","value":"accusamus","type":"STRING","is_private":true,"created_at":"2005-09-29T05:08:01+00:00","updated_at":"1989-12-14T06:05:08+00:00"},{"id":"fecaf9fe-6060-39af-b373-7563b93c16ba","key":"repellendus","value":"assumenda","type":"STRING","is_private":true,"created_at":"1981-01-06T21:28:39+00:00","updated_at":"1996-03-07T00:37:58+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"configs":[{"id":"2da616f3-ce5e-38f4-9369-f1be3919879d","key":"voluptate","value":"accusamus","type":"STRING","is_private":true,"created_at":"2005-09-29T05:08:01+00:00","updated_at":"1989-12-12T07:42:25+00:00"},{"id":"fecaf9fe-6060-39af-b373-7563b93c16ba","key":"repellendus","value":"assumenda","type":"STRING","is_private":true,"created_at":"1981-01-06T21:28:39+00:00","updated_at":"1996-03-05T02:15:15+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -81,7 +81,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2018-07-10T18:33:31+00:00","updated_at":"2019-09-12T01:42:41+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2018-07-08T20:10:48+00:00","updated_at":"2019-09-10T03:19:58+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -140,7 +140,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: INTEGER
+        example: STRING
         type: string
         enumValues:
           - STRING
@@ -154,7 +154,7 @@ endpoints:
         name: is_private
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -163,14 +163,14 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: INTEGER
-      is_private: false
+      type: STRING
+      is_private: true
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"harum","value":"mollitia","type":"INTEGER","is_private":false,"created_at":"2024-06-26T05:35:27+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"harum","value":"mollitia","type":"INTEGER","is_private":false,"created_at":"2024-06-24T07:12:44+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -245,7 +245,7 @@ endpoints:
         name: type
         description: ''
         required: false
-        example: STRING
+        example: BOOLEAN
         type: string
         enumValues:
           - STRING
@@ -268,7 +268,7 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: STRING
+      type: BOOLEAN
       is_private: false
     fileParameters: []
     responses:
