@@ -30,7 +30,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_instances":[{"id":"067d00f5-e958-3b01-bc80-7e5e367be869","competition_id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","name":"Fausto Conroy","shortname":"GSR","description":"Ab reiciendis quia perspiciatis deserunt ducimus corrupti. Dolores quia maiores assumenda odit doloribus repellat officiis. Nesciunt ut ratione iure impedit molestiae ut rem.","url":"http:\/\/klocko.com\/","organizer":"Miller Inc","organizer_type_id":"b791a78a-bdb6-3c15-a840-a911ad9b9a6e","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782047462&signature=4dc506962d5ff5a6344b3cc06c3c2f7f00e083a02026b4900d9910729bccffe9","start_date":"1998-09-11T00:00:00+00:00","end_date":"1992-12-15T00:00:00+00:00","location":"New Alfonsoport","created_at":"2011-04-15T19:48:33+00:00","updated_at":"1978-05-22T18:20:18+00:00"},{"id":"bea6f3b7-be19-33a7-a1c1-8e4be9f8ede4","competition_id":"12ea60a3-4641-392f-9274-8b4bc16686a0","name":"Ofelia Hackett","shortname":"DPM","description":"Rem dolorem aut quis. Dolores omnis et earum consequatur asperiores est vel id. Officiis eos voluptatem et qui unde et esse.","url":"http:\/\/www.schroeder.biz\/quis-est-nulla-vel-voluptas.html","organizer":"Hills LLC","organizer_type_id":"c8e3c808-031a-3d7a-936d-05edc1d0bda0","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782047462&signature=4dc506962d5ff5a6344b3cc06c3c2f7f00e083a02026b4900d9910729bccffe9","start_date":"2020-10-09T00:00:00+00:00","end_date":"2009-08-15T00:00:00+00:00","location":"South Tyree","created_at":"2001-11-16T17:17:07+00:00","updated_at":"2003-01-09T18:38:26+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"competition_instances":[{"id":"067d00f5-e958-3b01-bc80-7e5e367be869","competition_id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","name":"Fausto Conroy","shortname":"GSR","description":"Ab reiciendis quia perspiciatis deserunt ducimus corrupti. Dolores quia maiores assumenda odit doloribus repellat officiis. Nesciunt ut ratione iure impedit molestiae ut rem.","url":"http:\/\/klocko.com\/","organizer":"Miller Inc","organizer_type_id":"b791a78a-bdb6-3c15-a840-a911ad9b9a6e","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782049529&signature=f31ef0898af23e45a0d5bc83b30d26a2daa03a4873d8f111721013d4c0d0ad47","start_date":"1998-09-11T00:00:00+00:00","end_date":"1992-12-15T00:00:00+00:00","location":"New Alfonsoport","created_at":"2011-04-15T19:14:06+00:00","updated_at":"1978-05-22T17:45:51+00:00"},{"id":"bea6f3b7-be19-33a7-a1c1-8e4be9f8ede4","competition_id":"12ea60a3-4641-392f-9274-8b4bc16686a0","name":"Ofelia Hackett","shortname":"DPM","description":"Rem dolorem aut quis. Dolores omnis et earum consequatur asperiores est vel id. Officiis eos voluptatem et qui unde et esse.","url":"http:\/\/www.schroeder.biz\/quis-est-nulla-vel-voluptas.html","organizer":"Hills LLC","organizer_type_id":"c8e3c808-031a-3d7a-936d-05edc1d0bda0","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782049529&signature=f31ef0898af23e45a0d5bc83b30d26a2daa03a4873d8f111721013d4c0d0ad47","start_date":"2020-10-09T00:00:00+00:00","end_date":"2009-08-15T00:00:00+00:00","location":"South Tyree","created_at":"2001-11-16T17:17:07+00:00","updated_at":"2003-01-09T18:03:59+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -79,7 +79,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782047462&signature=4dc506962d5ff5a6344b3cc06c3c2f7f00e083a02026b4900d9910729bccffe9","start_date":"1976-06-12T00:00:00+00:00","end_date":"2005-05-20T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
+        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782049529&signature=f31ef0898af23e45a0d5bc83b30d26a2daa03a4873d8f111721013d4c0d0ad47","start_date":"1976-06-12T00:00:00+00:00","end_date":"2005-05-20T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -114,7 +114,7 @@ endpoints:
       competition_id:
         custom: []
         name: competition_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competitions table.'
+        description: 'Must be a valid UUID. Must match an existing stored value.'
         required: true
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -180,7 +180,7 @@ endpoints:
       organizer_type_id:
         custom: []
         name: organizer_type_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_organizer_types table.'
+        description: 'Must be a valid UUID. Must match an existing stored value.'
         required: true
         example: a4855dc5-0acb-33c3-b921-f4291f719ca0
         type: string
@@ -249,7 +249,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782047463&signature=757d6daa5df0d8594d16f680a5c0cb2142346df1a8da17660261bc91dbf408bd","start_date":"1976-06-12T00:00:00+00:00","end_date":"2005-05-20T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
+        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782049529&signature=f31ef0898af23e45a0d5bc83b30d26a2daa03a4873d8f111721013d4c0d0ad47","start_date":"1976-06-12T00:00:00+00:00","end_date":"2005-05-20T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -300,7 +300,7 @@ endpoints:
       competition_id:
         custom: []
         name: competition_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competitions table.'
+        description: 'Must be a valid UUID. Must match an existing stored value.'
         required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -366,7 +366,7 @@ endpoints:
       organizer_type_id:
         custom: []
         name: organizer_type_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the competition_organizer_types table.'
+        description: 'Must be a valid UUID. Must match an existing stored value.'
         required: false
         example: a4855dc5-0acb-33c3-b921-f4291f719ca0
         type: string
@@ -435,7 +435,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782047463&signature=757d6daa5df0d8594d16f680a5c0cb2142346df1a8da17660261bc91dbf408bd","start_date":"1976-06-12T00:00:00+00:00","end_date":"2005-05-20T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
+        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782049529&signature=f31ef0898af23e45a0d5bc83b30d26a2daa03a4873d8f111721013d4c0d0ad47","start_date":"1976-06-12T00:00:00+00:00","end_date":"2005-05-20T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -488,7 +488,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_instance":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","competition_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Rogers Leuschke Phd","shortname":"RSI","description":"Maiores assumenda odit doloribus repellat. Corporis nesciunt ut ratione iure impedit molestiae.","url":"http:\/\/www.lakin.com\/","organizer":"Emmerich, Feest and Gleason","organizer_type_id":"06cd53f5-e932-3a98-90f7-9447be932740","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782047463&signature=757d6daa5df0d8594d16f680a5c0cb2142346df1a8da17660261bc91dbf408bd","start_date":"2010-12-01T00:00:00+00:00","end_date":"2007-07-07T00:00:00+00:00","location":"Balistreriton","created_at":"1992-12-18T19:59:56+00:00","updated_at":"1985-11-16T08:33:32+00:00"}}}'
+        content: '{"status":"success","data":{"competition_instance":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","competition_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Rogers Leuschke Phd","shortname":"RSI","description":"Maiores assumenda odit doloribus repellat. Corporis nesciunt ut ratione iure impedit molestiae.","url":"http:\/\/www.lakin.com\/","organizer":"Emmerich, Feest and Gleason","organizer_type_id":"06cd53f5-e932-3a98-90f7-9447be932740","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1782049529&signature=f31ef0898af23e45a0d5bc83b30d26a2daa03a4873d8f111721013d4c0d0ad47","start_date":"2010-12-01T00:00:00+00:00","end_date":"2007-07-07T00:00:00+00:00","location":"Balistreriton","created_at":"1992-12-18T19:25:30+00:00","updated_at":"1985-11-16T07:59:06+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

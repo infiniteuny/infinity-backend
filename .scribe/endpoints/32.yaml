@@ -43,7 +43,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permissions":[{"id":"2ffa7a45-9337-32f3-94b1-7bdf03eb8d1c","name":"Ad","guard_name":"oidc","created_at":"1997-10-02T02:14:47.000000Z","updated_at":"2007-02-11T19:10:43.000000Z","entitlement":{"id":"3b0a3924-9859-3a72-968a-5ae961169c62","group_id":"9cebc033-b4b5-33c4-83cd-fe2c30e5d408","permission_id":"2ffa7a45-9337-32f3-94b1-7bdf03eb8d1c"}},{"id":"3a35752d-7bc8-3d68-bb94-5cab21ffbead","name":"Cupiditate","guard_name":"oidc","created_at":"1991-12-01T18:25:57.000000Z","updated_at":"1972-09-15T02:47:39.000000Z","entitlement":{"id":"2e6af5a9-a026-3aa3-b49c-0e6aa841ed83","group_id":"756999bc-1dce-3d7c-ad47-a47191cd2a49","permission_id":"3a35752d-7bc8-3d68-bb94-5cab21ffbead"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"group_permissions":[{"id":"20b6120b-1270-3b8e-8d45-372f33696bb3","name":"At","guard_name":"oidc","created_at":"1974-10-29T13:37:02.000000Z","updated_at":"1991-12-08T15:00:55.000000Z","entitlement":{"id":"3d9fc98f-a508-39d5-b10c-03e2b582d2ed","group_id":"b604e762-10e0-302f-9c0b-a195cbc9ccf1","permission_id":"20b6120b-1270-3b8e-8d45-372f33696bb3"}},{"id":"2d51565d-44d7-3007-be43-6dd81873e16c","name":"Officia","guard_name":"oidc","created_at":"1981-05-08T21:44:37.000000Z","updated_at":"1970-11-08T04:00:08.000000Z","entitlement":{"id":"785fe41d-d095-385c-8b76-7c203e8a34e9","group_id":"7564e6d7-92bd-3e14-870f-eb515311928e","permission_id":"2d51565d-44d7-3007-be43-6dd81873e16c"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -93,7 +93,7 @@ endpoints:
       permission_id:
         custom: []
         name: permission_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the permissions table.'
+        description: 'Must be a valid UUID. Must match an existing stored value.'
         required: true
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -108,7 +108,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Fugit","guard_name":"oidc","created_at":"2020-11-16T16:31:46.000000Z","updated_at":"2021-02-18T17:43:37.000000Z","entitlement":{"id":"0e2442a9-fa81-3115-8890-8b00ec9cd683","group_id":"1e9be565-c31b-3b43-8646-66a4d676e89f","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Distinctio","guard_name":"oidc","created_at":"2013-02-14T00:13:02.000000Z","updated_at":"1976-12-06T12:38:48.000000Z","entitlement":{"id":"1e9be565-c31b-3b43-8646-66a4d676e89f","group_id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -161,7 +161,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Veniam","guard_name":"oidc","created_at":"2022-09-14T16:14:00.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","group_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Corporis","guard_name":"oidc","created_at":"2022-09-14T15:39:33.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","group_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -212,7 +212,7 @@ endpoints:
       permission_id:
         custom: []
         name: permission_id
-        description: 'Must be a valid UUID. The <code>id</code> of an existing record in the permissions table.'
+        description: 'Must be a valid UUID. Must match an existing stored value.'
         required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -227,7 +227,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Corporis","guard_name":"oidc","created_at":"2022-09-14T16:14:00.000000Z","updated_at":"1975-07-10T01:22:31.000000Z","entitlement":{"id":"1df0d726-07cf-39dc-9280-74563f231abd","group_id":"2024410d-26cd-3763-b1f0-31011d306e58","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Dolorem","guard_name":"oidc","created_at":"1975-07-10T01:22:31.000000Z","updated_at":"1989-07-26T16:30:05.000000Z","entitlement":{"id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","group_id":"29635f5e-45e3-3a71-90b8-942cfd8ffe97","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -280,7 +280,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Quia","guard_name":"oidc","created_at":"2009-06-04T15:03:24.000000Z","updated_at":"2021-03-28T12:52:13.000000Z","entitlement":{"id":"8529678e-de6b-32f2-9f70-231a0d681563","group_id":"3a87aacf-b9fa-3196-a711-8910cad3c293","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dignissimos","guard_name":"oidc","created_at":"2014-08-18T14:21:19.000000Z","updated_at":"2024-04-02T10:03:47.000000Z","entitlement":{"id":"dc407d02-9b9b-35e5-8d69-87904a6787e3","group_id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
     responseFields: []
