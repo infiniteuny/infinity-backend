@@ -40,7 +40,18 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST'),
+            'read' => [
+                'host' => [
+                    env('DB_READ_HOST'),
+                ],
+            ],
+            'write' => [
+                'host' => [
+                    env('DB_WRITE_HOST'),
+                ],
+            ],
+            'sticky' => true,
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'infinity'),
             'username' => env('DB_USERNAME', 'root'),
@@ -60,7 +71,18 @@ return [
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST'),
+            'read' => [
+                'host' => [
+                    env('DB_READ_HOST'),
+                ],
+            ],
+            'write' => [
+                'host' => [
+                    env('DB_WRITE_HOST'),
+                ],
+            ],
+            'sticky' => true,
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'infinity'),
             'username' => env('DB_USERNAME', 'root'),
@@ -80,7 +102,18 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST'),
+            'read' => [
+                'host' => [
+                    env('DB_READ_HOST'),
+                ],
+            ],
+            'write' => [
+                'host' => [
+                    env('DB_WRITE_HOST'),
+                ],
+            ],
+            'sticky' => true,
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'infinity'),
             'username' => env('DB_USERNAME', 'postgres'),
@@ -95,7 +128,18 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_HOST'),
+            'read' => [
+                'host' => [
+                    env('DB_READ_HOST'),
+                ],
+            ],
+            'write' => [
+                'host' => [
+                    env('DB_WRITE_HOST'),
+                ],
+            ],
+            'sticky' => true,
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE', 'infinity'),
             'username' => env('DB_USERNAME', 'root'),
