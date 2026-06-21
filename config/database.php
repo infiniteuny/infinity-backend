@@ -40,7 +40,6 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST'),
             'read' => [
                 'host' => [
                     env('DB_READ_HOST'),
@@ -71,7 +70,6 @@ return [
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST'),
             'read' => [
                 'host' => [
                     env('DB_READ_HOST'),
@@ -102,7 +100,6 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST'),
             'read' => [
                 'host' => [
                     env('DB_READ_HOST'),
@@ -128,7 +125,6 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST'),
             'read' => [
                 'host' => [
                     env('DB_READ_HOST'),
