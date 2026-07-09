@@ -63,8 +63,10 @@ class CompetitionInstanceController extends Controller
             )
             ->allowedFilters(
                 AllowedFilter::exact('competition_id'),
-                'name',
-                'shortname',
+                AllowedFilter::groupOr('name', [
+                    AllowedFilter::partial('name'),
+                    AllowedFilter::partial('shortname'),
+                ]),
                 'description',
                 'url',
                 'organizer',

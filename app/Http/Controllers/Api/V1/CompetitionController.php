@@ -47,8 +47,10 @@ class CompetitionController extends Controller
                 'updated_at',
             )
             ->allowedFilters(
-                'name',
-                'shortname',
+                AllowedFilter::groupOr('name', [
+                    AllowedFilter::partial('name'),
+                    AllowedFilter::partial('shortname'),
+                ]),
                 'description',
                 AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
                 AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
