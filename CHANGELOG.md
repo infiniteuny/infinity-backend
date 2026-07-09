@@ -1,4 +1,19 @@
-# [1.14.0](https://github.com/infiniteuny/infinity-backend/compare/v1.13.1...v1.14.0) (2026-06-21)
+# [1.14.0](https://github.com/infiniteuny/infinity-backend/compare/v1.13.2...v1.14.0) (2026-07-09)
+
+
+### Bug Fixes
+
+* Cleanup unused file ([7674bb1](https://github.com/infiniteuny/infinity-backend/commit/7674bb1c7d3c97d2a148fa1c49947b9ce8c95df8))
+* **deps:** update non-major dependencies ([a700f17](https://github.com/infiniteuny/infinity-backend/commit/a700f17d9655f130f6bec718f3cf6958e179fb78))
+
+
+### Features
+
+* **controller:** Group competition name and shortname filter with or conjunction ([3b21e2a](https://github.com/infiniteuny/infinity-backend/commit/3b21e2aaa609cd2752ae2775fce5c84293993ee2))
+
+
+
+## [1.13.2](https://github.com/infiniteuny/infinity-backend/compare/v1.13.1...v1.13.2) (2026-06-21)
 
 
 ### Bug Fixes
@@ -38,15 +53,6 @@
 ### Bug Fixes
 
 * **docker:** Correct permissions and ownership setup ([184f2f2](https://github.com/infiniteuny/infinity-backend/commit/184f2f2350b8bebcc083a4c1fc901ad5dd317d14))
-
-
-
-## [1.12.13](https://github.com/infiniteuny/infinity-backend/compare/v1.12.12...v1.12.13) (2026-06-17)
-
-
-### Bug Fixes
-
-* **docker:** Correct folder creation and perm change order ([99add7e](https://github.com/infiniteuny/infinity-backend/commit/99add7e850379831a3af4dea2a2da2c0f8ce960e))
 
 
 
