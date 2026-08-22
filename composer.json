@@ -19,7 +19,7 @@
         "laravel/horizon": "5.48.3",
         "laravel/octane": "2.19.1",
         "laravel/tinker": "3.0.2",
-        "league/flysystem-aws-s3-v3": "3.35.2",
+        "league/flysystem-aws-s3-v3": "3.35.3",
         "namoshek/laravel-redis-sentinel": "1.3.0",
         "spatie/laravel-data": "4.23.0",
         "spatie/laravel-permission": "8.3.0",
