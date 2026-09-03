@@ -285,7 +285,7 @@ jobs:
 
       - name: Create multi-arch manifest
         id: manifest
-        uses: int128/docker-manifest-create-action@v2.24.0
+        uses: int128/docker-manifest-create-action@v2.27.0
         with:
           tags: ${{ needs.prepare.outputs.tags }}
           index-annotations: ${{ needs.prepare.outputs.labels }}
