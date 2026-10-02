@@ -134,7 +134,7 @@ jobs:
 
       - name: Generate changelog
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v6.4.0
+        uses: TriPSs/conventional-changelog-action@v6.5.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           skip-commit: "true"
