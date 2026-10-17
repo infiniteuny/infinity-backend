@@ -53,7 +53,7 @@ RUN install-php-extensions \
     rm -rf /tmp/* /var/tmp/*
 
 # Install dependencies
-FROM composer:2.10.2 AS vendor
+FROM composer:2.10.3 AS vendor
 
 ENV COMPOSER_FUND=0 \
     COMPOSER_MAX_PARALLEL_HTTP=48 \
