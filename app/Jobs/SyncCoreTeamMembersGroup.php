@@ -41,8 +41,6 @@ class SyncCoreTeamMembersGroup implements ShouldQueue
                     $inactiveGroup->users()->syncWithoutDetaching($userIds);
                 }
             }
-
-            $coreTeam->group->touch();
         }
     }
 }

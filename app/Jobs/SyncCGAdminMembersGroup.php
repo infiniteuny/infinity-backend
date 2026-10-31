@@ -41,8 +41,6 @@ class SyncCGAdminMembersGroup implements ShouldQueue
                     $inactiveGroup->users()->syncWithoutDetaching($userIds);
                 }
             }
-
-            $cgAdmin->group->touch();
         }
     }
 }
