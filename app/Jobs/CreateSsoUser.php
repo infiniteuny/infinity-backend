@@ -67,6 +67,9 @@ class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
         if ($ssoUsers->isNotEmpty()) {
             $ssoUser = $ssoUsers->first();
+            $ssoUser->path = $this->user->is_member ? $this->memberPath : $this->nonMemberPath;
+            $ssoUser->type = $this->user->is_member ? $this->memberType : $this->nonMemberType;
+            $ssoUser = $ssoService->updateUser($ssoUser->sso_id, $ssoUser);
         } else {
             $ssoUser = SsoUserData::fromModel($this->user)->additional([
                 'path' => $this->user->is_member ? $this->memberPath : $this->nonMemberPath,
