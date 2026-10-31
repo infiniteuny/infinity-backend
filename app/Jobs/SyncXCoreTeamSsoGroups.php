@@ -17,7 +17,7 @@ class SyncXCoreTeamSsoGroups implements ShouldQueue
     public function handle(): void
     {
         $coreTeams = CoreTeam::where('is_active', false)->get();
-        $ssoParentId = config('services.authentik.core_team_group_id');
+        $ssoParentId = config('services.authentik.xcore_team_group_id');
 
         foreach ($coreTeams as $coreTeam) {
             $group = Group::find($coreTeam->group_id);
