@@ -30,14 +30,14 @@ jobs:
       - name: Check if branch and release type match
         id: guard
         run: |
-          if [[ "$BRANCH" != "main" && "$BRANCH" != "develop" ]]; then
-            echo "Branch is not main or develop! Aborting."
+          if [[ "$RELEASE_TYPE" == "prod" && ( "$REF_TYPE" != "branch" || "$REF_NAME" != "main" ) ]]; then
+            echo "Production releases must only be triggered from the main branch! Aborting."
             VERSION_MISMATCH='true';
-          elif [ "$BRANCH" == "main" ] && [ "$RELEASE_TYPE" != "prod" ]; then
-            echo "Branch and release type do not match! Aborting."
+          elif [[ "$RELEASE_TYPE" != "prod" && "$REF_TYPE" != "branch" ]]; then
+            echo "Non-production releases must be triggered from a branch! Aborting."
             VERSION_MISMATCH='true';
-          elif [ "$BRANCH" == "develop" ] && ( [ "$RELEASE_TYPE" == "prod" ] || [ -z "$PRE_RELEASE_VERSION" ] ); then
-            echo "Branch and release type do not match! Aborting."
+          elif [[ "$RELEASE_TYPE" != "prod" && -z "$PRE_RELEASE_VERSION" ]]; then
+            echo "A pre-release version is required for non-production releases! Aborting."
             VERSION_MISMATCH='true';
           else
             echo "Branch and release type match! Proceeding."
@@ -46,7 +46,8 @@ jobs:
 
           echo "version_mismatch=$(echo $VERSION_MISMATCH)" >> "$GITHUB_OUTPUT";
         env:
-          BRANCH: ${{ github.ref_name }}
+          REF_NAME: ${{ github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
           RELEASE_TYPE: ${{ inputs.release_type }}
           PRE_RELEASE_VERSION: ${{ inputs.pre_release_version }}
 

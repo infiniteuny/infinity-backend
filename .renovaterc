@@ -8,7 +8,7 @@
         ":pinAllExceptPeerDependencies"
     ],
     "baseBranchPatterns": [
-        "develop"
+        "main"
     ],
     "lockFileMaintenance": {
         "enabled": true,
