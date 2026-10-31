@@ -43,6 +43,7 @@ return [
         'cg_admin_group_id' => env('AUTHENTIK_CG_ADMIN_GROUP_ID'),
         'xcg_admin_group_id' => env('AUTHENTIK_XCG_ADMIN_GROUP_ID'),
         'member_group_id' => env('AUTHENTIK_MEMBER_GROUP_ID'),
+        'internal_group_id' => env('AUTHENTIK_INTERNAL_GROUP_ID'),
         'admin_group_id' => env('AUTHENTIK_ADMIN_GROUP_ID'),
     ],
 

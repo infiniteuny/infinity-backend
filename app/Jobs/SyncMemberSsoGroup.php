@@ -15,8 +15,9 @@ class SyncMemberSsoGroup implements ShouldQueue
      */
     public function handle(): void
     {
-        $ssoId = config('services.authentik.member_group_id');
         $group = Group::where('name', 'Member')->first();
+        $ssoId = config('services.authentik.member_group_id');
+        $ssoParentId = config('services.authentik.internal_group_id');
 
         if (! $group) {
             return;
@@ -26,9 +27,9 @@ class SyncMemberSsoGroup implements ShouldQueue
         $group->save();
 
         if (is_null($group->sso_last_synced_at)) {
-            CreateSsoGroup::dispatch($group);
+            CreateSsoGroup::dispatch($group, [$ssoParentId]);
         } elseif ($group->sso_last_synced_at < $group->updated_at) {
-            UpdateSsoGroup::dispatch($group);
+            UpdateSsoGroup::dispatch($group, [$ssoParentId]);
         }
     }
 }
