@@ -21,6 +21,10 @@ class AchievementLeaderboardController extends Controller
      * List all achievement leaderboard years
      *
      * @unauthenticated
+     *
+     * @apiResourceCollection App\Http\Resources\AchievementLeaderboard\AchievementLeaderboardYearCollection
+     *
+     * @apiResourceModel App\Models\AchievementLeaderboard paginate=10,cursor
      */
     public function index(Request $request)
     {
@@ -37,6 +41,10 @@ class AchievementLeaderboardController extends Controller
      * Retrieve an achievement leaderboard
      *
      * @unauthenticated
+     *
+     * @apiResourceCollection App\Http\Resources\AchievementLeaderboard\AchievementLeaderboardCollection
+     *
+     * @apiResourceModel App\Models\AchievementLeaderboard paginate=10,cursor
      */
     public function show(Request $request, string $achievement)
     {
