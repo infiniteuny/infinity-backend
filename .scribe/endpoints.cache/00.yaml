@@ -31,12 +31,10 @@ endpoints:
     responses:
       -
         custom: []
-        status: 500
-        content: '{"status":"error","message":"Internal server error.","code":"42P01"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-        description: null
+        status: 200
+        content: '{"status":"success","data":{"achievement_leaderboard_years":["1987","2012"],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -82,12 +80,10 @@ endpoints:
     responses:
       -
         custom: []
-        status: 500
-        content: '{"status":"error","message":"Internal server error.","code":"42P01"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-        description: null
+        status: 200
+        content: '{"status":"success","data":{"achievement_leaderboards":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","user_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","year":"1996","total_points":1225605784,"created_at":"2018-02-14T16:36:06+00:00","updated_at":"2019-04-18T23:45:16+00:00"},{"id":"add3503c-ebff-3875-93af-b8c6a695762b","user_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","year":"1997","total_points":1296531115,"created_at":"2024-02-01T03:38:03+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null

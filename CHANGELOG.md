@@ -1,3 +1,13 @@
+## [1.14.2](https://github.com/infiniteuny/infinity-backend/compare/v1.14.1...v1.14.2) (2026-11-10)
+
+
+### Bug Fixes
+
+* **controller:** Add Scribe resource annotations to achievement leaderboard controller ([ed10607](https://github.com/infiniteuny/infinity-backend/commit/ed1060701c683b659bd1dc58c5f18d253a6181c9))
+* **factory:** Add achievement leaderboard factory definition ([8104aea](https://github.com/infiniteuny/infinity-backend/commit/8104aea740403fa3d215581309ea53106d70bab6))
+
+
+
 ## [1.14.1](https://github.com/infiniteuny/infinity-backend/compare/v1.14.0...v1.14.1) (2026-11-10)
 
 
@@ -69,10 +79,6 @@
 
 * **config:** Add separated DB read and write hosts ([5afea16](https://github.com/infiniteuny/infinity-backend/commit/5afea16259a06bd4ea1352d88cf2e608859b9d93))
 * **test:** Update load testing script ([7f0a0a5](https://github.com/infiniteuny/infinity-backend/commit/7f0a0a583d6f9d09e6645cfdf0e7b218cbf96a9e))
-
-
-
-## [1.13.1](https://github.com/infiniteuny/infinity-backend/compare/v1.13.0...v1.13.1) (2026-06-21)
 
 
 
