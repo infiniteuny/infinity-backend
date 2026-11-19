@@ -9,6 +9,7 @@ use App\Jobs\SyncCGAdminMembersGroup;
 use App\Jobs\SyncCGAdminSsoGroups;
 use App\Jobs\SyncCoreTeamMembersGroup;
 use App\Jobs\SyncCoreTeamSsoGroups;
+use App\Jobs\SyncIndividualTeams;
 use App\Jobs\SyncMemberGroup;
 use App\Jobs\SyncMemberSsoGroup;
 use App\Jobs\SyncSsoUsers;
@@ -75,6 +76,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->job(new SyncAchievementLeaderboards(Date::now()->year))->daily();
+        $schedule->job(new SyncIndividualTeams)->hourly();
         $schedule->job(new SyncMemberGroup)->hourly();
         $schedule->job(new SyncActiveInactiveMemberGroup)->hourly();
         $schedule->job(new SyncCoreTeamMembersGroup)->hourly();
