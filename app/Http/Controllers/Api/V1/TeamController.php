@@ -35,7 +35,7 @@ class TeamController extends Controller
      * @apiResourceModel App\Models\Team paginate=10,cursor
      *
      * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `leader_id`, `team_type_id`, `name`, `created_at`, `updated_at`. No-example
-     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `leader`, `members`, `team_type`, `fundApplications`, `achievements`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `leader`, `members`, `team_type`, `fund_applications`, `achievements`. No-example
      * @queryParam filters[leader_id] string Filter by exact `leader_id`. No-example
      * @queryParam filters[team_type_id] string Filter by exact `team_type_id`. No-example
      * @queryParam filters[name] string Filter by partial `name`. No-example
@@ -63,7 +63,7 @@ class TeamController extends Controller
                 'leader',
                 'members',
                 AllowedInclude::relationship('team_type', 'teamType'),
-                AllowedInclude::relationship('fundApplications', 'fund_applications'),
+                AllowedInclude::relationship('fund_applications', 'fundApplications'),
                 'achievements',
             )
             ->allowedFilters(
@@ -123,7 +123,7 @@ class TeamController extends Controller
      * @apiResourceModel App\Models\Team
      *
      * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `leader_id`, `team_type_id`, `name`, `created_at`, `updated_at`. No-example
-     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `leader`, `members`, `team_type`, `fundApplications`, `achievements`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `leader`, `members`, `team_type`, `fund_applications`, `achievements`. No-example
      */
     public function show(Team $team)
     {
