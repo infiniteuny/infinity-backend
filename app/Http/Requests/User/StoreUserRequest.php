@@ -98,12 +98,6 @@ class StoreUserRequest extends FormRequest
             'major_id' => [
                 'description' => 'The ID of the major the user belongs to.',
             ],
-            'links' => [
-                'description' => 'An associative map of external profile or social media links for the user.',
-            ],
-            'links.*' => [
-                'description' => 'The URL or value of an individual external link.',
-            ],
             'start_date' => [
                 'description' => 'The membership start date of the user.',
             ],

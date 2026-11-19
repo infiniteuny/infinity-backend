@@ -131,8 +131,8 @@ class UserController extends Controller
      *
      * @apiResourceModel App\Models\User
      *
-     * @bodyParam links object required Example: {"github": "infiniteuny", "linkedin": "infiniteuny", "website": "https://www.infiniteuny.id"}
-     * @bodyParam links.* string Example: https://example.com
+     * @bodyParam links object required An object of external profile or social media links for the user. Example: {"github": "infiniteuny", "linkedin": "infiniteuny", "website": "https://www.infiniteuny.id"}
+     * @bodyParam links.* string The value or URL of an individual external profile or social media link. Example: https://example.com
      */
     public function store(StoreUserRequest $request)
     {
@@ -200,8 +200,8 @@ class UserController extends Controller
      *
      * @apiResourceModel App\Models\User
      *
-     * @bodyParam links object Example: {"github": "infiniteuny", "linkedin": "infiniteuny", "website": "https://www.infiniteuny.id"}
-     * @bodyParam links.* string Example: https://example.com
+     * @bodyParam links object An object of external profile or social media links for the user. Example: {"github": "infiniteuny", "linkedin": "infiniteuny", "website": "https://www.infiniteuny.id"}
+     * @bodyParam links.* string The value or URL of an individual external profile or social media link. Example: https://example.com
      */
     public function update(UpdateUserRequest $request, User $user)
     {
