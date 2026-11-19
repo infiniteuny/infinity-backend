@@ -12,6 +12,8 @@ use App\Http\Resources\ProjectGallery\ProjectGalleryResource;
 use App\Jobs\DeleteBlob;
 use App\Models\ProjectGallery;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -40,6 +42,8 @@ class ProjectGalleryController extends Controller
      * @queryParam filters[title] string Filter by partial `title`. No-example
      * @queryParam filters[description] string Filter by partial `description`. No-example
      * @queryParam filters[url] string Filter by partial `url`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
      * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `title`, `created_at`, `updated_at`. Default: `-id`. No-example
      * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
      * @queryParam cursor string Cursor token for pagination. No-example
@@ -60,6 +64,8 @@ class ProjectGalleryController extends Controller
                 'title',
                 'description',
                 'url',
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
             )
             ->allowedSorts(
                 'id',
