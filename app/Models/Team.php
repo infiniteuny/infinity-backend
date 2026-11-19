@@ -21,18 +21,8 @@ class Team extends Model
      */
     protected $fillable = [
         'name',
-        'is_personal',
         'leader_id',
         'team_type_id',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'is_personal' => 'boolean',
     ];
 
     /**
