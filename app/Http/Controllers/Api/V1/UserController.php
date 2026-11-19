@@ -40,6 +40,25 @@ class UserController extends Controller
      * @apiResourceCollection App\Http\Resources\User\UserCollection
      *
      * @apiResourceModel App\Models\User paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `sso_id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `links`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`. No-example
+     * @queryParam filters[sso_id] string Filter by exact `sso_id`. No-example
+     * @queryParam filters[name] string Filter by partial `name`. No-example
+     * @queryParam filters[username] string Filter by partial `username`. No-example
+     * @queryParam filters[email_address] string Filter by partial `email_address`. No-example
+     * @queryParam filters[phone_number] string Filter by partial `phone_number`. No-example
+     * @queryParam filters[student_id] string Filter by partial `student_id`. No-example
+     * @queryParam filters[major_id] string Filter by exact `major_id`. No-example
+     * @queryParam filters[start_date] string Filter by `start_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[end_date] string Filter by `end_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[is_member] boolean Filter by exact `is_member`. No-example
+     * @queryParam filters[is_extraordinary] boolean Filter by exact `is_extraordinary`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. Default: `-id`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -137,6 +156,9 @@ class UserController extends Controller
      * @apiResource App\Http\Resources\User\UserResource
      *
      * @apiResourceModel App\Models\User
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `sso_id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `links`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`. No-example
      */
     public function show(User $user)
     {

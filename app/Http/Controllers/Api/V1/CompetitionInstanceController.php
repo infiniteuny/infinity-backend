@@ -37,6 +37,23 @@ class CompetitionInstanceController extends Controller
      * @apiResourceCollection App\Http\Resources\CompetitionInstance\CompetitionInstanceCollection
      *
      * @apiResourceModel App\Models\CompetitionInstance paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `competition_id`, `name`, `shortname`, `description`, `url`, `organizer`, `organizer_type_id`, `logo`, `start_date`, `end_date`, `location`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `competition`, `organizer_type`. No-example
+     * @queryParam filters[competition_id] string Filter by exact `competition_id`. No-example
+     * @queryParam filters[name] string Filter by partial `name` or `shortname`. No-example
+     * @queryParam filters[description] string Filter by partial `description`. No-example
+     * @queryParam filters[url] string Filter by partial `url`. No-example
+     * @queryParam filters[organizer] string Filter by partial `organizer`. No-example
+     * @queryParam filters[organizer_type_id] string Filter by exact `organizer_type_id`. No-example
+     * @queryParam filters[start_date] string Filter by `start_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[end_date] string Filter by `end_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[location] string Filter by partial `location`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `competition_id`, `name`, `shortname`, `organizer`, `organizer_type_id`, `start_date`, `end_date`, `location`, `created_at`, `updated_at`. Default: `-id`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -122,6 +139,9 @@ class CompetitionInstanceController extends Controller
      * @apiResource App\Http\Resources\CompetitionInstance\CompetitionInstanceResource
      *
      * @apiResourceModel App\Models\CompetitionInstance
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `competition_id`, `name`, `shortname`, `description`, `url`, `organizer`, `organizer_type_id`, `logo`, `start_date`, `end_date`, `location`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `competition`, `organizer_type`. No-example
      */
     public function show(CompetitionInstance $competitionInstance)
     {

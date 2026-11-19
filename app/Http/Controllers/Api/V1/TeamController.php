@@ -33,6 +33,17 @@ class TeamController extends Controller
      * @apiResourceCollection App\Http\Resources\Team\TeamCollection
      *
      * @apiResourceModel App\Models\Team paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `leader_id`, `team_type_id`, `name`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `leader`, `members`, `team_type`, `fundApplications`, `achievements`. No-example
+     * @queryParam filters[leader_id] string Filter by exact `leader_id`. No-example
+     * @queryParam filters[team_type_id] string Filter by exact `team_type_id`. No-example
+     * @queryParam filters[name] string Filter by partial `name`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `leader_id`, `team_type_id`, `name`, `created_at`, `updated_at`. Default: `-id`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -110,6 +121,9 @@ class TeamController extends Controller
      * @apiResource App\Http\Resources\Team\TeamResource
      *
      * @apiResourceModel App\Models\Team
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `leader_id`, `team_type_id`, `name`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `leader`, `members`, `team_type`, `fundApplications`, `achievements`. No-example
      */
     public function show(Team $team)
     {

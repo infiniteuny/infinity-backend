@@ -35,6 +35,14 @@ class ProjectGalleryController extends Controller
      * @apiResourceCollection App\Http\Resources\ProjectGallery\ProjectGalleryCollection
      *
      * @apiResourceModel App\Models\ProjectGallery paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `title`, `description`, `url`, `image`, `created_at`, `updated_at`. No-example
+     * @queryParam filters[title] string Filter by partial `title`. No-example
+     * @queryParam filters[description] string Filter by partial `description`. No-example
+     * @queryParam filters[url] string Filter by partial `url`. No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `title`, `created_at`, `updated_at`. Default: `-id`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -95,6 +103,8 @@ class ProjectGalleryController extends Controller
      * @apiResource App\Http\Resources\ProjectGallery\ProjectGalleryResource
      *
      * @apiResourceModel App\Models\ProjectGallery
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `title`, `description`, `url`, `image`, `created_at`, `updated_at`. No-example
      */
     public function show(ProjectGallery $projectGallery)
     {

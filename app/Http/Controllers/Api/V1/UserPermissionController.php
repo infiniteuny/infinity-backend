@@ -39,6 +39,15 @@ class UserPermissionController extends Controller
      * @apiResourceCollection App\Http\Resources\UserPermission\UserPermissionCollection
      *
      * @apiResourceModel App\Models\Permission states=pivotUserPermission paginate=10,cursor
+     *
+     * @queryParam includes string Comma-separated list of options to include. Use `nested` to return all direct and group-inherited permissions without pagination. No-example
+     * @queryParam filters[name] string Filter by exact `name`. No-example
+     * @queryParam filters[guard_name] string Filter by exact `guard_name`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`. Default: `-id`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(User $user, Request $request)
     {

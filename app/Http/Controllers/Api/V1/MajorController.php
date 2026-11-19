@@ -30,6 +30,18 @@ class MajorController extends Controller
      * @apiResourceCollection App\Http\Resources\Major\MajorCollection
      *
      * @apiResourceModel App\Models\Major paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `degree_id`, `faculty_id`, `code`, `name`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `degree`, `faculty`. No-example
+     * @queryParam filters[degree_id] string Filter by exact `degree_id`. No-example
+     * @queryParam filters[faculty_id] string Filter by exact `faculty_id`. No-example
+     * @queryParam filters[code] string Filter by exact `code`. No-example
+     * @queryParam filters[name] string Filter by partial `name`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `degree_id`, `faculty_id`, `code`, `name`, `created_at`, `updated_at`. Default: `code`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -90,6 +102,9 @@ class MajorController extends Controller
      * @apiResource App\Http\Resources\Major\MajorResource
      *
      * @apiResourceModel App\Models\Major
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `degree_id`, `faculty_id`, `code`, `name`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `degree`, `faculty`. No-example
      */
     public function show(Major $major)
     {

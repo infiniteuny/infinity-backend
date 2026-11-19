@@ -25,6 +25,10 @@ class AchievementLeaderboardController extends Controller
      * @apiResourceCollection App\Http\Resources\AchievementLeaderboard\AchievementLeaderboardYearCollection
      *
      * @apiResourceModel App\Models\AchievementLeaderboard paginate=10,cursor
+     *
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `year`. Default: `-year`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -45,6 +49,16 @@ class AchievementLeaderboardController extends Controller
      * @apiResourceCollection App\Http\Resources\AchievementLeaderboard\AchievementLeaderboardCollection
      *
      * @apiResourceModel App\Models\AchievementLeaderboard paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `user_id`, `year`, `total_points`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `user`. No-example
+     * @queryParam filters[user_id] string Filter by partial `user_id`. No-example
+     * @queryParam filters[total_points] string Filter by `total_points` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `user_id`, `total_points`, `created_at`, `updated_at`. Default: `-total_points`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function show(Request $request, string $achievement)
     {

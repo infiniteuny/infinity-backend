@@ -25,6 +25,16 @@ class UserCommunityGroupController extends Controller
      * @apiResourceCollection App\Http\Resources\UserCommunityGroup\UserCommunityGroupCollection
      *
      * @apiResourceModel App\Models\CommunityGroup states=pivotCommunityGroupMember paginate=10,cursor
+     *
+     * @queryParam filters[name] string Filter by partial `name`. No-example
+     * @queryParam filters[priority] integer Filter by exact `priority`. No-example
+     * @queryParam filters[description] string Filter by partial `description`. No-example
+     * @queryParam filters[is_active] boolean Filter by exact `is_active`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `priority`, `is_active`, `created_at`, `updated_at`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(User $user, Request $request)
     {

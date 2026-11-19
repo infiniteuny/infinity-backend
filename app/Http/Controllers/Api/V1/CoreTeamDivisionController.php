@@ -30,6 +30,15 @@ class CoreTeamDivisionController extends Controller
      * @apiResourceCollection App\Http\Resources\CoreTeamDivision\CoreTeamDivisionCollection
      *
      * @apiResourceModel App\Models\CoreTeamDivision paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `name`, `priority`, `created_at`, `updated_at`. No-example
+     * @queryParam filters[name] string Filter by partial `name`. No-example
+     * @queryParam filters[priority] integer Filter by exact `priority`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `priority`, `created_at`, `updated_at`. Default: `priority`, `-id`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -83,6 +92,8 @@ class CoreTeamDivisionController extends Controller
      * @apiResource App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource
      *
      * @apiResourceModel App\Models\CoreTeamDivision
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `name`, `priority`, `created_at`, `updated_at`. No-example
      */
     public function show(CoreTeamDivision $coreTeamDivision)
     {

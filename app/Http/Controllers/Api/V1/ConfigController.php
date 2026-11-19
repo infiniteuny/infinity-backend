@@ -36,6 +36,16 @@ class ConfigController extends Controller
      * @apiResourceCollection App\Http\Resources\Config\ConfigCollection
      *
      * @apiResourceModel App\Models\Config paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `key`, `value`, `type`, `is_private`, `created_at`, `updated_at`. No-example
+     * @queryParam filters[key] string Filter by partial `key`. No-example
+     * @queryParam filters[type] string Filter by exact `type`. No-example
+     * @queryParam filters[is_private] boolean Filter by exact `is_private`. Requires authentication. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `key`, `type`, `is_private`, `created_at`, `updated_at`. Default: `-id`. (`is_private` requires authentication). No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -116,6 +126,8 @@ class ConfigController extends Controller
      * @apiResource App\Http\Resources\Config\ConfigResource
      *
      * @apiResourceModel App\Models\Config
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `key`, `value`, `type`, `is_private`, `created_at`, `updated_at`. No-example
      */
     public function show(Config $config)
     {

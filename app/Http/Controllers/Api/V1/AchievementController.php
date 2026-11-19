@@ -38,6 +38,26 @@ class AchievementController extends Controller
      * @apiResourceCollection App\Http\Resources\Achievement\AchievementCollection
      *
      * @apiResourceModel App\Models\Achievement paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `name`, `team_id`, `competition_instance_id`, `competition_team_type_id`, `competition_scale_id`, `competition_time_range_id`, `competition_output_id`, `competition_rank_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `description`, `image`, `status`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `team`, `team.members`, `competition_instance`, `competition_scale`, `competition_time_range`, `competition_output`, `competition_rank`. (`team` and `team.members` require authentication). No-example
+     * @queryParam filters[team_id] string Filter by exact `team_id`. Requires authentication. No-example
+     * @queryParam filters[competition_instance_id] string Filter by exact `competition_instance_id`. No-example
+     * @queryParam filters[competition_team_type_id] string Filter by exact `competition_team_type_id`. No-example
+     * @queryParam filters[competition_scale_id] string Filter by exact `competition_scale_id`. No-example
+     * @queryParam filters[competition_time_range_id] string Filter by exact `competition_time_range_id`. No-example
+     * @queryParam filters[competition_output_id] string Filter by exact `competition_output_id`. No-example
+     * @queryParam filters[competition_rank_id] string Filter by exact `competition_rank_id`. No-example
+     * @queryParam filters[competition_branch] string Filter by partial `competition_branch`. No-example
+     * @queryParam filters[competition_start_date] string Filter by `competition_start_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[competition_end_date] string Filter by `competition_end_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[description] string Filter by partial `description`. No-example
+     * @queryParam filters[status] string Filter by exact `status`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_team_type_id`, `competition_scale_id`, `competition_time_range_id`, `competition_output_id`, `competition_rank_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `description`, `status`, `created_at`, `updated_at`. Default: `-id`. (`team_id` requires authentication). No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -184,6 +204,9 @@ class AchievementController extends Controller
      * @apiResource App\Http\Resources\Achievement\AchievementResource
      *
      * @apiResourceModel App\Models\Achievement
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `name`, `team_id`, `competition_instance_id`, `competition_team_type_id`, `competition_scale_id`, `competition_time_range_id`, `competition_output_id`, `competition_rank_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `description`, `image`, `status`, `created_at`, `updated_at`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `team`, `team.members`, `competition_instance`, `competition_scale`, `competition_time_range`, `competition_output`, `competition_rank`. (`team` and `team.members` require authentication). No-example
      */
     public function show(Achievement $achievement)
     {

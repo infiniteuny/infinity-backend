@@ -36,6 +36,15 @@ class CommunityGroupAdminController extends Controller
      * @apiResourceCollection App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminCollection
      *
      * @apiResourceModel App\Models\CommunityGroupAdmin paginate=10,cursor
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `year`, `is_active`, `created_at`, `updated_at`. No-example
+     * @queryParam filters[year] integer Filter by exact `year`. No-example
+     * @queryParam filters[is_active] boolean Filter by exact `is_active`. No-example
+     * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `year`, `is_active`, `created_at`, `updated_at`. No-example
+     * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
+     * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
@@ -103,6 +112,8 @@ class CommunityGroupAdminController extends Controller
      * @apiResource App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource
      *
      * @apiResourceModel App\Models\CommunityGroupAdmin
+     *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `year`, `is_active`, `created_at`, `updated_at`. No-example
      */
     public function show(CommunityGroupAdmin $communityGroupAdmin)
     {

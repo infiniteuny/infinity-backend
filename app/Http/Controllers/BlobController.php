@@ -12,6 +12,9 @@ class BlobController extends Controller
 {
     /**
      * Handle the incoming request.
+     *
+     * @queryParam force_download boolean Whether to force the browser to download the file instead of displaying it inline. No-example
+     * @queryParam name string Custom filename to use when serving or downloading the file. No-example
      */
     public function __invoke(BlobRequest $request, string $blob)
     {
