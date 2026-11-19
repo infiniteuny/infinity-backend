@@ -18,4 +18,18 @@ class StoreGroupPermissionRequest extends FormRequest
             'permission_id' => ['required', 'uuid', 'exists:permissions,id'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'permission_id' => [
+                'description' => 'The ID of the permission to assign to the group.',
+            ],
+        ];
+    }
 }

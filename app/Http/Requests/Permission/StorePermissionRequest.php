@@ -19,4 +19,21 @@ class StorePermissionRequest extends FormRequest
             'guard_name' => ['required', 'string', 'in:api'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'The name of the permission.',
+            ],
+            'guard_name' => [
+                'description' => 'The authentication guard name for the permission.',
+            ],
+        ];
+    }
 }

@@ -28,4 +28,48 @@ class UpdateCompetitionInstanceRequest extends FormRequest
             'location' => ['sometimes', 'string'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'competition_id' => [
+                'description' => 'The ID of the parent competition series.',
+            ],
+            'name' => [
+                'description' => 'The name of the competition instance.',
+            ],
+            'shortname' => [
+                'description' => 'The short name or acronym of the competition instance.',
+            ],
+            'description' => [
+                'description' => 'The description of the competition instance.',
+            ],
+            'url' => [
+                'description' => 'The official website URL of the competition instance.',
+            ],
+            'organizer' => [
+                'description' => 'The name of the competition organizer.',
+            ],
+            'organizer_type_id' => [
+                'description' => 'The ID of the competition organizer type.',
+            ],
+            'logo' => [
+                'description' => 'The logo image of the competition instance.',
+            ],
+            'start_date' => [
+                'description' => 'The start date of the competition instance.',
+            ],
+            'end_date' => [
+                'description' => 'The end date of the competition instance.',
+            ],
+            'location' => [
+                'description' => 'The location or venue of the competition instance.',
+            ],
+        ];
+    }
 }

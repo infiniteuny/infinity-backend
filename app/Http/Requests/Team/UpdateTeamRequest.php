@@ -28,4 +28,24 @@ class UpdateTeamRequest extends FormRequest
             'name' => ['sometimes', 'string'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'leader_id' => [
+                'description' => 'The ID of the user who leads the team.',
+            ],
+            'team_type_id' => [
+                'description' => 'The ID of the team type.',
+            ],
+            'name' => [
+                'description' => 'The name of the team.',
+            ],
+        ];
+    }
 }

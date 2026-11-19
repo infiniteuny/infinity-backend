@@ -21,4 +21,27 @@ class StoreMajorRequest extends FormRequest
             'name' => ['required', 'string'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'degree_id' => [
+                'description' => 'The ID of the degree associated with the major.',
+            ],
+            'faculty_id' => [
+                'description' => 'The ID of the faculty the major belongs to.',
+            ],
+            'code' => [
+                'description' => 'The unique code of the major.',
+            ],
+            'name' => [
+                'description' => 'The name of the major.',
+            ],
+        ];
+    }
 }

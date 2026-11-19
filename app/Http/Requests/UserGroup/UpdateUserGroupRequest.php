@@ -18,4 +18,18 @@ class UpdateUserGroupRequest extends FormRequest
             'group_id' => ['sometimes', 'uuid', 'exists:groups,id'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'group_id' => [
+                'description' => 'The ID of the group to assign to the user.',
+            ],
+        ];
+    }
 }

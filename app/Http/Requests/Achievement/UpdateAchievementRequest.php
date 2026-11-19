@@ -33,4 +33,51 @@ class UpdateAchievementRequest extends FormRequest
             'status' => ['sometimes', 'string', 'in:'.$statusValues],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'team_id' => [
+                'description' => 'The ID of the team that earned the achievement.',
+            ],
+            'competition_instance_id' => [
+                'description' => 'The ID of the competition instance where the achievement was earned.',
+            ],
+            'competition_scale_id' => [
+                'description' => 'The ID of the competition scale.',
+            ],
+            'competition_time_range_id' => [
+                'description' => 'The ID of the competition time range.',
+            ],
+            'competition_output_id' => [
+                'description' => 'The ID of the competition output.',
+            ],
+            'competition_rank_id' => [
+                'description' => 'The ID of the competition rank achieved.',
+            ],
+            'competition_branch' => [
+                'description' => 'The branch or category of the competition.',
+            ],
+            'competition_start_date' => [
+                'description' => 'The start date of the competition.',
+            ],
+            'competition_end_date' => [
+                'description' => 'The end date of the competition.',
+            ],
+            'description' => [
+                'description' => 'The description of the achievement.',
+            ],
+            'image' => [
+                'description' => 'The supporting image or certificate for the achievement.',
+            ],
+            'status' => [
+                'description' => 'The approval status of the achievement.',
+            ],
+        ];
+    }
 }

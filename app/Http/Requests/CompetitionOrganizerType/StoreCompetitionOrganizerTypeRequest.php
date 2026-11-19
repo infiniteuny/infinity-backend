@@ -19,4 +19,21 @@ class StoreCompetitionOrganizerTypeRequest extends FormRequest
             'weight' => ['required', 'integer', 'between:0,2147483647'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'The name of the competition organizer type.',
+            ],
+            'weight' => [
+                'description' => 'The scoring weight of the competition organizer type.',
+            ],
+        ];
+    }
 }

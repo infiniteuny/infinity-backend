@@ -19,4 +19,21 @@ class UpdateCompetitionTeamTypeRequest extends FormRequest
             'weight' => ['sometimes', 'integer', 'between:0,2147483647'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'The name of the competition team type.',
+            ],
+            'weight' => [
+                'description' => 'The scoring weight of the competition team type.',
+            ],
+        ];
+    }
 }

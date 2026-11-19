@@ -21,4 +21,27 @@ class UpdateTestimonialRequest extends FormRequest
             'content' => ['sometimes', 'string'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'The name of the person giving the testimonial.',
+            ],
+            'position' => [
+                'description' => 'The position or role of the person giving the testimonial.',
+            ],
+            'photo' => [
+                'description' => 'The photo of the person giving the testimonial.',
+            ],
+            'content' => [
+                'description' => 'The content of the testimonial.',
+            ],
+        ];
+    }
 }

@@ -31,4 +31,21 @@ class StoreCommunityGroupAdminRequest extends FormRequest
             'is_active' => ['required', 'boolean'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'year' => [
+                'description' => 'The service period year of the community group administration.',
+            ],
+            'is_active' => [
+                'description' => 'Whether this community group administration period is currently active.',
+            ],
+        ];
+    }
 }

@@ -31,4 +31,21 @@ class BlobRequest extends FormRequest
             'name' => ['sometimes', 'string'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'force_download' => [
+                'description' => 'Whether to force the browser to download the file instead of displaying it inline.',
+            ],
+            'name' => [
+                'description' => 'The custom filename to use when serving or downloading the file.',
+            ],
+        ];
+    }
 }

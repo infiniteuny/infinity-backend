@@ -24,4 +24,18 @@ class UpdateCommunityGroupMemberRequest extends FormRequest
             'user_id' => $userIdRules,
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'user_id' => [
+                'description' => 'The ID of the user belonging to the community group.',
+            ],
+        ];
+    }
 }

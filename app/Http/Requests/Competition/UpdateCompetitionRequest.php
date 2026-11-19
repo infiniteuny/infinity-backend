@@ -19,4 +19,21 @@ class UpdateCompetitionRequest extends FormRequest
             'shortname' => ['sometimes', 'nullable', 'string'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'The name of the competition series.',
+            ],
+            'shortname' => [
+                'description' => 'The short name or acronym of the competition series.',
+            ],
+        ];
+    }
 }

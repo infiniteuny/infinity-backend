@@ -19,4 +19,21 @@ class StoreFacultyRequest extends FormRequest
             'name' => ['required', 'string'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'code' => [
+                'description' => 'The unique code of the faculty.',
+            ],
+            'name' => [
+                'description' => 'The name of the faculty.',
+            ],
+        ];
+    }
 }

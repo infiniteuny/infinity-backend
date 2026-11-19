@@ -34,4 +34,30 @@ class UpdateCommunityGroupRequest extends FormRequest
             'is_active' => ['sometimes', 'boolean'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'The name of the community group.',
+            ],
+            'priority' => [
+                'description' => 'The display priority order of the community group.',
+            ],
+            'description' => [
+                'description' => 'The description of the community group.',
+            ],
+            'logo' => [
+                'description' => 'The logo image of the community group.',
+            ],
+            'is_active' => [
+                'description' => 'Whether the community group is currently active.',
+            ],
+        ];
+    }
 }

@@ -18,4 +18,18 @@ class UpdateUserPersonaRequest extends FormRequest
             'persona_id' => ['sometimes', 'uuid', 'exists:personas,id'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'persona_id' => [
+                'description' => 'The ID of the persona to assign to the user.',
+            ],
+        ];
+    }
 }

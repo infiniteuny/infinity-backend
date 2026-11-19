@@ -30,4 +30,42 @@ class StoreFundApplicationRequest extends FormRequest
             'status' => ['required', 'string', 'in:'.$statusValues],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'team_id' => [
+                'description' => 'The ID of the team submitting the fund application.',
+            ],
+            'competition_instance_id' => [
+                'description' => 'The ID of the competition instance the funding is requested for.',
+            ],
+            'competition_scale_id' => [
+                'description' => 'The ID of the competition scale.',
+            ],
+            'competition_branch' => [
+                'description' => 'The branch or category of the competition.',
+            ],
+            'competition_start_date' => [
+                'description' => 'The start date of the competition.',
+            ],
+            'competition_end_date' => [
+                'description' => 'The end date of the competition.',
+            ],
+            'letter_of_acceptance' => [
+                'description' => 'The letter of acceptance document for the competition.',
+            ],
+            'proposal' => [
+                'description' => 'The funding proposal document.',
+            ],
+            'status' => [
+                'description' => 'The approval status of the fund application.',
+            ],
+        ];
+    }
 }

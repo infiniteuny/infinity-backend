@@ -71,4 +71,51 @@ class StoreUserRequest extends FormRequest
 
         return $validated;
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'The full name of the user.',
+            ],
+            'username' => [
+                'description' => 'The unique username of the user.',
+            ],
+            'email_address' => [
+                'description' => 'The unique email address of the user.',
+            ],
+            'phone_number' => [
+                'description' => 'The unique phone number of the user.',
+            ],
+            'student_id' => [
+                'description' => 'The unique student ID number of the user.',
+            ],
+            'major_id' => [
+                'description' => 'The ID of the major the user belongs to.',
+            ],
+            'links' => [
+                'description' => 'An associative map of external profile or social media links for the user.',
+            ],
+            'links.*' => [
+                'description' => 'The URL or value of an individual external link.',
+            ],
+            'start_date' => [
+                'description' => 'The membership start date of the user.',
+            ],
+            'end_date' => [
+                'description' => 'The membership end date of the user.',
+            ],
+            'is_member' => [
+                'description' => 'Whether the user is a registered member.',
+            ],
+            'is_extraordinary' => [
+                'description' => 'Whether the user is an extraordinary member.',
+            ],
+        ];
+    }
 }

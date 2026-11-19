@@ -33,4 +33,27 @@ class UpdateConfigRequest extends FormRequest
             'is_private' => ['sometimes', 'boolean'],
         ];
     }
+
+    /**
+     * Get the body parameters for API documentation.
+     *
+     * @return array<string, array{description: string}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'key' => [
+                'description' => 'The unique key identifying the configuration entry.',
+            ],
+            'value' => [
+                'description' => 'The value of the configuration entry.',
+            ],
+            'type' => [
+                'description' => 'The data type of the configuration value.',
+            ],
+            'is_private' => [
+                'description' => 'Whether the configuration entry is restricted from public access.',
+            ],
+        ];
+    }
 }
