@@ -36,6 +36,7 @@ class CommunityGroupFactory extends Factory
                 'path' => 'community-groups/logos',
                 'name' => 'some-logo-id.jpg',
             ]),
+            'is_active' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

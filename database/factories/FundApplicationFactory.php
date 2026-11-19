@@ -30,7 +30,6 @@ class FundApplicationFactory extends Factory
             'id' => $this->faker->uuid(),
             'team_id' => $this->faker->uuid(),
             'competition_instance_id' => $this->faker->uuid(),
-            'competition_team_type_id' => $this->faker->uuid(),
             'competition_scale_id' => $this->faker->uuid(),
             'competition_branch' => Str::title($this->faker->word()),
             'competition_start_date' => $this->faker->date(),

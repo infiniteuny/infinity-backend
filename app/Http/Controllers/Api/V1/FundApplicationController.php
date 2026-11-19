@@ -35,11 +35,10 @@ class FundApplicationController extends Controller
      *
      * @apiResourceModel App\Models\FundApplication paginate=10,cursor
      *
-     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_team_type_id`, `competition_scale_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `letter_of_acceptance`, `proposal`, `status`, `created_at`, `updated_at`. No-example
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_scale_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `letter_of_acceptance`, `proposal`, `status`, `created_at`, `updated_at`. No-example
      * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `team`, `team.members`, `competition_instance`, `competition_scale`. No-example
      * @queryParam filters[team_id] string Filter by exact `team_id`. No-example
      * @queryParam filters[competition_instance_id] string Filter by exact `competition_instance_id`. No-example
-     * @queryParam filters[competition_team_type_id] string Filter by exact `competition_team_type_id`. No-example
      * @queryParam filters[competition_scale_id] string Filter by exact `competition_scale_id`. No-example
      * @queryParam filters[competition_branch] string Filter by partial `competition_branch`. No-example
      * @queryParam filters[competition_start_date] string Filter by `competition_start_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
@@ -47,7 +46,7 @@ class FundApplicationController extends Controller
      * @queryParam filters[status] string Filter by exact `status`. No-example
      * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
      * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
-     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_team_type_id`, `competition_scale_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `status`, `created_at`, `updated_at`. Default: `-id`. No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_scale_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `status`, `created_at`, `updated_at`. Default: `-id`. No-example
      * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
      * @queryParam cursor string Cursor token for pagination. No-example
      */
@@ -61,7 +60,6 @@ class FundApplicationController extends Controller
                 'id',
                 'team_id',
                 'competition_instance_id',
-                'competition_team_type_id',
                 'competition_scale_id',
                 'competition_branch',
                 'competition_start_date',
@@ -81,7 +79,6 @@ class FundApplicationController extends Controller
             ->allowedFilters(
                 AllowedFilter::exact('team_id'),
                 AllowedFilter::exact('competition_instance_id'),
-                AllowedFilter::exact('competition_team_type_id'),
                 AllowedFilter::exact('competition_scale_id'),
                 'competition_branch',
                 AllowedFilter::operator('competition_start_date', FilterOperator::DYNAMIC),
@@ -94,7 +91,6 @@ class FundApplicationController extends Controller
                 'id',
                 'team_id',
                 'competition_instance_id',
-                'competition_team_type_id',
                 'competition_scale_id',
                 'competition_branch',
                 'competition_start_date',
@@ -155,7 +151,7 @@ class FundApplicationController extends Controller
      *
      * @apiResourceModel App\Models\FundApplication
      *
-     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_team_type_id`, `competition_scale_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `letter_of_acceptance`, `proposal`, `status`, `created_at`, `updated_at`. No-example
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_scale_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `letter_of_acceptance`, `proposal`, `status`, `created_at`, `updated_at`. No-example
      * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `team`, `team.members`, `competition_instance`, `competition_scale`. No-example
      */
     public function show(FundApplication $fundApplication)
@@ -165,7 +161,6 @@ class FundApplicationController extends Controller
                 'id',
                 'team_id',
                 'competition_instance_id',
-                'competition_team_type_id',
                 'competition_scale_id',
                 'competition_branch',
                 'competition_start_date',

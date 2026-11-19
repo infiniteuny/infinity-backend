@@ -23,7 +23,6 @@ class Achievement extends Model
     protected $fillable = [
         'team_id',
         'competition_instance_id',
-        'competition_team_type_id',
         'competition_scale_id',
         'competition_time_range_id',
         'competition_output_id',

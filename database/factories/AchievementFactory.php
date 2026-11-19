@@ -30,7 +30,6 @@ class AchievementFactory extends Factory
             'id' => $this->faker->uuid(),
             'team_id' => $this->faker->uuid(),
             'competition_instance_id' => $this->faker->uuid(),
-            'competition_team_type_id' => $this->faker->uuid(),
             'competition_scale_id' => $this->faker->uuid(),
             'competition_time_range_id' => $this->faker->uuid(),
             'competition_output_id' => $this->faker->uuid(),

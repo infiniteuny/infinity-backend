@@ -21,7 +21,6 @@ class FundApplication extends Model
     protected $fillable = [
         'team_id',
         'competition_instance_id',
-        'competition_team_type_id',
         'competition_scale_id',
         'competition_branch',
         'competition_start_date',

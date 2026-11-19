@@ -29,6 +29,7 @@ class TeamFactory extends Factory
         return [
             'id' => $this->faker->uuid(),
             'leader_id' => $this->faker->uuid(),
+            'team_type_id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->unique()->word()),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

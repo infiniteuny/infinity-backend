@@ -27,7 +27,9 @@ class CoreTeamFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
+            'group_id' => $this->faker->uuid(),
             'year' => $this->faker->year(),
+            'is_active' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
