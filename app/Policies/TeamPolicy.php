@@ -47,6 +47,12 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team): bool
     {
+        $individualTeamTypeId = config('app.individual_team_type_id');
+
+        if ($individualTeamTypeId && strcasecmp((string) $team->team_type_id, (string) $individualTeamTypeId) === 0) {
+            return false;
+        }
+
         return $user->can('delete-team') ||
             ($user->can('delete-own-team') && $user->id === $team->leader_id);
     }

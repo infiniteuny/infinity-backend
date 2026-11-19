@@ -85,6 +85,18 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Miscellaneous Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This section contains miscellaneous configuration options for the application.
+    |
+    */
+
+    'individual_team_type_id' => env('APP_INDIVIDUAL_TEAM_TYPE_ID', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key

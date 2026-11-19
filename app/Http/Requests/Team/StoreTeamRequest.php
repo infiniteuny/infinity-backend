@@ -4,6 +4,7 @@ namespace App\Http\Requests\Team;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTeamRequest extends FormRequest
 {
@@ -26,9 +27,16 @@ class StoreTeamRequest extends FormRequest
      */
     public function rules(): array
     {
+        $individualTeamTypeId = config('app.individual_team_type_id');
+        $teamTypeExistsRule = Rule::exists('competition_team_types', 'id');
+
+        if ($individualTeamTypeId) {
+            $teamTypeExistsRule->whereNot('id', $individualTeamTypeId);
+        }
+
         return [
             'leader_id' => ['required', 'uuid', 'exists:users,id'],
-            'team_type_id' => ['required', 'uuid', 'exists:competition_team_types,id'],
+            'team_type_id' => ['required', 'uuid', $teamTypeExistsRule],
             'name' => ['required', 'string'],
             'is_personal' => ['required', 'boolean'],
         ];
