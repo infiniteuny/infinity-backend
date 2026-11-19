@@ -30,7 +30,6 @@ class CompetitionFactory extends Factory
             'id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->name()),
             'shortname' => Str::upper($this->faker->lexify('???')),
-            'description' => $this->faker->text(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

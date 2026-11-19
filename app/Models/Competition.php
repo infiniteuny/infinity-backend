@@ -21,7 +21,6 @@ class Competition extends Model
     protected $fillable = [
         'name',
         'shortname',
-        'description',
     ];
 
     /**

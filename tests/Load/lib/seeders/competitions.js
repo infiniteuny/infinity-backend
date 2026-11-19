@@ -6,7 +6,6 @@ export function generateCompetitionData() {
     return {
         name: `k6_competition_${uniqueId}`,
         shortname: `K6C_${uniqueId}`,
-        description: `k6 competition description ${uniqueId}`,
     };
 }
 
@@ -15,6 +14,5 @@ export function generateCompetitionUpdateData() {
 
     return {
         name: `k6_competition_upd_${uniqueId}`,
-        description: `k6 competition description updated ${uniqueId}`,
     };
 }
