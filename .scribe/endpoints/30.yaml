@@ -22,8 +22,97 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[name]':
+        custom: []
+        name: 'filters[name]'
+        description: 'Filter by partial `name`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[guard_name]':
+        custom: []
+        name: 'filters[guard_name]'
+        description: 'Filter by exact `guard_name`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[created_at]':
+        custom: []
+        name: 'filters[created_at]'
+        description: 'Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[updated_at]':
+        custom: []
+        name: 'filters[updated_at]'
+        description: 'Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`. Default: `-id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -31,7 +120,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1996-11-23T16:36:12.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"},{"id":"1937113a-b0a2-3b03-925a-3163292463db","name":"Voluptatem","guard_name":"oidc","created_at":"2023-08-06T00:38:36.000000Z","updated_at":"2001-10-17T08:45:49.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2013-08-06T15:43:19.000000Z"},{"id":"62b13b25-7887-3a6d-933d-9f63b76646b2","name":"Facere","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -69,7 +158,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: 'Must not be greater than 255 characters.'
+        description: 'The name of the permission. Must not be greater than 255 characters.'
         required: true
         example: b
         type: string
@@ -80,7 +169,7 @@ endpoints:
       guard_name:
         custom: []
         name: guard_name
-        description: ''
+        description: 'The authentication guard name for the permission.'
         required: true
         example: api
         type: string
@@ -97,7 +186,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2006-02-28T07:24:49.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Quo","guard_name":"oidc","created_at":"2018-09-13T04:38:18.000000Z","updated_at":"1971-10-04T15:17:12.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -141,7 +230,18 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       id: architecto
-    queryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
@@ -150,7 +250,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Enim","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Dolores","guard_name":"oidc","created_at":"1996-11-14T17:31:56.000000Z","updated_at":"1980-04-05T05:19:07.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -201,7 +301,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: 'Must not be greater than 255 characters.'
+        description: 'The name of the permission. Must not be greater than 255 characters.'
         required: false
         example: b
         type: string
@@ -212,7 +312,7 @@ endpoints:
       guard_name:
         custom: []
         name: guard_name
-        description: ''
+        description: 'The authentication guard name for the permission.'
         required: false
         example: api
         type: string
@@ -229,7 +329,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Non","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Adipisci","guard_name":"oidc","created_at":"2006-02-19T08:20:33.000000Z","updated_at":"2015-01-19T20:47:12.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -282,7 +382,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Facere","guard_name":"oidc","created_at":"2020-03-13T08:10:43.000000Z","updated_at":"1985-12-26T03:24:50.000000Z"}}}'
+        content: '{"status":"success","data":{"permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Enim","guard_name":"oidc","created_at":"1980-04-05T05:19:07.000000Z","updated_at":"2020-03-13T08:10:43.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []

@@ -23,8 +23,42 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `year`. Default: `-year`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -32,7 +66,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"achievement_leaderboard_years":["1987","2012"],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"achievement_leaderboard_years":["1998","2002"],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -72,8 +106,108 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `user_id`, `year`, `total_points`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      includes:
+        custom: []
+        name: includes
+        description: 'Comma-separated list of relationships to include. Allowed values: `user`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[user_id]':
+        custom: []
+        name: 'filters[user_id]'
+        description: 'Filter by partial `user_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[total_points]':
+        custom: []
+        name: 'filters[total_points]'
+        description: 'Filter by `total_points` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[created_at]':
+        custom: []
+        name: 'filters[created_at]'
+        description: 'Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[updated_at]':
+        custom: []
+        name: 'filters[updated_at]'
+        description: 'Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `user_id`, `total_points`, `created_at`, `updated_at`. Default: `-total_points`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -81,7 +215,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"achievement_leaderboards":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","user_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","year":"1996","total_points":1225605784,"created_at":"2018-02-14T16:36:06+00:00","updated_at":"2019-04-18T23:45:16+00:00"},{"id":"add3503c-ebff-3875-93af-b8c6a695762b","user_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","year":"1997","total_points":1296531115,"created_at":"2024-02-01T03:38:03+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"achievement_leaderboards":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","user_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","year":"1996","total_points":1225605784,"created_at":"2018-02-05T17:31:50+00:00","updated_at":"2019-04-10T00:41:00+00:00"},{"id":"add3503c-ebff-3875-93af-b8c6a695762b","user_id":"c3b6b42e-3a0f-3935-b28d-cb767f8a2a0a","year":"1997","total_points":1296531115,"created_at":"2024-01-23T04:33:47+00:00","updated_at":"1991-08-13T18:05:48+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []

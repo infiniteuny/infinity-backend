@@ -21,8 +21,207 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `sso_id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `links`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      includes:
+        custom: []
+        name: includes
+        description: 'Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[sso_id]':
+        custom: []
+        name: 'filters[sso_id]'
+        description: 'Filter by exact `sso_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[name]':
+        custom: []
+        name: 'filters[name]'
+        description: 'Filter by partial `name`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[username]':
+        custom: []
+        name: 'filters[username]'
+        description: 'Filter by partial `username`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[email_address]':
+        custom: []
+        name: 'filters[email_address]'
+        description: 'Filter by partial `email_address`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[phone_number]':
+        custom: []
+        name: 'filters[phone_number]'
+        description: 'Filter by partial `phone_number`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[student_id]':
+        custom: []
+        name: 'filters[student_id]'
+        description: 'Filter by partial `student_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[major_id]':
+        custom: []
+        name: 'filters[major_id]'
+        description: 'Filter by exact `major_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[start_date]':
+        custom: []
+        name: 'filters[start_date]'
+        description: 'Filter by `start_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[end_date]':
+        custom: []
+        name: 'filters[end_date]'
+        description: 'Filter by `end_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[is_member]':
+        custom: []
+        name: 'filters[is_member]'
+        description: 'Filter by exact `is_member`.'
+        required: false
+        example: null
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[is_extraordinary]':
+        custom: []
+        name: 'filters[is_extraordinary]'
+        description: 'Filter by exact `is_extraordinary`.'
+        required: false
+        example: null
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[created_at]':
+        custom: []
+        name: 'filters[created_at]'
+        description: 'Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[updated_at]':
+        custom: []
+        name: 'filters[updated_at]'
+        description: 'Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. Default: `-id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -30,7 +229,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"users":[{"id":"d34becdc-c0c1-3b29-91d0-b8358c864cf4","name":"Henri Mitchell","email_address":"feeney.demarcus@gmail.com","phone_number":"559.897.7788","student_id":"55159266794","major_id":"56db1203-2e82-3de6-a828-ead32bd52d27","links":{"github":"http:\/\/www.schaden.com\/odit-quia-officia-est-dignissimos-neque-blanditiis-odio.html","linkedin":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html","website":"http:\/\/howe.com\/accusamus-ut-et-recusandae.html"},"start_date":"1989-07-21","end_date":"1971-09-08","is_member":false,"is_extraordinary":false,"created_at":"1981-08-05T19:10:26+00:00","updated_at":"1994-10-06T23:06:18+00:00","is_active":false},{"id":"aa7148ea-5fbc-38cb-95a9-bdfc3d462337","name":"Mona Lemke","email_address":"mayert.margaretta@thiel.com","phone_number":"+1 (619) 523-1922","student_id":"19214877433","major_id":"741f623f-132b-3692-ab2c-a09b08acdad6","links":{"github":"http:\/\/brekke.com\/suscipit-doloribus-fugiat-ut-aut-deserunt-et-error","linkedin":"http:\/\/tromp.com\/dolorem-et-ut-dicta","website":"http:\/\/www.lakin.com\/"},"start_date":"2012-07-02","end_date":"2026-09-20","is_member":true,"is_extraordinary":true,"created_at":"2007-01-20T01:47:07+00:00","updated_at":"1970-11-05T15:02:36+00:00","is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"users":[{"id":"d34becdc-c0c1-3b29-91d0-b8358c864cf4","name":"Henri Mitchell","username":"tleuschke","email_address":"vraynor@labadie.com","phone_number":"417-663-0574","student_id":"24385650588","major_id":"45e62725-5da9-35c7-82db-977f64d08292","links":{"github":"cartwright.noah","linkedin":"kirsten.ward","website":"https:\/\/beier.com\/delectus-fugit-qui-repudiandae-laboriosam.html"},"start_date":"1976-06-12","end_date":"2004-12-19","is_member":false,"is_extraordinary":false,"created_at":"1985-09-13T05:06:47+00:00","updated_at":"2024-01-13T01:48:03+00:00","is_active":false},{"id":"079d22ad-aa1d-3464-af6a-6f1ca215693f","name":"Josephine Dare","username":"zachery.fadel","email_address":"garett.runolfsson@yahoo.com","phone_number":"(920) 661-0057","student_id":"72400663863","major_id":"45d1e1f4-e38d-3971-92c7-6d933b3b67fa","links":{"github":"emilie87","linkedin":"hammes.simeon","website":"http:\/\/collins.net\/ut-aut-deserunt-et-error-neque-recusandae-et.html"},"start_date":"2014-11-14","end_date":"1977-04-22","is_member":true,"is_extraordinary":false,"created_at":"1971-08-02T05:36:21+00:00","updated_at":"2001-03-13T12:24:20+00:00","is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -70,7 +269,29 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       id: architecto
-    queryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `sso_id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `links`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      includes:
+        custom: []
+        name: includes
+        description: 'Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
@@ -79,7 +300,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jermaine.tillman@yahoo.com","phone_number":"1-820-420-3724","student_id":"43084522821","major_id":"445bd3f6-8f2c-38cb-aa04-2f4e1edb32bb","links":{"github":"http:\/\/www.baumbach.org\/et-modi-ipsum-nostrum-omnis-autem-et-consequatur","linkedin":"http:\/\/leffler.com\/","website":"http:\/\/vonrueden.com\/"},"start_date":"2020-03-13","end_date":"1985-12-26","is_member":true,"is_extraordinary":true,"created_at":"2001-10-17T08:45:50+00:00","updated_at":"1974-10-04T12:04:24+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","username":"jdach","email_address":"cecil42@gmail.com","phone_number":"1-463-692-1881","student_id":"21149155711","major_id":"c68e0767-6220-31fb-a489-61093ff79529","links":{"github":"ferne52","linkedin":"isidro.mclaughlin","website":"http:\/\/tromp.com\/non-facere-tempora-ex-voluptatem-laboriosam-praesentium"},"start_date":"2001-10-08","end_date":"1974-09-25","is_member":false,"is_extraordinary":true,"created_at":"2020-06-18T05:00:55+00:00","updated_at":"2020-09-20T06:12:46+00:00","is_active":false}}}'
         headers: []
         description: ''
     responseFields: []
@@ -129,7 +350,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"user":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"ferne52@gmail.com","phone_number":"870-215-1024","student_id":"84729902083","major_id":"4ac9147e-bdf0-3914-9dcd-3c6a5c52010c","links":{"github":"https:\/\/labadie.com\/deleniti-distinctio-eum-doloremque-id-aut.html","linkedin":"http:\/\/klocko.com\/dolorem-mollitia-deleniti-nemo","website":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio"},"start_date":"1973-04-26","end_date":"2001-02-19","is_member":true,"is_extraordinary":false,"created_at":"1978-02-21T03:10:37+00:00","updated_at":"1995-01-30T23:03:05+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","username":"imclaughlin","email_address":"okeefe.isidro@yahoo.com","phone_number":"1-915-230-6227","student_id":"87072336780","major_id":"f2726f3d-9044-3663-bede-2a0f37053879","links":{"github":"verlie08","linkedin":"cynthia.fahey","website":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio"},"start_date":"1973-04-17","end_date":"2001-02-10","is_member":true,"is_extraordinary":false,"created_at":"1978-02-21T03:10:37+00:00","updated_at":"1995-01-30T23:03:05+00:00","is_active":false}}}'
         headers: []
         description: ''
     responseFields: []
@@ -167,7 +388,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'The full name of the user.'
         required: true
         example: architecto
         type: string
@@ -178,7 +399,7 @@ endpoints:
       username:
         custom: []
         name: username
-        description: ''
+        description: 'The unique username of the user.'
         required: true
         example: architecto
         type: string
@@ -189,7 +410,7 @@ endpoints:
       email_address:
         custom: []
         name: email_address
-        description: 'Must be a valid email address.'
+        description: 'The unique email address of the user. Must be a valid email address.'
         required: true
         example: zbailey@example.net
         type: string
@@ -200,7 +421,7 @@ endpoints:
       phone_number:
         custom: []
         name: phone_number
-        description: ''
+        description: 'The unique phone number of the user.'
         required: true
         example: architecto
         type: string
@@ -211,7 +432,7 @@ endpoints:
       student_id:
         custom: []
         name: student_id
-        description: ''
+        description: 'The unique student ID number of the user.'
         required: true
         example: architecto
         type: string
@@ -222,7 +443,7 @@ endpoints:
       major_id:
         custom: []
         name: major_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the major the user belongs to. Must be a valid UUID. Must match an existing stored value.'
         required: true
         example: a4855dc5-0acb-33c3-b921-f4291f719ca0
         type: string
@@ -233,12 +454,12 @@ endpoints:
       links:
         custom: []
         name: links
-        description: ''
+        description: 'An object of external profile or social media links for the user.'
         required: true
         example:
-          github: 'https://github.com/infiniteuny'
-          linkedin: 'https://linkedin.com/company/infiniteuny/'
-          website: 'https://infiniteuny.id'
+          github: infiniteuny
+          linkedin: infiniteuny
+          website: 'https://www.infiniteuny.id'
         type: object
         enumValues: []
         exampleWasSpecified: true
@@ -247,7 +468,7 @@ endpoints:
       'links.*':
         custom: []
         name: 'links.*'
-        description: ''
+        description: 'The value or URL of an individual external profile or social media link.'
         required: false
         example: 'https://example.com'
         type: string
@@ -263,16 +484,16 @@ endpoints:
       student_id: architecto
       major_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       links:
-        github: 'https://github.com/infiniteuny'
-        linkedin: 'https://linkedin.com/company/infiniteuny/'
-        website: 'https://infiniteuny.id'
+        github: infiniteuny
+        linkedin: infiniteuny
+        website: 'https://www.infiniteuny.id'
         '*': 'https://example.com'
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"jhaag@hotmail.com","phone_number":"1-847-548-7905","student_id":"78785868631","major_id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","links":{"github":"http:\/\/www.torp.com\/neque-blanditiis-odio-veritatis-excepturi-doloribus-delectus","linkedin":"http:\/\/kuvalis.com\/est-alias-tenetur-ratione","website":"https:\/\/www.casper.com\/et-recusandae-modi-rerum-ex-repellendus-assumenda-et"},"start_date":"1985-03-25","end_date":"1981-01-06","is_member":false,"is_extraordinary":false,"created_at":"1990-03-02T10:37:54+00:00","updated_at":"1992-04-28T03:30:54+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","username":"pfritsch","email_address":"christian51@leffler.com","phone_number":"+1-559-693-2083","student_id":"55366487659","major_id":"9e13baad-9e20-392f-94ab-6047f7ff6a83","links":{"github":"wnitzsche","linkedin":"balistreri.josiane","website":"http:\/\/www.wolff.info\/veritatis-excepturi-doloribus-delectus-fugit.html"},"start_date":"1995-01-30","end_date":"2006-12-03","is_member":false,"is_extraordinary":false,"created_at":"2004-12-19T17:37:22+00:00","updated_at":"1994-01-17T04:17:38+00:00","is_active":false}}}'
         headers: []
         description: ''
     responseFields: []
@@ -323,7 +544,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'The full name of the user.'
         required: false
         example: architecto
         type: string
@@ -334,7 +555,7 @@ endpoints:
       username:
         custom: []
         name: username
-        description: ''
+        description: 'The unique username of the user.'
         required: false
         example: architecto
         type: string
@@ -345,7 +566,7 @@ endpoints:
       email_address:
         custom: []
         name: email_address
-        description: 'Must be a valid email address.'
+        description: 'The unique email address of the user. Must be a valid email address.'
         required: false
         example: zbailey@example.net
         type: string
@@ -356,7 +577,7 @@ endpoints:
       phone_number:
         custom: []
         name: phone_number
-        description: ''
+        description: 'The unique phone number of the user.'
         required: false
         example: architecto
         type: string
@@ -367,7 +588,7 @@ endpoints:
       student_id:
         custom: []
         name: student_id
-        description: ''
+        description: 'The unique student ID number of the user.'
         required: false
         example: architecto
         type: string
@@ -378,7 +599,7 @@ endpoints:
       major_id:
         custom: []
         name: major_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the major the user belongs to. Must be a valid UUID. Must match an existing stored value.'
         required: false
         example: a4855dc5-0acb-33c3-b921-f4291f719ca0
         type: string
@@ -389,12 +610,12 @@ endpoints:
       links:
         custom: []
         name: links
-        description: ''
+        description: 'An object of external profile or social media links for the user.'
         required: false
         example:
-          github: 'https://github.com/infiniteuny'
-          linkedin: 'https://linkedin.com/company/infiniteuny/'
-          website: 'https://infiniteuny.id'
+          github: infiniteuny
+          linkedin: infiniteuny
+          website: 'https://www.infiniteuny.id'
         type: object
         enumValues: []
         exampleWasSpecified: true
@@ -403,7 +624,7 @@ endpoints:
       'links.*':
         custom: []
         name: 'links.*'
-        description: ''
+        description: 'The value or URL of an individual external profile or social media link.'
         required: false
         example: 'https://example.com'
         type: string
@@ -419,16 +640,16 @@ endpoints:
       student_id: architecto
       major_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       links:
-        github: 'https://github.com/infiniteuny'
-        linkedin: 'https://linkedin.com/company/infiniteuny/'
-        website: 'https://infiniteuny.id'
+        github: infiniteuny
+        linkedin: infiniteuny
+        website: 'https://www.infiniteuny.id'
         '*': 'https://example.com'
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"micaela88@yahoo.com","phone_number":"+1 (878) 642-3669","student_id":"78281414653","major_id":"0733da06-3f67-3b0d-b923-684c336397e5","links":{"github":"https:\/\/beier.com\/delectus-fugit-qui-repudiandae-laboriosam.html","linkedin":"http:\/\/franecki.net\/nemo-voluptate-accusamus-ut-et.html","website":"http:\/\/kovacek.info\/"},"start_date":"2014-11-13","end_date":"2017-03-12","is_member":false,"is_extraordinary":true,"created_at":"1985-03-25T07:07:18+00:00","updated_at":"1981-01-06T21:28:39+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","username":"wbatz","email_address":"oking@hotmail.com","phone_number":"717.994.2329","student_id":"15159750740","major_id":"d6795ffc-5469-39cc-b8a3-ff26d1b1d12a","links":{"github":"oreilly.jacques","linkedin":"anderson.herbert","website":"http:\/\/www.cruickshank.com\/rerum-ex-repellendus-assumenda-et"},"start_date":"1985-03-25","end_date":"1981-01-06","is_member":false,"is_extraordinary":false,"created_at":"1990-02-21T11:33:37+00:00","updated_at":"1992-04-28T03:30:54+00:00","is_active":false}}}'
         headers: []
         description: ''
     responseFields: []
@@ -481,7 +702,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"user":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"christian51@leffler.com","phone_number":"+1-559-693-2083","student_id":"55366487659","major_id":"9e13baad-9e20-392f-94ab-6047f7ff6a83","links":{"github":"https:\/\/nitzsche.net\/aliquam-veniam-corporis-dolorem-mollitia-deleniti-nemo.html","linkedin":"https:\/\/www.balistreri.org\/dignissimos-neque-blanditiis-odio","website":"https:\/\/bradtke.org\/fugit-qui-repudiandae-laboriosam-est-alias.html"},"start_date":"2004-12-28","end_date":"1994-01-26","is_member":true,"is_extraordinary":true,"created_at":"2024-01-13T01:48:03+00:00","updated_at":"1975-11-24T15:37:19+00:00","is_active":false}}}'
+        content: '{"status":"success","data":{"user":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","username":"ashtyn.oconnell","email_address":"pagac.skylar@yahoo.com","phone_number":"260-842-0483","student_id":"16934464815","major_id":"cd7c94c7-777c-3bc2-ab81-c1d1c184670a","links":{"github":"moises37","linkedin":"edna59","website":"http:\/\/www.braun.org\/et-dolores-quia-maiores"},"start_date":"2020-09-15","end_date":"1979-04-08","is_member":false,"is_extraordinary":true,"created_at":"1986-02-19T08:35:51+00:00","updated_at":"2020-11-25T23:19:01+00:00","is_active":false}}}'
         headers: []
         description: ''
     responseFields: []

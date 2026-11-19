@@ -34,8 +34,86 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       group_id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      'filters[name]':
+        custom: []
+        name: 'filters[name]'
+        description: 'Filter by exact `name`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[guard_name]':
+        custom: []
+        name: 'filters[guard_name]'
+        description: 'Filter by exact `guard_name`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[created_at]':
+        custom: []
+        name: 'filters[created_at]'
+        description: 'Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[updated_at]':
+        custom: []
+        name: 'filters[updated_at]'
+        description: 'Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`. Default: `-id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -43,7 +121,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Distinctio","guard_name":"oidc","created_at":"2013-02-14T00:13:02.000000Z","updated_at":"1976-07-17T00:46:39.000000Z","entitlement":{"id":"1e9be565-c31b-3b43-8646-66a4d676e89f","group_id":"c7bf1d68-67aa-3fb7-979d-eaef8e3908bc","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"56db1203-2e82-3de6-a828-ead32bd52d27","name":"Dolorem","guard_name":"oidc","created_at":"1975-07-10T01:22:31.000000Z","updated_at":"1989-07-26T16:30:05.000000Z","entitlement":{"id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","group_id":"29635f5e-45e3-3a71-90b8-942cfd8ffe97","permission_id":"56db1203-2e82-3de6-a828-ead32bd52d27"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"group_permissions":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Molestias","guard_name":"oidc","created_at":"1986-05-11T16:40:23.000000Z","updated_at":"2020-06-18T05:00:54.000000Z","entitlement":{"id":"9e13baad-9e20-392f-94ab-6047f7ff6a83","group_id":"f0b41b1f-4d8e-3b0d-b54e-b367d8431199","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}},{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","name":"Aliquam","guard_name":"oidc","created_at":"1972-06-24T12:27:38.000000Z","updated_at":"2022-04-16T04:43:09.000000Z","entitlement":{"id":"45e62725-5da9-35c7-82db-977f64d08292","group_id":"ae418b3a-69fc-38d5-a5ed-bba4255aaea9","permission_id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849"}}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -93,7 +171,7 @@ endpoints:
       permission_id:
         custom: []
         name: permission_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the permission to assign to the group. Must be a valid UUID. Must match an existing stored value.'
         required: true
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -108,7 +186,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Eum","guard_name":"oidc","created_at":"1976-07-17T00:46:39.000000Z","updated_at":"1990-06-17T12:27:47.000000Z","entitlement":{"id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","group_id":"7ede3c6a-246e-324b-b30f-8fde291e43b3","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Deleniti","guard_name":"oidc","created_at":"2020-09-20T06:12:45.000000Z","updated_at":"2013-02-14T00:13:02.000000Z","entitlement":{"id":"f0b41b1f-4d8e-3b0d-b54e-b367d8431199","group_id":"d553e1c3-0e01-333f-aae0-a6d9ef90c849","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -161,7 +239,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Officia","guard_name":"oidc","created_at":"2021-03-28T12:52:13.000000Z","updated_at":"1999-10-12T05:09:05.000000Z","entitlement":{"id":"0733da06-3f67-3b0d-b923-684c336397e5","group_id":"3457a2ff-ae91-3fa6-b7ef-d2a3b0cb075b","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Nemo","guard_name":"oidc","created_at":"2008-12-19T05:21:47.000000Z","updated_at":"1976-01-28T00:40:55.000000Z","entitlement":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","group_id":"8529678e-de6b-32f2-9f70-231a0d681563","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -212,7 +290,7 @@ endpoints:
       permission_id:
         custom: []
         name: permission_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the permission to assign to the group. Must be a valid UUID. Must match an existing stored value.'
         required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -227,7 +305,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Dignissimos","guard_name":"oidc","created_at":"2014-08-18T14:21:19.000000Z","updated_at":"2023-11-11T22:11:39.000000Z","entitlement":{"id":"dc407d02-9b9b-35e5-8d69-87904a6787e3","group_id":"b3dfd3b4-abf6-34e6-9ab5-ef739060a5da","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Officia","guard_name":"oidc","created_at":"2021-03-28T12:52:13.000000Z","updated_at":"1999-10-12T05:09:05.000000Z","entitlement":{"id":"0733da06-3f67-3b0d-b923-684c336397e5","group_id":"3457a2ff-ae91-3fa6-b7ef-d2a3b0cb075b","permission_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"}}}}'
         headers: []
         description: ''
     responseFields: []
@@ -280,7 +358,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Neque","guard_name":"oidc","created_at":"2023-11-11T22:11:39.000000Z","updated_at":"1973-04-26T02:50:29.000000Z","entitlement":{"id":"54df41cd-f321-3c8c-bee8-8f345f900166","group_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
+        content: '{"status":"success","data":{"group_permission":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Est","guard_name":"oidc","created_at":"1999-10-12T05:09:05.000000Z","updated_at":"2014-08-18T14:21:19.000000Z","entitlement":{"id":"3a87aacf-b9fa-3196-a711-8910cad3c293","group_id":"dc407d02-9b9b-35e5-8d69-87904a6787e3","permission_id":"bfc53181-d647-36b2-9080-f9c2b76006f4"}}}}'
         headers: []
         description: ''
     responseFields: []

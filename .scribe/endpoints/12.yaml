@@ -33,8 +33,185 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       community_group_id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      includes:
+        custom: []
+        name: includes
+        description: 'Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[sso_id]':
+        custom: []
+        name: 'filters[sso_id]'
+        description: 'Filter by exact `sso_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[name]':
+        custom: []
+        name: 'filters[name]'
+        description: 'Filter by partial `name`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[email_address]':
+        custom: []
+        name: 'filters[email_address]'
+        description: 'Filter by partial `email_address`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[phone_number]':
+        custom: []
+        name: 'filters[phone_number]'
+        description: 'Filter by partial `phone_number`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[student_id]':
+        custom: []
+        name: 'filters[student_id]'
+        description: 'Filter by partial `student_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[major_id]':
+        custom: []
+        name: 'filters[major_id]'
+        description: 'Filter by exact `major_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[start_date]':
+        custom: []
+        name: 'filters[start_date]'
+        description: 'Filter by `start_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[end_date]':
+        custom: []
+        name: 'filters[end_date]'
+        description: 'Filter by `end_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[is_member]':
+        custom: []
+        name: 'filters[is_member]'
+        description: 'Filter by exact `is_member`.'
+        required: false
+        example: null
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[is_extraordinary]':
+        custom: []
+        name: 'filters[is_extraordinary]'
+        description: 'Filter by exact `is_extraordinary`.'
+        required: false
+        example: null
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[created_at]':
+        custom: []
+        name: 'filters[created_at]'
+        description: 'Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[updated_at]':
+        custom: []
+        name: 'filters[updated_at]'
+        description: 'Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `email_address`, `phone_number`, `student_id`, `major_id`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. Default: `-id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -42,7 +219,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group_members":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"lexus42@gmail.com","phone_number":"253.392.8862","student_id":"53454247343","major_id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","links":{"github":"http:\/\/www.okeefe.net\/et-consequatur-aut-dolores-enim","linkedin":"http:\/\/vonrueden.com\/","website":"http:\/\/www.leffler.info\/quis-adipisci-molestias-fugit-deleniti-distinctio-eum"},"start_date":"1976-07-17","end_date":"1990-06-17","is_member":false,"is_extraordinary":true,"created_at":"1990-08-25T02:52:24+00:00","updated_at":"1972-07-03T11:31:55+00:00","membership":{"id":"2d85fc8c-1f12-35b2-8d02-e99ae5c47a0e","user_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","community_group_id":"45e62725-5da9-35c7-82db-977f64d08292","created_at":"1987-09-28T08:29:37+00:00","updated_at":"2008-12-28T04:26:05+00:00"},"is_active":false},{"id":"29635f5e-45e3-3a71-90b8-942cfd8ffe97","name":"Rodrigo O''connell","email_address":"pagac.skylar@yahoo.com","phone_number":"260-842-0483","student_id":"16934464815","major_id":"cd7c94c7-777c-3bc2-ab81-c1d1c184670a","links":{"github":"http:\/\/www.crist.com\/tenetur-ab-reiciendis-quia-perspiciatis","linkedin":"https:\/\/www.lemke.com\/dolores-quia-maiores-assumenda-odit-doloribus-repellat-officiis","website":"http:\/\/kreiger.info\/"},"start_date":"2008-10-27","end_date":"2017-03-01","is_member":true,"is_extraordinary":true,"created_at":"1978-03-18T08:29:42+00:00","updated_at":"1973-07-07T05:31:42+00:00","membership":{"id":"741f623f-132b-3692-ab2c-a09b08acdad6","user_id":"29635f5e-45e3-3a71-90b8-942cfd8ffe97","community_group_id":"95fbc6f1-62ad-37e9-b66f-26b48c54c413","created_at":"1977-05-02T01:48:41+00:00","updated_at":"1997-06-06T12:13:19+00:00"},"is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"community_group_members":[{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","username":"lafayette.considine","email_address":"cormier.nick@cruickshank.com","phone_number":"1-619-829-0034","student_id":"22573636336","major_id":"1cdf7bf0-e381-3a72-a922-e680daa4dd16","links":{"github":"carey67","linkedin":"sleffler","website":"http:\/\/vonrueden.com\/"},"start_date":"2020-03-13","end_date":"1985-12-26","is_member":true,"is_extraordinary":true,"created_at":"2001-10-08T09:41:34+00:00","updated_at":"1974-09-25T13:00:08+00:00","membership":{"id":"b1acb002-2839-312b-9bbc-3ecc71af48bf","user_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","community_group_id":"5f936efd-e185-3891-a84d-e9ea08ed9d45","created_at":"2013-02-14T00:13:02+00:00","updated_at":"1976-07-08T01:42:24+00:00"},"is_active":false},{"id":"1e9be565-c31b-3b43-8646-66a4d676e89f","name":"Mr. Madisen Schaden","username":"colt.balistreri","email_address":"kirsten.ward@yahoo.com","phone_number":"(669) 328-9388","student_id":"71410895686","major_id":"cc18252a-110c-3e9b-83cc-81f0ab1d55ab","links":{"github":"roxanne81","linkedin":"modesta58","website":"http:\/\/www.doyle.net\/reiciendis-quia-perspiciatis-deserunt-ducimus-corrupti-et.html"},"start_date":"2014-08-30","end_date":"1977-08-10","is_member":false,"is_extraordinary":true,"created_at":"2022-02-01T15:38:44+00:00","updated_at":"1986-02-19T08:35:51+00:00","membership":{"id":"731b4d16-074d-3a29-a7a0-de30158b742d","user_id":"1e9be565-c31b-3b43-8646-66a4d676e89f","community_group_id":"241611a0-a07b-352b-9f83-f15a091959e3","created_at":"1998-03-02T23:58:28+00:00","updated_at":"2021-02-03T11:32:02+00:00"},"is_active":false}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -82,7 +259,18 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       id: architecto
-    queryParameters: []
+    queryParameters:
+      includes:
+        custom: []
+        name: includes
+        description: 'Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
@@ -91,7 +279,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group_member":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","email_address":"leo34@hotmail.com","phone_number":"(678) 471-7515","student_id":"52240351051","major_id":"502eabbf-311f-3542-a47b-b2a14f5de904","links":{"github":"http:\/\/raynor.org\/molestias-fugit-deleniti-distinctio-eum-doloremque-id","linkedin":"http:\/\/mcdermott.com\/corporis-dolorem-mollitia-deleniti-nemo-odit-quia-officia.html","website":"http:\/\/www.emard.org\/odio-veritatis-excepturi-doloribus-delectus-fugit-qui-repudiandae"},"start_date":"2006-12-12","end_date":"1976-06-12","is_member":false,"is_extraordinary":false,"created_at":"1994-01-26T03:21:55+00:00","updated_at":"1985-09-22T04:11:03+00:00","membership":{"id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","user_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","community_group_id":"43fd77a7-5d0e-3206-88ea-5c77b63072ad","created_at":"1971-09-08T02:56:18+00:00","updated_at":"2014-11-13T21:46:22+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"community_group_member":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Aleen O''kon","username":"lyric80","email_address":"theo.hauck@leuschke.com","phone_number":"+14324666067","student_id":"16805762791","major_id":"62b13b25-7887-3a6d-933d-9f63b76646b2","links":{"github":"jhaag","linkedin":"daphne59","website":"http:\/\/ankunding.biz\/veniam-corporis-dolorem-mollitia"},"start_date":"1989-07-26","end_date":"1987-09-19","is_member":true,"is_extraordinary":false,"created_at":"2009-01-04T03:32:34+00:00","updated_at":"2021-03-28T12:52:13+00:00","membership":{"id":"8529678e-de6b-32f2-9f70-231a0d681563","user_id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","community_group_id":"3a87aacf-b9fa-3196-a711-8910cad3c293","created_at":"1973-04-17T03:46:14+00:00","updated_at":"2001-02-10T12:16:09+00:00"},"is_active":false}}}'
         headers: []
         description: ''
     responseFields: []
@@ -138,7 +326,7 @@ endpoints:
       user_id:
         custom: []
         name: user_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the user belonging to the community group. Must be a valid UUID. Must match an existing stored value.'
         required: true
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -153,7 +341,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"community_group_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"cecil42@gmail.com","phone_number":"1-463-692-1881","student_id":"21149155711","major_id":"c68e0767-6220-31fb-a489-61093ff79529","links":{"github":"https:\/\/www.leuschke.info\/nostrum-omnis-autem-et-consequatur-aut","linkedin":"http:\/\/www.stokes.com\/tempora-ex-voluptatem-laboriosam-praesentium-quis.html","website":"http:\/\/www.haag.org\/distinctio-eum-doloremque-id-aut-libero-aliquam-veniam-corporis"},"start_date":"2022-04-25","end_date":"1975-07-10","is_member":true,"is_extraordinary":true,"created_at":"2008-12-28T04:26:04+00:00","updated_at":"1976-02-05T23:45:12+00:00","membership":{"id":"1f5f3396-ae02-35de-8a96-3a1f05669df3","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","community_group_id":"8529678e-de6b-32f2-9f70-231a0d681563","created_at":"2023-11-11T22:11:39+00:00","updated_at":"1973-04-26T02:50:29+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"community_group_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","username":"emanuel.emmerich","email_address":"green.doris@gmail.com","phone_number":"269-915-6037","student_id":"69538059950","major_id":"af49b819-28db-33bd-b66b-66e0bad1c5fa","links":{"github":"garett.runolfsson","linkedin":"mayert.margaretta","website":"http:\/\/marvin.net\/officiis-corporis-nesciunt-ut.html"},"start_date":"2008-10-27","end_date":"2017-02-20","is_member":true,"is_extraordinary":true,"created_at":"1978-03-09T09:25:25+00:00","updated_at":"1973-07-07T05:31:42+00:00","membership":{"id":"741f623f-132b-3692-ab2c-a09b08acdad6","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","community_group_id":"95fbc6f1-62ad-37e9-b66f-26b48c54c413","created_at":"1977-05-02T01:48:41+00:00","updated_at":"1997-05-28T13:09:02+00:00"},"is_active":false}}}'
         headers: []
         description: ''
     responseFields: []
@@ -204,7 +392,7 @@ endpoints:
       user_id:
         custom: []
         name: user_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the user belonging to the community group. Must be a valid UUID. Must match an existing stored value.'
         required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -219,7 +407,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","email_address":"ernie.nitzsche@ankunding.biz","phone_number":"+1-380-698-8637","student_id":"69403872784","major_id":"7299053e-5fea-32a4-be53-165db447cc87","links":{"github":"http:\/\/little.net\/voluptate-accusamus-ut-et-recusandae.html","linkedin":"http:\/\/www.conroy.com\/assumenda-et-tenetur-ab-reiciendis-quia","website":"http:\/\/www.braun.org\/et-dolores-quia-maiores"},"start_date":"2020-09-24","end_date":"1979-04-08","is_member":false,"is_extraordinary":true,"created_at":"1986-02-19T08:35:51+00:00","updated_at":"2020-12-04T22:23:17+00:00","membership":{"id":"9aabaecc-2f21-32fd-9ece-469aadfdb927","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","community_group_id":"45d1e1f4-e38d-3971-92c7-6d933b3b67fa","created_at":"2021-02-03T11:32:02+00:00","updated_at":"1978-03-18T08:29:41+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"community_group_member":{"id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","name":"Mr. Gerhard Dach Jr.","username":"edmund.dare","email_address":"edna59@gmail.com","phone_number":"973-982-7468","student_id":"46514850820","major_id":"fcba8e73-dfba-3576-8ee2-226f12ade1a7","links":{"github":"oklocko","linkedin":"zstanton","website":"http:\/\/www.glover.com\/aut-molestiae-sunt-suscipit-doloribus-fugiat"},"start_date":"2009-10-13","end_date":"1986-11-14","is_member":false,"is_extraordinary":true,"created_at":"2013-08-18T09:37:20+00:00","updated_at":"2004-06-18T14:00:35+00:00","membership":{"id":"0946df97-37a5-38d3-ad41-d635320184d0","user_id":"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9","community_group_id":"e01e6c64-459d-37af-9000-f6cce4a86480","created_at":"1984-07-31T07:16:16+00:00","updated_at":"1971-08-02T05:36:21+00:00"},"is_active":false}}}'
         headers: []
         description: ''
     responseFields: []
@@ -272,7 +460,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"community_group_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","email_address":"madisen51@hotmail.com","phone_number":"+1 (216) 979-0089","student_id":"50937833468","major_id":"773ccc0c-3f66-300a-ab12-8180267b8dc4","links":{"github":"https:\/\/www.green.com\/alias-tenetur-ratione-nemo-voluptate-accusamus-ut-et","linkedin":"http:\/\/kovacek.info\/","website":"http:\/\/www.crist.com\/tenetur-ab-reiciendis-quia-perspiciatis"},"start_date":"1992-04-28","end_date":"1970-12-03","is_member":false,"is_extraordinary":false,"created_at":"2014-08-30T10:37:42+00:00","updated_at":"1977-08-19T21:22:19+00:00","membership":{"id":"46611970-6c6f-3417-ac6a-8f461885495c","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","community_group_id":"1470dbfb-09b2-390a-9691-9f19035d3dd5","created_at":"1986-02-19T08:35:51+00:00","updated_at":"2020-12-04T22:23:17+00:00"},"is_active":false}}}'
+        content: '{"status":"success","data":{"community_group_member":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Rogers Leuschke Phd","username":"wortiz","email_address":"rosario67@hotmail.com","phone_number":"417.371.0142","student_id":"87316739735","major_id":"cff91250-116d-33fa-9960-45f37e530838","links":{"github":"rswaniawski","linkedin":"marquardt.zion","website":"http:\/\/halvorson.biz\/deserunt-et-error-neque-recusandae-et.html"},"start_date":"2014-11-14","end_date":"1977-04-22","is_member":true,"is_extraordinary":false,"created_at":"1971-08-02T05:36:21+00:00","updated_at":"2001-03-13T12:24:20+00:00","membership":{"id":"510b150e-bfa1-36ba-b088-8165c1e72ccd","user_id":"bfc53181-d647-36b2-9080-f9c2b76006f4","community_group_id":"4b1a329e-a402-3093-aea9-bc42dfb85174","created_at":"1986-01-17T13:13:50+00:00","updated_at":"2007-01-11T02:42:49+00:00"},"is_active":false}}}'
         headers: []
         description: ''
     responseFields: []

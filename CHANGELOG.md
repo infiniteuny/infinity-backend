@@ -1,3 +1,44 @@
+# [1.15.0](https://github.com/infiniteuny/infinity-backend/compare/v1.14.2...v1.15.0) (2026-11-19)
+
+
+### Bug Fixes
+
+* **controller:** Add project gallery's created and updated filters ([64ffb7e](https://github.com/infiniteuny/infinity-backend/commit/64ffb7ee8af8be88943aabacae3fde4f5371d512))
+* **controller:** Corrent team's fund app include name ([933cab9](https://github.com/infiniteuny/infinity-backend/commit/933cab93eef9ef9c2ba4adaac792872a87970542))
+
+
+
+# 1.15.0-beta.2 (2026-11-19)
+
+
+### Bug Fixes
+
+* **controller:** Move user link body parameters description to controller ([bc75245](https://github.com/infiniteuny/infinity-backend/commit/bc7524507f1ff0f5c03ad7de6b6d6375d8a1f978))
+* **factory:** Remove dropped and add missing properties ([cdc42ca](https://github.com/infiniteuny/infinity-backend/commit/cdc42ca192dc49bf50561af2c7f484f137818a69))
+
+
+
+# 1.15.0-beta.1 (2026-11-19)
+
+
+### Bug Fixes
+
+* **controller:** Update user link body params description ([6b14ef6](https://github.com/infiniteuny/infinity-backend/commit/6b14ef625e60e5cdbd1f249e36f66ecd00dae4a9))
+* **deps:** update dependency laravel/framework to v13.40.0 [security] ([#288](https://github.com/infiniteuny/infinity-backend/issues/288)) ([d6b8091](https://github.com/infiniteuny/infinity-backend/commit/d6b80917c4ad05af0b0ee44690cfd184d01e9cfc))
+* **env:** Add APP_INDIVIDUAL_TEAM_TYPE_ID to env example ([e358836](https://github.com/infiniteuny/infinity-backend/commit/e35883603319a24a507ca8bb0ee27640a65576bf))
+
+
+### Features
+
+* **controller:** Add query parameters description ([e66d428](https://github.com/infiniteuny/infinity-backend/commit/e66d428401eb3f37f66e3fcde755050e1704ff4c))
+* **database:** Drop description column from competitions table ([3138b4a](https://github.com/infiniteuny/infinity-backend/commit/3138b4a0a54e309c25a91e84602d10fdbc4fe6a0))
+* **database:** Drop is_personal column from teams table ([7e7ca8a](https://github.com/infiniteuny/infinity-backend/commit/7e7ca8ae06da8d56542385994ff1b9692979b2c3))
+* **job:** Add individual teams sync job ([2113c7d](https://github.com/infiniteuny/infinity-backend/commit/2113c7d20da98b9daaeff476ecd5c785788755ab))
+* **request:** Add body parameters description ([7548eee](https://github.com/infiniteuny/infinity-backend/commit/7548eee02f1880588da6467d5f95c34f8ee895c9))
+* **request:** Prevent create, update, and delete individual team ([1b62c75](https://github.com/infiniteuny/infinity-backend/commit/1b62c759dcc4af8d0523a6378b262ff81bea4a54))
+
+
+
 ## [1.14.2](https://github.com/infiniteuny/infinity-backend/compare/v1.14.1...v1.14.2) (2026-11-10)
 
 
@@ -58,27 +99,6 @@
 ### Features
 
 * **controller:** Group competition name and shortname filter with or conjunction ([3b21e2a](https://github.com/infiniteuny/infinity-backend/commit/3b21e2aaa609cd2752ae2775fce5c84293993ee2))
-
-
-
-## [1.13.2](https://github.com/infiniteuny/infinity-backend/compare/v1.13.1...v1.13.2) (2026-06-21)
-
-
-### Bug Fixes
-
-* **deps:** update dependency laravel/framework to v12.61.1 [security] ([1aaea70](https://github.com/infiniteuny/infinity-backend/commit/1aaea70b265877d925d6a9447998941d65752928))
-* **deps:** update major dependencies ([bbc526c](https://github.com/infiniteuny/infinity-backend/commit/bbc526caa0b8d6a639e5ecba51a0adfe2b5b8fad))
-* **deps:** update major dependencies to v13 ([a7ce4a9](https://github.com/infiniteuny/infinity-backend/commit/a7ce4a932611624c10b1b74f118ff18e9bdd094f))
-* **deps:** update non-major dependencies ([c085bff](https://github.com/infiniteuny/infinity-backend/commit/c085bffe67294d28af85eac27ba60f89c5a2e579))
-* **deps:** Upgrade php version requirement ([51f5343](https://github.com/infiniteuny/infinity-backend/commit/51f5343c01c7478b18dc1a8ea93d42e547317977))
-* **docker:** Change caddy builder image to non alpine ([b03053c](https://github.com/infiniteuny/infinity-backend/commit/b03053c30390dea9a3c3e47db23640e49ebbf01d))
-* **workflow:** Update DB env to use read and write ([f9fe84a](https://github.com/infiniteuny/infinity-backend/commit/f9fe84ab10864a71b1c466b75d2a84d9951f0585))
-
-
-### Features
-
-* **config:** Add separated DB read and write hosts ([5afea16](https://github.com/infiniteuny/infinity-backend/commit/5afea16259a06bd4ea1352d88cf2e608859b9d93))
-* **test:** Update load testing script ([7f0a0a5](https://github.com/infiniteuny/infinity-backend/commit/7f0a0a583d6f9d09e6645cfdf0e7b218cbf96a9e))
 
 
 

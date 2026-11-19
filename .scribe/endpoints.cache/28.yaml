@@ -24,8 +24,97 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[name]':
+        custom: []
+        name: 'filters[name]'
+        description: 'Filter by partial `name`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[guard_name]':
+        custom: []
+        name: 'filters[guard_name]'
+        description: 'Filter by exact `guard_name`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[created_at]':
+        custom: []
+        name: 'filters[created_at]'
+        description: 'Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[updated_at]':
+        custom: []
+        name: 'filters[updated_at]'
+        description: 'Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`. Default: `-id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -33,7 +122,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1981-08-11T13:58:04.000000Z"},{"id":"665a39c0-48af-31f1-a546-aa4f41372488","name":"Omnis","guard_name":"oidc","created_at":"2009-07-27T04:40:06.000000Z","updated_at":"2003-07-15T08:01:07.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"groups":[{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Iure","guard_name":"oidc","created_at":"1989-06-30T10:26:03.000000Z","updated_at":"1977-08-15T10:47:14.000000Z"},{"id":"6c868c6d-85fb-3170-87f4-2bdcd8769991","name":"Omnis","guard_name":"oidc","created_at":"2009-07-27T04:40:06.000000Z","updated_at":"2003-07-15T08:01:07.000000Z"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -71,7 +160,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: 'Must not be greater than 255 characters.'
+        description: 'The name of the group. Must not be greater than 255 characters.'
         required: true
         example: b
         type: string
@@ -82,7 +171,7 @@ endpoints:
       guard_name:
         custom: []
         name: guard_name
-        description: ''
+        description: 'The authentication guard name for the group.'
         required: true
         example: api
         type: string
@@ -99,7 +188,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Perspiciatis","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Provident","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -143,7 +232,18 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       id: architecto
-    queryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
@@ -152,7 +252,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Autem","guard_name":"oidc","created_at":"2003-07-15T08:01:07.000000Z","updated_at":"2019-08-30T13:55:51.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Odit","guard_name":"oidc","created_at":"1977-08-15T10:47:14.000000Z","updated_at":"1981-08-02T14:53:48.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -203,7 +303,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: 'Must not be greater than 255 characters.'
+        description: 'The name of the group. Must not be greater than 255 characters.'
         required: false
         example: b
         type: string
@@ -214,7 +314,7 @@ endpoints:
       guard_name:
         custom: []
         name: guard_name
-        description: ''
+        description: 'The authentication guard name for the group.'
         required: false
         example: api
         type: string
@@ -231,7 +331,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Quo","guard_name":"oidc","created_at":"2018-09-13T04:38:18.000000Z","updated_at":"1971-10-04T15:17:12.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","name":"Perspiciatis","guard_name":"oidc","created_at":"1985-10-22T05:49:42.000000Z","updated_at":"2018-09-13T04:38:18.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -284,7 +384,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Consequatur","guard_name":"oidc","created_at":"2019-08-30T13:55:51.000000Z","updated_at":"2013-08-15T14:47:35.000000Z"}}}'
+        content: '{"status":"success","data":{"group":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","name":"Autem","guard_name":"oidc","created_at":"2003-07-15T08:01:07.000000Z","updated_at":"2019-08-30T13:55:51.000000Z"}}}'
         headers: []
         description: ''
     responseFields: []

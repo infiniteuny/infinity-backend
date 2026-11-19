@@ -23,8 +23,185 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `competition_id`, `name`, `shortname`, `description`, `url`, `organizer`, `organizer_type_id`, `logo`, `start_date`, `end_date`, `location`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      includes:
+        custom: []
+        name: includes
+        description: 'Comma-separated list of relationships to include. Allowed values: `competition`, `organizer_type`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[competition_id]':
+        custom: []
+        name: 'filters[competition_id]'
+        description: 'Filter by exact `competition_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[name]':
+        custom: []
+        name: 'filters[name]'
+        description: 'Filter by partial `name` or `shortname`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[description]':
+        custom: []
+        name: 'filters[description]'
+        description: 'Filter by partial `description`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[url]':
+        custom: []
+        name: 'filters[url]'
+        description: 'Filter by partial `url`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[organizer]':
+        custom: []
+        name: 'filters[organizer]'
+        description: 'Filter by partial `organizer`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[organizer_type_id]':
+        custom: []
+        name: 'filters[organizer_type_id]'
+        description: 'Filter by exact `organizer_type_id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[start_date]':
+        custom: []
+        name: 'filters[start_date]'
+        description: 'Filter by `start_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[end_date]':
+        custom: []
+        name: 'filters[end_date]'
+        description: 'Filter by `end_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[location]':
+        custom: []
+        name: 'filters[location]'
+        description: 'Filter by partial `location`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[created_at]':
+        custom: []
+        name: 'filters[created_at]'
+        description: 'Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[updated_at]':
+        custom: []
+        name: 'filters[updated_at]'
+        description: 'Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `competition_id`, `name`, `shortname`, `organizer`, `organizer_type_id`, `start_date`, `end_date`, `location`, `created_at`, `updated_at`. Default: `-id`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -32,7 +209,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_instances":[{"id":"067d00f5-e958-3b01-bc80-7e5e367be869","competition_id":"f5450c36-cbb4-3022-a48d-b1c1bcd285aa","name":"Fausto Conroy","shortname":"GSR","description":"Ab reiciendis quia perspiciatis deserunt ducimus corrupti. Dolores quia maiores assumenda odit doloribus repellat officiis. Nesciunt ut ratione iure impedit molestiae ut rem.","url":"http:\/\/klocko.com\/","organizer":"Miller Inc","organizer_type_id":"b791a78a-bdb6-3c15-a840-a911ad9b9a6e","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1794361058&signature=e370bce5fdde98bf20c0ac067109e32d05d1a151518f9c3bfc08ea6aa8247d07","start_date":"1998-04-21T00:00:00+00:00","end_date":"1992-12-15T00:00:00+00:00","location":"New Alfonsoport","created_at":"2010-11-24T07:21:57+00:00","updated_at":"2026-03-29T18:20:11+00:00"},{"id":"488b4973-cced-39cd-9019-4e5670dd35d4","competition_id":"338aa13c-ee9b-3c59-9dad-eeca56f85ba2","name":"Jimmie Batz","shortname":"QDP","description":"Perspiciatis rem dolorem aut quis ut. Omnis et earum consequatur asperiores. Vel id aut officiis eos voluptatem et qui unde. Esse pariatur non inventore iusto facere possimus aliquam.","url":"http:\/\/cartwright.info\/vel-omnis-tempora-nulla-in-unde","organizer":"Reichert Group","organizer_type_id":"4fd2c035-3a1f-3cfc-99a9-f4843f83766e","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1794361058&signature=e370bce5fdde98bf20c0ac067109e32d05d1a151518f9c3bfc08ea6aa8247d07","start_date":"2009-01-25T00:00:00+00:00","end_date":"1978-02-25T00:00:00+00:00","location":"Estebanmouth","created_at":"1973-09-11T01:32:31+00:00","updated_at":"1994-06-06T21:18:11+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"competition_instances":[{"id":"cd1eb1ea-4697-3b9a-9dd0-988044a83af6","competition_id":"5e4f00df-4238-35bd-9edc-0b98dc359c80","name":"Mr. Adriel Romaguera","shortname":"MYU","description":"Nostrum qui commodi incidunt iure. Et et modi ipsum nostrum. Autem et consequatur aut dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci.","url":"http:\/\/www.oreilly.net\/ratione-nemo-voluptate-accusamus-ut-et-recusandae-modi-rerum","organizer":"Crist-Dare","organizer_type_id":"fbfcb7d8-9709-33e7-b1ee-ad9e734c960c","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1795135314&signature=fc7a988fd0a367e3af2009f96fd3b819e507a09ebbf90c3ffbf521f52b96b4e5","start_date":"1981-01-06T00:00:00+00:00","end_date":"1995-10-03T00:00:00+00:00","location":"Ortizmouth","created_at":"1970-12-03T05:50:39+00:00","updated_at":"1974-05-28T02:16:22+00:00"},{"id":"80f97160-0f9c-3885-91cc-204d2ea4567f","competition_id":"038b9f54-eb63-348c-8f34-3e197313f192","name":"Kayden Robel","shortname":"SGT","description":"Ratione iure impedit molestiae ut rem. Esse sint aut molestiae sunt suscipit doloribus fugiat.","url":"https:\/\/www.kihn.com\/aut-deserunt-sint-quis","organizer":"Kris Group","organizer_type_id":"fb4e9a96-8ae8-34e3-9349-fc9386a9928f","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1795135314&signature=fc7a988fd0a367e3af2009f96fd3b819e507a09ebbf90c3ffbf521f52b96b4e5","start_date":"1977-12-22T00:00:00+00:00","end_date":"1999-05-14T00:00:00+00:00","location":"New Jimmiemouth","created_at":"1990-06-24T00:23:27+00:00","updated_at":"1987-12-11T09:43:43+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -72,7 +249,29 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       id: architecto
-    queryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `competition_id`, `name`, `shortname`, `description`, `url`, `organizer`, `organizer_type_id`, `logo`, `start_date`, `end_date`, `location`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      includes:
+        custom: []
+        name: includes
+        description: 'Comma-separated list of relationships to include. Allowed values: `competition`, `organizer_type`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
@@ -81,7 +280,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1794361058&signature=e370bce5fdde98bf20c0ac067109e32d05d1a151518f9c3bfc08ea6aa8247d07","start_date":"1976-06-12T00:00:00+00:00","end_date":"2004-12-28T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
+        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1795135314&signature=fc7a988fd0a367e3af2009f96fd3b819e507a09ebbf90c3ffbf521f52b96b4e5","start_date":"1976-06-12T00:00:00+00:00","end_date":"2004-12-19T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -116,7 +315,7 @@ endpoints:
       competition_id:
         custom: []
         name: competition_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the parent competition series. Must be a valid UUID. Must match an existing stored value.'
         required: true
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -127,7 +326,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'The name of the competition instance.'
         required: true
         example: architecto
         type: string
@@ -138,7 +337,7 @@ endpoints:
       shortname:
         custom: []
         name: shortname
-        description: ''
+        description: 'The short name or acronym of the competition instance.'
         required: false
         example: architecto
         type: string
@@ -149,7 +348,7 @@ endpoints:
       description:
         custom: []
         name: description
-        description: ''
+        description: 'The description of the competition instance.'
         required: true
         example: 'Eius et animi quos velit et.'
         type: string
@@ -160,7 +359,7 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'The official website URL of the competition instance. Must be a valid URL.'
         required: false
         example: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
         type: string
@@ -171,7 +370,7 @@ endpoints:
       organizer:
         custom: []
         name: organizer
-        description: ''
+        description: 'The name of the competition organizer.'
         required: true
         example: architecto
         type: string
@@ -182,7 +381,7 @@ endpoints:
       organizer_type_id:
         custom: []
         name: organizer_type_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the competition organizer type. Must be a valid UUID. Must match an existing stored value.'
         required: true
         example: a4855dc5-0acb-33c3-b921-f4291f719ca0
         type: string
@@ -193,7 +392,7 @@ endpoints:
       logo:
         custom: []
         name: logo
-        description: 'Must be a file. Must not be greater than 5120 kilobytes.'
+        description: 'The logo image of the competition instance. Must be a file. Must not be greater than 5120 kilobytes.'
         required: true
         example: null
         type: file
@@ -204,9 +403,9 @@ endpoints:
       start_date:
         custom: []
         name: start_date
-        description: 'Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
+        description: 'The start date of the competition instance. Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
         required: true
-        example: '2022-12-05'
+        example: '2022-12-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -215,9 +414,9 @@ endpoints:
       end_date:
         custom: []
         name: end_date
-        description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+        description: 'The end date of the competition instance. Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
         required: true
-        example: '2052-12-03'
+        example: '2052-12-12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -226,7 +425,7 @@ endpoints:
       location:
         custom: []
         name: location
-        description: ''
+        description: 'The location or venue of the competition instance.'
         required: true
         example: architecto
         type: string
@@ -242,8 +441,8 @@ endpoints:
       url: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
       organizer: architecto
       organizer_type_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
-      start_date: '2022-12-05'
-      end_date: '2052-12-03'
+      start_date: '2022-12-14'
+      end_date: '2052-12-12'
       location: architecto
     fileParameters:
       logo: null
@@ -251,7 +450,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1794361058&signature=e370bce5fdde98bf20c0ac067109e32d05d1a151518f9c3bfc08ea6aa8247d07","start_date":"1976-06-12T00:00:00+00:00","end_date":"2004-12-28T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
+        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1795135314&signature=fc7a988fd0a367e3af2009f96fd3b819e507a09ebbf90c3ffbf521f52b96b4e5","start_date":"1976-06-12T00:00:00+00:00","end_date":"2004-12-19T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -302,7 +501,7 @@ endpoints:
       competition_id:
         custom: []
         name: competition_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the parent competition series. Must be a valid UUID. Must match an existing stored value.'
         required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
@@ -313,7 +512,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'The name of the competition instance.'
         required: false
         example: architecto
         type: string
@@ -324,7 +523,7 @@ endpoints:
       shortname:
         custom: []
         name: shortname
-        description: ''
+        description: 'The short name or acronym of the competition instance.'
         required: false
         example: architecto
         type: string
@@ -335,7 +534,7 @@ endpoints:
       description:
         custom: []
         name: description
-        description: ''
+        description: 'The description of the competition instance.'
         required: false
         example: 'Eius et animi quos velit et.'
         type: string
@@ -346,7 +545,7 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'The official website URL of the competition instance. Must be a valid URL.'
         required: false
         example: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
         type: string
@@ -357,7 +556,7 @@ endpoints:
       organizer:
         custom: []
         name: organizer
-        description: ''
+        description: 'The name of the competition organizer.'
         required: false
         example: architecto
         type: string
@@ -368,7 +567,7 @@ endpoints:
       organizer_type_id:
         custom: []
         name: organizer_type_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        description: 'The ID of the competition organizer type. Must be a valid UUID. Must match an existing stored value.'
         required: false
         example: a4855dc5-0acb-33c3-b921-f4291f719ca0
         type: string
@@ -379,7 +578,7 @@ endpoints:
       logo:
         custom: []
         name: logo
-        description: 'Must be a file. Must not be greater than 5120 kilobytes.'
+        description: 'The logo image of the competition instance. Must be a file. Must not be greater than 5120 kilobytes.'
         required: false
         example: null
         type: file
@@ -390,9 +589,9 @@ endpoints:
       start_date:
         custom: []
         name: start_date
-        description: 'Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
+        description: 'The start date of the competition instance. Must be a valid date. Must be a date before or equal to <code>end_date</code>.'
         required: false
-        example: '2022-12-05'
+        example: '2022-12-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -401,9 +600,9 @@ endpoints:
       end_date:
         custom: []
         name: end_date
-        description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+        description: 'The end date of the competition instance. Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
         required: false
-        example: '2052-12-03'
+        example: '2052-12-12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -412,7 +611,7 @@ endpoints:
       location:
         custom: []
         name: location
-        description: ''
+        description: 'The location or venue of the competition instance.'
         required: false
         example: architecto
         type: string
@@ -428,8 +627,8 @@ endpoints:
       url: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
       organizer: architecto
       organizer_type_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
-      start_date: '2022-12-05'
-      end_date: '2052-12-03'
+      start_date: '2022-12-14'
+      end_date: '2052-12-12'
       location: architecto
     fileParameters:
       logo: null
@@ -437,7 +636,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1794361058&signature=e370bce5fdde98bf20c0ac067109e32d05d1a151518f9c3bfc08ea6aa8247d07","start_date":"1976-06-12T00:00:00+00:00","end_date":"2004-12-28T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
+        content: '{"status":"success","data":{"competition_instance":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","competition_id":"c90237e9-ced5-3af6-88ea-84aeaa148878","name":"Aleen O''kon","shortname":"DLJ","description":"Modi deserunt aut ab provident perspiciatis. Omnis nostrum aut adipisci quidem nostrum qui commodi. Iure odit et et modi ipsum nostrum omnis. Et consequatur aut dolores enim.","url":"http:\/\/cartwright.com\/est-dignissimos-neque-blanditiis-odio-veritatis-excepturi-doloribus","organizer":"Schmidt PLC","organizer_type_id":"047616b9-c05d-3fa3-9ad9-452244fc55e1","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1795135314&signature=fc7a988fd0a367e3af2009f96fd3b819e507a09ebbf90c3ffbf521f52b96b4e5","start_date":"1976-06-12T00:00:00+00:00","end_date":"2004-12-19T00:00:00+00:00","location":"West Herberttown","created_at":"1975-11-24T15:37:19+00:00","updated_at":"2005-09-29T05:08:01+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -490,7 +689,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"competition_instance":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","competition_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Rogers Leuschke Phd","shortname":"RSI","description":"Maiores assumenda odit doloribus repellat. Corporis nesciunt ut ratione iure impedit molestiae.","url":"http:\/\/www.lakin.com\/","organizer":"Emmerich, Feest and Gleason","organizer_type_id":"06cd53f5-e932-3a98-90f7-9447be932740","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1794361058&signature=e370bce5fdde98bf20c0ac067109e32d05d1a151518f9c3bfc08ea6aa8247d07","start_date":"2010-12-01T00:00:00+00:00","end_date":"2007-02-14T00:00:00+00:00","location":"Balistreriton","created_at":"1992-07-29T07:33:21+00:00","updated_at":"1985-06-26T20:06:57+00:00"}}}'
+        content: '{"status":"success","data":{"competition_instance":{"id":"bfc53181-d647-36b2-9080-f9c2b76006f4","competition_id":"5d093e7f-5aae-3aa3-bece-f6e784dcbd67","name":"Rogers Leuschke Phd","shortname":"RSI","description":"Maiores assumenda odit doloribus repellat. Corporis nesciunt ut ratione iure impedit molestiae.","url":"http:\/\/www.lakin.com\/","organizer":"Emmerich, Feest and Gleason","organizer_type_id":"06cd53f5-e932-3a98-90f7-9447be932740","logo":"http:\/\/api.infiniteuny.id\/infinity\/infinity\/static\/private\/competition-instances\/logos\/some-logo-id.jpg?expires=1795135314&signature=fc7a988fd0a367e3af2009f96fd3b819e507a09ebbf90c3ffbf521f52b96b4e5","start_date":"2010-12-01T00:00:00+00:00","end_date":"2007-02-05T00:00:00+00:00","location":"Balistreriton","created_at":"1992-07-20T08:29:05+00:00","updated_at":"1985-06-17T21:02:41+00:00"}}}'
         headers: []
         description: ''
     responseFields: []

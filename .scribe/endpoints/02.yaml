@@ -21,8 +21,108 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `key`, `value`, `type`, `is_private`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[key]':
+        custom: []
+        name: 'filters[key]'
+        description: 'Filter by partial `key`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[type]':
+        custom: []
+        name: 'filters[type]'
+        description: 'Filter by exact `type`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[is_private]':
+        custom: []
+        name: 'filters[is_private]'
+        description: 'Filter by exact `is_private`. Requires authentication.'
+        required: false
+        example: null
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[created_at]':
+        custom: []
+        name: 'filters[created_at]'
+        description: 'Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'filters[updated_at]':
+        custom: []
+        name: 'filters[updated_at]'
+        description: 'Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sorts:
+        custom: []
+        name: sorts
+        description: 'Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `key`, `type`, `is_private`, `created_at`, `updated_at`. Default: `-id`. (`is_private` requires authentication).'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items to return per page. Defaults to 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cursor:
+        custom: []
+        name: cursor
+        description: 'Cursor token for pagination.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -30,7 +130,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"configs":[{"id":"2da616f3-ce5e-38f4-9369-f1be3919879d","key":"voluptate","value":"accusamus","type":"STRING","is_private":true,"created_at":"2005-09-29T05:08:01+00:00","updated_at":"1989-07-21T04:07:43+00:00"},{"id":"fecaf9fe-6060-39af-b373-7563b93c16ba","key":"repellendus","value":"assumenda","type":"STRING","is_private":true,"created_at":"1981-01-06T21:28:39+00:00","updated_at":"1995-10-12T22:40:33+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
+        content: '{"status":"success","data":{"configs":[{"id":"3a87aacf-b9fa-3196-a711-8910cad3c293","key":"veritatis","value":"excepturi","type":"STRING","is_private":false,"created_at":"1978-02-21T03:10:37+00:00","updated_at":"1995-01-30T23:03:05+00:00"},{"id":"7299053e-5fea-32a4-be53-165db447cc87","key":"alias","value":"tenetur","type":"STRING","is_private":false,"created_at":"1985-09-13T05:06:47+00:00","updated_at":"2024-01-13T01:48:03+00:00"}],"meta":{"per_page":10,"prev_cursor":null,"next_cursor":null}}}'
         headers: []
         description: ''
     responseFields: []
@@ -70,7 +170,18 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       key: architecto
-    queryParameters: []
+    queryParameters:
+      fields:
+        custom: []
+        name: fields
+        description: 'Comma-separated list of fields to include. Allowed values: `id`, `key`, `value`, `type`, `is_private`, `created_at`, `updated_at`.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
@@ -79,7 +190,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2018-02-14T16:36:06+00:00","updated_at":"2019-04-18T23:45:16+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"animi","value":"quos","type":"INTEGER","is_private":true,"created_at":"2018-02-05T17:31:50+00:00","updated_at":"2019-04-10T00:41:00+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -114,7 +225,7 @@ endpoints:
       key:
         custom: []
         name: key
-        description: ''
+        description: 'The unique key identifying the configuration entry.'
         required: true
         example: architecto
         type: string
@@ -125,7 +236,7 @@ endpoints:
       value:
         custom: []
         name: value
-        description: ''
+        description: 'The value of the configuration entry.'
         required: true
         example: architecto
         type: string
@@ -136,9 +247,9 @@ endpoints:
       type:
         custom: []
         name: type
-        description: ''
+        description: 'The data type of the configuration value.'
         required: true
-        example: INTEGER
+        example: STRING
         type: string
         enumValues:
           - STRING
@@ -150,7 +261,7 @@ endpoints:
       is_private:
         custom: []
         name: is_private
-        description: ''
+        description: 'Whether the configuration entry is restricted from public access.'
         required: true
         example: true
         type: boolean
@@ -161,14 +272,14 @@ endpoints:
     cleanBodyParameters:
       key: architecto
       value: architecto
-      type: INTEGER
+      type: STRING
       is_private: true
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"accusantium","value":"harum","type":"INTEGER","is_private":false,"created_at":"2022-04-11T11:08:24+00:00","updated_at":"2024-02-01T03:38:03+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"nihil","value":"accusantium","type":"INTEGER","is_private":false,"created_at":"1997-01-07T10:06:22+00:00","updated_at":"2022-04-02T12:04:08+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
@@ -219,7 +330,7 @@ endpoints:
       key:
         custom: []
         name: key
-        description: ''
+        description: 'The unique key identifying the configuration entry.'
         required: false
         example: architecto
         type: string
@@ -230,7 +341,7 @@ endpoints:
       value:
         custom: []
         name: value
-        description: ''
+        description: 'The value of the configuration entry.'
         required: false
         example: architecto
         type: string
@@ -241,7 +352,7 @@ endpoints:
       type:
         custom: []
         name: type
-        description: ''
+        description: 'The data type of the configuration value.'
         required: false
         example: BOOLEAN
         type: string
@@ -255,7 +366,7 @@ endpoints:
       is_private:
         custom: []
         name: is_private
-        description: ''
+        description: 'Whether the configuration entry is restricted from public access.'
         required: false
         example: true
         type: boolean
@@ -273,7 +384,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"harum","value":"mollitia","type":"INTEGER","is_private":false,"created_at":"2024-02-01T03:38:03+00:00","updated_at":"1991-08-13T18:05:48+00:00"}}}'
+        content: '{"status":"success","data":{"config":{"id":"a4855dc5-0acb-33c3-b921-f4291f719ca0","key":"accusantium","value":"harum","type":"INTEGER","is_private":false,"created_at":"2022-04-02T12:04:08+00:00","updated_at":"2024-01-23T04:33:47+00:00"}}}'
         headers: []
         description: ''
     responseFields: []
