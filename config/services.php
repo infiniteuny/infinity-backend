@@ -47,4 +47,11 @@ return [
         'admin_group_id' => env('AUTHENTIK_ADMIN_GROUP_ID'),
     ],
 
+    'outline' => [
+        'base_url' => env('OUTLINE_BASE_URL', 'https://docs.infiniteuny.id'),
+        'token' => env('OUTLINE_TOKEN'),
+        'core_team_group_id' => env('OUTLINE_CORE_TEAM_GROUP_ID'),
+        'xcore_team_group_id' => env('OUTLINE_XCORE_TEAM_GROUP_ID'),
+    ],
+
 ];

@@ -13,6 +13,8 @@ use App\Services\AuthentikService;
 use App\Services\AuthentikServiceImpl;
 use App\Services\OidcService;
 use App\Services\OidcServiceImpl;
+use App\Services\OutlineService;
+use App\Services\OutlineServiceImpl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         StorageRepository::class => StorageRepositoryImpl::class,
         AuthentikService::class => AuthentikServiceImpl::class,
         OidcService::class => OidcServiceImpl::class,
+        OutlineService::class => OutlineServiceImpl::class,
     ];
 
     /**
@@ -84,6 +87,12 @@ class AppServiceProvider extends ServiceProvider
         Http::macro('authentik', function () {
             return Http::withToken(config('services.authentik.token'))
                 ->baseUrl(config('services.authentik.base_url'))
+                ->acceptJson()
+                ->asJson();
+        });
+        Http::macro('outline', function () {
+            return Http::withToken(config('services.outline.token'))
+                ->baseUrl(config('services.outline.base_url'))
                 ->acceptJson()
                 ->asJson();
         });
