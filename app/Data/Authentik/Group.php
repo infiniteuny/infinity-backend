@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Authentik;
 
-use App\Models\Group;
+use App\Models\Group as GroupModel;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 
-class SsoGroupData extends Data
+class Group extends Data
 {
     public function __construct(
         #[MapName('pk')]
@@ -19,9 +19,10 @@ class SsoGroupData extends Data
         public array|Optional $user_ids,
         public string|Optional $name,
         public bool|Optional $is_superuser,
-    ) {}
+    ) {
+    }
 
-    public static function fromModel(Group $group): self
+    public static function fromModel(GroupModel $group): self
     {
         return new self(
             sso_id: $group->sso_id,

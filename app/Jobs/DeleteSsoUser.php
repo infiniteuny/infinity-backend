@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\SsoService;
+use App\Services\AuthentikService;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -49,8 +49,8 @@ class DeleteSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(SsoService $ssoService): void
+    public function handle(AuthentikService $authentikService): void
     {
-        $ssoService->deleteUser($this->userSsoId);
+        $authentikService->deleteUser($this->userSsoId);
     }
 }

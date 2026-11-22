@@ -9,10 +9,10 @@ use App\Repositories\PsrCacheRepository;
 use App\Repositories\PsrCacheRepositoryImpl;
 use App\Repositories\StorageRepository;
 use App\Repositories\StorageRepositoryImpl;
+use App\Services\AuthentikService;
+use App\Services\AuthentikServiceImpl;
 use App\Services\OidcService;
 use App\Services\OidcServiceImpl;
-use App\Services\SsoService;
-use App\Services\SsoServiceImpl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
     public $singletons = [
         PsrCacheRepository::class => PsrCacheRepositoryImpl::class,
         StorageRepository::class => StorageRepositoryImpl::class,
+        AuthentikService::class => AuthentikServiceImpl::class,
         OidcService::class => OidcServiceImpl::class,
-        SsoService::class => SsoServiceImpl::class,
     ];
 
     /**
@@ -83,7 +83,9 @@ class AppServiceProvider extends ServiceProvider
         });
         Http::macro('authentik', function () {
             return Http::withToken(config('services.authentik.token'))
-                ->baseUrl(config('services.authentik.base_url'));
+                ->baseUrl(config('services.authentik.base_url'))
+                ->acceptJson()
+                ->asJson();
         });
         RateLimiter::for('api', function (Request $request) {
             if (! config('app.rate_limiter.enabled')) {

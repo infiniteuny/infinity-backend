@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Authentik;
 
-use App\Models\User;
+use App\Models\User as UserModel;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 
-class SsoUserData extends Data
+class User extends Data
 {
     public function __construct(
         #[MapName('pk')]
@@ -19,9 +19,10 @@ class SsoUserData extends Data
         public bool|Optional $is_active,
         public string|Optional $path,
         public string|Optional $type,
-    ) {}
+    ) {
+    }
 
-    public static function fromModel(User $user): self
+    public static function fromModel(UserModel $user): self
     {
         return new self(
             sso_id: $user->sso_id,

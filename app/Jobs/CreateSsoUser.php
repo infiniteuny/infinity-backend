@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Data\SsoUserData;
+use App\Data\Authentik\User as AuthentikUser;
 use App\Models\User;
-use App\Services\SsoService;
+use App\Services\AuthentikService;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -59,9 +59,9 @@ class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(SsoService $ssoService): void
+    public function handle(AuthentikService $authentikService): void
     {
-        $ssoUsers = $ssoService->listUsers([
+        $ssoUsers = $authentikService->listUsers([
             'email' => $this->user->email_address,
         ]);
 
@@ -69,13 +69,13 @@ class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
             $ssoUser = $ssoUsers->first();
             $ssoUser->path = $this->user->is_member ? $this->memberPath : $this->nonMemberPath;
             $ssoUser->type = $this->user->is_member ? $this->memberType : $this->nonMemberType;
-            $ssoUser = $ssoService->updateUser($ssoUser->sso_id, $ssoUser);
+            $ssoUser = $authentikService->updateUser($ssoUser->sso_id, $ssoUser);
         } else {
-            $ssoUser = SsoUserData::fromModel($this->user)->additional([
+            $ssoUser = AuthentikUser::fromModel($this->user)->additional([
                 'path' => $this->user->is_member ? $this->memberPath : $this->nonMemberPath,
                 'type' => $this->user->is_member ? $this->memberType : $this->nonMemberType,
             ]);
-            $ssoUser = $ssoService->createUser($ssoUser);
+            $ssoUser = $authentikService->createUser($ssoUser);
         }
 
         $this->user->sso_id = (string) $ssoUser->sso_id;

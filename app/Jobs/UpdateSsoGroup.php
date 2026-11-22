@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Data\SsoGroupData;
+use App\Data\Authentik\Group as AuthentikGroup;
 use App\Models\Group;
-use App\Services\SsoService;
+use App\Services\AuthentikService;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -54,13 +54,13 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(SsoService $ssoService): void
+    public function handle(AuthentikService $authentikService): void
     {
-        $ssoGroup = SsoGroupData::fromModel($this->group)->additional([
+        $ssoGroup = AuthentikGroup::fromModel($this->group)->additional([
             'parents' => $this->ssoParentIds ?? [],
             'is_superuser' => $this->isSuperuser ?? false,
         ]);
-        $ssoGroup = $ssoService->updateGroup($this->group->sso_id, $ssoGroup);
+        $ssoGroup = $authentikService->updateGroup($this->group->sso_id, $ssoGroup);
 
         $this->group->sso_id = $ssoGroup->sso_id;
         $this->group->sso_last_synced_at = now();
