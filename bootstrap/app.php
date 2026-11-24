@@ -7,6 +7,8 @@ use App\Jobs\SyncActiveInactiveMemberSsoGroup;
 use App\Jobs\SyncAdminSsoGroup;
 use App\Jobs\SyncCGAdminMembersGroup;
 use App\Jobs\SyncCGAdminSsoGroups;
+use App\Jobs\SyncCoreTeamDocsCollections;
+use App\Jobs\SyncCoreTeamDocsGroups;
 use App\Jobs\SyncCoreTeamMembersGroup;
 use App\Jobs\SyncCoreTeamSsoGroups;
 use App\Jobs\SyncIndividualTeams;
@@ -14,6 +16,7 @@ use App\Jobs\SyncMemberGroup;
 use App\Jobs\SyncMemberSsoGroup;
 use App\Jobs\SyncSsoUsers;
 use App\Jobs\SyncXCGAdminSsoGroups;
+use App\Jobs\SyncXCoreTeamDocsGroups;
 use App\Jobs\SyncXCoreTeamSsoGroups;
 use App\Utils\JsendFormatter;
 use Illuminate\Auth\AuthenticationException;
@@ -89,6 +92,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->job(new SyncMemberSsoGroup)->hourly();
         $schedule->job(new SyncAdminSsoGroup)->hourly();
         $schedule->job(new SyncActiveInactiveMemberSsoGroup)->hourly();
+        $schedule->job(new SyncCoreTeamDocsGroups)->hourly();
+        $schedule->job(new SyncXCoreTeamDocsGroups)->hourly();
+        $schedule->job(new SyncCoreTeamDocsCollections)->hourly();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {

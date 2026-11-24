@@ -6,6 +6,7 @@ use App\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Models\Role as Model;
 use Spatie\Permission\PermissionRegistrar;
@@ -22,7 +23,13 @@ class Group extends Model implements RoleContract
     protected $hidden = [
         'sso_id',
         'sso_last_synced_at',
+        'integration',
     ];
+
+    public function integration(): HasOne
+    {
+        return $this->hasOne(GroupIntegration::class, 'group_id');
+    }
 
     public function permissions(): BelongsToMany
     {
