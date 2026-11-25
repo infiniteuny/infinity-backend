@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('competition_end_date');
             $table->string('letter_of_acceptance');
             $table->string('proposal');
-            $table->enum('status', ['PENDING', 'REJECTED', 'ACCEPTED>'])->default('PENDING');
+            $table->enum('status', ['PENDING', 'REJECTED', 'ACCEPTED'])->default('PENDING');
             $table->timestamps();
         });
     }
