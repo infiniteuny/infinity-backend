@@ -61,7 +61,6 @@ class AchievementController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
-        $userId = $user->id;
 
         if ($user) {
             $includes = [
@@ -205,7 +204,6 @@ class AchievementController extends Controller
     public function show(Achievement $achievement)
     {
         $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
-        $userId = $user->id;
 
         if ($user) {
             $includes = [
