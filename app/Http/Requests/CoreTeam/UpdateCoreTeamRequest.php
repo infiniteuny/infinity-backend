@@ -6,6 +6,7 @@ use App\Models\CoreTeam;
 use App\Rules\CannotDeactivateActive;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UpdateCoreTeamRequest extends FormRequest
@@ -29,10 +30,17 @@ class UpdateCoreTeamRequest extends FormRequest
      */
     public function rules(): array
     {
-        $routeCoreTeam = $this->route('core_team');
-        $coreTeam = $routeCoreTeam instanceof CoreTeam
-            ? $routeCoreTeam
-            : CoreTeam::find($routeCoreTeam);
+        $coreTeam = null;
+
+        if ($this->user()) {
+            $routeCoreTeam = $this->route('core_team');
+            $coreTeam = $routeCoreTeam instanceof CoreTeam
+                ? $routeCoreTeam
+                : (is_string($routeCoreTeam) && Str::isUuid($routeCoreTeam)
+                    ? CoreTeam::find($routeCoreTeam)
+                    : null);
+        }
+
         $yearUniqueRule = Rule::unique('core_teams', 'year');
 
         if ($coreTeam?->id) {

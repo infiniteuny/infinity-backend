@@ -6,6 +6,7 @@ use App\Models\CommunityGroupAdmin;
 use App\Rules\CannotDeactivateActive;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UpdateCommunityGroupAdminRequest extends FormRequest
@@ -29,10 +30,17 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        $routeCommunityGroupAdmin = $this->route('community_group_admin');
-        $communityGroupAdmin = $routeCommunityGroupAdmin instanceof CommunityGroupAdmin
-            ? $routeCommunityGroupAdmin
-            : CommunityGroupAdmin::find($routeCommunityGroupAdmin);
+        $communityGroupAdmin = null;
+
+        if ($this->user()) {
+            $routeCommunityGroupAdmin = $this->route('community_group_admin');
+            $communityGroupAdmin = $routeCommunityGroupAdmin instanceof CommunityGroupAdmin
+                ? $routeCommunityGroupAdmin
+                : (is_string($routeCommunityGroupAdmin) && Str::isUuid($routeCommunityGroupAdmin)
+                    ? CommunityGroupAdmin::find($routeCommunityGroupAdmin)
+                    : null);
+        }
+
         $yearUniqueRule = Rule::unique('community_group_admins', 'year');
 
         if ($communityGroupAdmin?->id) {

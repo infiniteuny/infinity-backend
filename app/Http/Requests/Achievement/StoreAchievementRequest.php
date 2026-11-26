@@ -22,9 +22,9 @@ class StoreAchievementRequest extends FormRequest
             $teamIdRules[] = new OwnedEntity(Team::class, $this->user()->id);
         }
 
-        $statusValues = $this->user()?->can('approve-achievement')
-            ? 'PENDING,REJECTED,ACCEPTED'
-            : 'PENDING';
+        $statusValues = $this->user()?->cannot('approve-achievement')
+            ? 'PENDING'
+            : 'PENDING,REJECTED,ACCEPTED';
 
         return [
             'team_id' => $teamIdRules,

@@ -74,9 +74,9 @@ class UpdateFundApplicationRequest extends FormRequest
             }
         }
 
-        $statusValues = $this->user()?->can('approve-fund-application')
-            ? 'PENDING,REJECTED,ACCEPTED'
-            : 'PENDING';
+        $statusValues = $this->user()?->cannot('approve-fund-application')
+            ? 'PENDING'
+            : 'PENDING,REJECTED,ACCEPTED';
 
         return [
             'team_id' => $teamIdRules,

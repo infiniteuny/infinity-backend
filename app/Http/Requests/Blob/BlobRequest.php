@@ -33,11 +33,11 @@ class BlobRequest extends FormRequest
     }
 
     /**
-     * Get the body parameters for API documentation.
+     * Get the query parameters for API documentation.
      *
      * @return array<string, array{description: string}>
      */
-    public function bodyParameters(): array
+    public function queryParameters(): array
     {
         return [
             'force_download' => [

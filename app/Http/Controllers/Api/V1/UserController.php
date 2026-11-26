@@ -131,7 +131,7 @@ class UserController extends Controller
      *
      * @apiResourceModel App\Models\User
      *
-     * @bodyParam links object required An object of external profile or social media links for the user. Example: {"github": "infiniteuny", "linkedin": "infiniteuny", "website": "https://www.infiniteuny.id"}
+     * @bodyParam links object An object of external profile or social media links for the user. Example: {"github": "infiniteuny", "linkedin": "infiniteuny", "website": "https://www.infiniteuny.id"}
      * @bodyParam links.* string The value or URL of an individual external profile or social media link. Example: https://example.com
      */
     public function store(StoreUserRequest $request)
