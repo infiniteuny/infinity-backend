@@ -108,6 +108,7 @@ class CommunityGroupAdminMemberController extends Controller
                 AllowedSort::field('updated_at', 'users.updated_at'),
             )
             ->defaultSorts('-users.id')
+            ->orderByDesc('community_group_admin_members.id')
             ->cursorPaginate($request->query('per_page', 10));
 
         if (in_array('membership.community_group', explode(',', $request->query('includes', '')))) {
@@ -153,6 +154,7 @@ class CommunityGroupAdminMemberController extends Controller
         $communityGroupAdminMember = $communityGroupAdmin
             ->members()
             ->wherePivot('user_id', $request->validated('user_id'))
+            ->wherePivot('community_group_id', $request->validated('community_group_id'))
             ->first();
 
         return new CommunityGroupAdminMemberResource($communityGroupAdminMember);
@@ -286,13 +288,13 @@ class CommunityGroupAdminMemberController extends Controller
 
         $communityGroupAdminMemberId = $communityGroupAdminMember->id;
         $communityGroupAdmin = $communityGroupAdminMember->communityGroupAdmin;
-        $communityGroupAdminMember = $communityGroupAdmin
+        $member = $communityGroupAdmin
             ->members()
             ->wherePivot('id', $communityGroupAdminMemberId)
             ->firstOrFail();
 
-        $communityGroupAdmin->members()->detach($communityGroupAdminMember->id);
+        $communityGroupAdminMember->delete();
 
-        return new CommunityGroupAdminMemberResource($communityGroupAdminMember);
+        return new CommunityGroupAdminMemberResource($member);
     }
 }
