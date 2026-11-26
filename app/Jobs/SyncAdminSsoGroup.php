@@ -22,13 +22,15 @@ class SyncAdminSsoGroup implements ShouldQueue
             return;
         }
 
-        $group->sso_id = $ssoId;
-        $group->save();
+        if ($ssoId && $group->sso_id !== $ssoId) {
+            $group->sso_id = $ssoId;
+            $group->save();
+        }
 
         if (is_null($group->sso_last_synced_at)) {
-            CreateSsoGroup::dispatch($group);
+            CreateSsoGroup::dispatch($group, isSuperuser: true);
         } elseif ($group->sso_last_synced_at < $group->updated_at) {
-            UpdateSsoGroup::dispatch($group);
+            UpdateSsoGroup::dispatch($group, isSuperuser: true);
         }
     }
 }

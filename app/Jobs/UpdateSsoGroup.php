@@ -56,10 +56,26 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(AuthentikService $authentikService): void
     {
-        $ssoGroup = AuthentikGroup::fromModel($this->group)->additional([
-            'parents' => $this->ssoParentIds ?? [],
-            'is_superuser' => $this->isSuperuser ?? false,
-        ]);
+        if (is_null($this->group->sso_id)) {
+            CreateSsoGroup::dispatch(
+                $this->group,
+                $this->ssoParentIds,
+                $this->isSuperuser,
+            );
+
+            return;
+        }
+
+        $ssoGroup = AuthentikGroup::fromModel($this->group);
+
+        if (! is_null($this->ssoParentIds)) {
+            $ssoGroup->sso_parent_ids = array_values(array_filter($this->ssoParentIds));
+        }
+
+        if (! is_null($this->isSuperuser)) {
+            $ssoGroup->is_superuser = $this->isSuperuser;
+        }
+
         $ssoGroup = $authentikService->updateGroup($this->group->sso_id, $ssoGroup);
 
         $this->group->sso_id = $ssoGroup->sso_id;
