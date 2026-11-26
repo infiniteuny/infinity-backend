@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\CommunityGroupMember;
 
+use App\Models\User;
+use App\Rules\OwnedEntity;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -16,8 +18,8 @@ class UpdateCommunityGroupMemberRequest extends FormRequest
     {
         $userIdRules = ['sometimes', 'uuid', 'exists:users,id'];
 
-        if ($this->user()?->cannot('create-community-group-member')) {
-            $userIdRules[] = 'in:'.$this->user()->id;
+        if ($this->user()?->cannot('update-community-group-member')) {
+            $userIdRules[] = new OwnedEntity(User::class, $this->user()->id);
         }
 
         return [

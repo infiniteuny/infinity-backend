@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Team;
 
+use App\Models\User;
+use App\Rules\OwnedEntity;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -15,6 +17,12 @@ class StoreTeamRequest extends FormRequest
      */
     public function rules(): array
     {
+        $leaderIdRules = ['required', 'uuid', 'exists:users,id'];
+
+        if ($this->user()?->cannot('create-team')) {
+            $leaderIdRules[] = new OwnedEntity(User::class, $this->user()->id);
+        }
+
         $individualTeamTypeId = config('app.individual_team_type_id');
         $teamTypeExistsRule = Rule::exists('competition_team_types', 'id');
 
@@ -23,7 +31,7 @@ class StoreTeamRequest extends FormRequest
         }
 
         return [
-            'leader_id' => ['required', 'uuid', 'exists:users,id'],
+            'leader_id' => $leaderIdRules,
             'team_type_id' => ['required', 'uuid', $teamTypeExistsRule],
             'name' => ['required', 'string'],
         ];
