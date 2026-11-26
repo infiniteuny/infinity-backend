@@ -102,13 +102,13 @@ class FundApplicationController extends Controller
             ->defaultSorts('-id');
 
         if (! $user->can('read-fund-application')) {
-            $fundApplications = $fundApplications
-                ->whereHas('team', function ($query) use ($userId) {
-                    $query->where('leader_id', $userId);
-                })
-                ->orWhereHas('team.members', function ($query) use ($userId) {
-                    $query->where('users.id', $userId);
+            $fundApplications = $fundApplications->where(function ($query) use ($userId) {
+                $query->whereHas('team', function ($teamQuery) use ($userId) {
+                    $teamQuery->where('leader_id', $userId);
+                })->orWhereHas('team.members', function ($memberQuery) use ($userId) {
+                    $memberQuery->where('users.id', $userId);
                 });
+            });
         }
 
         $fundApplications = $fundApplications->cursorPaginate($request->query('per_page', 10));
