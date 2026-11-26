@@ -27,6 +27,13 @@ class GroupPermission extends Pivot
         'permission_id',
     ];
 
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class);
