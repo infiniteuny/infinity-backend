@@ -12,7 +12,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function listUsers(array $filters = []): Collection
     {
         $response = Http::authentik()
-            ->get('/api/v3/core/users/', $filters);
+            ->get('/api/v3/core/users/', $filters)
+            ->throw();
 
         $users = User::collect($response->json('results', []), Collection::class);
 
@@ -22,7 +23,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function createUser(User $authentikUser): User
     {
         $response = Http::authentik()
-            ->post('/api/v3/core/users/', $authentikUser->toArray());
+            ->post('/api/v3/core/users/', $authentikUser->toArray())
+            ->throw();
 
         return User::from($response->json());
     }
@@ -30,7 +32,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function getUser(string $userId): User
     {
         $response = Http::authentik()
-            ->get("/api/v3/core/users/$userId/");
+            ->get("/api/v3/core/users/$userId/")
+            ->throw();
 
         return User::from($response->json());
     }
@@ -38,7 +41,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function updateUser(string $userId, User $authentikUser): User
     {
         $response = Http::authentik()
-            ->patch("/api/v3/core/users/$userId/", $authentikUser->toArray());
+            ->patch("/api/v3/core/users/$userId/", $authentikUser->toArray())
+            ->throw();
 
         return User::from($response->json());
     }
@@ -46,7 +50,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function deleteUser(string $userId): bool
     {
         $response = Http::authentik()
-            ->delete("/api/v3/core/users/$userId/");
+            ->delete("/api/v3/core/users/$userId/")
+            ->throw();
 
         return $response->successful();
     }
@@ -54,7 +59,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function listGroups(array $filters = []): Collection
     {
         $response = Http::authentik()
-            ->get('/api/v3/core/groups/', $filters);
+            ->get('/api/v3/core/groups/', $filters)
+            ->throw();
 
         $groups = Group::collect($response->json('results', []), Collection::class);
 
@@ -64,7 +70,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function createGroup(Group $authentikGroup): Group
     {
         $response = Http::authentik()
-            ->post('/api/v3/core/groups/', $authentikGroup->toArray());
+            ->post('/api/v3/core/groups/', $authentikGroup->toArray())
+            ->throw();
 
         return Group::from($response->json());
     }
@@ -72,7 +79,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function getGroup(string $groupId): Group
     {
         $response = Http::authentik()
-            ->get("/api/v3/core/groups/$groupId/");
+            ->get("/api/v3/core/groups/$groupId/")
+            ->throw();
 
         return Group::from($response->json());
     }
@@ -80,7 +88,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function updateGroup(string $groupId, Group $authentikGroup): Group
     {
         $response = Http::authentik()
-            ->patch("/api/v3/core/groups/$groupId/", $authentikGroup->toArray());
+            ->patch("/api/v3/core/groups/$groupId/", $authentikGroup->toArray())
+            ->throw();
 
         return Group::from($response->json());
     }
@@ -88,7 +97,8 @@ class AuthentikServiceImpl implements AuthentikService
     public function deleteGroup(string $groupId): bool
     {
         $response = Http::authentik()
-            ->delete("/api/v3/core/groups/$groupId/");
+            ->delete("/api/v3/core/groups/$groupId/")
+            ->throw();
 
         return $response->successful();
     }

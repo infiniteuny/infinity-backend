@@ -6,6 +6,7 @@ use App\Services\AuthentikService;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 
 class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
@@ -51,6 +52,12 @@ class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(AuthentikService $authentikService): void
     {
-        $authentikService->deleteGroup($this->groupSsoId);
+        try {
+            $authentikService->deleteGroup($this->groupSsoId);
+        } catch (RequestException $exception) {
+            if ($exception->response?->status() !== 404) {
+                throw $exception;
+            }
+        }
     }
 }
