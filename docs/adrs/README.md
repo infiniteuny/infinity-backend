@@ -14,9 +14,10 @@ Each ADR follows a concise structure:
 
 ## Index
 
-| ADR                                                                    | Title                                                                                   | Status   | Date       |
-| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------- | ---------- |
-| [ADR-0001](./0001-local-disk-private-blob-serving.md)                  | Local-Disk Private Blob Serving & Default Private Storage Visibility                    | Accepted | 2026-11-27 |
-| [ADR-0002](./0002-istio-gateway-oidc-headers-authentication.md)        | Offloading OIDC Token Validation to Istio API Gateway (`OidcHeadersGuard`)              | Accepted | 2026-11-27 |
-| [ADR-0003](./0003-redis-backed-maintenance-mode-cache-store.md)        | Redis-Backed Maintenance Mode with Local/Docs File Fallback                             | Accepted | 2026-11-27 |
-| [ADR-0004](./0004-team-permissions-leadership-and-individual-teams.md) | Team Permissions, Leadership Transfer, Membership Rules, and Automated Individual Teams | Accepted | 2026-11-27 |
+| ADR                                                                     | Title                                                                                   | Status   | Date       |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------- | ---------- |
+| [ADR-0001](./0001-local-disk-private-blob-serving.md)                   | Local-Disk Private Blob Serving & Default Private Storage Visibility                    | Accepted | 2026-11-27 |
+| [ADR-0002](./0002-istio-gateway-oidc-headers-authentication.md)         | Offloading OIDC Token Validation to Istio API Gateway (`OidcHeadersGuard`)              | Accepted | 2026-11-27 |
+| [ADR-0003](./0003-redis-backed-maintenance-mode-cache-store.md)         | Redis-Backed Maintenance Mode with Local/Docs File Fallback                             | Accepted | 2026-11-27 |
+| [ADR-0004](./0004-team-permissions-leadership-and-individual-teams.md)  | Team Permissions, Leadership Transfer, Membership Rules, and Automated Individual Teams | Accepted | 2026-11-27 |
+| [ADR-0005](./0005-nullable-blob-field-upload-and-deletion-semantics.md) | Nullable Blob Field Upload and Deletion-by-Null Semantics                               | Accepted | 2026-11-27 |
