@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Achievement;
 
+use App\Models\Team;
+use App\Rules\OwnedEntity;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,12 +16,18 @@ class StoreAchievementRequest extends FormRequest
      */
     public function rules(): array
     {
+        $teamIdRules = ['required', 'uuid', 'exists:teams,id'];
+
+        if ($this->user()?->cannot('create-achievement')) {
+            $teamIdRules[] = new OwnedEntity(Team::class, $this->user()->id);
+        }
+
         $statusValues = $this->user()?->can('approve-achievement')
             ? 'PENDING,REJECTED,ACCEPTED'
             : 'PENDING';
 
         return [
-            'team_id' => ['required', 'uuid', 'exists:teams,id'],
+            'team_id' => $teamIdRules,
             'competition_instance_id' => ['required', 'uuid', 'exists:competition_instances,id'],
             'competition_scale_id' => ['required', 'uuid', 'exists:competition_scales,id'],
             'competition_time_range_id' => ['required', 'uuid', 'exists:competition_time_ranges,id'],

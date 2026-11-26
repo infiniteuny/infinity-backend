@@ -2,11 +2,25 @@
 
 namespace App\Http\Requests\FundApplication;
 
+use App\Models\Team;
+use App\Rules\OwnedEntity;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateFundApplicationRequest extends FormRequest
 {
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->user()?->cannot('approve-fund-application') && ! $this->has('status')) {
+            $this->merge([
+                'status' => 'PENDING',
+            ]);
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -14,12 +28,18 @@ class UpdateFundApplicationRequest extends FormRequest
      */
     public function rules(): array
     {
+        $teamIdRules = ['sometimes', 'uuid', 'exists:teams,id'];
+
+        if ($this->user()?->cannot('update-fund-application')) {
+            $teamIdRules[] = new OwnedEntity(Team::class, $this->user()->id);
+        }
+
         $statusValues = $this->user()?->can('approve-fund-application')
             ? 'PENDING,REJECTED,ACCEPTED'
             : 'PENDING';
 
         return [
-            'team_id' => ['sometimes', 'uuid', 'exists:teams,id'],
+            'team_id' => $teamIdRules,
             'competition_instance_id' => ['sometimes', 'uuid', 'exists:competition_instances,id'],
             'competition_scale_id' => ['sometimes', 'uuid', 'exists:competition_scales,id'],
             'competition_branch' => ['sometimes', 'string'],
