@@ -102,26 +102,32 @@ class OidcTokenGuard implements Guard
                 $tokenInfo = $this->oidcService->introspect($credentials['token']);
 
                 if ($tokenInfo['active']) {
-                    $token = new Token([
-                        'sso_id' => $tokenPayload['uid'],
-                        'user_id' => $user->id,
-                        'created_at' => Carbon::createFromTimestamp($tokenInfo['iat']),
-                        'expires_at' => Carbon::createFromTimestamp($tokenInfo['exp']),
-                    ]);
+                    $token = Token::withTrashed()->createOrFirst(
+                        ['sso_id' => $tokenPayload['uid']],
+                        [
+                            'user_id' => $user->id,
+                            'last_used_at' => Carbon::now(),
+                            'created_at' => Carbon::createFromTimestamp($tokenInfo['iat']),
+                            'expires_at' => Carbon::createFromTimestamp($tokenInfo['exp']),
+                        ],
+                    );
                 } else {
                     return false;
                 }
             } catch (Throwable $e) {
                 return false;
             }
-        } else {
-            if ($token->trashed()) {
-                return false;
-            }
         }
 
-        $token->last_used_at = Carbon::now();
-        $token->save();
+        if ($token->trashed() || $token->user_id !== $user->id) {
+            return false;
+        }
+
+        if (! $token->wasRecentlyCreated) {
+            $token->last_used_at = Carbon::now();
+            $token->save();
+        }
+
         $this->setUser($user);
 
         return true;
