@@ -3,7 +3,7 @@
 namespace App\Http\Requests\CommunityGroupAdmin;
 
 use App\Models\CommunityGroupAdmin;
-use App\Rules\CannotDeactivateActive;
+use App\Rules\NoDeactivateActive;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -52,7 +52,7 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
             'is_active' => [
                 'sometimes',
                 'boolean',
-                new CannotDeactivateActive($communityGroupAdmin->is_active ?? false),
+                new NoDeactivateActive($communityGroupAdmin->is_active ?? false),
             ],
         ];
     }

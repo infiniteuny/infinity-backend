@@ -3,7 +3,7 @@
 namespace App\Http\Requests\CoreTeam;
 
 use App\Models\CoreTeam;
-use App\Rules\CannotDeactivateActive;
+use App\Rules\NoDeactivateActive;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -52,7 +52,7 @@ class UpdateCoreTeamRequest extends FormRequest
             'is_active' => [
                 'sometimes',
                 'boolean',
-                new CannotDeactivateActive($coreTeam->is_active ?? false),
+                new NoDeactivateActive($coreTeam->is_active ?? false),
             ],
         ];
     }

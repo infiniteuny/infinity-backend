@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
-class CannotDeactivateActive implements ValidationRule
+class NoDeactivateActive implements ValidationRule
 {
     public function __construct(private readonly ?bool $currentValue) {}
 
