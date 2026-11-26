@@ -15,7 +15,13 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    'paths' => [
+        'v1/*',
+        '_health',
+        'static/*',
+        'collection.json',
+        'openapi.yaml',
+    ],
 
     'allowed_methods' => ['*'],
 
