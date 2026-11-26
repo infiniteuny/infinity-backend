@@ -141,16 +141,15 @@ COPY --link --chown=${UID}:${GID} deployment/supervisord.conf /etc/
 COPY --link --chown=${UID}:${GID} deployment/supervisord.*.conf /etc/supervisor/conf.d/
 COPY --link --chown=${UID}:${GID} deployment/healthcheck /usr/local/bin/healthcheck
 COPY --link --chown=${UID}:${GID} deployment/start-container /usr/local/bin/start-container
-COPY --link --chown=${UID}:${GID} --from=vendor /usr/bin/composer /usr/bin/composer
 COPY --link --chown=${UID}:${GID} --from=vendor /tmp/vendor ./vendor
 COPY --link --chown=${UID}:${GID} . .
 
-RUN composer dump-autoload \
+RUN --mount=type=bind,from=vendor,source=/usr/bin/composer,target=/usr/bin/composer \
+    composer dump-autoload \
     --optimize \
     --classmap-authoritative \
     --apcu \
     --no-dev && \
-    rm -f /usr/bin/composer && \
     chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
 
 EXPOSE 8000 2019 8080
