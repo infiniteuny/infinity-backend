@@ -18,7 +18,7 @@ class BlobController extends Controller
      */
     public function __invoke(BlobRequest $request, string $blob)
     {
-        if (! $request->hasValidRelativeSignature()) {
+        if (! $request->hasValidRelativeSignatureWhileIgnoring(['force_download', 'name'])) {
             config('app.debug')
                 ? throw new AccessDeniedHttpException
                 : throw new NotFoundHttpException('File not found');
