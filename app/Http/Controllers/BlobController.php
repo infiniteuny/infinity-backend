@@ -25,8 +25,8 @@ class BlobController extends Controller
         }
 
         if (Storage::disk('local')->exists($blob)) {
-            $name = $request->validated()->name;
-            $forceDownload = $request->validated()->force_download;
+            $name = $request->validated('name');
+            $forceDownload = (bool) $request->validated('force_download', false);
 
             $headers = [
                 'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
