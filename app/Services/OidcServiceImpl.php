@@ -34,13 +34,7 @@ class OidcServiceImpl implements OidcService
 
     public function __construct(
         private PsrCacheRepository $cacheRepository,
-    ) {
-        $this->getIssuer();
-        $this->getClient();
-        $this->getAccessTokenVerifier();
-        $this->getIntrospectionService();
-        $this->getUserInfoService();
-    }
+    ) {}
 
     protected function getMetadataProviderBuilder(): MetadataProviderBuilder
     {
@@ -172,13 +166,13 @@ class OidcServiceImpl implements OidcService
     {
         $service = $this->getIntrospectionService();
 
-        return $service->introspect($this->client, $token);
+        return $service->introspect($this->getClient(), $token);
     }
 
     public function getUserInfo(string $token): array
     {
         $service = $this->getUserInfoService();
 
-        return $service->getUserInfo($this->client, TokenSet::fromParams(['access_token' => $token]));
+        return $service->getUserInfo($this->getClient(), TokenSet::fromParams(['access_token' => $token]));
     }
 }

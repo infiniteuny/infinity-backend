@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use DateInterval;
 use Illuminate\Cache\Repository;
 
 class PsrCacheRepositoryImpl implements PsrCacheRepository
@@ -10,64 +11,43 @@ class PsrCacheRepositoryImpl implements PsrCacheRepository
         private Repository $cacheRepository,
     ) {}
 
-    public function get($key, $default = null): mixed
+    public function get(string $key, mixed $default = null): mixed
     {
         return $this->cacheRepository->get($key, $default);
     }
 
-    public function set($key, $value, $ttl = null): bool
+    public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
     {
-        $this->cacheRepository->put($key, $value, $this->ttl2minutes($ttl));
-
-        return true;
+        return $this->cacheRepository->set($key, $value, $ttl);
     }
 
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
-        return $this->cacheRepository->forget($key);
+        return $this->cacheRepository->delete($key);
     }
 
     public function clear(): bool
     {
-        return $this->cacheRepository->flush();
+        return $this->cacheRepository->clear();
     }
 
-    public function getMultiple($keys, $default = null): iterable
+    public function getMultiple(iterable $keys, mixed $default = null): iterable
     {
-        return $this->cacheRepository->many($keys);
+        return $this->cacheRepository->getMultiple($keys, $default);
     }
 
-    public function setMultiple($values, $ttl = null): bool
+    public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
     {
-        $this->cacheRepository->putMany((array) $values, $this->ttl2minutes($ttl));
-
-        return true;
+        return $this->cacheRepository->setMultiple($values, $ttl);
     }
 
-    public function deleteMultiple($keys): bool
+    public function deleteMultiple(iterable $keys): bool
     {
-        foreach ($keys as $key) {
-            $this->delete($key);
-        }
-
-        return true;
+        return $this->cacheRepository->deleteMultiple($keys);
     }
 
-    public function has($key): bool
+    public function has(string $key): bool
     {
         return $this->cacheRepository->has($key);
-    }
-
-    protected function ttl2minutes($ttl): float|int|null
-    {
-        if (is_null($ttl)) {
-            return null;
-        }
-
-        if ($ttl instanceof \DateInterval) {
-            return $ttl->days * 86400 + $ttl->h * 3600 + $ttl->i * 60;
-        }
-
-        return $ttl / 60;
     }
 }
