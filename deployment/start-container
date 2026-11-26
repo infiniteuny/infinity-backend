@@ -28,9 +28,10 @@ init() {
     "${ROOT}/storage/framework/cache" \
     "${ROOT}/storage/framework/testing" \
     "${ROOT}/storage/logs" \
-    "${ROOT}/bootstrap/cache" && \
+    "${ROOT}/bootstrap/cache" \
+    "${ROOT}/public/static" && \
     chmod -R a+rw "${ROOT}/storage" && \
-    ln -s "${ROOT}/storage/app/local/public" "${ROOT}/public/static/public"
+    ln -sfn "${ROOT}/storage/app/local/public" "${ROOT}/public/static/public"
 
     php "${ROOT}/artisan" optimize:clear; \
     php "${ROOT}/artisan" optimize
