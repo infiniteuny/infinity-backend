@@ -137,7 +137,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-        $data['links'] = $data['links'] ?? [];
+        $data['links'] = (object) ($data['links'] ?? []);
         $data['is_member'] ??= false;
         $data['is_extraordinary'] ??= false;
 
@@ -205,7 +205,13 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $data = $request->validated();
+
+        if (array_key_exists('links', $data)) {
+            $data['links'] = (object) ($data['links'] ?? []);
+        }
+
+        $user->update($data);
 
         if ($user->sso_id) {
             UpdateSsoUser::dispatch($user);

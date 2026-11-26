@@ -60,7 +60,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $casts = [
-        'links' => 'array',
+        'links' => 'object',
         'is_member' => 'boolean',
         'is_extraordinary' => 'boolean',
     ];
