@@ -20,8 +20,8 @@ class StorageRepositoryImpl implements StorageRepository
         UploadedFile $file,
         string $path,
         StorageVisibility $visibility = StorageVisibility::PRIVATE,
-        ?string $disk = null,
         ?string $name = null,
+        ?string $disk = null,
     ): string {
         if (is_null($name)) {
             $name = Uuid::v7().'.'.$file->extension();

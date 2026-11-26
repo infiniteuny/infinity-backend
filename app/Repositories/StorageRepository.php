@@ -10,7 +10,7 @@ interface StorageRepository
     public function store(
         UploadedFile $file,
         string $path,
-        StorageVisibility $visibility = StorageVisibility::PUBLIC,
+        StorageVisibility $visibility = StorageVisibility::PRIVATE,
         ?string $name = null,
         ?string $disk = null,
     ): string;
