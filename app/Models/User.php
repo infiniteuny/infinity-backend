@@ -84,8 +84,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected function isActive(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->is_member && $this->start_date <= Carbon::now() &&
-                $this->end_date >= Carbon::now(),
+            get: function (): bool {
+                if (! $this->is_member || ! $this->start_date || ! $this->end_date) {
+                    return false;
+                }
+
+                $today = Carbon::today()->toDateString();
+                $startDate = Carbon::parse($this->start_date)->toDateString();
+                $endDate = Carbon::parse($this->end_date)->toDateString();
+
+                return $startDate <= $today && $endDate >= $today;
+            },
         );
     }
 

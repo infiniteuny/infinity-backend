@@ -263,29 +263,52 @@ class UserController extends Controller
         $startPeriod = Config::where('key', 'start_reregistration_date')->first();
         $endPeriod = Config::where('key', 'end_reregistration_date')->first();
         $now = Carbon::now();
+        $today = Carbon::today()->toDateString();
 
         if (! $startPeriod || ! $endPeriod) {
             throw new AccessDeniedHttpException('Reregistration period is not configured.');
         }
 
-        if (! $allowReregistration || $allowReregistration->value !== 'true' || $now->lt(Carbon::parse($startPeriod->value)) || $now->gt(Carbon::parse($endPeriod->value))) {
+        $startPeriodRaw = trim((string) $startPeriod->value);
+        $endPeriodRaw = trim((string) $endPeriod->value);
+        $startWindow = preg_match('/^\d{4}-\d{2}-\d{2}$/', $startPeriodRaw)
+            ? Carbon::parse($startPeriodRaw)->startOfDay()
+            : Carbon::parse($startPeriodRaw);
+        $endWindow = preg_match('/^\d{4}-\d{2}-\d{2}$/', $endPeriodRaw)
+            ? Carbon::parse($endPeriodRaw)->endOfDay()
+            : Carbon::parse($endPeriodRaw);
+
+        if (! $allowReregistration || $allowReregistration->value !== 'true' || $now->lt($startWindow) || $now->gt($endWindow)) {
             throw new AccessDeniedHttpException('Reregistration is currently disabled.');
         }
 
-        if ($user->end_date) {
+        $currentEndDate = $user->end_date
+            ? Carbon::parse($user->end_date)->toDateString()
+            : null;
+
+        if ($currentEndDate !== null) {
             $allowExpiredReregistration = Config::where('key', 'allow_expired_reregistration')->first();
 
             if (
                 (! $allowExpiredReregistration || $allowExpiredReregistration->value !== 'true')
-                && Carbon::parse($user->end_date)->lt($now)
+                && $currentEndDate < $today
             ) {
                 throw new AccessDeniedHttpException('Membership has expired and expired member\'s reregistration is not allowed.');
             }
         }
 
-        $newEndDate = Carbon::parse($endPeriod->value)->addYear();
+        $candidateEndDate = Carbon::parse($endPeriodRaw)->addYear()->toDateString();
+        $newEndDate = ($currentEndDate !== null && $currentEndDate > $candidateEndDate)
+            ? $currentEndDate
+            : $candidateEndDate;
 
-        $user->update(['end_date' => $newEndDate->toDateString()]);
+        $updates = ['end_date' => $newEndDate];
+
+        if (! $user->start_date) {
+            $updates['start_date'] = min($today, $newEndDate);
+        }
+
+        $user->update($updates);
 
         if ($user->sso_id) {
             UpdateSsoUser::dispatch($user);

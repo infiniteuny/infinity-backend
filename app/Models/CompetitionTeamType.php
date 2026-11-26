@@ -7,6 +7,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CompetitionTeamType extends Model
 {
@@ -30,13 +31,8 @@ class CompetitionTeamType extends Model
         return $date->format(DATE_ATOM);
     }
 
-    public function fundApplications()
+    public function teams(): HasMany
     {
-        return $this->hasMany(FundApplication::class);
-    }
-
-    public function achievements()
-    {
-        return $this->hasMany(Achievement::class);
+        return $this->hasMany(Team::class, 'team_type_id');
     }
 }

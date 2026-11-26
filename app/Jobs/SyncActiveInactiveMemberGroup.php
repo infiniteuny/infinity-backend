@@ -24,11 +24,13 @@ class SyncActiveInactiveMemberGroup implements ShouldQueue
             return;
         }
 
-        $now = Carbon::now();
+        $today = Carbon::today()->toDateString();
 
         $activeUserIds = User::where('is_member', true)
-            ->where('start_date', '<=', $now)
-            ->where('end_date', '>=', $now)
+            ->whereNotNull('start_date')
+            ->whereNotNull('end_date')
+            ->whereDate('start_date', '<=', $today)
+            ->whereDate('end_date', '>=', $today)
             ->pluck('id')
             ->unique()
             ->values()
@@ -36,8 +38,10 @@ class SyncActiveInactiveMemberGroup implements ShouldQueue
 
         $inactiveUserIds = User::where('is_member', true)
             ->where(fn ($query) => $query
-                ->where('start_date', '>', $now)
-                ->orWhere('end_date', '<', $now)
+                ->whereNull('start_date')
+                ->orWhereNull('end_date')
+                ->orWhereDate('start_date', '>', $today)
+                ->orWhereDate('end_date', '<', $today)
             )
             ->pluck('id')
             ->unique()
