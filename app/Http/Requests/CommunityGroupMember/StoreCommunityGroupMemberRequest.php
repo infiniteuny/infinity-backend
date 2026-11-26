@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\CommunityGroupMember;
 
+use App\Models\CommunityGroup;
 use App\Models\User;
 use App\Rules\OwnedEntity;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreCommunityGroupMemberRequest extends FormRequest
 {
@@ -20,6 +23,22 @@ class StoreCommunityGroupMemberRequest extends FormRequest
 
         if ($this->user()?->cannot('create-community-group-member')) {
             $userIdRules[] = new OwnedEntity(User::class, $this->user()->id);
+        }
+
+        if ($this->user()) {
+            $routeCommunityGroup = $this->route('community_group');
+            $communityGroupId = $routeCommunityGroup instanceof CommunityGroup
+                ? $routeCommunityGroup->id
+                : $routeCommunityGroup;
+            $userId = $this->input('user_id');
+
+            if (
+                is_string($communityGroupId) && Str::isUuid($communityGroupId) &&
+                is_string($userId) && Str::isUuid($userId)
+            ) {
+                $userIdRules[] = Rule::unique('community_group_members', 'user_id')
+                    ->where('community_group_id', $communityGroupId);
+            }
         }
 
         return [

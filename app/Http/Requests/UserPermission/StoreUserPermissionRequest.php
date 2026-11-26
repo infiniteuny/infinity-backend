@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\UserPermission;
 
+use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreUserPermissionRequest extends FormRequest
 {
@@ -14,8 +17,26 @@ class StoreUserPermissionRequest extends FormRequest
      */
     public function rules(): array
     {
+        $permissionIdRules = ['required', 'uuid', 'exists:permissions,id'];
+
+        if ($this->user()) {
+            $routeUser = $this->route('user');
+            $userId = $routeUser instanceof User
+                ? $routeUser->id
+                : $routeUser;
+            $permissionId = $this->input('permission_id');
+
+            if (
+                is_string($userId) && Str::isUuid($userId) &&
+                is_string($permissionId) && Str::isUuid($permissionId)
+            ) {
+                $permissionIdRules[] = Rule::unique('user_permissions', 'permission_id')
+                    ->where('user_id', $userId);
+            }
+        }
+
         return [
-            'permission_id' => ['required', 'uuid', 'exists:permissions,id'],
+            'permission_id' => $permissionIdRules,
         ];
     }
 

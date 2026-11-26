@@ -4,6 +4,7 @@ namespace App\Http\Requests\CoreTeamDivision;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCoreTeamDivisionRequest extends FormRequest
 {
@@ -14,8 +15,10 @@ class UpdateCoreTeamDivisionRequest extends FormRequest
      */
     public function rules(): array
     {
+        $coreTeamDivision = $this->route('core_team_division');
+
         return [
-            'name' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'string', Rule::unique('core_team_divisions', 'name')->ignore($coreTeamDivision)],
             'priority' => ['sometimes', 'integer', 'between:0,127'],
         ];
     }

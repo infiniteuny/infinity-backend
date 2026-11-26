@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\CoreTeamMember;
 
+use App\Models\CoreTeamMember;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UpdateCoreTeamMemberRequest extends FormRequest
 {
@@ -14,8 +17,30 @@ class UpdateCoreTeamMemberRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userIdRules = ['sometimes', 'uuid', 'exists:users,id'];
+
+        if ($this->user()) {
+            $routeMember = $this->route('core_team_member');
+            $member = $routeMember instanceof CoreTeamMember
+                ? $routeMember
+                : (is_string($routeMember) && Str::isUuid($routeMember)
+                    ? CoreTeamMember::find($routeMember)
+                    : null);
+            $coreTeamId = $member?->core_team_id;
+            $userId = $this->input('user_id');
+
+            if (
+                is_string($coreTeamId) && Str::isUuid($coreTeamId) &&
+                is_string($userId) && Str::isUuid($userId)
+            ) {
+                $userIdRules[] = Rule::unique('core_team_members', 'user_id')
+                    ->where('core_team_id', $coreTeamId)
+                    ->ignore($member);
+            }
+        }
+
         return [
-            'user_id' => ['sometimes', 'uuid', 'exists:users,id'],
+            'user_id' => $userIdRules,
             'core_team_division_id' => ['sometimes', 'uuid', 'exists:core_team_divisions,id'],
             'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'animation' => ['sometimes', 'nullable', 'file', 'mimes:gif,apng,webp', 'max:5120'],

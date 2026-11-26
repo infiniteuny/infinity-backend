@@ -15,7 +15,7 @@ class StorePersonaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', 'unique:personas,name'],
             'priority' => ['required', 'integer', 'between:0,127'],
             'description' => ['required', 'string'],
             'logo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],

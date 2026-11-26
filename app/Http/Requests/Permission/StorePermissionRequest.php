@@ -4,6 +4,7 @@ namespace App\Http\Requests\Permission;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePermissionRequest extends FormRequest
 {
@@ -14,8 +15,18 @@ class StorePermissionRequest extends FormRequest
      */
     public function rules(): array
     {
+        $nameRules = ['required', 'string', 'max:255'];
+
+        if ($this->user()) {
+            $guardName = $this->input('guard_name');
+
+            if (is_string($guardName)) {
+                $nameRules[] = Rule::unique('permissions', 'name')->where('guard_name', $guardName);
+            }
+        }
+
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => $nameRules,
             'guard_name' => ['required', 'string', 'in:api'],
         ];
     }

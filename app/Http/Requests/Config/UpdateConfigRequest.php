@@ -4,6 +4,7 @@ namespace App\Http\Requests\Config;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateConfigRequest extends FormRequest
 {
@@ -26,8 +27,10 @@ class UpdateConfigRequest extends FormRequest
      */
     public function rules(): array
     {
+        $config = $this->route('config');
+
         return [
-            'key' => ['sometimes', 'string'],
+            'key' => ['sometimes', 'string', Rule::unique('configs', 'key')->ignore($config)],
             'value' => ['sometimes', 'string'],
             'type' => ['sometimes', 'string', 'in:STRING,INTEGER,BOOLEAN'],
             'is_private' => ['sometimes', 'boolean'],

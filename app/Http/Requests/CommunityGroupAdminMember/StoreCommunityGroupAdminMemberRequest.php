@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\CommunityGroupAdminMember;
 
+use App\Models\CommunityGroupAdmin;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreCommunityGroupAdminMemberRequest extends FormRequest
 {
@@ -14,8 +17,29 @@ class StoreCommunityGroupAdminMemberRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userIdRules = ['required', 'uuid', 'exists:users,id'];
+
+        if ($this->user()) {
+            $routeAdmin = $this->route('community_group_admin');
+            $communityGroupAdminId = $routeAdmin instanceof CommunityGroupAdmin
+                ? $routeAdmin->id
+                : $routeAdmin;
+            $userId = $this->input('user_id');
+            $communityGroupId = $this->input('community_group_id');
+
+            if (
+                is_string($communityGroupAdminId) && Str::isUuid($communityGroupAdminId) &&
+                is_string($userId) && Str::isUuid($userId) &&
+                is_string($communityGroupId) && Str::isUuid($communityGroupId)
+            ) {
+                $userIdRules[] = Rule::unique('community_group_admin_members', 'user_id')
+                    ->where('community_group_admin_id', $communityGroupAdminId)
+                    ->where('community_group_id', $communityGroupId);
+            }
+        }
+
         return [
-            'user_id' => ['required', 'uuid', 'exists:users,id'],
+            'user_id' => $userIdRules,
             'community_group_id' => ['required', 'uuid', 'exists:community_groups,id'],
             'photo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'animation' => ['nullable', 'file', 'mimes:gif,apng,webp', 'max:5120'],

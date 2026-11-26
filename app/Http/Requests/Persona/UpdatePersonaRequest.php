@@ -4,6 +4,7 @@ namespace App\Http\Requests\Persona;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePersonaRequest extends FormRequest
 {
@@ -14,8 +15,10 @@ class UpdatePersonaRequest extends FormRequest
      */
     public function rules(): array
     {
+        $persona = $this->route('persona');
+
         return [
-            'name' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'string', Rule::unique('personas', 'name')->ignore($persona)],
             'priority' => ['sometimes', 'integer', 'between:0,127'],
             'description' => ['sometimes', 'string'],
             'logo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],

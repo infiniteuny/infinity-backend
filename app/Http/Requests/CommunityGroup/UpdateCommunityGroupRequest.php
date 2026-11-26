@@ -4,6 +4,7 @@ namespace App\Http\Requests\CommunityGroup;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCommunityGroupRequest extends FormRequest
 {
@@ -26,8 +27,10 @@ class UpdateCommunityGroupRequest extends FormRequest
      */
     public function rules(): array
     {
+        $communityGroup = $this->route('community_group');
+
         return [
-            'name' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'string', Rule::unique('community_groups', 'name')->ignore($communityGroup)],
             'priority' => ['sometimes', 'integer', 'between:0,127'],
             'description' => ['sometimes', 'string'],
             'logo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
