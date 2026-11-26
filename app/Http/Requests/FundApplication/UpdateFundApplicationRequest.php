@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\FundApplication;
 
+use App\Models\FundApplication;
 use App\Models\Team;
 use App\Rules\OwnedEntity;
+use DateTimeInterface;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class UpdateFundApplicationRequest extends FormRequest
 {
@@ -34,6 +37,43 @@ class UpdateFundApplicationRequest extends FormRequest
             $teamIdRules[] = new OwnedEntity(Team::class, $this->user()->id);
         }
 
+        $startDateRules = ['sometimes', 'date'];
+        $endDateRules = ['sometimes', 'date'];
+
+        if (! $this->user()) {
+            $startDateRules[] = 'before_or_equal:competition_end_date';
+            $endDateRules[] = 'after_or_equal:competition_start_date';
+        } else {
+            $routeFundApplication = $this->route('fund_application');
+            $fundApplication = $routeFundApplication instanceof FundApplication
+                ? $routeFundApplication
+                : (is_string($routeFundApplication) && Str::isUuid($routeFundApplication)
+                    ? FundApplication::find($routeFundApplication)
+                    : null);
+
+            if ($this->has('competition_end_date')) {
+                if ($this->filled('competition_end_date')) {
+                    $startDateRules[] = 'before_or_equal:competition_end_date';
+                }
+            } elseif ($fundApplication?->competition_end_date) {
+                $endDate = $fundApplication->competition_end_date instanceof DateTimeInterface
+                    ? $fundApplication->competition_end_date->format('Y-m-d')
+                    : $fundApplication->competition_end_date;
+                $startDateRules[] = 'before_or_equal:'.$endDate;
+            }
+
+            if ($this->has('competition_start_date')) {
+                if ($this->filled('competition_start_date')) {
+                    $endDateRules[] = 'after_or_equal:competition_start_date';
+                }
+            } elseif ($fundApplication?->competition_start_date) {
+                $startDate = $fundApplication->competition_start_date instanceof DateTimeInterface
+                    ? $fundApplication->competition_start_date->format('Y-m-d')
+                    : $fundApplication->competition_start_date;
+                $endDateRules[] = 'after_or_equal:'.$startDate;
+            }
+        }
+
         $statusValues = $this->user()?->can('approve-fund-application')
             ? 'PENDING,REJECTED,ACCEPTED'
             : 'PENDING';
@@ -43,8 +83,8 @@ class UpdateFundApplicationRequest extends FormRequest
             'competition_instance_id' => ['sometimes', 'uuid', 'exists:competition_instances,id'],
             'competition_scale_id' => ['sometimes', 'uuid', 'exists:competition_scales,id'],
             'competition_branch' => ['sometimes', 'string'],
-            'competition_start_date' => ['sometimes', 'date', 'before_or_equal:competition_end_date'],
-            'competition_end_date' => ['sometimes', 'date', 'after_or_equal:competition_start_date'],
+            'competition_start_date' => $startDateRules,
+            'competition_end_date' => $endDateRules,
             'letter_of_acceptance' => ['sometimes', 'file', 'mimes:pdf,jpg,jpeg,png,webp', 'max:20480'],
             'proposal' => ['sometimes', 'file', 'mimes:doc,docx', 'max:20480'],
             'status' => ['sometimes', 'string', 'in:'.$statusValues],

@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\Achievement;
 
+use App\Models\Achievement;
 use App\Models\Team;
 use App\Rules\OwnedEntity;
+use DateTimeInterface;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class UpdateAchievementRequest extends FormRequest
 {
@@ -34,6 +37,43 @@ class UpdateAchievementRequest extends FormRequest
             $teamIdRules[] = new OwnedEntity(Team::class, $this->user()->id);
         }
 
+        $startDateRules = ['sometimes', 'date'];
+        $endDateRules = ['sometimes', 'date'];
+
+        if (! $this->user()) {
+            $startDateRules[] = 'before_or_equal:competition_end_date';
+            $endDateRules[] = 'after_or_equal:competition_start_date';
+        } else {
+            $routeAchievement = $this->route('achievement');
+            $achievement = $routeAchievement instanceof Achievement
+                ? $routeAchievement
+                : (is_string($routeAchievement) && Str::isUuid($routeAchievement)
+                    ? Achievement::find($routeAchievement)
+                    : null);
+
+            if ($this->has('competition_end_date')) {
+                if ($this->filled('competition_end_date')) {
+                    $startDateRules[] = 'before_or_equal:competition_end_date';
+                }
+            } elseif ($achievement?->competition_end_date) {
+                $endDate = $achievement->competition_end_date instanceof DateTimeInterface
+                    ? $achievement->competition_end_date->format('Y-m-d')
+                    : $achievement->competition_end_date;
+                $startDateRules[] = 'before_or_equal:'.$endDate;
+            }
+
+            if ($this->has('competition_start_date')) {
+                if ($this->filled('competition_start_date')) {
+                    $endDateRules[] = 'after_or_equal:competition_start_date';
+                }
+            } elseif ($achievement?->competition_start_date) {
+                $startDate = $achievement->competition_start_date instanceof DateTimeInterface
+                    ? $achievement->competition_start_date->format('Y-m-d')
+                    : $achievement->competition_start_date;
+                $endDateRules[] = 'after_or_equal:'.$startDate;
+            }
+        }
+
         $statusValues = $this->user()?->can('approve-achievement')
             ? 'PENDING,REJECTED,ACCEPTED'
             : 'PENDING';
@@ -46,8 +86,8 @@ class UpdateAchievementRequest extends FormRequest
             'competition_output_id' => ['sometimes', 'uuid', 'exists:competition_outputs,id'],
             'competition_rank_id' => ['sometimes', 'uuid', 'exists:competition_ranks,id'],
             'competition_branch' => ['sometimes', 'string'],
-            'competition_start_date' => ['sometimes', 'date', 'before_or_equal:competition_end_date'],
-            'competition_end_date' => ['sometimes', 'date', 'after_or_equal:competition_start_date'],
+            'competition_start_date' => $startDateRules,
+            'competition_end_date' => $endDateRules,
             'description' => ['sometimes', 'string'],
             'image' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'status' => ['sometimes', 'string', 'in:'.$statusValues],

@@ -29,6 +29,17 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $startDateRules = ['sometimes', 'nullable', 'date'];
+        $endDateRules = ['sometimes', 'nullable', 'date'];
+
+        if (! $this->user() || $this->filled('end_date')) {
+            $startDateRules[] = 'before_or_equal:end_date';
+        }
+
+        if (! $this->user() || $this->filled('start_date')) {
+            $endDateRules[] = 'after_or_equal:start_date';
+        }
+
         $rules = [
             'name' => ['required', 'string'],
             'username' => ['required', 'string', 'unique:users,username'],
@@ -38,13 +49,13 @@ class StoreUserRequest extends FormRequest
             'major_id' => ['required', 'uuid', 'exists:majors,id'],
             'links' => ['sometimes', 'nullable', new Associative],
             'links.*' => ['string'],
-            'start_date' => ['sometimes', 'nullable', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['sometimes', 'nullable', 'date', 'after_or_equal:start_date'],
+            'start_date' => $startDateRules,
+            'end_date' => $endDateRules,
             'is_member' => ['required', 'boolean'],
             'is_extraordinary' => ['required', 'boolean'],
         ];
 
-        if (! $this->user()?->can('manage-user-membership')) {
+        if ($this->user()?->cannot('manage-user-membership')) {
             unset(
                 $rules['start_date'],
                 $rules['end_date'],
@@ -60,7 +71,7 @@ class StoreUserRequest extends FormRequest
     {
         $validated = parent::validated($key, $default);
 
-        if (! $this->user()?->can('manage-user-membership')) {
+        if ($this->user()?->cannot('manage-user-membership')) {
             unset(
                 $validated['start_date'],
                 $validated['end_date'],

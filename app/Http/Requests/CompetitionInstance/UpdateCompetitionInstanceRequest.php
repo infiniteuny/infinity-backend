@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\CompetitionInstance;
 
+use App\Models\CompetitionInstance;
+use DateTimeInterface;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class UpdateCompetitionInstanceRequest extends FormRequest
 {
@@ -14,6 +17,43 @@ class UpdateCompetitionInstanceRequest extends FormRequest
      */
     public function rules(): array
     {
+        $startDateRules = ['sometimes', 'date'];
+        $endDateRules = ['sometimes', 'date'];
+
+        if (! $this->user()) {
+            $startDateRules[] = 'before_or_equal:end_date';
+            $endDateRules[] = 'after_or_equal:start_date';
+        } else {
+            $routeCompetitionInstance = $this->route('competition_instance');
+            $competitionInstance = $routeCompetitionInstance instanceof CompetitionInstance
+                ? $routeCompetitionInstance
+                : (is_string($routeCompetitionInstance) && Str::isUuid($routeCompetitionInstance)
+                    ? CompetitionInstance::find($routeCompetitionInstance)
+                    : null);
+
+            if ($this->has('end_date')) {
+                if ($this->filled('end_date')) {
+                    $startDateRules[] = 'before_or_equal:end_date';
+                }
+            } elseif ($competitionInstance?->end_date) {
+                $endDate = $competitionInstance->end_date instanceof DateTimeInterface
+                    ? $competitionInstance->end_date->format('Y-m-d')
+                    : $competitionInstance->end_date;
+                $startDateRules[] = 'before_or_equal:'.$endDate;
+            }
+
+            if ($this->has('start_date')) {
+                if ($this->filled('start_date')) {
+                    $endDateRules[] = 'after_or_equal:start_date';
+                }
+            } elseif ($competitionInstance?->start_date) {
+                $startDate = $competitionInstance->start_date instanceof DateTimeInterface
+                    ? $competitionInstance->start_date->format('Y-m-d')
+                    : $competitionInstance->start_date;
+                $endDateRules[] = 'after_or_equal:'.$startDate;
+            }
+        }
+
         return [
             'competition_id' => ['sometimes', 'uuid', 'exists:competitions,id'],
             'name' => ['sometimes', 'string'],
@@ -23,8 +63,8 @@ class UpdateCompetitionInstanceRequest extends FormRequest
             'organizer' => ['sometimes', 'string'],
             'organizer_type_id' => ['sometimes', 'uuid', 'exists:competition_organizer_types,id'],
             'logo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'start_date' => ['sometimes', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['sometimes', 'date', 'after_or_equal:start_date'],
+            'start_date' => $startDateRules,
+            'end_date' => $endDateRules,
             'location' => ['sometimes', 'string'],
         ];
     }

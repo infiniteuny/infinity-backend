@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\User;
 
+use App\Models\User;
 use App\Rules\Associative;
+use DateTimeInterface;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
@@ -30,24 +33,62 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $user = $this->route('user');
+        $routeUser = $this->route('user');
+        $ignoreUser = $routeUser;
+
+        $startDateRules = ['sometimes', 'nullable', 'date'];
+        $endDateRules = ['sometimes', 'nullable', 'date'];
+
+        if (! $this->user()) {
+            $startDateRules[] = 'before_or_equal:end_date';
+            $endDateRules[] = 'after_or_equal:start_date';
+        } else {
+            $user = $routeUser instanceof User
+                ? $routeUser
+                : (is_string($routeUser) && Str::isUuid($routeUser)
+                    ? User::find($routeUser)
+                    : null);
+            $ignoreUser = $user ?? $routeUser;
+
+            if ($this->has('end_date')) {
+                if ($this->filled('end_date')) {
+                    $startDateRules[] = 'before_or_equal:end_date';
+                }
+            } elseif ($user?->end_date) {
+                $endDate = $user->end_date instanceof DateTimeInterface
+                    ? $user->end_date->format('Y-m-d')
+                    : $user->end_date;
+                $startDateRules[] = 'before_or_equal:'.$endDate;
+            }
+
+            if ($this->has('start_date')) {
+                if ($this->filled('start_date')) {
+                    $endDateRules[] = 'after_or_equal:start_date';
+                }
+            } elseif ($user?->start_date) {
+                $startDate = $user->start_date instanceof DateTimeInterface
+                    ? $user->start_date->format('Y-m-d')
+                    : $user->start_date;
+                $endDateRules[] = 'after_or_equal:'.$startDate;
+            }
+        }
 
         $rules = [
             'name' => ['sometimes', 'string'],
-            'username' => ['sometimes', 'string', Rule::unique('users', 'username')->ignore($user)],
-            'email_address' => ['sometimes', 'email', Rule::unique('users', 'email_address')->ignore($user)],
-            'phone_number' => ['sometimes', 'string', Rule::unique('users', 'phone_number')->ignore($user)],
-            'student_id' => ['sometimes', 'string', Rule::unique('users', 'student_id')->ignore($user)],
+            'username' => ['sometimes', 'string', Rule::unique('users', 'username')->ignore($ignoreUser)],
+            'email_address' => ['sometimes', 'email', Rule::unique('users', 'email_address')->ignore($ignoreUser)],
+            'phone_number' => ['sometimes', 'string', Rule::unique('users', 'phone_number')->ignore($ignoreUser)],
+            'student_id' => ['sometimes', 'string', Rule::unique('users', 'student_id')->ignore($ignoreUser)],
             'major_id' => ['sometimes', 'uuid', 'exists:majors,id'],
             'links' => ['sometimes', 'nullable', new Associative],
             'links.*' => ['string'],
-            'start_date' => ['sometimes', 'nullable', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['sometimes', 'nullable', 'date', 'after_or_equal:start_date'],
+            'start_date' => $startDateRules,
+            'end_date' => $endDateRules,
             'is_member' => ['sometimes', 'boolean'],
             'is_extraordinary' => ['sometimes', 'boolean'],
         ];
 
-        if (! $this->user()?->can('manage-user-membership')) {
+        if ($this->user()?->cannot('manage-user-membership')) {
             unset(
                 $rules['start_date'],
                 $rules['end_date'],
@@ -63,7 +104,7 @@ class UpdateUserRequest extends FormRequest
     {
         $validated = parent::validated($key, $default);
 
-        if (! $this->user()?->can('manage-user-membership')) {
+        if ($this->user()?->cannot('manage-user-membership')) {
             unset(
                 $validated['start_date'],
                 $validated['end_date'],
