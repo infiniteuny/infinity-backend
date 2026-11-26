@@ -31,7 +31,7 @@ class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
      */
     public function uniqueId(): string
     {
-        return $this->year;
+        return (string) $this->year;
     }
 
     /**
@@ -42,7 +42,6 @@ class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
         $achievementLeaderboards = DB::table('achievements AS a')
             ->select([
                 'users.id AS user_id',
-                DB::raw('EXTRACT(YEAR FROM a.competition_start_date) AS year'),
                 DB::raw('SUM(COALESCE(cot.weight,0) * COALESCE(ctt.weight,0) * COALESCE(cs.weight,0) * COALESCE(ctr.weight,0) * COALESCE(co.weight,0) * COALESCE(cr.weight,0)) AS total_points'),
             ])
             ->join('competition_instances AS ci', 'a.competition_instance_id', '=', 'ci.id')
@@ -55,23 +54,27 @@ class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
             ->leftJoin('competition_time_ranges AS ctr', 'a.competition_time_range_id', '=', 'ctr.id')
             ->leftJoin('competition_outputs AS co', 'a.competition_output_id', '=', 'co.id')
             ->leftJoin('competition_ranks AS cr', 'a.competition_rank_id', '=', 'cr.id')
-            ->groupBy('users.id', DB::raw('EXTRACT(YEAR FROM a.competition_start_date)'))
+            ->where('a.status', 'ACCEPTED')
             ->whereYear('a.competition_start_date', $this->year)
+            ->groupBy('users.id')
             ->get();
 
-        AchievementLeaderboard::where('year', $this->year)->whereNotIn('user_id', $achievementLeaderboards->pluck('user_id'))
-            ->delete();
+        DB::transaction(function () use ($achievementLeaderboards) {
+            AchievementLeaderboard::where('year', $this->year)
+                ->whereNotIn('user_id', $achievementLeaderboards->pluck('user_id'))
+                ->delete();
 
-        foreach ($achievementLeaderboards as $row) {
-            AchievementLeaderboard::updateOrCreate(
-                [
-                    'user_id' => $row->user_id,
-                    'year' => (int) $row->year,
-                ],
-                [
-                    'total_points' => $row->total_points,
-                ]
-            );
-        }
+            foreach ($achievementLeaderboards as $row) {
+                AchievementLeaderboard::updateOrCreate(
+                    [
+                        'user_id' => $row->user_id,
+                        'year' => $this->year,
+                    ],
+                    [
+                        'total_points' => (int) $row->total_points,
+                    ]
+                );
+            }
+        });
     }
 }
