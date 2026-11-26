@@ -134,9 +134,9 @@ class CommunityGroupAdminMemberController extends Controller
             StorageVisibility::PUBLIC,
         );
 
-        $hasAnimation = $request->has('animation');
+        $hasFileAnimation = $request->hasFile('animation');
 
-        if ($hasAnimation) {
+        if ($hasFileAnimation) {
             $animationManifest = Storage::store(
                 $request->file('animation'),
                 'community-group-admins/animations',
@@ -147,7 +147,7 @@ class CommunityGroupAdminMemberController extends Controller
         $communityGroupAdmin->members()->attach($request->validated('user_id'), [
             'community_group_id' => $request->validated('community_group_id'),
             'photo' => $photoManifest,
-            'animation' => $hasAnimation ? $animationManifest : null,
+            'animation' => $hasFileAnimation ? $animationManifest : null,
         ]);
 
         $communityGroupAdminMember = $communityGroupAdmin

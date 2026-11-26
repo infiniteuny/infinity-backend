@@ -134,9 +134,9 @@ class CoreTeamMemberController extends Controller
             StorageVisibility::PUBLIC,
         );
 
-        $hasAnimation = $request->has('animation');
+        $hasFileAnimation = $request->hasFile('animation');
 
-        if ($hasAnimation) {
+        if ($hasFileAnimation) {
             $animationManifest = Storage::store(
                 $request->file('animation'),
                 'core-teams/animations',
@@ -147,7 +147,7 @@ class CoreTeamMemberController extends Controller
         $coreTeam->members()->attach($request->validated('user_id'), [
             'core_team_division_id' => $request->validated('core_team_division_id'),
             'photo' => $photoManifest,
-            'animation' => $hasAnimation ? $animationManifest : null,
+            'animation' => $hasFileAnimation ? $animationManifest : null,
         ]);
 
         $coreTeamMember = $coreTeam
