@@ -92,6 +92,7 @@ ENV USER=octane \
     WITH_SCHEDULER=false \
     APP_ENV=${APP_ENV} \
     APP_DEBUG=false \
+    LOG_LEVEL=info \
     COMPOSER_FUND=0 \
     COMPOSER_MAX_PARALLEL_HTTP=48 \
     GODEBUG=cgocheck=0 \
