@@ -38,6 +38,10 @@ class TeamPolicy
      */
     public function update(User $user, Team $team): bool
     {
+        if ($this->isIndividualTeam($team)) {
+            return false;
+        }
+
         return $user->can('update-team') ||
             ($user->can('update-own-team') && $user->id === $team->leader_id);
     }
@@ -47,13 +51,18 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team): bool
     {
-        $individualTeamTypeId = config('app.individual_team_type_id');
-
-        if ($individualTeamTypeId && strcasecmp((string) $team->team_type_id, (string) $individualTeamTypeId) === 0) {
+        if ($this->isIndividualTeam($team)) {
             return false;
         }
 
         return $user->can('delete-team') ||
             ($user->can('delete-own-team') && $user->id === $team->leader_id);
+    }
+
+    private function isIndividualTeam(Team $team): bool
+    {
+        $individualTeamTypeId = config('app.individual_team_type_id');
+
+        return (bool) ($individualTeamTypeId && strcasecmp((string) $team->team_type_id, (string) $individualTeamTypeId) === 0);
     }
 }

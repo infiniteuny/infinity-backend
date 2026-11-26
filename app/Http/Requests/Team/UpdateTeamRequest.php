@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Team;
 
-use App\Models\User;
-use App\Rules\OwnedEntity;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -17,12 +15,6 @@ class UpdateTeamRequest extends FormRequest
      */
     public function rules(): array
     {
-        $leaderIdRules = ['sometimes', 'uuid', 'exists:users,id'];
-
-        if ($this->user()?->cannot('update-team')) {
-            $leaderIdRules[] = new OwnedEntity(User::class, $this->user()->id);
-        }
-
         $individualTeamTypeId = config('app.individual_team_type_id');
         $teamTypeExistsRule = Rule::exists('competition_team_types', 'id');
 
@@ -31,7 +23,7 @@ class UpdateTeamRequest extends FormRequest
         }
 
         return [
-            'leader_id' => $leaderIdRules,
+            'leader_id' => ['sometimes', 'uuid', 'exists:users,id'],
             'team_type_id' => ['sometimes', 'uuid', $teamTypeExistsRule],
             'name' => ['sometimes', 'string'],
         ];
