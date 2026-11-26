@@ -141,7 +141,7 @@ class TeamController extends Controller
                 'leader',
                 'members',
                 AllowedInclude::relationship('team_type', 'teamType'),
-                AllowedInclude::relationship('fundApplications', 'fund_applications'),
+                AllowedInclude::relationship('fund_applications', 'fundApplications'),
                 'achievements',
             )
             ->firstOrFail();

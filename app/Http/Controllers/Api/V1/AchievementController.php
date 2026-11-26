@@ -39,7 +39,7 @@ class AchievementController extends Controller
      *
      * @apiResourceModel App\Models\Achievement paginate=10,cursor
      *
-     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `name`, `team_id`, `competition_instance_id`, `competition_scale_id`, `competition_time_range_id`, `competition_output_id`, `competition_rank_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `description`, `image`, `status`, `created_at`, `updated_at`. No-example
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_scale_id`, `competition_time_range_id`, `competition_output_id`, `competition_rank_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `description`, `image`, `status`, `created_at`, `updated_at`. No-example
      * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `team`, `team.members`, `competition_instance`, `competition_scale`, `competition_time_range`, `competition_output`, `competition_rank`. (`team` and `team.members` require authentication). No-example
      * @queryParam filters[team_id] string Filter by exact `team_id`. Requires authentication. No-example
      * @queryParam filters[competition_instance_id] string Filter by exact `competition_instance_id`. No-example
@@ -145,7 +145,6 @@ class AchievementController extends Controller
         $achievements = QueryBuilder::for(Achievement::class)
             ->allowedFields(
                 'id',
-                'name',
                 'team_id',
                 'competition_instance_id',
                 'competition_scale_id',
@@ -198,7 +197,7 @@ class AchievementController extends Controller
      *
      * @apiResourceModel App\Models\Achievement
      *
-     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `name`, `team_id`, `competition_instance_id`, `competition_scale_id`, `competition_time_range_id`, `competition_output_id`, `competition_rank_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `description`, `image`, `status`, `created_at`, `updated_at`. No-example
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `team_id`, `competition_instance_id`, `competition_scale_id`, `competition_time_range_id`, `competition_output_id`, `competition_rank_id`, `competition_branch`, `competition_start_date`, `competition_end_date`, `description`, `image`, `status`, `created_at`, `updated_at`. No-example
      * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `team`, `team.members`, `competition_instance`, `competition_scale`, `competition_time_range`, `competition_output`, `competition_rank`. (`team` and `team.members` require authentication). No-example
      */
     public function show(Achievement $achievement)
@@ -228,7 +227,6 @@ class AchievementController extends Controller
         $achievement = QueryBuilder::for(Achievement::where('id', $achievement->id))
             ->allowedFields(
                 'id',
-                'name',
                 'team_id',
                 'competition_instance_id',
                 'competition_scale_id',
