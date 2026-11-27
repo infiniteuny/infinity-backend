@@ -23,7 +23,10 @@ class SyncIndividualTeams implements ShouldBeUnique, ShouldQueue
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping('sync-individual-teams'))->dontRelease(),
+            (new WithoutOverlapping('sync-individual-teams'))
+                ->shared()
+                ->dontRelease()
+                ->expireAfter(120),
         ];
     }
 

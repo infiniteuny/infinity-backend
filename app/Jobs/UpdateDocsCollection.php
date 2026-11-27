@@ -5,12 +5,15 @@ namespace App\Jobs;
 use App\Data\Outline\Collection as OutlineCollection;
 use App\Enums\OutlinePermission;
 use App\Models\Group;
+use App\Models\GroupIntegration;
 use App\Services\OutlineService;
+use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
+use Illuminate\Support\Facades\DB;
 use Spatie\LaravelData\Optional;
 
 class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
@@ -30,11 +33,22 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
     ) {}
 
     /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
+     * The maximum number of unhandled exceptions to allow before failing.
      */
-    public $tries = 5;
+    public int $maxExceptions = 5;
+
+    /**
+     * The number of seconds to wait before retrying an exception.
+     */
+    public int $backoff = 10;
+
+    /**
+     * Determine the time at which the job should timeout.
+     */
+    public function retryUntil(): DateTimeInterface
+    {
+        return now()->addMinutes(15);
+    }
 
     /**
      * Get the unique ID for the job.
@@ -52,7 +66,10 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
     public function middleware(): array
     {
         return [
-            new WithoutOverlapping($this->group->id),
+            (new WithoutOverlapping("docs-collection:{$this->group->id}"))
+                ->shared()
+                ->releaseAfter(15)
+                ->expireAfter(120),
         ];
     }
 
@@ -61,11 +78,10 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(OutlineService $outlineService): void
     {
-        $this->group->loadMissing('integration');
+        $integration = GroupIntegration::where('group_id', $this->group->id)->first();
+        $owningGroupId = $integration?->docs_group_id;
 
-        $integration = $this->group->integration;
-
-        if (is_null($integration?->docs_group_id)) {
+        if (is_null($owningGroupId)) {
             return;
         }
 
@@ -96,20 +112,34 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
             $recreatedCollection = $this->findOrCreateCollection($outlineService, $this->collectionName);
             $docsCollectionId = $recreatedCollection->id;
-            $integration->docs_collection_id = $docsCollectionId;
         }
 
-        if (! $this->syncCollectionGroups($outlineService, $docsCollectionId, $integration->docs_group_id)) {
-            $integration->docs_group_id = null;
-            $integration->docs_group_last_synced_at = null;
-            $integration->docs_collection_last_synced_at = null;
-            $integration->save();
+        $synced = $this->syncCollectionGroups($outlineService, $docsCollectionId, $owningGroupId);
 
-            return;
-        }
+        DB::transaction(function () use ($docsCollectionId, $owningGroupId, $synced) {
+            $fresh = GroupIntegration::where('group_id', $this->group->id)
+                ->lockForUpdate()
+                ->first();
 
-        $integration->docs_collection_last_synced_at = now();
-        $integration->save();
+            if (! $fresh) {
+                return;
+            }
+
+            $fresh->docs_collection_id = $docsCollectionId;
+
+            if (! $synced) {
+                $fresh->docs_collection_last_synced_at = null;
+
+                if ($fresh->docs_group_id === $owningGroupId) {
+                    $fresh->docs_group_id = null;
+                    $fresh->docs_group_last_synced_at = null;
+                }
+            } else {
+                $fresh->docs_collection_last_synced_at = $fresh->docs_group_id === $owningGroupId ? now() : null;
+            }
+
+            $fresh->save();
+        });
     }
 
     private function syncCollectionGroups(

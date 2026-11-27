@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Services\AuthentikService;
+use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -21,11 +22,22 @@ class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
     ) {}
 
     /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
+     * The maximum number of unhandled exceptions to allow before failing.
      */
-    public $tries = 5;
+    public int $maxExceptions = 5;
+
+    /**
+     * The number of seconds to wait before retrying an exception.
+     */
+    public int $backoff = 10;
+
+    /**
+     * Determine the time at which the job should timeout.
+     */
+    public function retryUntil(): DateTimeInterface
+    {
+        return now()->addMinutes(15);
+    }
 
     /**
      * Get the unique ID for the job.
@@ -43,7 +55,10 @@ class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
     public function middleware(): array
     {
         return [
-            new WithoutOverlapping($this->groupSsoId),
+            (new WithoutOverlapping("sso-group-delete:{$this->groupSsoId}"))
+                ->shared()
+                ->releaseAfter(10)
+                ->expireAfter(120),
         ];
     }
 

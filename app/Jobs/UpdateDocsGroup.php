@@ -7,13 +7,16 @@ use App\Data\Outline\Invite;
 use App\Models\CommunityGroupAdmin;
 use App\Models\CoreTeam;
 use App\Models\Group;
+use App\Models\GroupIntegration;
 use App\Models\User;
 use App\Services\OutlineService;
+use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
+use Illuminate\Support\Facades\DB;
 use RuntimeException;
 use Spatie\LaravelData\Optional;
 
@@ -38,11 +41,22 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
     ) {}
 
     /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
+     * The maximum number of unhandled exceptions to allow before failing.
      */
-    public $tries = 5;
+    public int $maxExceptions = 5;
+
+    /**
+     * The number of seconds to wait before retrying an exception.
+     */
+    public int $backoff = 10;
+
+    /**
+     * Determine the time at which the job should timeout.
+     */
+    public function retryUntil(): DateTimeInterface
+    {
+        return now()->addMinutes(15);
+    }
 
     /**
      * Get the unique ID for the job.
@@ -60,7 +74,10 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
     public function middleware(): array
     {
         return [
-            new WithoutOverlapping($this->group->id),
+            (new WithoutOverlapping("docs-group:{$this->group->id}"))
+                ->shared()
+                ->releaseAfter(15)
+                ->expireAfter(120),
         ];
     }
 
@@ -69,9 +86,7 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(OutlineService $outlineService): void
     {
-        $this->group->loadMissing('integration');
-
-        $integration = $this->group->integration;
+        $integration = GroupIntegration::where('group_id', $this->group->id)->first();
 
         if (is_null($integration?->docs_group_id)) {
             CreateDocsGroup::dispatch(
@@ -85,6 +100,7 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
         }
 
         $docsGroupId = $integration->docs_group_id;
+        $groupRecreated = false;
 
         try {
             $outlineService->updateGroup($docsGroupId, new OutlineGroup(
@@ -103,14 +119,24 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
             $recreatedGroup = $this->findOrCreateGroup($outlineService, $this->group->name);
             $docsGroupId = $recreatedGroup->id;
-            $integration->docs_group_id = $docsGroupId;
-            $integration->docs_collection_last_synced_at = null;
+            $groupRecreated = true;
         }
 
         $this->syncGroupUsers($outlineService, $docsGroupId);
 
-        $integration->docs_group_last_synced_at = now();
-        $integration->save();
+        DB::transaction(function () use ($docsGroupId, $groupRecreated) {
+            $fresh = GroupIntegration::where('group_id', $this->group->id)
+                ->lockForUpdate()
+                ->first() ?? new GroupIntegration(['group_id' => $this->group->id]);
+
+            if ($groupRecreated || ($fresh->exists && $fresh->docs_group_id !== $docsGroupId)) {
+                $fresh->docs_collection_last_synced_at = null;
+            }
+
+            $fresh->docs_group_id = $docsGroupId;
+            $fresh->docs_group_last_synced_at = now();
+            $fresh->save();
+        });
     }
 
     private function findOrCreateGroup(OutlineService $outlineService, string $name): OutlineGroup
