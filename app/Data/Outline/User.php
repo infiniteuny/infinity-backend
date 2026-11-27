@@ -16,8 +16,7 @@ class User extends Data
         public string|null|Optional $role,
         public bool|Optional $isSuspended,
         public string|null|Optional $avatarUrl,
-    ) {
-    }
+    ) {}
 
     public static function fromModel(UserModel $user, OutlineUserRole $role = OutlineUserRole::MEMBER): self
     {

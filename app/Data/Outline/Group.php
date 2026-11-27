@@ -16,8 +16,7 @@ class Group extends Data
         public string|null|Optional $color,
         public string|null|Optional $externalId,
         public int|Optional $memberCount,
-    ) {
-    }
+    ) {}
 
     public static function fromModel(GroupModel $group): self
     {

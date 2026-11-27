@@ -17,6 +17,5 @@ class Collection extends Data
         public bool|Optional $sharing,
         public string|null|Optional $url,
         public string|null|Optional $urlId,
-    ) {
-    }
+    ) {}
 }

@@ -12,6 +12,5 @@ class CollectionGroupMembership extends Data
         public string|Optional $groupId,
         public string|null|Optional $collectionId,
         public string|Optional $permission,
-    ) {
-    }
+    ) {}
 }

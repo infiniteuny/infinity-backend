@@ -19,8 +19,7 @@ class User extends Data
         public bool|Optional $is_active,
         public string|Optional $path,
         public string|Optional $type,
-    ) {
-    }
+    ) {}
 
     public static function fromModel(UserModel $user): self
     {

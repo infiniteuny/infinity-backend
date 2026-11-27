@@ -12,8 +12,7 @@ class Invite extends Data
         public string $name,
         public string $email,
         public string $role = OutlineUserRole::MEMBER->value,
-    ) {
-    }
+    ) {}
 
     public static function fromModel(User $user, OutlineUserRole $role = OutlineUserRole::MEMBER): self
     {
