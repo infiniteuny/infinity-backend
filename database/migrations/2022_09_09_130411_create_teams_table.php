@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('leader_id')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
-            $table->string('name')->fulltext();
+            $table->string('name');
+            if (in_array(Schema::getConnection()->getDriverName(), ['mysql', 'mariadb', 'pgsql'], true)) {
+                $table->fullText('name');
+            }
             $table->boolean('is_personal')->default(false);
             $table->timestamps();
         });

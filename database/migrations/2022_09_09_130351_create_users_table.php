@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('sso_id')->unique()->nullable();
-            $table->string('name')->fulltext();
+            $table->string('name');
+            if (in_array(Schema::getConnection()->getDriverName(), ['mysql', 'mariadb', 'pgsql'], true)) {
+                $table->fullText('name');
+            }
             $table->string('username')->unique();
             $table->string('email_address')->unique();
             $table->string('phone_number')->unique();

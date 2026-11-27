@@ -109,7 +109,7 @@ class SyncDocsJobsTest extends TestCase
         Bus::assertDispatched(
             CreateDocsCollection::class,
             fn (CreateDocsCollection $job) => $job->group->is($inactiveGroup)
-                && $job->collectionName === 'Core 2024'
+                && $job->collectionName === 'Core Team 2024'
                 && $job->readOnlyGroupIds === [self::CORE_TEAM_GROUP_ID, self::EX_CORE_TEAM_GROUP_ID]
         );
     }
@@ -571,12 +571,22 @@ class SyncDocsJobsTest extends TestCase
 
     private function createMajor(): Major
     {
-        $degree = Degree::firstOrCreate(['name' => 'S1']);
-        $faculty = Faculty::firstOrCreate(['name' => 'FT']);
+        $degree = Degree::firstOrCreate(
+            ['code' => 'S1'],
+            ['name' => 'S1'],
+        );
+        $faculty = Faculty::firstOrCreate(
+            ['code' => 'FT'],
+            ['name' => 'FT'],
+        );
 
         return Major::firstOrCreate(
-            ['name' => 'Teknologi Informasi'],
-            ['degree_id' => $degree->id, 'faculty_id' => $faculty->id],
+            ['code' => 'TI'],
+            [
+                'name' => 'Teknologi Informasi',
+                'degree_id' => $degree->id,
+                'faculty_id' => $faculty->id,
+            ],
         );
     }
 

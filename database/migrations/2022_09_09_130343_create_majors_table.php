@@ -16,7 +16,10 @@ return new class extends Migration
             $table->foreignUuid('degree_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
             $table->foreignUuid('faculty_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
             $table->string('code')->unique();
-            $table->string('name')->fulltext();
+            $table->string('name');
+            if (in_array(Schema::getConnection()->getDriverName(), ['mysql', 'mariadb', 'pgsql'], true)) {
+                $table->fullText('name');
+            }
             $table->timestamps();
         });
     }

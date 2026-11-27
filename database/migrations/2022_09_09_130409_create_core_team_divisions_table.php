@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('core_team_divisions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name')->unique()->fulltext();
+            $table->string('name')->unique();
+            if (in_array(Schema::getConnection()->getDriverName(), ['mysql', 'mariadb', 'pgsql'], true)) {
+                $table->fullText('name');
+            }
             $table->tinyInteger('priority');
             $table->timestamps();
         });

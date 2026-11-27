@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('degrees', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('code')->unique();
-            $table->string('name')->fulltext();
+            $table->string('name');
+            if (in_array(Schema::getConnection()->getDriverName(), ['mysql', 'mariadb', 'pgsql'], true)) {
+                $table->fullText('name');
+            }
             $table->timestamps();
         });
     }
