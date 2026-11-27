@@ -23,6 +23,7 @@ use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\Includes\IncludeInterface;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Core Team Members
@@ -177,27 +178,43 @@ class CoreTeamMemberController extends Controller
      */
     public function store(CoreTeam $coreTeam, StoreCoreTeamMemberRequest $request)
     {
-        $photoManifest = Storage::store(
-            $request->file('photo'),
-            'core-teams/photos',
-            StorageVisibility::PUBLIC,
-        );
-
+        $uploadedManifests = [];
         $hasFileAnimation = $request->hasFile('animation');
 
-        if ($hasFileAnimation) {
-            $animationManifest = Storage::store(
-                $request->file('animation'),
-                'core-teams/animations',
+        try {
+            $photoManifest = Storage::store(
+                $request->file('photo'),
+                'core-teams/photos',
                 StorageVisibility::PUBLIC,
             );
-        }
+            if (is_string($photoManifest) && $photoManifest !== '') {
+                $uploadedManifests[] = $photoManifest;
+            }
 
-        $coreTeam->members()->attach($request->validated('user_id'), [
-            'core_team_division_id' => $request->validated('core_team_division_id'),
-            'photo' => $photoManifest,
-            'animation' => $hasFileAnimation ? $animationManifest : null,
-        ]);
+            $animationManifest = null;
+            if ($hasFileAnimation) {
+                $animationManifest = Storage::store(
+                    $request->file('animation'),
+                    'core-teams/animations',
+                    StorageVisibility::PUBLIC,
+                );
+                if (is_string($animationManifest) && $animationManifest !== '') {
+                    $uploadedManifests[] = $animationManifest;
+                }
+            }
+
+            $coreTeam->members()->attach($request->validated('user_id'), [
+                'core_team_division_id' => $request->validated('core_team_division_id'),
+                'photo' => $photoManifest,
+                'animation' => $hasFileAnimation ? $animationManifest : null,
+            ]);
+        } catch (Throwable $e) {
+            foreach ($uploadedManifests as $manifest) {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         $coreTeamMember = $coreTeam
             ->members()
@@ -284,44 +301,59 @@ class CoreTeamMemberController extends Controller
         $hasAnimation = $request->has('animation');
         $hasFileAnimation = $request->hasFile('animation');
 
-        if ($hasPhoto) {
-            $photoManifest = $coreTeamMember->getRawOriginal('photo');
+        $oldPhotoManifest = $hasPhoto ? $coreTeamMember->getRawOriginal('photo') : null;
+        $oldAnimationManifest = $hasAnimation ? $coreTeamMember->getRawOriginal('animation') : null;
+        $uploadedManifests = [];
+        $photoManifest = null;
+        $animationManifest = null;
 
-            DeleteBlob::dispatch($photoManifest);
-
-            $photoManifest = Storage::store(
-                $request->file('photo'),
-                'core-teams/photos',
-                StorageVisibility::PUBLIC,
-            );
-        }
-
-        if ($hasAnimation) {
-            $oldAnimationManifest = $coreTeamMember->getRawOriginal('animation');
-
-            if ($oldAnimationManifest) {
-                DeleteBlob::dispatch($oldAnimationManifest);
+        try {
+            if ($hasPhoto) {
+                $photoManifest = Storage::store(
+                    $request->file('photo'),
+                    'core-teams/photos',
+                    StorageVisibility::PUBLIC,
+                );
+                if (is_string($photoManifest) && $photoManifest !== '') {
+                    $uploadedManifests[] = $photoManifest;
+                }
             }
 
-            if ($hasFileAnimation) {
+            if ($hasAnimation && $hasFileAnimation) {
                 $animationManifest = Storage::store(
                     $request->file('animation'),
                     'core-teams/animations',
                     StorageVisibility::PUBLIC,
                 );
-            } else {
-                $animationManifest = null;
+                if (is_string($animationManifest) && $animationManifest !== '') {
+                    $uploadedManifests[] = $animationManifest;
+                }
             }
+
+            $coreTeamMember->update(
+                $hasPhoto || $hasAnimation
+                    ? array_replace($request->validated(), [
+                        ...($hasPhoto ? ['photo' => $photoManifest] : []),
+                        ...($hasAnimation ? ['animation' => $animationManifest] : []),
+                    ])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            foreach ($uploadedManifests as $manifest) {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
         }
 
-        $coreTeamMember->update(
-            $hasPhoto || $hasAnimation
-                ? array_replace($request->validated(), [
-                    ...($hasPhoto ? ['photo' => $photoManifest] : []),
-                    ...($hasAnimation ? ['animation' => $animationManifest] : []),
-                ])
-                : $request->validated()
-        );
+        if (is_string($oldPhotoManifest) && $oldPhotoManifest !== '') {
+            DeleteBlob::dispatch($oldPhotoManifest);
+        }
+
+        if (is_string($oldAnimationManifest) && $oldAnimationManifest !== '') {
+            DeleteBlob::dispatch($oldAnimationManifest);
+        }
+
         $coreTeamMember = $coreTeam
             ->members()
             ->wherePivot('id', $coreTeamMemberId)
@@ -342,21 +374,23 @@ class CoreTeamMemberController extends Controller
         $photoManifest = $coreTeamMember->getRawOriginal('photo');
         $animationManifest = $coreTeamMember->getRawOriginal('animation');
 
-        DeleteBlob::dispatch($photoManifest);
-
-        if ($animationManifest) {
-            DeleteBlob::dispatch($animationManifest);
-        }
-
         $coreTeamMemberId = $coreTeamMember->id;
         $coreTeam = $coreTeamMember->coreTeam;
-        $coreTeamMember = $coreTeam
+        $member = $coreTeam
             ->members()
             ->wherePivot('id', $coreTeamMemberId)
             ->firstOrFail();
 
-        $coreTeam->members()->detach($coreTeamMember->id);
+        $coreTeamMember->delete();
 
-        return new CoreTeamMemberResource($coreTeamMember);
+        if (is_string($photoManifest) && $photoManifest !== '') {
+            DeleteBlob::dispatch($photoManifest);
+        }
+
+        if (is_string($animationManifest) && $animationManifest !== '') {
+            DeleteBlob::dispatch($animationManifest);
+        }
+
+        return new CoreTeamMemberResource($member);
     }
 }

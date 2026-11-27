@@ -15,6 +15,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Competition Instances
@@ -124,9 +125,17 @@ class CompetitionInstanceController extends Controller
     {
         $manifest = Storage::store($request->file('logo'), 'competition-instances/logos');
 
-        $competitionInstance = CompetitionInstance::create(
-            array_replace($request->validated(), ['logo' => $manifest])
-        );
+        try {
+            $competitionInstance = CompetitionInstance::create(
+                array_replace($request->validated(), ['logo' => $manifest])
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         return new CompetitionInstanceResource($competitionInstance);
     }
@@ -181,20 +190,31 @@ class CompetitionInstanceController extends Controller
     public function update(UpdateCompetitionInstanceRequest $request, CompetitionInstance $competitionInstance)
     {
         $hasLogo = $request->has('logo');
+        $oldManifest = null;
+        $manifest = null;
 
         if ($hasLogo) {
             $oldManifest = $competitionInstance->getRawOriginal('logo');
-
-            DeleteBlob::dispatch($oldManifest);
-
             $manifest = Storage::store($request->file('logo'), 'competition-instances/logos');
         }
 
-        $competitionInstance->update(
-            $hasLogo
-                ? array_replace($request->validated(), ['logo' => $manifest])
-                : $request->validated()
-        );
+        try {
+            $competitionInstance->update(
+                $hasLogo
+                    ? array_replace($request->validated(), ['logo' => $manifest])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
+
+        if (is_string($oldManifest) && $oldManifest !== '') {
+            DeleteBlob::dispatch($oldManifest);
+        }
 
         return new CompetitionInstanceResource($competitionInstance);
     }
@@ -210,9 +230,11 @@ class CompetitionInstanceController extends Controller
     {
         $manifest = $competitionInstance->getRawOriginal('logo');
 
-        DeleteBlob::dispatch($manifest);
-
         $competitionInstance->delete();
+
+        if (is_string($manifest) && $manifest !== '') {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new CompetitionInstanceResource($competitionInstance);
     }

@@ -16,6 +16,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Achievements
@@ -181,9 +182,17 @@ class AchievementController extends Controller
     {
         $manifest = Storage::store($request->file('image'), 'achievements/images');
 
-        $achievement = Achievement::create(
-            array_replace($request->validated(), ['image' => $manifest])
-        );
+        try {
+            $achievement = Achievement::create(
+                array_replace($request->validated(), ['image' => $manifest])
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         return new AchievementResource($achievement);
     }
@@ -258,20 +267,31 @@ class AchievementController extends Controller
     public function update(UpdateAchievementRequest $request, Achievement $achievement)
     {
         $hasImage = $request->has('image');
+        $oldManifest = null;
+        $manifest = null;
 
         if ($hasImage) {
             $oldManifest = $achievement->getRawOriginal('image');
-
-            DeleteBlob::dispatch($oldManifest);
-
             $manifest = Storage::store($request->file('image'), 'achievements/images');
         }
 
-        $achievement->update(
-            $hasImage
-                ? array_replace($request->validated(), ['image' => $manifest])
-                : $request->validated()
-        );
+        try {
+            $achievement->update(
+                $hasImage
+                    ? array_replace($request->validated(), ['image' => $manifest])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
+
+        if (is_string($oldManifest) && $oldManifest !== '') {
+            DeleteBlob::dispatch($oldManifest);
+        }
 
         return new AchievementResource($achievement);
     }
@@ -287,9 +307,11 @@ class AchievementController extends Controller
     {
         $manifest = $achievement->getRawOriginal('image');
 
-        DeleteBlob::dispatch($manifest);
-
         $achievement->delete();
+
+        if (is_string($manifest) && $manifest !== '') {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new AchievementResource($achievement);
     }

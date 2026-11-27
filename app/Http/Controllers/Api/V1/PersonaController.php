@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Personas
@@ -98,9 +99,17 @@ class PersonaController extends Controller
             StorageVisibility::PUBLIC,
         );
 
-        $persona = Persona::create(
-            array_replace($request->validated(), ['logo' => $manifest])
-        );
+        try {
+            $persona = Persona::create(
+                array_replace($request->validated(), ['logo' => $manifest])
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         return new PersonaResource($persona);
     }
@@ -143,12 +152,11 @@ class PersonaController extends Controller
     public function update(UpdatePersonaRequest $request, Persona $persona)
     {
         $hasLogo = $request->has('logo');
+        $oldManifest = null;
+        $manifest = null;
 
         if ($hasLogo) {
             $oldManifest = $persona->getRawOriginal('logo');
-
-            DeleteBlob::dispatch($oldManifest);
-
             $manifest = Storage::store(
                 $request->file('logo'),
                 'personas/logos',
@@ -156,11 +164,23 @@ class PersonaController extends Controller
             );
         }
 
-        $persona->update(
-            $hasLogo
-                ? array_replace($request->validated(), ['logo' => $manifest])
-                : $request->validated()
-        );
+        try {
+            $persona->update(
+                $hasLogo
+                    ? array_replace($request->validated(), ['logo' => $manifest])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
+
+        if (is_string($oldManifest) && $oldManifest !== '') {
+            DeleteBlob::dispatch($oldManifest);
+        }
 
         return new PersonaResource($persona);
     }
@@ -176,9 +196,11 @@ class PersonaController extends Controller
     {
         $manifest = $persona->getRawOriginal('logo');
 
-        DeleteBlob::dispatch($manifest);
-
         $persona->delete();
+
+        if (is_string($manifest) && $manifest !== '') {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new PersonaResource($persona);
     }

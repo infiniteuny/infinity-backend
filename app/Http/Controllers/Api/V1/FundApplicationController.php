@@ -16,6 +16,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Fund Applications
@@ -125,21 +126,38 @@ class FundApplicationController extends Controller
      */
     public function store(StoreFundApplicationRequest $request)
     {
-        $loaManifest = Storage::store(
-            $request->file('letter_of_acceptance'),
-            'fund-applications/letter-of-acceptances',
-        );
-        $proposalManifest = Storage::store(
-            $request->file('proposal'),
-            'fund-applications/proposals',
-        );
+        $uploadedManifests = [];
 
-        $fundApplication = FundApplication::create(
-            array_replace($request->validated(), [
-                'letter_of_acceptance' => $loaManifest,
-                'proposal' => $proposalManifest,
-            ])
-        );
+        try {
+            $loaManifest = Storage::store(
+                $request->file('letter_of_acceptance'),
+                'fund-applications/letter-of-acceptances',
+            );
+            if (is_string($loaManifest) && $loaManifest !== '') {
+                $uploadedManifests[] = $loaManifest;
+            }
+
+            $proposalManifest = Storage::store(
+                $request->file('proposal'),
+                'fund-applications/proposals',
+            );
+            if (is_string($proposalManifest) && $proposalManifest !== '') {
+                $uploadedManifests[] = $proposalManifest;
+            }
+
+            $fundApplication = FundApplication::create(
+                array_replace($request->validated(), [
+                    'letter_of_acceptance' => $loaManifest,
+                    'proposal' => $proposalManifest,
+                ])
+            );
+        } catch (Throwable $e) {
+            foreach ($uploadedManifests as $manifest) {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         return new FundApplicationResource($fundApplication);
     }
@@ -194,36 +212,56 @@ class FundApplicationController extends Controller
         $hasLoa = $request->has('letter_of_acceptance');
         $hasProposal = $request->has('proposal');
 
-        if ($hasLoa) {
-            $oldLoaManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
+        $oldLoaManifest = $hasLoa ? $fundApplication->getRawOriginal('letter_of_acceptance') : null;
+        $oldProposalManifest = $hasProposal ? $fundApplication->getRawOriginal('proposal') : null;
+        $uploadedManifests = [];
+        $loaManifest = null;
+        $proposalManifest = null;
 
+        try {
+            if ($hasLoa) {
+                $loaManifest = Storage::store(
+                    $request->file('letter_of_acceptance'),
+                    'fund-applications/letter-of-acceptances',
+                );
+                if (is_string($loaManifest) && $loaManifest !== '') {
+                    $uploadedManifests[] = $loaManifest;
+                }
+            }
+
+            if ($hasProposal) {
+                $proposalManifest = Storage::store(
+                    $request->file('proposal'),
+                    'fund-applications/proposals',
+                );
+                if (is_string($proposalManifest) && $proposalManifest !== '') {
+                    $uploadedManifests[] = $proposalManifest;
+                }
+            }
+
+            $fundApplication->update(
+                $hasLoa || $hasProposal
+                    ? array_replace($request->validated(), [
+                        ...($hasLoa ? ['letter_of_acceptance' => $loaManifest] : []),
+                        ...($hasProposal ? ['proposal' => $proposalManifest] : []),
+                    ])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            foreach ($uploadedManifests as $manifest) {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
+
+        if (is_string($oldLoaManifest) && $oldLoaManifest !== '') {
             DeleteBlob::dispatch($oldLoaManifest);
-
-            $loaManifest = Storage::store(
-                $request->file('letter_of_acceptance'),
-                'fund-applications/letter-of-acceptances',
-            );
         }
 
-        if ($hasProposal) {
-            $oldProposalManifest = $fundApplication->getRawOriginal('proposal');
-
+        if (is_string($oldProposalManifest) && $oldProposalManifest !== '') {
             DeleteBlob::dispatch($oldProposalManifest);
-
-            $proposalManifest = Storage::store(
-                $request->file('proposal'),
-                'fund-applications/proposals',
-            );
         }
-
-        $fundApplication->update(
-            $hasLoa || $hasProposal
-                ? array_replace($request->validated(), [
-                    ...($hasLoa ? ['letter_of_acceptance' => $loaManifest] : []),
-                    ...($hasProposal ? ['proposal' => $proposalManifest] : []),
-                ])
-                : $request->validated()
-        );
 
         return new FundApplicationResource($fundApplication);
     }
@@ -240,10 +278,15 @@ class FundApplicationController extends Controller
         $loaManifest = $fundApplication->getRawOriginal('letter_of_acceptance');
         $proposalManifest = $fundApplication->getRawOriginal('proposal');
 
-        DeleteBlob::dispatch($loaManifest);
-        DeleteBlob::dispatch($proposalManifest);
-
         $fundApplication->delete();
+
+        if (is_string($loaManifest) && $loaManifest !== '') {
+            DeleteBlob::dispatch($loaManifest);
+        }
+
+        if (is_string($proposalManifest) && $proposalManifest !== '') {
+            DeleteBlob::dispatch($proposalManifest);
+        }
 
         return new FundApplicationResource($fundApplication);
     }

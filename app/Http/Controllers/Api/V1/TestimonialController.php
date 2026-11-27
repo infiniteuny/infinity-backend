@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Testimonials
@@ -93,9 +94,17 @@ class TestimonialController extends Controller
             StorageVisibility::PUBLIC,
         );
 
-        $testimonial = Testimonial::create(
-            array_replace($request->validated(), ['photo' => $manifest])
-        );
+        try {
+            $testimonial = Testimonial::create(
+                array_replace($request->validated(), ['photo' => $manifest])
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         return new TestimonialResource($testimonial);
     }
@@ -138,12 +147,11 @@ class TestimonialController extends Controller
     public function update(UpdateTestimonialRequest $request, Testimonial $testimonial)
     {
         $hasPhoto = $request->has('photo');
+        $oldManifest = null;
+        $manifest = null;
 
         if ($hasPhoto) {
             $oldManifest = $testimonial->getRawOriginal('photo');
-
-            DeleteBlob::dispatch($oldManifest);
-
             $manifest = Storage::store(
                 $request->file('photo'),
                 'testimonials/photos',
@@ -151,11 +159,23 @@ class TestimonialController extends Controller
             );
         }
 
-        $testimonial->update(
-            $hasPhoto
-                ? array_replace($request->validated(), ['photo' => $manifest])
-                : $request->validated()
-        );
+        try {
+            $testimonial->update(
+                $hasPhoto
+                    ? array_replace($request->validated(), ['photo' => $manifest])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
+
+        if (is_string($oldManifest) && $oldManifest !== '') {
+            DeleteBlob::dispatch($oldManifest);
+        }
 
         return new TestimonialResource($testimonial);
     }
@@ -171,9 +191,11 @@ class TestimonialController extends Controller
     {
         $manifest = $testimonial->getRawOriginal('photo');
 
-        DeleteBlob::dispatch($manifest);
-
         $testimonial->delete();
+
+        if (is_string($manifest) && $manifest !== '') {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new TestimonialResource($testimonial);
     }

@@ -23,6 +23,7 @@ use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\Includes\IncludeInterface;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Community Group Admin Members
@@ -178,27 +179,43 @@ class CommunityGroupAdminMemberController extends Controller
      */
     public function store(CommunityGroupAdmin $communityGroupAdmin, StoreCommunityGroupAdminMemberRequest $request)
     {
-        $photoManifest = Storage::store(
-            $request->file('photo'),
-            'community-group-admins/photos',
-            StorageVisibility::PUBLIC,
-        );
-
+        $uploadedManifests = [];
         $hasFileAnimation = $request->hasFile('animation');
 
-        if ($hasFileAnimation) {
-            $animationManifest = Storage::store(
-                $request->file('animation'),
-                'community-group-admins/animations',
+        try {
+            $photoManifest = Storage::store(
+                $request->file('photo'),
+                'community-group-admins/photos',
                 StorageVisibility::PUBLIC,
             );
-        }
+            if (is_string($photoManifest) && $photoManifest !== '') {
+                $uploadedManifests[] = $photoManifest;
+            }
 
-        $communityGroupAdmin->members()->attach($request->validated('user_id'), [
-            'community_group_id' => $request->validated('community_group_id'),
-            'photo' => $photoManifest,
-            'animation' => $hasFileAnimation ? $animationManifest : null,
-        ]);
+            $animationManifest = null;
+            if ($hasFileAnimation) {
+                $animationManifest = Storage::store(
+                    $request->file('animation'),
+                    'community-group-admins/animations',
+                    StorageVisibility::PUBLIC,
+                );
+                if (is_string($animationManifest) && $animationManifest !== '') {
+                    $uploadedManifests[] = $animationManifest;
+                }
+            }
+
+            $communityGroupAdmin->members()->attach($request->validated('user_id'), [
+                'community_group_id' => $request->validated('community_group_id'),
+                'photo' => $photoManifest,
+                'animation' => $hasFileAnimation ? $animationManifest : null,
+            ]);
+        } catch (Throwable $e) {
+            foreach ($uploadedManifests as $manifest) {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         $communityGroupAdminMember = $communityGroupAdmin
             ->members()
@@ -286,44 +303,59 @@ class CommunityGroupAdminMemberController extends Controller
         $hasAnimation = $request->has('animation');
         $hasFileAnimation = $request->hasFile('animation');
 
-        if ($hasPhoto) {
-            $oldPhotoManifest = $communityGroupAdminMember->getRawOriginal('photo');
+        $oldPhotoManifest = $hasPhoto ? $communityGroupAdminMember->getRawOriginal('photo') : null;
+        $oldAnimationManifest = $hasAnimation ? $communityGroupAdminMember->getRawOriginal('animation') : null;
+        $uploadedManifests = [];
+        $photoManifest = null;
+        $animationManifest = null;
 
-            DeleteBlob::dispatch($oldPhotoManifest);
-
-            $photoManifest = Storage::store(
-                $request->file('photo'),
-                'community-group-admins/photos',
-                StorageVisibility::PUBLIC,
-            );
-        }
-
-        if ($hasAnimation) {
-            $oldAnimationManifest = $communityGroupAdminMember->getRawOriginal('animation');
-
-            if ($oldAnimationManifest) {
-                DeleteBlob::dispatch($oldAnimationManifest);
+        try {
+            if ($hasPhoto) {
+                $photoManifest = Storage::store(
+                    $request->file('photo'),
+                    'community-group-admins/photos',
+                    StorageVisibility::PUBLIC,
+                );
+                if (is_string($photoManifest) && $photoManifest !== '') {
+                    $uploadedManifests[] = $photoManifest;
+                }
             }
 
-            if ($hasFileAnimation) {
+            if ($hasAnimation && $hasFileAnimation) {
                 $animationManifest = Storage::store(
                     $request->file('animation'),
                     'community-group-admins/animations',
                     StorageVisibility::PUBLIC,
                 );
-            } else {
-                $animationManifest = null;
+                if (is_string($animationManifest) && $animationManifest !== '') {
+                    $uploadedManifests[] = $animationManifest;
+                }
             }
+
+            $communityGroupAdminMember->update(
+                $hasPhoto || $hasAnimation
+                    ? array_replace($request->validated(), [
+                        ...($hasPhoto ? ['photo' => $photoManifest] : []),
+                        ...($hasAnimation ? ['animation' => $animationManifest] : []),
+                    ])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            foreach ($uploadedManifests as $manifest) {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
         }
 
-        $communityGroupAdminMember->update(
-            $hasPhoto || $hasAnimation
-                ? array_replace($request->validated(), [
-                    ...($hasPhoto ? ['photo' => $photoManifest] : []),
-                    ...($hasAnimation ? ['animation' => $animationManifest] : []),
-                ])
-                : $request->validated()
-        );
+        if (is_string($oldPhotoManifest) && $oldPhotoManifest !== '') {
+            DeleteBlob::dispatch($oldPhotoManifest);
+        }
+
+        if (is_string($oldAnimationManifest) && $oldAnimationManifest !== '') {
+            DeleteBlob::dispatch($oldAnimationManifest);
+        }
+
         $communityGroupAdminMember = $communityGroupAdmin
             ->members()
             ->wherePivot('id', $communityGroupAdminMemberId)
@@ -344,12 +376,6 @@ class CommunityGroupAdminMemberController extends Controller
         $photoManifest = $communityGroupAdminMember->getRawOriginal('photo');
         $animationManifest = $communityGroupAdminMember->getRawOriginal('animation');
 
-        DeleteBlob::dispatch($photoManifest);
-
-        if ($animationManifest) {
-            DeleteBlob::dispatch($animationManifest);
-        }
-
         $communityGroupAdminMemberId = $communityGroupAdminMember->id;
         $communityGroupAdmin = $communityGroupAdminMember->communityGroupAdmin;
         $member = $communityGroupAdmin
@@ -358,6 +384,14 @@ class CommunityGroupAdminMemberController extends Controller
             ->firstOrFail();
 
         $communityGroupAdminMember->delete();
+
+        if (is_string($photoManifest) && $photoManifest !== '') {
+            DeleteBlob::dispatch($photoManifest);
+        }
+
+        if (is_string($animationManifest) && $animationManifest !== '') {
+            DeleteBlob::dispatch($animationManifest);
+        }
 
         return new CommunityGroupAdminMemberResource($member);
     }

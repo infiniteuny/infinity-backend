@@ -8,6 +8,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
 use App\Jobs\CreateSsoUser;
+use App\Jobs\DeleteBlob;
 use App\Jobs\DeleteSsoUser;
 use App\Jobs\UpdateSsoUser;
 use App\Models\Config;
@@ -16,6 +17,7 @@ use App\Traits\HasQueryFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -288,10 +290,31 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $ssoId = $user->sso_id;
+        $blobManifests = [];
+
+        foreach (['core_team_members', 'community_group_admin_members'] as $pivotTable) {
+            $rows = DB::table($pivotTable)
+                ->where('user_id', $user->id)
+                ->get(['photo', 'animation']);
+
+            foreach ($rows as $row) {
+                foreach ([$row->photo, $row->animation] as $manifest) {
+                    if (is_string($manifest) && $manifest !== '') {
+                        $blobManifests[$manifest] = true;
+                    }
+                }
+            }
+        }
+
         $user->delete();
 
-        if ($user->sso_id) {
-            DeleteSsoUser::dispatch($user->sso_id);
+        if (is_string($ssoId) && $ssoId !== '') {
+            DeleteSsoUser::dispatch($ssoId);
+        }
+
+        foreach (array_keys($blobManifests) as $manifest) {
+            DeleteBlob::dispatch($manifest);
         }
 
         return new UserResource($user);

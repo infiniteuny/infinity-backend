@@ -7,8 +7,10 @@ use App\Http\Requests\CoreTeamDivision\StoreCoreTeamDivisionRequest;
 use App\Http\Requests\CoreTeamDivision\UpdateCoreTeamDivisionRequest;
 use App\Http\Resources\CoreTeamDivision\CoreTeamDivisionCollection;
 use App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource;
+use App\Jobs\DeleteBlob;
 use App\Models\CoreTeamDivision;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -133,7 +135,24 @@ class CoreTeamDivisionController extends Controller
      */
     public function destroy(CoreTeamDivision $coreTeamDivision)
     {
+        $blobManifests = [];
+        $memberBlobs = DB::table('core_team_members')
+            ->where('core_team_division_id', $coreTeamDivision->id)
+            ->get(['photo', 'animation']);
+
+        foreach ($memberBlobs as $member) {
+            foreach ([$member->photo, $member->animation] as $manifest) {
+                if (is_string($manifest) && $manifest !== '') {
+                    $blobManifests[$manifest] = true;
+                }
+            }
+        }
+
         $coreTeamDivision->delete();
+
+        foreach (array_keys($blobManifests) as $manifest) {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new CoreTeamDivisionResource($coreTeamDivision);
     }

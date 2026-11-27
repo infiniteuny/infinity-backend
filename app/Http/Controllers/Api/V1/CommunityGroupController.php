@@ -12,9 +12,11 @@ use App\Http\Resources\CommunityGroup\CommunityGroupResource;
 use App\Jobs\DeleteBlob;
 use App\Models\CommunityGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Community Groups
@@ -102,9 +104,17 @@ class CommunityGroupController extends Controller
             StorageVisibility::PUBLIC,
         );
 
-        $communityGroup = CommunityGroup::create(
-            array_replace($request->validated(), ['logo' => $manifest])
-        );
+        try {
+            $communityGroup = CommunityGroup::create(
+                array_replace($request->validated(), ['logo' => $manifest])
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         return new CommunityGroupResource($communityGroup);
     }
@@ -148,12 +158,11 @@ class CommunityGroupController extends Controller
     public function update(UpdateCommunityGroupRequest $request, CommunityGroup $communityGroup)
     {
         $hasLogo = $request->has('logo');
+        $oldManifest = null;
+        $manifest = null;
 
         if ($hasLogo) {
             $oldManifest = $communityGroup->getRawOriginal('logo');
-
-            DeleteBlob::dispatch($oldManifest);
-
             $manifest = Storage::store(
                 $request->file('logo'),
                 'community-groups/logos',
@@ -161,11 +170,23 @@ class CommunityGroupController extends Controller
             );
         }
 
-        $communityGroup->update(
-            $hasLogo
-                ? array_replace($request->validated(), ['logo' => $manifest])
-                : $request->validated()
-        );
+        try {
+            $communityGroup->update(
+                $hasLogo
+                    ? array_replace($request->validated(), ['logo' => $manifest])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
+
+        if (is_string($oldManifest) && $oldManifest !== '') {
+            DeleteBlob::dispatch($oldManifest);
+        }
 
         return new CommunityGroupResource($communityGroup);
     }
@@ -179,11 +200,30 @@ class CommunityGroupController extends Controller
      */
     public function destroy(CommunityGroup $communityGroup)
     {
-        $manifest = $communityGroup->getRawOriginal('logo');
+        $blobManifests = [];
+        $logoManifest = $communityGroup->getRawOriginal('logo');
 
-        DeleteBlob::dispatch($manifest);
+        if (is_string($logoManifest) && $logoManifest !== '') {
+            $blobManifests[$logoManifest] = true;
+        }
+
+        $memberBlobs = DB::table('community_group_admin_members')
+            ->where('community_group_id', $communityGroup->id)
+            ->get(['photo', 'animation']);
+
+        foreach ($memberBlobs as $member) {
+            foreach ([$member->photo, $member->animation] as $manifest) {
+                if (is_string($manifest) && $manifest !== '') {
+                    $blobManifests[$manifest] = true;
+                }
+            }
+        }
 
         $communityGroup->delete();
+
+        foreach (array_keys($blobManifests) as $manifest) {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new CommunityGroupResource($communityGroup);
     }

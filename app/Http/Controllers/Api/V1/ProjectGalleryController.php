@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @group Project Galleries
@@ -94,9 +95,17 @@ class ProjectGalleryController extends Controller
             StorageVisibility::PUBLIC,
         );
 
-        $projectGallery = ProjectGallery::create(
-            array_replace($request->validated(), ['image' => $manifest])
-        );
+        try {
+            $projectGallery = ProjectGallery::create(
+                array_replace($request->validated(), ['image' => $manifest])
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
 
         return new ProjectGalleryResource($projectGallery);
     }
@@ -139,12 +148,11 @@ class ProjectGalleryController extends Controller
     public function update(UpdateProjectGalleryRequest $request, ProjectGallery $projectGallery)
     {
         $hasImage = $request->has('image');
+        $oldManifest = null;
+        $manifest = null;
 
         if ($hasImage) {
             $oldManifest = $projectGallery->getRawOriginal('image');
-
-            DeleteBlob::dispatch($oldManifest);
-
             $manifest = Storage::store(
                 $request->file('image'),
                 'project-galleries/images',
@@ -152,11 +160,23 @@ class ProjectGalleryController extends Controller
             );
         }
 
-        $projectGallery->update(
-            $hasImage
-                ? array_replace($request->validated(), ['image' => $manifest])
-                : $request->validated()
-        );
+        try {
+            $projectGallery->update(
+                $hasImage
+                    ? array_replace($request->validated(), ['image' => $manifest])
+                    : $request->validated()
+            );
+        } catch (Throwable $e) {
+            if (is_string($manifest) && $manifest !== '') {
+                DeleteBlob::dispatch($manifest);
+            }
+
+            throw $e;
+        }
+
+        if (is_string($oldManifest) && $oldManifest !== '') {
+            DeleteBlob::dispatch($oldManifest);
+        }
 
         return new ProjectGalleryResource($projectGallery);
     }
@@ -172,9 +192,11 @@ class ProjectGalleryController extends Controller
     {
         $manifest = $projectGallery->getRawOriginal('image');
 
-        DeleteBlob::dispatch($manifest);
-
         $projectGallery->delete();
+
+        if (is_string($manifest) && $manifest !== '') {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new ProjectGalleryResource($projectGallery);
     }

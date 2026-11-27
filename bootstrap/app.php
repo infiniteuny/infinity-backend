@@ -115,7 +115,17 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (QueryException $e) {
-            if ($e->getCode() === '23503') {
+            $sqlState = (string) $e->getCode();
+            $driverCode = $e->errorInfo[1] ?? null;
+            $driverMessage = (string) ($e->errorInfo[2] ?? $e->getMessage());
+
+            if (
+                $sqlState === '23503'
+                || ($sqlState === '23000' && (
+                    in_array($driverCode, [1451, 1452], true)
+                    || ($driverCode === 19 && str_contains(strtolower($driverMessage), 'foreign key'))
+                ))
+            ) {
                 return response()->json(
                     JsendFormatter::fail(
                         'Operation cannot be completed due to a foreign key constraint, which usually means that the record is still referenced by other records.',
