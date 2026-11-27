@@ -457,6 +457,54 @@ class SyncDocsJobsTest extends TestCase
             && $r['permission'] === null);
     }
 
+    public function test_update_docs_collection_preserves_existing_groups_and_owning_group_read_write(): void
+    {
+        $docsGroupId = '33333333-3333-3333-3333-333333333333';
+        $docsCollectionId = '44444444-4444-4444-4444-444444444444';
+
+        Http::fake([
+            self::BASE_URL.'/api/collections.update' => Http::response([
+                'data' => [
+                    'id' => $docsCollectionId,
+                    'name' => 'Core Team 2025',
+                    'permission' => null,
+                ],
+            ]),
+            self::BASE_URL.'/api/collections.add_group' => Http::response([
+                'data' => ['groupMemberships' => []],
+            ]),
+        ]);
+
+        $group = Group::create([
+            'name' => 'Core Team 2025',
+            'guard_name' => 'api',
+        ]);
+        GroupIntegration::create([
+            'group_id' => $group->id,
+            'docs_group_id' => $docsGroupId,
+            'docs_collection_id' => $docsCollectionId,
+            'docs_group_last_synced_at' => now()->subHour(),
+            'docs_collection_last_synced_at' => now()->subHour(),
+        ]);
+
+        (new UpdateDocsCollection(
+            $group,
+            'Core Team 2025',
+            [$docsGroupId, self::CORE_TEAM_GROUP_ID, self::EX_CORE_TEAM_GROUP_ID],
+        ))->handle(app(OutlineService::class));
+
+        Http::assertSent(fn (Request $r) => $r->url() === self::BASE_URL.'/api/collections.add_group'
+            && $r['id'] === $docsCollectionId
+            && $r['groupId'] === $docsGroupId
+            && $r['permission'] === OutlinePermission::READ_WRITE->value);
+
+        Http::assertNotSent(fn (Request $r) => $r->url() === self::BASE_URL.'/api/collections.add_group'
+            && $r['groupId'] === $docsGroupId
+            && $r['permission'] === OutlinePermission::READ->value);
+
+        Http::assertNotSent(fn (Request $r) => $r->url() === self::BASE_URL.'/api/collections.remove_group');
+    }
+
     private function createMajor(): Major
     {
         $degree = Degree::firstOrCreate(['name' => 'S1']);

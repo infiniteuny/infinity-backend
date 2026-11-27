@@ -27,8 +27,7 @@ class CreateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
         public string $collectionName,
         /** @var string[] */
         public array $readOnlyGroupIds = [],
-    ) {
-    }
+    ) {}
 
     /**
      * The number of times the job may be attempted.
@@ -72,30 +71,46 @@ class CreateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
         $collection = $this->findOrCreateCollection($outlineService, $this->collectionName);
 
-        try {
-            $outlineService->addGroupToCollection($collection->id, $integration->docs_group_id, OutlinePermission::READ_WRITE);
-        } catch (RequestException $exception) {
-            if ($exception->response?->status() !== 404) {
-                throw $exception;
-            }
-
+        if (! $this->syncCollectionGroups($outlineService, $collection->id, $integration->docs_group_id)) {
             $integration->docs_collection_id = $collection->id;
             $integration->docs_group_id = null;
             $integration->docs_group_last_synced_at = null;
+            $integration->docs_collection_last_synced_at = null;
             $integration->save();
 
             return;
         }
 
-        foreach ($this->readOnlyGroupIds as $groupId) {
-            if (! empty($groupId)) {
-                $outlineService->addGroupToCollection($collection->id, $groupId, OutlinePermission::READ);
-            }
-        }
-
         $integration->docs_collection_id = $collection->id;
         $integration->docs_collection_last_synced_at = now();
         $integration->save();
+    }
+
+    private function syncCollectionGroups(
+        OutlineService $outlineService,
+        string $collectionId,
+        string $owningGroupId,
+    ): bool {
+        try {
+            $outlineService->addGroupToCollection($collectionId, $owningGroupId, OutlinePermission::READ_WRITE);
+        } catch (RequestException $exception) {
+            if ($exception->response?->status() !== 404) {
+                throw $exception;
+            }
+
+            return false;
+        }
+
+        $readOnlyGroupIds = array_values(array_unique(array_filter(
+            $this->readOnlyGroupIds,
+            fn ($groupId) => is_string($groupId) && $groupId !== '' && $groupId !== $owningGroupId,
+        )));
+
+        foreach ($readOnlyGroupIds as $groupId) {
+            $outlineService->addGroupToCollection($collectionId, $groupId, OutlinePermission::READ);
+        }
+
+        return true;
     }
 
     private function findOrCreateCollection(OutlineService $outlineService, string $name): OutlineCollection
