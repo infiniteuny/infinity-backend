@@ -35,13 +35,36 @@ class GroupSeeder extends Seeder
                 'name' => 'Inactive Member',
                 'is_managed' => true,
             ],
+            [
+                'name' => 'Core Team',
+                'is_managed' => true,
+            ],
+            [
+                'name' => 'Ex Core Team',
+                'is_managed' => true,
+            ],
+            [
+                'name' => 'CG Admin',
+                'is_managed' => true,
+            ],
+            [
+                'name' => 'Ex CG Admin',
+                'is_managed' => true,
+            ],
         ];
 
+        $guardName = Guard::getDefaultName(User::class);
+
         foreach ($groups as $group) {
-            Group::firstOrCreate([
-                ...$group,
-                'guard_name' => Guard::getDefaultName(User::class),
-            ]);
+            Group::updateOrCreate(
+                [
+                    'name' => $group['name'],
+                    'guard_name' => $guardName,
+                ],
+                [
+                    'is_managed' => $group['is_managed'],
+                ],
+            );
         }
 
         $adminGroup = Group::where('name', 'Administrator')->first();

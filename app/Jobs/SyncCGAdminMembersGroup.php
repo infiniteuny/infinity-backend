@@ -16,31 +16,40 @@ class SyncCGAdminMembersGroup implements ShouldQueue
      */
     public function handle(): void
     {
-        $cgAdmins = CommunityGroupAdmin::with('members')->get();
+        $cgAdmins = CommunityGroupAdmin::with(['group', 'members'])->get();
         $activeGroup = Group::where('name', 'CG Admin')->first();
         $inactiveGroup = Group::where('name', 'Ex CG Admin')->first();
 
+        $activeUserIds = [];
+        $inactiveUserIds = [];
+
         foreach ($cgAdmins as $cgAdmin) {
             $userIds = $cgAdmin->members->pluck('id')->unique()->values()->all();
-            $cgAdmin->group->users()->sync($userIds);
+
+            if ($cgAdmin->group) {
+                $cgAdmin->group->users()->sync($userIds);
+            }
 
             if ($cgAdmin->is_active) {
-                if ($activeGroup) {
-                    $activeGroup->users()->syncWithoutDetaching($userIds);
-                }
-
-                if ($inactiveGroup) {
-                    $inactiveGroup->users()->detach($userIds);
+                foreach ($userIds as $userId) {
+                    $activeUserIds[$userId] = true;
                 }
             } else {
-                if ($activeGroup) {
-                    $activeGroup->users()->detach($userIds);
-                }
-
-                if ($inactiveGroup) {
-                    $inactiveGroup->users()->syncWithoutDetaching($userIds);
+                foreach ($userIds as $userId) {
+                    $inactiveUserIds[$userId] = true;
                 }
             }
+        }
+
+        $activeIds = array_keys($activeUserIds);
+        $inactiveOnlyIds = array_values(array_diff(array_keys($inactiveUserIds), $activeIds));
+
+        if ($activeGroup) {
+            $activeGroup->users()->sync($activeIds);
+        }
+
+        if ($inactiveGroup) {
+            $inactiveGroup->users()->sync($inactiveOnlyIds);
         }
     }
 }
