@@ -24,34 +24,34 @@ class BlobController extends Controller
                 : throw new NotFoundHttpException('File not found');
         }
 
-        if (Storage::disk('local')->exists($blob)) {
+        $headers = [
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            'Content-Security-Policy' => "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        ];
+
+        try {
+            if (! Storage::disk('local')->fileExists($blob)) {
+                throw new NotFoundHttpException('File not found');
+            }
+
             $name = $request->validated('name');
             $forceDownload = (bool) $request->validated('force_download', false);
 
-            $headers = [
-                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-                'Content-Security-Policy' => "default-src 'none'; style-src 'unsafe-inline'; sandbox",
-            ];
-
-            try {
-                if ($forceDownload) {
-                    $response = Storage::disk('local')->download($blob, $name, $headers);
-                } else {
-                    $response = Storage::disk('local')->serve($request, $blob, $name, $headers);
-                }
-
-                return tap(
-                    $response,
-                    function ($response) use ($headers) {
-                        if (! $response->headers->has('Content-Security-Policy')) {
-                            $response->headers->replace($headers);
-                        }
-                    }
-                );
-            } catch (PathTraversalDetected $e) {
-                throw new NotFoundHttpException('File not found');
+            if ($forceDownload) {
+                $response = Storage::disk('local')->download($blob, $name, $headers);
+            } else {
+                $response = Storage::disk('local')->serve($request, $blob, $name, $headers);
             }
-        } else {
+
+            return tap(
+                $response,
+                function ($response) use ($headers) {
+                    if (! $response->headers->has('Content-Security-Policy')) {
+                        $response->headers->add($headers);
+                    }
+                }
+            );
+        } catch (PathTraversalDetected $e) {
             throw new NotFoundHttpException('File not found');
         }
     }
