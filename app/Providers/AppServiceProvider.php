@@ -52,7 +52,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        URL::useOrigin(config('app.url'));
+        $appUrl = config('app.url');
+        URL::useOrigin($appUrl);
+        if (is_string($appUrl) && str_starts_with(strtolower($appUrl), 'https://')) {
+            URL::forceScheme('https');
+        }
         Storage::disk('local')->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
             return URL::to(
                 URL::temporarySignedRoute(
@@ -97,14 +101,18 @@ class AppServiceProvider extends ServiceProvider
             return $guard;
         });
         Http::macro('authentik', function () {
-            return Http::withToken(config('services.authentik.token'))
-                ->baseUrl(config('services.authentik.base_url'))
+            return Http::withToken((string) config('services.authentik.token', ''))
+                ->baseUrl((string) config('services.authentik.base_url', ''))
+                ->connectTimeout(10)
+                ->timeout(30)
                 ->acceptJson()
                 ->asJson();
         });
         Http::macro('outline', function () {
-            return Http::withToken(config('services.outline.token'))
-                ->baseUrl(config('services.outline.base_url'))
+            return Http::withToken((string) config('services.outline.token', ''))
+                ->baseUrl((string) config('services.outline.base_url', ''))
+                ->connectTimeout(10)
+                ->timeout(30)
                 ->acceptJson()
                 ->asJson();
         });

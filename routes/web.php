@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,16 +17,27 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'as' => 'scribe.',
 ], function () {
-    Route::view('/', 'scribe.index');
+    Route::get('/', function () {
+        abort_unless(View::exists('scribe.index'), 404);
+
+        return view('scribe.index');
+    });
 
     Route::get('/collection.json', function () {
-        return new JsonResponse(
-            file_get_contents(storage_path('app/scribe/collection.json')),
-            json: true,
-        );
+        $path = storage_path('app/scribe/collection.json');
+        abort_unless(is_file($path), 404);
+
+        return response()->file($path, [
+            'Content-Type' => 'application/json',
+        ]);
     })->name('postman');
 
     Route::get('/openapi.yaml', function () {
-        return response()->file(storage_path('app/scribe/openapi.yaml'));
+        $path = storage_path('app/scribe/openapi.yaml');
+        abort_unless(is_file($path), 404);
+
+        return response()->file($path, [
+            'Content-Type' => 'application/yaml',
+        ]);
     })->name('openapi');
 });
