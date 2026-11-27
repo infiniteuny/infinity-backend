@@ -41,6 +41,7 @@ class TeamMemberController extends Controller
      * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`. No-example
      * @queryParam filters[sso_id] string Filter by exact `sso_id`. No-example
      * @queryParam filters[name] string Filter by partial `name`. No-example
+     * @queryParam filters[username] string Filter by partial `username`. No-example
      * @queryParam filters[email_address] string Filter by partial `email_address`. No-example
      * @queryParam filters[phone_number] string Filter by partial `phone_number`. No-example
      * @queryParam filters[student_id] string Filter by partial `student_id`. No-example
@@ -51,7 +52,7 @@ class TeamMemberController extends Controller
      * @queryParam filters[is_extraordinary] boolean Filter by exact `is_extraordinary`. No-example
      * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
      * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
-     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `email_address`, `phone_number`, `student_id`, `major_id`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. Default: `-id`. No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. Default: `-id`. No-example
      * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
      * @queryParam cursor string Cursor token for pagination. No-example
      */
@@ -69,6 +70,7 @@ class TeamMemberController extends Controller
             ->allowedFilters(
                 AllowedFilter::exact('sso_id', 'users.sso_id'),
                 AllowedFilter::partial('name', 'users.name'),
+                AllowedFilter::partial('username', 'users.username'),
                 AllowedFilter::partial('email_address', 'users.email_address'),
                 AllowedFilter::partial('phone_number', 'users.phone_number'),
                 AllowedFilter::partial('student_id', 'users.student_id'),
@@ -83,6 +85,7 @@ class TeamMemberController extends Controller
             ->allowedSorts(
                 AllowedSort::field('id', 'users.id'),
                 AllowedSort::field('name', 'users.name'),
+                AllowedSort::field('username', 'users.username'),
                 AllowedSort::field('email_address', 'users.email_address'),
                 AllowedSort::field('phone_number', 'users.phone_number'),
                 AllowedSort::field('student_id', 'users.student_id'),

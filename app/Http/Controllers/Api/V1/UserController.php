@@ -12,8 +12,10 @@ use App\Jobs\DeleteSsoUser;
 use App\Jobs\UpdateSsoUser;
 use App\Models\Config;
 use App\Models\User;
+use App\Traits\HasQueryFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -25,6 +27,8 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class UserController extends Controller
 {
+    use HasQueryFilters;
+
     public function __construct()
     {
         $this->middleware('can:create,'.User::class)->only('store');
@@ -42,13 +46,13 @@ class UserController extends Controller
      * @apiResourceModel App\Models\User paginate=10,cursor
      *
      * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `sso_id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `links`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. No-example
-     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`. No-example
-     * @queryParam filters[sso_id] string Filter by exact `sso_id`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`. (`groups` and `permissions` require authentication). No-example
+     * @queryParam filters[sso_id] string Filter by exact `sso_id`. Requires authentication. No-example
      * @queryParam filters[name] string Filter by partial `name`. No-example
      * @queryParam filters[username] string Filter by partial `username`. No-example
-     * @queryParam filters[email_address] string Filter by partial `email_address`. No-example
-     * @queryParam filters[phone_number] string Filter by partial `phone_number`. No-example
-     * @queryParam filters[student_id] string Filter by partial `student_id`. No-example
+     * @queryParam filters[email_address] string Filter by `email_address` (single-value case-insensitive exact match when unauthenticated; partial match when authenticated). No-example
+     * @queryParam filters[phone_number] string Filter by partial `phone_number`. Requires authentication. No-example
+     * @queryParam filters[student_id] string Filter by `student_id` (single-value case-insensitive exact match when unauthenticated; partial match when authenticated). No-example
      * @queryParam filters[major_id] string Filter by exact `major_id`. No-example
      * @queryParam filters[start_date] string Filter by `start_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
      * @queryParam filters[end_date] string Filter by `end_date` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
@@ -56,12 +60,87 @@ class UserController extends Controller
      * @queryParam filters[is_extraordinary] boolean Filter by exact `is_extraordinary`. No-example
      * @queryParam filters[created_at] string Filter by `created_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
      * @queryParam filters[updated_at] string Filter by `updated_at` using dynamic operators (e.g. `>`, `>=`, `<`, `<=`, `<>`). No-example
-     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. Default: `-id`. No-example
+     * @queryParam sorts string Comma-separated list of fields to sort by. Prefix with `-` for descending order. Allowed values: `id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. Default: `-id`. (`email_address`, `phone_number`, and `student_id` require authentication). No-example
      * @queryParam per_page integer Number of items to return per page. Defaults to 10. Example: 10
      * @queryParam cursor string Cursor token for pagination. No-example
      */
     public function index(Request $request)
     {
+        $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
+
+        if ($user) {
+            $includes = [
+                'major',
+                'major.degree',
+                'major.faculty',
+                'personas',
+                'groups',
+                'permissions',
+            ];
+            $filters = [
+                AllowedFilter::exact('sso_id'),
+                'name',
+                'username',
+                'email_address',
+                'phone_number',
+                'student_id',
+                AllowedFilter::exact('major_id'),
+                AllowedFilter::operator('start_date', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('end_date', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('is_member'),
+                AllowedFilter::exact('is_extraordinary'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            ];
+            $sorts = [
+                'id',
+                'name',
+                'username',
+                'email_address',
+                'phone_number',
+                'student_id',
+                'major_id',
+                'start_date',
+                'end_date',
+                'is_member',
+                'is_extraordinary',
+                'created_at',
+                'updated_at',
+            ];
+        } else {
+            $includes = [
+                'major',
+                'major.degree',
+                'major.faculty',
+                'personas',
+            ];
+            $filters = [
+                'name',
+                'username',
+                $this->exactCaseInsensitiveFilter('email_address'),
+                $this->exactCaseInsensitiveFilter('student_id'),
+                AllowedFilter::exact('major_id'),
+                AllowedFilter::operator('start_date', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('end_date', FilterOperator::DYNAMIC),
+                AllowedFilter::exact('is_member'),
+                AllowedFilter::exact('is_extraordinary'),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
+            ];
+            $sorts = [
+                'id',
+                'name',
+                'username',
+                'major_id',
+                'start_date',
+                'end_date',
+                'is_member',
+                'is_extraordinary',
+                'created_at',
+                'updated_at',
+            ];
+        }
+
         $users = QueryBuilder::for(User::class)
             ->allowedFields(
                 'id',
@@ -80,44 +159,9 @@ class UserController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->allowedIncludes(
-                'major',
-                'major.degree',
-                'major.faculty',
-                'personas',
-                'groups',
-                'permissions',
-            )
-            ->allowedFilters(
-                AllowedFilter::exact('sso_id'),
-                'name',
-                'username',
-                'email_address',
-                'phone_number',
-                'student_id',
-                AllowedFilter::exact('major_id'),
-                AllowedFilter::operator('start_date', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('end_date', FilterOperator::DYNAMIC),
-                AllowedFilter::exact('is_member'),
-                AllowedFilter::exact('is_extraordinary'),
-                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC),
-                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC),
-            )
-            ->allowedSorts(
-                'id',
-                'name',
-                'username',
-                'email_address',
-                'phone_number',
-                'student_id',
-                'major_id',
-                'start_date',
-                'end_date',
-                'is_member',
-                'is_extraordinary',
-                'created_at',
-                'updated_at',
-            )
+            ->allowedIncludes(...$includes)
+            ->allowedFilters(...$filters)
+            ->allowedSorts(...$sorts)
             ->defaultSorts('-id')
             ->cursorPaginate($request->query('per_page', 10));
 
@@ -158,10 +202,30 @@ class UserController extends Controller
      * @apiResourceModel App\Models\User
      *
      * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `sso_id`, `name`, `username`, `email_address`, `phone_number`, `student_id`, `major_id`, `links`, `start_date`, `end_date`, `is_member`, `is_extraordinary`, `created_at`, `updated_at`. No-example
-     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`. No-example
+     * @queryParam includes string Comma-separated list of relationships to include. Allowed values: `major`, `major.degree`, `major.faculty`, `personas`, `groups`, `permissions`. (`groups` and `permissions` require authentication). No-example
      */
     public function show(User $user)
     {
+        $authUser = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
+
+        if ($authUser) {
+            $includes = [
+                'major',
+                'major.degree',
+                'major.faculty',
+                'personas',
+                'groups',
+                'permissions',
+            ];
+        } else {
+            $includes = [
+                'major',
+                'major.degree',
+                'major.faculty',
+                'personas',
+            ];
+        }
+
         $user = QueryBuilder::for(User::where('id', $user->id))
             ->allowedFields(
                 'id',
@@ -180,14 +244,7 @@ class UserController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->allowedIncludes(
-                'major',
-                'major.degree',
-                'major.faculty',
-                'personas',
-                'groups',
-                'permissions',
-            )
+            ->allowedIncludes(...$includes)
             ->firstOrFail();
 
         return new UserResource($user);
