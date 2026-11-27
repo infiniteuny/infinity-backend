@@ -505,6 +505,70 @@ class SyncDocsJobsTest extends TestCase
         Http::assertNotSent(fn (Request $r) => $r->url() === self::BASE_URL.'/api/collections.remove_group');
     }
 
+    public function test_update_docs_group_removes_all_stale_members_across_paginated_batches_without_offset_skip(): void
+    {
+        $docsGroupId = '33333333-3333-3333-3333-333333333333';
+        $statefulMembers = [];
+
+        for ($i = 1; $i <= 105; $i++) {
+            $statefulMembers[] = [
+                'id' => sprintf('00000000-0000-0000-0000-%012d', $i),
+                'name' => "Stale {$i}",
+                'email' => "stale{$i}@infiniteuny.id",
+            ];
+        }
+
+        Http::fake([
+            self::BASE_URL.'/api/groups.update' => Http::response([
+                'data' => ['id' => $docsGroupId, 'name' => 'Core Team 2025'],
+            ]),
+            self::BASE_URL.'/api/groups.memberships' => function (Request $request) use (&$statefulMembers) {
+                $offset = (int) ($request['offset'] ?? 0);
+                $limit = (int) ($request['limit'] ?? 100);
+
+                return Http::response([
+                    'data' => [
+                        'users' => array_slice(array_values($statefulMembers), $offset, $limit),
+                    ],
+                ]);
+            },
+            self::BASE_URL.'/api/groups.remove_user' => function (Request $request) use (&$statefulMembers, $docsGroupId) {
+                if ($request['id'] === $docsGroupId) {
+                    $statefulMembers = array_values(array_filter(
+                        $statefulMembers,
+                        fn (array $member) => $member['id'] !== $request['userId'],
+                    ));
+                }
+
+                return Http::response(['data' => ['groups' => []]]);
+            },
+            self::BASE_URL.'/api/users.info' => function (Request $request) {
+                return Http::response([
+                    'data' => [
+                        'id' => $request['id'],
+                        'name' => 'Stale',
+                        'email' => 'stale@infiniteuny.id',
+                    ],
+                ]);
+            },
+        ]);
+
+        $group = Group::create([
+            'name' => 'Core Team 2025',
+            'guard_name' => 'api',
+        ]);
+        GroupIntegration::create([
+            'group_id' => $group->id,
+            'docs_group_id' => $docsGroupId,
+            'docs_group_last_synced_at' => now()->subHour(),
+        ]);
+
+        (new UpdateDocsGroup($group, [self::CORE_TEAM_GROUP_ID], [self::EX_CORE_TEAM_GROUP_ID]))
+            ->handle(app(OutlineService::class));
+
+        $this->assertSame([], $statefulMembers);
+    }
+
     private function createMajor(): Major
     {
         $degree = Degree::firstOrCreate(['name' => 'S1']);

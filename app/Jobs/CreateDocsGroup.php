@@ -36,8 +36,7 @@ class CreateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
         /** @var string[]|null */
         public ?array $docsRemoveParentIds = null,
         public bool $suppressInviteEmail = false,
-    ) {
-    }
+    ) {}
 
     /**
      * The number of times the job may be attempted.
@@ -204,6 +203,7 @@ class CreateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
         }
 
         $sharedGroupIds = array_values(array_unique(array_merge($parentIdsToAdd, $parentIdsToRemove)));
+        $staleMemberIds = [];
         $offset = 0;
 
         do {
@@ -213,16 +213,29 @@ class CreateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             ]);
 
             foreach ($batch as $currentMember) {
-                if (! is_string($currentMember->id) || isset($desiredOutlineUserIds[$currentMember->id])) {
-                    continue;
+                if (
+                    is_string($currentMember->id)
+                    && $currentMember->id !== ''
+                    && ! isset($desiredOutlineUserIds[$currentMember->id])
+                ) {
+                    $staleMemberIds[$currentMember->id] = true;
                 }
-
-                $outlineService->removeUserFromGroup($docsGroupId, $currentMember->id);
-                $this->reconcileRemovedMemberSharedGroups($outlineService, $currentMember->id, $sharedGroupIds);
             }
 
             $offset += self::PAGE_LIMIT;
         } while ($batch->count() === self::PAGE_LIMIT);
+
+        foreach (array_keys($staleMemberIds) as $staleMemberId) {
+            try {
+                $outlineService->removeUserFromGroup($docsGroupId, $staleMemberId);
+            } catch (RequestException $exception) {
+                if ($exception->response?->status() !== 404) {
+                    throw $exception;
+                }
+            }
+
+            $this->reconcileRemovedMemberSharedGroups($outlineService, $staleMemberId, $sharedGroupIds);
+        }
     }
 
     private function shouldUserBelongToSharedGroup(?User $user, string $outlineGroupId, bool $default): bool
