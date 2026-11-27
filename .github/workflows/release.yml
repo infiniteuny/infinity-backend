@@ -160,6 +160,7 @@ jobs:
           path: |
             config/app.php
             CHANGELOG.md
+            resources/views/scribe/
             storage/app/scribe/
           retention-days: 1
 
@@ -202,7 +203,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v7.0.1
         with:
-          ref: ${{ needs.prepare.outputs.commit_hash || github.ref_name }}
+          ref: ${{ needs.prepare.outputs.commit_hash || github.sha }}
 
       - name: Download release files
         if: ${{ inputs.release_type != 'prod' }}
@@ -334,7 +335,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v7.0.1
         with:
-          ref: ${{ needs.prepare.outputs.commit_hash || github.ref_name }}
+          ref: ${{ needs.prepare.outputs.commit_hash || github.sha }}
 
       - name: Create release
         uses: softprops/action-gh-release@v3.0.3
@@ -343,7 +344,7 @@ jobs:
         with:
           tag_name: v${{ needs.prepare.outputs.version }}
           name: v${{ needs.prepare.outputs.version }}
-          target_commitish: ${{ github.ref_name }}
+          target_commitish: ${{ needs.prepare.outputs.commit_hash || github.sha }}
           prerelease: ${{ inputs.release_type != 'prod' }}
           make_latest: "${{ inputs.release_type == 'prod' }}"
           body: ${{ needs.prepare.outputs.clean_changelog }}
