@@ -49,7 +49,9 @@ class ConfigController extends Controller
      */
     public function index(Request $request)
     {
-        if (Auth::check()) {
+        $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
+
+        if ($user) {
             $filters = [
                 'key',
                 AllowedFilter::exact('type'),
@@ -95,7 +97,7 @@ class ConfigController extends Controller
             ->allowedSorts(...$sorts)
             ->defaultSorts('-id');
 
-        if (! Auth::check()) {
+        if (! $user) {
             $configs = $configs->where('is_private', false);
         }
 
@@ -131,7 +133,9 @@ class ConfigController extends Controller
      */
     public function show(Config $config)
     {
-        if ($config->is_private && ! Auth::check()) {
+        $user = Auth::guard(config('auth.defaults.semi_public_guard'))->user();
+
+        if ($config->is_private && ! $user) {
             // For security reasons, we don't want to expose private configurations to
             // unauthenticated users nor give them a hint that the configuration exists.
             throw new NotFoundHttpException;

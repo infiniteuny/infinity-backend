@@ -19,7 +19,7 @@ class AchievementResource extends Resource
     {
         $achievement = $this->resource->toArray();
 
-        if (! Auth::guard(config('auth.defaults.semi_public_guard'))->user()) {
+        if (! Auth::hasUser() && ! Auth::guard(config('auth.defaults.semi_public_guard'))->check()) {
             $classifiedFields = [
                 'team_id',
             ];
