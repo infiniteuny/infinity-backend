@@ -331,7 +331,7 @@ class SemiPublicGuardAndRedactionTest extends TestCase
 
         $this->mock(OidcService::class, function ($mock) {
             $mock->shouldReceive('verify')
-                ->twice()
+                ->once()
                 ->with('invalid-jwt')
                 ->andThrow(new RuntimeException('Invalid JWT signature'));
             $mock->shouldNotReceive('introspect');

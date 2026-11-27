@@ -3,11 +3,13 @@
 namespace App\Guards;
 
 use App\Models\User;
+use Faker\Factory as FakerFactory;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DummyGuard implements Guard
 {
@@ -54,16 +56,43 @@ class DummyGuard implements Guard
      */
     public function validate(array $credentials = []): bool
     {
-        /** @var Authenticatable $user */
-        $user = User::where('id', $this->dummyUserId)
-            ->first();
+        $user = null;
+
+        if (is_string($this->dummyUserId) && Str::isUuid($this->dummyUserId)) {
+            $user = User::where('id', $this->dummyUserId)->first();
+        }
 
         if (! $user) {
-            $user = User::factory()->make();
+            if (class_exists(FakerFactory::class)) {
+                $user = User::factory()->make();
+            } else {
+                $user = new User([
+                    'name' => 'Dummy User',
+                    'username' => 'dummyuser',
+                    'email_address' => 'dummy@infiniteuny.id',
+                    'phone_number' => '+6280000000000',
+                    'student_id' => '00000000000',
+                    'major_id' => (string) Str::uuid7(),
+                    'links' => (object) [],
+                    'is_member' => true,
+                    'is_extraordinary' => false,
+                ]);
+                $user->id = (string) Str::uuid7();
+            }
         }
 
         $this->setUser($user);
 
         return true;
+    }
+
+    /**
+     * Set the current request instance.
+     */
+    public function setRequest(Request $request): static
+    {
+        $this->request = $request;
+
+        return $this;
     }
 }

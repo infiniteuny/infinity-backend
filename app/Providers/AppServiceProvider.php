@@ -64,25 +64,37 @@ class AppServiceProvider extends ServiceProvider
             );
         });
         Auth::extend('oidc_token', function ($app, $name, array $config) {
-            return new OidcTokenGuard(
+            $guard = new OidcTokenGuard(
                 Auth::createUserProvider($config['provider']),
                 $app->make(OidcService::class),
                 $app->make('request'),
             );
+
+            $app->refresh('request', $guard, 'setRequest');
+
+            return $guard;
         });
         Auth::extend('oidc_headers', function ($app, $name, array $config) {
-            return new OidcHeadersGuard(
+            $guard = new OidcHeadersGuard(
                 Auth::createUserProvider($config['provider']),
                 $app->make(OidcService::class),
                 $app->make('request'),
             );
+
+            $app->refresh('request', $guard, 'setRequest');
+
+            return $guard;
         });
         Auth::extend('dummy', function ($app, $name, array $config) {
-            return new DummyGuard(
+            $guard = new DummyGuard(
                 Auth::createUserProvider($config['provider']),
                 $app->make('request'),
                 config('auth.dummy_user_id')
             );
+
+            $app->refresh('request', $guard, 'setRequest');
+
+            return $guard;
         });
         Http::macro('authentik', function () {
             return Http::withToken(config('services.authentik.token'))

@@ -21,6 +21,8 @@ class OidcHeadersGuard implements Guard
 
     protected OidcService $oidcService;
 
+    protected ?Request $lastAttemptedRequest = null;
+
     /**
      * Create a new authentication guard.
      *
@@ -46,6 +48,12 @@ class OidcHeadersGuard implements Guard
             return $this->user;
         }
 
+        if ($this->lastAttemptedRequest === $this->request) {
+            return null;
+        }
+
+        $this->lastAttemptedRequest = $this->request;
+
         if ($this->validate()) {
             return $this->user;
         }
@@ -64,21 +72,29 @@ class OidcHeadersGuard implements Guard
             }
         }
 
-        // Check if the token subject exists in the users database
-        $user = $this->provider->retrieveByCredentials(['sso_id' => $credentials['headers']['user_id']]);
+        $ssoId = (string) $credentials['headers']['user_id'];
+        $shouldBindSsoId = false;
 
-        // If the user is not found, try to get the user info from the OIDC server
+        // Check if the token subject exists in the users database
+        $user = $this->provider->retrieveByCredentials(['sso_id' => $ssoId]);
+
+        // If the user is not found, try to match the user by case-insensitive email
         if (is_null($user)) {
             try {
-                /** @var User $user */
-                $user = $this->provider->retrieveByCredentials(['email_address' => $credentials['headers']['user_email']]);
+                $email = mb_strtolower(trim((string) $credentials['headers']['user_email']), 'UTF-8');
 
-                if (! is_null($user)) {
-                    $user->sso_id = $credentials['headers']['user_id'];
-                    $user->save();
-                } else {
+                if ($email === '') {
                     return false;
                 }
+
+                /** @var User|null $user */
+                $user = User::whereRaw('LOWER(TRIM(email_address)) = ?', [$email])->first();
+
+                if (is_null($user)) {
+                    return false;
+                }
+
+                $shouldBindSsoId = true;
             } catch (Throwable $e) {
                 return false;
             }
@@ -92,7 +108,7 @@ class OidcHeadersGuard implements Guard
             try {
                 $tokenInfo = $this->oidcService->introspect($credentials['headers']['token']);
 
-                if ($tokenInfo['active']) {
+                if (! empty($tokenInfo['active']) && isset($tokenInfo['iat'], $tokenInfo['exp'])) {
                     $token = Token::withTrashed()->createOrFirst(
                         ['sso_id' => $credentials['headers']['token_id']],
                         [
@@ -114,6 +130,13 @@ class OidcHeadersGuard implements Guard
             return false;
         }
 
+        if ($shouldBindSsoId) {
+            User::withoutTimestamps(function () use ($user, $ssoId) {
+                $user->sso_id = $ssoId;
+                $user->saveQuietly();
+            });
+        }
+
         if (! $token->wasRecentlyCreated) {
             $token->last_used_at = Carbon::now();
             $token->save();
@@ -122,6 +145,16 @@ class OidcHeadersGuard implements Guard
         $this->setUser($user);
 
         return true;
+    }
+
+    /**
+     * Set the current request instance.
+     */
+    public function setRequest(Request $request): static
+    {
+        $this->request = $request;
+
+        return $this;
     }
 
     /**
