@@ -43,6 +43,20 @@ class UserGroup extends Pivot
      */
     public $timestamps = false;
 
+    protected static function booted(): void
+    {
+        static::updated(function (UserGroup $userGroup): void {
+            if ($userGroup->wasChanged('group_id')) {
+                $userGroup->unsetRelation('group');
+
+                $previousGroupId = $userGroup->getOriginal('group_id');
+                if (is_string($previousGroupId) && $previousGroupId !== '' && ! static::isIgnoringTouch(Group::class)) {
+                    Group::whereKey($previousGroupId)->touch();
+                }
+            }
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
