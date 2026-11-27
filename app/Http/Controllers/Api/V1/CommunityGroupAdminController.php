@@ -7,8 +7,13 @@ use App\Http\Requests\CommunityGroupAdmin\StoreCommunityGroupAdminRequest;
 use App\Http\Requests\CommunityGroupAdmin\UpdateCommunityGroupAdminRequest;
 use App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminCollection;
 use App\Http\Resources\CommunityGroupAdmin\CommunityGroupAdminResource;
+use App\Jobs\DeleteBlob;
+use App\Jobs\DeleteDocsGroup;
+use App\Jobs\DeleteSsoGroup;
 use App\Models\CommunityGroupAdmin;
+use App\Models\CommunityGroupAdminMember;
 use App\Models\Group;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -165,12 +170,87 @@ class CommunityGroupAdminController extends Controller
      */
     public function destroy(CommunityGroupAdmin $communityGroupAdmin)
     {
-        DB::transaction(function () use ($communityGroupAdmin) {
-            $group = $communityGroupAdmin->group;
-            $communityGroupAdmin->delete();
-            $group->delete();
+        $ssoId = null;
+        $groupId = null;
+        $docsGroupId = null;
+        $memberEmails = [];
+        $blobManifests = [];
+        $sharedGroupIds = array_values(array_filter([
+            config('services.outline.cg_admin_group_id'),
+            config('services.outline.xcg_admin_group_id'),
+        ]));
+
+        DB::transaction(function () use (
+            $communityGroupAdmin,
+            $sharedGroupIds,
+            &$ssoId,
+            &$groupId,
+            &$docsGroupId,
+            &$memberEmails,
+            &$blobManifests,
+        ) {
+            $group = $communityGroupAdmin->group()->with('integration:id,group_id,docs_group_id')->first();
+            $ssoId = $group?->sso_id;
+            $groupId = $group?->id;
+            $docsGroupId = $group?->integration?->docs_group_id;
+
+            if (is_string($docsGroupId) && $docsGroupId !== '' && $sharedGroupIds !== []) {
+                $userGroupsTable = config('permission.table_names.model_has_roles', 'user_groups');
+                $pivotRoleKey = config('permission.column_names.role_pivot_key') ?: 'group_id';
+                $pivotUserKey = config('permission.column_names.model_morph_key', 'user_id');
+
+                $memberEmails = User::query()
+                    ->where(function ($query) use ($communityGroupAdmin, $groupId, $userGroupsTable, $pivotRoleKey, $pivotUserKey) {
+                        $query->whereIn(
+                            'id',
+                            CommunityGroupAdminMember::where('community_group_admin_id', $communityGroupAdmin->id)->select('user_id'),
+                        );
+
+                        if ($groupId !== null) {
+                            $query->orWhereIn(
+                                'id',
+                                DB::table($userGroupsTable)->where($pivotRoleKey, $groupId)->select($pivotUserKey),
+                            );
+                        }
+                    })
+                    ->pluck('email_address')
+                    ->map(fn ($email) => is_string($email) ? strtolower(trim($email)) : '')
+                    ->filter(fn (string $email) => $email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL) !== false)
+                    ->unique()
+                    ->values()
+                    ->all();
+            }
+
+            $memberBlobs = DB::table('community_group_admin_members')
+                ->where('community_group_admin_id', $communityGroupAdmin->id)
+                ->get(['photo', 'animation']);
+
+            foreach ($memberBlobs as $member) {
+                foreach ([$member->photo, $member->animation] as $manifest) {
+                    if (is_string($manifest) && $manifest !== '') {
+                        $blobManifests[$manifest] = true;
+                    }
+                }
+            }
+
+            Group::withoutTouching(function () use ($communityGroupAdmin, $group) {
+                $communityGroupAdmin->delete();
+                $group?->delete();
+            });
             unset($communityGroupAdmin->group);
         });
+
+        if (is_string($ssoId) && $ssoId !== '') {
+            DeleteSsoGroup::dispatch($ssoId);
+        }
+
+        if (is_string($docsGroupId) && $docsGroupId !== '') {
+            DeleteDocsGroup::dispatch($docsGroupId, $groupId, $sharedGroupIds, $memberEmails);
+        }
+
+        foreach (array_keys($blobManifests) as $manifest) {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new CommunityGroupAdminResource($communityGroupAdmin);
     }

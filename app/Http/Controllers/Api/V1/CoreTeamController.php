@@ -7,8 +7,13 @@ use App\Http\Requests\CoreTeam\StoreCoreTeamRequest;
 use App\Http\Requests\CoreTeam\UpdateCoreTeamRequest;
 use App\Http\Resources\CoreTeam\CoreTeamCollection;
 use App\Http\Resources\CoreTeam\CoreTeamResource;
+use App\Jobs\DeleteBlob;
+use App\Jobs\DeleteDocsGroup;
+use App\Jobs\DeleteSsoGroup;
 use App\Models\CoreTeam;
+use App\Models\CoreTeamMember;
 use App\Models\Group;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -165,12 +170,84 @@ class CoreTeamController extends Controller
      */
     public function destroy(CoreTeam $coreTeam)
     {
-        DB::transaction(function () use ($coreTeam) {
-            $group = $coreTeam->group;
-            $coreTeam->delete();
-            $group->delete();
+        $ssoId = null;
+        $groupId = null;
+        $docsGroupId = null;
+        $memberEmails = [];
+        $blobManifests = [];
+        $sharedGroupIds = array_values(array_filter([
+            config('services.outline.core_team_group_id'),
+            config('services.outline.xcore_team_group_id'),
+        ]));
+
+        DB::transaction(function () use (
+            $coreTeam,
+            $sharedGroupIds,
+            &$ssoId,
+            &$groupId,
+            &$docsGroupId,
+            &$memberEmails,
+            &$blobManifests,
+        ) {
+            $group = $coreTeam->group()->with('integration:id,group_id,docs_group_id')->first();
+            $ssoId = $group?->sso_id;
+            $groupId = $group?->id;
+            $docsGroupId = $group?->integration?->docs_group_id;
+
+            if (is_string($docsGroupId) && $docsGroupId !== '' && $sharedGroupIds !== []) {
+                $userGroupsTable = config('permission.table_names.model_has_roles', 'user_groups');
+                $pivotRoleKey = config('permission.column_names.role_pivot_key') ?: 'group_id';
+                $pivotUserKey = config('permission.column_names.model_morph_key', 'user_id');
+
+                $memberEmails = User::query()
+                    ->where(function ($query) use ($coreTeam, $groupId, $userGroupsTable, $pivotRoleKey, $pivotUserKey) {
+                        $query->whereIn('id', CoreTeamMember::where('core_team_id', $coreTeam->id)->select('user_id'));
+
+                        if ($groupId !== null) {
+                            $query->orWhereIn(
+                                'id',
+                                DB::table($userGroupsTable)->where($pivotRoleKey, $groupId)->select($pivotUserKey),
+                            );
+                        }
+                    })
+                    ->pluck('email_address')
+                    ->map(fn ($email) => is_string($email) ? strtolower(trim($email)) : '')
+                    ->filter(fn (string $email) => $email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL) !== false)
+                    ->unique()
+                    ->values()
+                    ->all();
+            }
+
+            $memberBlobs = DB::table('core_team_members')
+                ->where('core_team_id', $coreTeam->id)
+                ->get(['photo', 'animation']);
+
+            foreach ($memberBlobs as $member) {
+                foreach ([$member->photo, $member->animation] as $manifest) {
+                    if (is_string($manifest) && $manifest !== '') {
+                        $blobManifests[$manifest] = true;
+                    }
+                }
+            }
+
+            Group::withoutTouching(function () use ($coreTeam, $group) {
+                $coreTeam->delete();
+                $group?->delete();
+            });
             unset($coreTeam->group);
         });
+
+        if (is_string($ssoId) && $ssoId !== '') {
+            DeleteSsoGroup::dispatch($ssoId);
+        }
+
+        if (is_string($docsGroupId) && $docsGroupId !== '') {
+            DeleteDocsGroup::dispatch($docsGroupId, $groupId, $sharedGroupIds, $memberEmails);
+        }
+
+        foreach (array_keys($blobManifests) as $manifest) {
+            DeleteBlob::dispatch($manifest);
+        }
 
         return new CoreTeamResource($coreTeam);
     }

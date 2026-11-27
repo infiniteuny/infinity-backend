@@ -8,6 +8,7 @@ use App\Http\Requests\Group\UpdateGroupRequest;
 use App\Http\Resources\Group\GroupCollection;
 use App\Http\Resources\Group\GroupResource;
 use App\Jobs\CreateSsoGroup;
+use App\Jobs\DeleteDocsGroup;
 use App\Jobs\DeleteSsoGroup;
 use App\Jobs\UpdateSsoGroup;
 use App\Models\Group;
@@ -141,10 +142,17 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        $group->delete();
+        $ssoId = $group->sso_id;
+        $docsGroupId = $group->integration?->docs_group_id;
 
-        if ($group->sso_id) {
-            DeleteSsoGroup::dispatch($group->sso_id);
+        Group::withoutTouching(fn () => $group->delete());
+
+        if (is_string($ssoId) && $ssoId !== '') {
+            DeleteSsoGroup::dispatch($ssoId);
+        }
+
+        if (is_string($docsGroupId) && $docsGroupId !== '') {
+            DeleteDocsGroup::dispatch($docsGroupId, $group->id);
         }
 
         return new GroupResource($group);
