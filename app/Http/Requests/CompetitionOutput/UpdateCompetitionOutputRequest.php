@@ -16,7 +16,7 @@ class UpdateCompetitionOutputRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string', 'max:255'],
-            'weight' => ['sometimes', 'integer', 'between:0,2147483647'],
+            'weight' => ['sometimes', 'integer', 'min:0', 'max:1000'],
         ];
     }
 

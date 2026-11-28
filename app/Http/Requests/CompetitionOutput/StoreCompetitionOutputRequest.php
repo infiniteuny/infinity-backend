@@ -16,7 +16,7 @@ class StoreCompetitionOutputRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'weight' => ['required', 'integer', 'between:0,2147483647'],
+            'weight' => ['required', 'integer', 'min:0', 'max:1000'],
         ];
     }
 

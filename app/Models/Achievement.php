@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\Blob;
 use App\Casts\DateOnly;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,15 @@ class Achievement extends Model
     ];
 
     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'computed_point',
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array
@@ -56,15 +66,60 @@ class Achievement extends Model
         'point',
     ];
 
+    public static function pointProductSql(
+        string $cot = 'cot',
+        string $ctt = 'ctt',
+        string $cs = 'cs',
+        string $ctr = 'ctr',
+        string $co = 'co',
+        string $cr = 'cr',
+    ): string {
+        $type = DB::getFacadeRoot() !== null && DB::connection()->getDriverName() === 'pgsql'
+            ? 'NUMERIC(38, 0)'
+            : 'BIGINT';
+
+        return "CAST(COALESCE({$cot}.weight, 0) AS {$type})"
+            ." * CAST(COALESCE({$ctt}.weight, 0) AS {$type})"
+            ." * CAST(COALESCE({$cs}.weight, 0) AS {$type})"
+            ." * CAST(COALESCE({$ctr}.weight, 0) AS {$type})"
+            ." * CAST(COALESCE({$co}.weight, 0) AS {$type})"
+            ." * CAST(COALESCE({$cr}.weight, 0) AS {$type})";
+    }
+
+    public function scopeWithComputedPoint(Builder $query): Builder
+    {
+        if ($query->getQuery()->columns === null) {
+            $query->select($this->qualifyColumn('*'));
+        }
+
+        $subquery = DB::table('achievements as a_pt')
+            ->leftJoin('competition_instances as ci_pt', 'ci_pt.id', '=', 'a_pt.competition_instance_id')
+            ->leftJoin('competition_organizer_types as cot_pt', 'cot_pt.id', '=', 'ci_pt.organizer_type_id')
+            ->leftJoin('teams as t_pt', 't_pt.id', '=', 'a_pt.team_id')
+            ->leftJoin('competition_team_types as ctt_pt', 'ctt_pt.id', '=', 't_pt.team_type_id')
+            ->leftJoin('competition_scales as cs_pt', 'cs_pt.id', '=', 'a_pt.competition_scale_id')
+            ->leftJoin('competition_time_ranges as ctr_pt', 'ctr_pt.id', '=', 'a_pt.competition_time_range_id')
+            ->leftJoin('competition_outputs as co_pt', 'co_pt.id', '=', 'a_pt.competition_output_id')
+            ->leftJoin('competition_ranks as cr_pt', 'cr_pt.id', '=', 'a_pt.competition_rank_id')
+            ->whereColumn('a_pt.id', $this->qualifyColumn('id'))
+            ->selectRaw(self::pointProductSql('cot_pt', 'ctt_pt', 'cs_pt', 'ctr_pt', 'co_pt', 'cr_pt'));
+
+        return $query->selectSub($subquery, 'computed_point');
+    }
+
     protected function point(): Attribute
     {
         return new Attribute(
-            get: function () {
+            get: function (): int {
+                if (array_key_exists('computed_point', $this->attributes)) {
+                    return self::normalizePointValue($this->attributes['computed_point']);
+                }
+
                 if (! $this->getKey()) {
                     return 0;
                 }
 
-                return (int) (DB::table('achievements as a')
+                $value = DB::table('achievements as a')
                     ->leftJoin('competition_instances as ci', 'ci.id', '=', 'a.competition_instance_id')
                     ->leftJoin('competition_organizer_types as cot', 'cot.id', '=', 'ci.organizer_type_id')
                     ->leftJoin('teams as t', 't.id', '=', 'a.team_id')
@@ -74,10 +129,55 @@ class Achievement extends Model
                     ->leftJoin('competition_outputs as co', 'co.id', '=', 'a.competition_output_id')
                     ->leftJoin('competition_ranks as cr', 'cr.id', '=', 'a.competition_rank_id')
                     ->where('a.id', $this->getKey())
-                    ->selectRaw('COALESCE(cot.weight, 0) * COALESCE(ctt.weight, 0) * COALESCE(cs.weight, 0) * COALESCE(ctr.weight, 0) * COALESCE(co.weight, 0) * COALESCE(cr.weight, 0) as point')
-                    ->value('point') ?? 0);
+                    ->selectRaw(self::pointProductSql().' as point')
+                    ->value('point');
+
+                return self::normalizePointValue($value);
             },
         );
+    }
+
+    private static function normalizePointValue(mixed $value): int
+    {
+        if (is_int($value)) {
+            return $value;
+        }
+
+        if ($value === null) {
+            return 0;
+        }
+
+        if (is_string($value)) {
+            $trimmed = trim($value);
+            if ($trimmed === '' || ! is_numeric($trimmed)) {
+                return 0;
+            }
+
+            $intValue = filter_var($trimmed, FILTER_VALIDATE_INT);
+            if ($intValue !== false) {
+                return $intValue;
+            }
+
+            $value = (float) $trimmed;
+        }
+
+        if (is_float($value)) {
+            if (is_nan($value)) {
+                return 0;
+            }
+
+            if ($value >= (float) PHP_INT_MAX) {
+                return PHP_INT_MAX;
+            }
+
+            if ($value <= (float) PHP_INT_MIN) {
+                return PHP_INT_MIN;
+            }
+
+            return (int) $value;
+        }
+
+        return 0;
     }
 
     /**

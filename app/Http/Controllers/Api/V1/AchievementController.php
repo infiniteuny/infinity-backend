@@ -9,9 +9,11 @@ use App\Http\Requests\Achievement\UpdateAchievementRequest;
 use App\Http\Resources\Achievement\AchievementCollection;
 use App\Http\Resources\Achievement\AchievementResource;
 use App\Jobs\DeleteBlob;
+use App\Jobs\SyncAchievementLeaderboards;
 use App\Models\Achievement;
 use App\Traits\HasPagination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -169,6 +171,7 @@ class AchievementController extends Controller
             ->allowedSorts(...$sorts)
             ->defaultSorts('-id');
 
+        $achievements->getEloquentBuilder()->withComputedPoint();
 
         $achievements = $this->cursorPaginateWithTieBreaker($achievements, $request);
 
@@ -196,6 +199,12 @@ class AchievementController extends Controller
             }
 
             throw $e;
+        }
+
+        if ($achievement->status === 'ACCEPTED') {
+            $this->dispatchLeaderboardSyncForYears([
+                $this->extractAchievementYear($achievement->competition_start_date),
+            ]);
         }
 
         return new AchievementResource($achievement);
@@ -237,7 +246,7 @@ class AchievementController extends Controller
             ];
         }
 
-        $achievement = QueryBuilder::for(Achievement::where('id', $achievement->id))
+        $query = QueryBuilder::for(Achievement::where('id', $achievement->id))
             ->allowedFields(
                 'id',
                 'team_id',
@@ -255,8 +264,11 @@ class AchievementController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->allowedIncludes(...$includes)
-            ->firstOrFail();
+            ->allowedIncludes(...$includes);
+
+        $query->getEloquentBuilder()->withComputedPoint();
+
+        $achievement = $query->firstOrFail();
 
         return new AchievementResource($achievement);
     }
@@ -270,6 +282,18 @@ class AchievementController extends Controller
      */
     public function update(UpdateAchievementRequest $request, Achievement $achievement)
     {
+        $wasAccepted = $achievement->status === 'ACCEPTED';
+        $oldYear = $this->extractAchievementYear($achievement->competition_start_date);
+        $oldLeaderboardAttributes = $achievement->only([
+            'team_id',
+            'competition_instance_id',
+            'competition_scale_id',
+            'competition_time_range_id',
+            'competition_output_id',
+            'competition_rank_id',
+            'competition_start_date',
+        ]);
+
         $hasImage = $request->has('image');
         $oldManifest = null;
         $manifest = null;
@@ -297,6 +321,26 @@ class AchievementController extends Controller
             DeleteBlob::dispatch($oldManifest);
         }
 
+        $isAccepted = $achievement->status === 'ACCEPTED';
+        $newYear = $this->extractAchievementYear($achievement->competition_start_date);
+        $newLeaderboardAttributes = $achievement->only([
+            'team_id',
+            'competition_instance_id',
+            'competition_scale_id',
+            'competition_time_range_id',
+            'competition_output_id',
+            'competition_rank_id',
+            'competition_start_date',
+        ]);
+
+        if (! $wasAccepted && $isAccepted) {
+            $this->dispatchLeaderboardSyncForYears([$newYear]);
+        } elseif ($wasAccepted && ! $isAccepted) {
+            $this->dispatchLeaderboardSyncForYears([$oldYear]);
+        } elseif ($wasAccepted && $isAccepted && ($oldYear !== $newYear || $oldLeaderboardAttributes !== $newLeaderboardAttributes)) {
+            $this->dispatchLeaderboardSyncForYears([$oldYear, $newYear]);
+        }
+
         return new AchievementResource($achievement);
     }
 
@@ -309,6 +353,8 @@ class AchievementController extends Controller
      */
     public function destroy(Achievement $achievement)
     {
+        $wasAccepted = $achievement->status === 'ACCEPTED';
+        $oldYear = $this->extractAchievementYear($achievement->competition_start_date);
         $manifest = $achievement->getRawOriginal('image');
 
         $achievement->delete();
@@ -317,6 +363,34 @@ class AchievementController extends Controller
             DeleteBlob::dispatch($manifest);
         }
 
+        if ($wasAccepted) {
+            $this->dispatchLeaderboardSyncForYears([$oldYear]);
+        }
+
         return new AchievementResource($achievement);
+    }
+
+    private function extractAchievementYear(mixed $date): ?int
+    {
+        if ($date === null || $date === '') {
+            return null;
+        }
+
+        return Carbon::parse($date)->year;
+    }
+
+    /**
+     * @param  array<int, int|null>  $years
+     */
+    private function dispatchLeaderboardSyncForYears(array $years): void
+    {
+        $uniqueYears = array_values(array_unique(array_filter(
+            $years,
+            static fn (?int $year): bool => is_int($year) && $year > 0,
+        )));
+
+        foreach ($uniqueYears as $year) {
+            SyncAchievementLeaderboards::dispatch($year)->afterCommit();
+        }
     }
 }

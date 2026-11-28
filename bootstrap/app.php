@@ -39,6 +39,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -83,7 +84,43 @@ return Application::configure(basePath: dirname(__DIR__))
         );
     })
     ->withSchedule(function (Schedule $schedule) {
-        $schedule->job(new SyncAchievementLeaderboards(Date::now()->year))->daily();
+        $schedule->call(function () {
+            $driver = DB::connection()->getDriverName();
+            $yearExpression = match ($driver) {
+                'pgsql' => 'EXTRACT(YEAR FROM competition_start_date)::int',
+                'sqlite' => "CAST(strftime('%Y', competition_start_date) AS INTEGER)",
+                default => 'YEAR(competition_start_date)',
+            };
+
+            $achievementYears = DB::table('achievements')
+                ->where('status', 'ACCEPTED')
+                ->whereNotNull('competition_start_date')
+                ->selectRaw("DISTINCT {$yearExpression} as year")
+                ->pluck('year')
+                ->all();
+
+            $leaderboardYears = DB::table('achievement_leaderboards')
+                ->distinct()
+                ->pluck('year')
+                ->all();
+
+            $now = Date::now();
+            $years = collect([
+                ...$achievementYears,
+                ...$leaderboardYears,
+                $now->year,
+                $now->copy()->subYear()->year,
+            ])
+                ->filter(static fn (mixed $year): bool => is_numeric($year) && (int) $year > 0)
+                ->map(static fn (mixed $year): int => (int) $year)
+                ->unique()
+                ->sort()
+                ->values();
+
+            foreach ($years as $year) {
+                SyncAchievementLeaderboards::dispatch($year);
+            }
+        })->name('sync-achievement-leaderboards')->daily();
 
         $schedule->job(new SyncIndividualTeams)->hourly();
 

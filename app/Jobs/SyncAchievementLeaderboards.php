@@ -6,11 +6,14 @@ use App\Models\AchievementLeaderboard;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Support\Facades\DB;
 
 class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
+
+    public int $uniqueFor = 900;
 
     /**
      * Create a new job instance.
@@ -21,10 +24,13 @@ class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
 
     /**
      * The number of times the job may be attempted.
-     *
-     * @var int
      */
-    public $tries = 5;
+    public int $tries = 5;
+
+    /**
+     * The number of seconds to wait before retrying an exception.
+     */
+    public int $backoff = 10;
 
     /**
      * Get the unique ID for the job.
@@ -35,14 +41,33 @@ class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
     }
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array<int, object>
+     */
+    public function middleware(): array
+    {
+        return [
+            (new WithoutOverlapping("achievement-leaderboard:{$this->year}"))
+                ->shared()
+                ->releaseAfter(10)
+                ->expireAfter(240),
+        ];
+    }
+
+    /**
      * Execute the job.
      */
     public function handle(): void
     {
+        $castType = DB::connection()->getDriverName() === 'pgsql' ? 'NUMERIC(38, 0)' : 'BIGINT';
+
         $achievementLeaderboards = DB::table('achievements AS a')
             ->select([
                 'users.id AS user_id',
-                DB::raw('SUM(COALESCE(cot.weight,0) * COALESCE(ctt.weight,0) * COALESCE(cs.weight,0) * COALESCE(ctr.weight,0) * COALESCE(co.weight,0) * COALESCE(cr.weight,0)) AS total_points'),
+                DB::raw(
+                    "SUM(CAST(COALESCE(cot.weight, 0) AS {$castType}) * CAST(COALESCE(ctt.weight, 0) AS {$castType}) * CAST(COALESCE(cs.weight, 0) AS {$castType}) * CAST(COALESCE(ctr.weight, 0) AS {$castType}) * CAST(COALESCE(co.weight, 0) AS {$castType}) * CAST(COALESCE(cr.weight, 0) AS {$castType})) AS total_points"
+                ),
             ])
             ->join('competition_instances AS ci', 'a.competition_instance_id', '=', 'ci.id')
             ->join('teams AS t', 'a.team_id', '=', 't.id')
@@ -71,10 +96,62 @@ class SyncAchievementLeaderboards implements ShouldBeUnique, ShouldQueue
                         'year' => $this->year,
                     ],
                     [
-                        'total_points' => (int) $row->total_points,
+                        'total_points' => $this->clampTotalPoints($row->total_points),
                     ]
                 );
             }
         });
+    }
+
+    private function clampTotalPoints(mixed $value): int
+    {
+        if (is_int($value)) {
+            return $value;
+        }
+
+        if (is_string($value)) {
+            $trimmed = trim($value);
+            if ($trimmed === '') {
+                return 0;
+            }
+
+            $intPart = explode('.', $trimmed)[0];
+            if (preg_match('/^\+?\d+$/', $intPart) === 1) {
+                $normalized = ltrim($intPart, '+0');
+                if ($normalized === '') {
+                    return 0;
+                }
+
+                $maxString = (string) PHP_INT_MAX;
+                if (
+                    strlen($normalized) > strlen($maxString)
+                    || (strlen($normalized) === strlen($maxString) && strcmp($normalized, $maxString) >= 0)
+                ) {
+                    return PHP_INT_MAX;
+                }
+
+                return (int) $normalized;
+            }
+
+            $value = (float) $trimmed;
+        }
+
+        if (is_float($value)) {
+            if (is_nan($value)) {
+                return 0;
+            }
+
+            if ($value >= (float) PHP_INT_MAX) {
+                return PHP_INT_MAX;
+            }
+
+            if ($value <= (float) PHP_INT_MIN) {
+                return PHP_INT_MIN;
+            }
+
+            return (int) $value;
+        }
+
+        return 0;
     }
 }
