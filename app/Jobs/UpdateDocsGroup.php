@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Data\Outline\Group as OutlineGroup;
 use App\Data\Outline\Invite;
-use App\Models\CommunityGroupAdmin;
 use App\Models\CoreTeam;
 use App\Models\Group;
 use App\Models\GroupIntegration;
@@ -163,7 +162,7 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
     private function syncGroupUsers(OutlineService $outlineService, string $docsGroupId): void
     {
-        $this->group->loadMissing(['users.coreTeams', 'users.communityGroupAdmins']);
+        $this->group->loadMissing(['users.coreTeams']);
 
         $usersWithEmail = $this->group->users
             ->filter(
@@ -298,8 +297,6 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
         $coreTeamGroupId = config('services.outline.core_team_group_id');
         $xcoreTeamGroupId = config('services.outline.xcore_team_group_id');
-        $cgAdminGroupId = config('services.outline.cg_admin_group_id');
-        $xcgAdminGroupId = config('services.outline.xcg_admin_group_id');
 
         if ($outlineGroupId === $coreTeamGroupId) {
             return $user->coreTeams->contains(fn (CoreTeam $team) => (bool) $team->is_active);
@@ -308,17 +305,6 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
         if ($outlineGroupId === $xcoreTeamGroupId) {
             $hasActive = $user->coreTeams->contains(fn (CoreTeam $team) => (bool) $team->is_active);
             $hasInactive = $user->coreTeams->contains(fn (CoreTeam $team) => ! $team->is_active);
-
-            return ! $hasActive && $hasInactive;
-        }
-
-        if (! empty($cgAdminGroupId) && $outlineGroupId === $cgAdminGroupId) {
-            return $user->communityGroupAdmins->contains(fn (CommunityGroupAdmin $admin) => (bool) $admin->is_active);
-        }
-
-        if (! empty($xcgAdminGroupId) && $outlineGroupId === $xcgAdminGroupId) {
-            $hasActive = $user->communityGroupAdmins->contains(fn (CommunityGroupAdmin $admin) => (bool) $admin->is_active);
-            $hasInactive = $user->communityGroupAdmins->contains(fn (CommunityGroupAdmin $admin) => ! $admin->is_active);
 
             return ! $hasActive && $hasInactive;
         }
@@ -352,7 +338,7 @@ class UpdateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             return;
         }
 
-        $localUser = User::with(['coreTeams', 'communityGroupAdmins'])
+        $localUser = User::with(['coreTeams'])
             ->whereRaw('LOWER(email_address) = ?', [strtolower($outlineUser->email)])
             ->first();
 

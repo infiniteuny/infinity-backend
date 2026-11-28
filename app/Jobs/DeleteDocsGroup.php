@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Data\Outline\User as OutlineUser;
-use App\Models\CommunityGroupAdmin;
 use App\Models\CoreTeam;
 use App\Models\User;
 use App\Services\OutlineService;
@@ -262,10 +261,7 @@ class DeleteDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
         foreach (array_chunk($normalizedEmails, self::PAGE_LIMIT) as $emailChunk) {
             $placeholders = implode(', ', array_fill(0, count($emailChunk), '?'));
-            $users = User::with([
-                'coreTeams:id,is_active',
-                'communityGroupAdmins:id,is_active',
-            ])
+            $users = User::with(['coreTeams:id,is_active'])
                 ->select(['users.id', 'users.email_address'])
                 ->whereRaw("LOWER(TRIM(email_address)) IN ({$placeholders})", $emailChunk)
                 ->get();
@@ -288,8 +284,6 @@ class DeleteDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
         $coreTeamGroupId = config('services.outline.core_team_group_id');
         $xcoreTeamGroupId = config('services.outline.xcore_team_group_id');
-        $cgAdminGroupId = config('services.outline.cg_admin_group_id');
-        $xcgAdminGroupId = config('services.outline.xcg_admin_group_id');
 
         if (! empty($coreTeamGroupId) && $outlineGroupId === $coreTeamGroupId) {
             return $user->coreTeams->contains(fn (CoreTeam $team) => (bool) $team->is_active);
@@ -298,17 +292,6 @@ class DeleteDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
         if (! empty($xcoreTeamGroupId) && $outlineGroupId === $xcoreTeamGroupId) {
             $hasActive = $user->coreTeams->contains(fn (CoreTeam $team) => (bool) $team->is_active);
             $hasInactive = $user->coreTeams->contains(fn (CoreTeam $team) => ! $team->is_active);
-
-            return ! $hasActive && $hasInactive;
-        }
-
-        if (! empty($cgAdminGroupId) && $outlineGroupId === $cgAdminGroupId) {
-            return $user->communityGroupAdmins->contains(fn (CommunityGroupAdmin $admin) => (bool) $admin->is_active);
-        }
-
-        if (! empty($xcgAdminGroupId) && $outlineGroupId === $xcgAdminGroupId) {
-            $hasActive = $user->communityGroupAdmins->contains(fn (CommunityGroupAdmin $admin) => (bool) $admin->is_active);
-            $hasInactive = $user->communityGroupAdmins->contains(fn (CommunityGroupAdmin $admin) => ! $admin->is_active);
 
             return ! $hasActive && $hasInactive;
         }

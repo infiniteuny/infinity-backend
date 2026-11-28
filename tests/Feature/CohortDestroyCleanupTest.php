@@ -38,10 +38,6 @@ class CohortDestroyCleanupTest extends TestCase
 
     private const EX_CORE_TEAM_GROUP_ID = '22222222-2222-2222-2222-222222222222';
 
-    private const CG_ADMIN_GROUP_ID = '33333333-3333-3333-3333-333333333333';
-
-    private const EX_CG_ADMIN_GROUP_ID = '44444444-4444-4444-4444-444444444444';
-
     private User $admin;
 
     private Major $major;
@@ -55,8 +51,6 @@ class CohortDestroyCleanupTest extends TestCase
             'services.outline.token' => self::TOKEN,
             'services.outline.core_team_group_id' => self::CORE_TEAM_GROUP_ID,
             'services.outline.xcore_team_group_id' => self::EX_CORE_TEAM_GROUP_ID,
-            'services.outline.cg_admin_group_id' => self::CG_ADMIN_GROUP_ID,
-            'services.outline.xcg_admin_group_id' => self::EX_CG_ADMIN_GROUP_ID,
         ]);
 
         $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
@@ -251,8 +245,8 @@ class CohortDestroyCleanupTest extends TestCase
             DeleteDocsGroup::class,
             fn (DeleteDocsGroup $job) => $job->docsGroupId === 'docs-cga-2024'
                 && $job->groupId === $group->id
-                && $job->sharedGroupIds === [self::CG_ADMIN_GROUP_ID, self::EX_CG_ADMIN_GROUP_ID]
-                && $job->fallbackMemberEmails === ['alice@infiniteuny.id']
+                && $job->sharedGroupIds === null
+                && $job->fallbackMemberEmails === []
         );
 
         Bus::assertDispatchedTimes(DeleteBlob::class, 3);
@@ -369,8 +363,8 @@ class CohortDestroyCleanupTest extends TestCase
         $queryCount = count(DB::getQueryLog());
         DB::disableQueryLog();
 
-        // Batch-loaded in exactly 3 SQL queries (users + coreTeams + communityGroupAdmins), not 3*N
-        $this->assertSame(3, $queryCount);
+        // Batch-loaded in exactly 2 SQL queries (users + coreTeams), not 2*N
+        $this->assertSame(2, $queryCount);
 
         $this->assertFalse($deletedCollectionCalled, 'ADR-0007 forbids deleting Outline collections on cohort deletion.');
         $this->assertSame([$docsGroupId], $deletedGroupIds);

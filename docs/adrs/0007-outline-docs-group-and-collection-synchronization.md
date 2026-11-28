@@ -51,8 +51,8 @@ Because Outline groups are flat, `CreateDocsGroup` and `UpdateDocsGroup` assign 
 | `CoreTeam` (`is_active = false`) | `SyncXCoreTeamDocsGroups` | `Core Team {year}`   | `"Ex Core Team"` (`[OUTLINE_XCORE_TEAM_GROUP_ID]`) | `"Core Team"` (`[OUTLINE_CORE_TEAM_GROUP_ID]`)     |
 
 - **Global Multi-Cohort Invariant (`shouldUserBelongToSharedGroup`):** Because a user may belong to multiple cohorts across years (e.g., non-active `Core Team 2024` **and** active `Core Team 2025`), `"Core Team"` vs. `"Ex Core Team"` membership is evaluated across **all** of the user's cohorts rather than the single cohort being synced:
-    - Assigned to **`"Core Team"`** (`OUTLINE_CORE_TEAM_GROUP_ID`, or `cg_admin_group_id`) **iff** the user belongs to **at least one** active cohort (`is_active = true`).
-    - Assigned to **`"Ex Core Team"`** (`OUTLINE_XCORE_TEAM_GROUP_ID`, or `xcg_admin_group_id`) **iff** the user belongs to **zero** active cohorts and **at least one** non-active cohort (`is_active = false`).
+    - Assigned to **`"Core Team"`** (`OUTLINE_CORE_TEAM_GROUP_ID`) **if** the user belongs to **at least one** active cohort (`is_active = true`).
+    - Assigned to **`"Ex Core Team"`** (`OUTLINE_XCORE_TEAM_GROUP_ID`) **if** the user belongs to **zero** active cohorts and **at least one** non-active cohort (`is_active = false`).
 - **Stale member & shared-group cleanup:** After adding current members, the job diffs existing Outline group members (`POST /api/groups.memberships`), removes stale users from the `Core Team {year}` Outline group (`groups.remove_user`), looks up each removed Outline user's email (`users.info`), resolves their local `User`, and reconciles their `"Core Team"` / `"Ex Core Team"` group memberships (`reconcileRemovedMemberSharedGroups`).
 
 ### 4. Per-Cohort Collection Access Matrix (Own-Cohort Editor, All-Cohort View)

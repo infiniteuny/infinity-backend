@@ -1,5 +1,7 @@
 <?php
 
+use Pdo\Mysql;
+
 return [
 
     /*
@@ -40,17 +42,16 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
-            'read' => [
-                'host' => [
-                    env('DB_READ_HOST'),
-                ],
-            ],
-            'write' => [
-                'host' => [
-                    env('DB_WRITE_HOST'),
-                ],
-            ],
-            'sticky' => true,
+            'host' => env('DB_HOST', '127.0.0.1'),
+            ...(env('DB_READ_HOST') || env('DB_WRITE_HOST') ? [
+                'read' => env('DB_READ_HOST') ? [
+                    'host' => array_values(array_filter(array_map('trim', explode(',', (string) env('DB_READ_HOST'))))),
+                ] : [],
+                'write' => env('DB_WRITE_HOST') ? [
+                    'host' => array_values(array_filter(array_map('trim', explode(',', (string) env('DB_WRITE_HOST'))))),
+                ] : [],
+                'sticky' => true,
+            ] : []),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'infinity'),
             'username' => env('DB_USERNAME', 'root'),
@@ -63,24 +64,23 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                (PHP_VERSION_ID >= 80500 ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),
-            'read' => [
-                'host' => [
-                    env('DB_READ_HOST'),
-                ],
-            ],
-            'write' => [
-                'host' => [
-                    env('DB_WRITE_HOST'),
-                ],
-            ],
-            'sticky' => true,
+            'host' => env('DB_HOST', '127.0.0.1'),
+            ...(env('DB_READ_HOST') || env('DB_WRITE_HOST') ? [
+                'read' => env('DB_READ_HOST') ? [
+                    'host' => array_values(array_filter(array_map('trim', explode(',', (string) env('DB_READ_HOST'))))),
+                ] : [],
+                'write' => env('DB_WRITE_HOST') ? [
+                    'host' => array_values(array_filter(array_map('trim', explode(',', (string) env('DB_WRITE_HOST'))))),
+                ] : [],
+                'sticky' => true,
+            ] : []),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'infinity'),
             'username' => env('DB_USERNAME', 'root'),
@@ -93,24 +93,23 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                (PHP_VERSION_ID >= 80500 ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
-            'read' => [
-                'host' => [
-                    env('DB_READ_HOST'),
-                ],
-            ],
-            'write' => [
-                'host' => [
-                    env('DB_WRITE_HOST'),
-                ],
-            ],
-            'sticky' => true,
+            'host' => env('DB_HOST', '127.0.0.1'),
+            ...(env('DB_READ_HOST') || env('DB_WRITE_HOST') ? [
+                'read' => env('DB_READ_HOST') ? [
+                    'host' => array_values(array_filter(array_map('trim', explode(',', (string) env('DB_READ_HOST'))))),
+                ] : [],
+                'write' => env('DB_WRITE_HOST') ? [
+                    'host' => array_values(array_filter(array_map('trim', explode(',', (string) env('DB_WRITE_HOST'))))),
+                ] : [],
+                'sticky' => true,
+            ] : []),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'infinity'),
             'username' => env('DB_USERNAME', 'postgres'),
@@ -125,17 +124,16 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
-            'read' => [
-                'host' => [
-                    env('DB_READ_HOST'),
-                ],
-            ],
-            'write' => [
-                'host' => [
-                    env('DB_WRITE_HOST'),
-                ],
-            ],
-            'sticky' => true,
+            'host' => env('DB_HOST', 'localhost'),
+            ...(env('DB_READ_HOST') || env('DB_WRITE_HOST') ? [
+                'read' => env('DB_READ_HOST') ? [
+                    'host' => array_values(array_filter(array_map('trim', explode(',', (string) env('DB_READ_HOST'))))),
+                ] : [],
+                'write' => env('DB_WRITE_HOST') ? [
+                    'host' => array_values(array_filter(array_map('trim', explode(',', (string) env('DB_WRITE_HOST'))))),
+                ] : [],
+                'sticky' => true,
+            ] : []),
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE', 'infinity'),
             'username' => env('DB_USERNAME', 'root'),
