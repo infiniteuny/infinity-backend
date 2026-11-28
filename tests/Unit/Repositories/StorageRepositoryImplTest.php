@@ -28,4 +28,38 @@ class StorageRepositoryImplTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         BlobStorage::url('{"disk":"local"}');
     }
+
+    public function test_stores_file_without_extension_without_trailing_dot(): void
+    {
+        LaravelStorage::fake('local');
+
+        $tempPath = tempnam(sys_get_temp_dir(), 'blob_no_ext_');
+        file_put_contents($tempPath, '');
+
+        try {
+            $file = new class($tempPath, 'README', 'application/octet-stream', null, true) extends UploadedFile
+            {
+                public function extension(): string
+                {
+                    return '';
+                }
+            };
+
+            $manifest = BlobStorage::store(
+                $file,
+                'docs',
+                StorageVisibility::PRIVATE,
+                null,
+                'local',
+            );
+
+            $decoded = json_decode($manifest, true);
+            $this->assertIsArray($decoded);
+            $this->assertStringEndsNotWith('.', $decoded['name']);
+            $this->assertStringNotContainsString('.', $decoded['name']);
+            LaravelStorage::disk('local')->assertExists($decoded['path'].'/'.$decoded['name']);
+        } finally {
+            @unlink($tempPath);
+        }
+    }
 }

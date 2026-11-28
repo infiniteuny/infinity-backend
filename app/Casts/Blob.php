@@ -5,6 +5,7 @@ namespace App\Casts;
 use App\Facades\Storage;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 
 class Blob implements CastsAttributes
 {
@@ -15,7 +16,17 @@ class Blob implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return is_string($value) && trim($value) !== '' ? Storage::url($value) : null;
+        if (! is_string($value) || trim($value) === '') {
+            return null;
+        }
+
+        try {
+            return Storage::url($value);
+        } catch (InvalidArgumentException $e) {
+            report($e);
+
+            return null;
+        }
     }
 
     /**

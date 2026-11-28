@@ -23,6 +23,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Throwable;
 
 /**
  * @group Users
@@ -350,14 +351,29 @@ class UserController extends Controller
             throw new AccessDeniedHttpException('Reregistration period is not configured.');
         }
 
-        $startPeriodRaw = trim((string) $startPeriod->value);
-        $endPeriodRaw = trim((string) $endPeriod->value);
+        $startRaw = $startPeriod->value;
+        $endRaw = $endPeriod->value;
+
+        if (! is_string($startRaw) || trim($startRaw) === '' || ! is_string($endRaw) || trim($endRaw) === '') {
+            throw new AccessDeniedHttpException('Reregistration period is not configured.');
+        }
+
+        $startPeriodRaw = trim($startRaw);
+        $endPeriodRaw = trim($endRaw);
+
+        try {
+            $parsedStart = Carbon::parse($startPeriodRaw);
+            $parsedEnd = Carbon::parse($endPeriodRaw);
+        } catch (Throwable) {
+            throw new AccessDeniedHttpException('Reregistration period is not configured.');
+        }
+
         $startWindow = preg_match('/^\d{4}-\d{2}-\d{2}$/', $startPeriodRaw)
-            ? Carbon::parse($startPeriodRaw)->startOfDay()
-            : Carbon::parse($startPeriodRaw);
+            ? $parsedStart->copy()->startOfDay()
+            : $parsedStart->copy();
         $endWindow = preg_match('/^\d{4}-\d{2}-\d{2}$/', $endPeriodRaw)
-            ? Carbon::parse($endPeriodRaw)->endOfDay()
-            : Carbon::parse($endPeriodRaw);
+            ? $parsedEnd->copy()->endOfDay()
+            : $parsedEnd->copy();
 
         if (! $allowReregistration || $allowReregistration->value !== 'true' || $now->lt($startWindow) || $now->gt($endWindow)) {
             throw new AccessDeniedHttpException('Reregistration is currently disabled.');
@@ -378,7 +394,7 @@ class UserController extends Controller
             }
         }
 
-        $candidateEndDate = Carbon::parse($endPeriodRaw)->addYear()->toDateString();
+        $candidateEndDate = $parsedEnd->copy()->addYear()->toDateString();
         $newEndDate = ($currentEndDate !== null && $currentEndDate > $candidateEndDate)
             ? $currentEndDate
             : $candidateEndDate;

@@ -24,7 +24,8 @@ class StorageRepositoryImpl implements StorageRepository
         ?string $disk = null,
     ): string {
         if (is_null($name)) {
-            $name = Uuid::v7().'.'.$file->extension();
+            $extension = trim((string) $file->extension(), '.');
+            $name = $extension !== '' ? Uuid::v7().'.'.$extension : (string) Uuid::v7();
         } else {
             $name = Str::ascii($name);
         }
