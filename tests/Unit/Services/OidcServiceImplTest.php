@@ -5,11 +5,13 @@ namespace Tests\Unit\Services;
 use App\Repositories\PsrCacheRepository;
 use App\Services\OidcServiceImpl;
 use App\Utils\Encoder;
+use Facile\JoseVerifier\Exception\InvalidTokenClaimException;
 use Facile\JoseVerifier\Exception\InvalidTokenException;
 use Facile\JoseVerifier\JWK\MemoryJwksProvider;
 use Facile\OpenIDClient\Issuer\Issuer;
 use Facile\OpenIDClient\Issuer\IssuerInterface;
 use Facile\OpenIDClient\Issuer\Metadata\IssuerMetadata;
+use GuzzleHttp\Client as GuzzleClient;
 use OpenSSLAsymmetricKey;
 use ReflectionMethod;
 use Tests\TestCase;
@@ -185,5 +187,70 @@ class OidcServiceImplTest extends TestCase
                 $this->addToAssertionCount(1);
             }
         }
+    }
+
+    public function test_applies_clock_tolerance_http_timeout_and_expires_in_memory_memoization_after_ttl(): void
+    {
+        config([
+            'oidc.clock_tolerance' => 10,
+            'oidc.http_timeout' => 12,
+            'oidc.memoize_ttl' => 300,
+        ]);
+
+        $now = time();
+        $signJwt = function (int $exp) use ($now): string {
+            $headerSegment = Encoder::base64UrlEncode(json_encode([
+                'alg' => 'RS256',
+                'typ' => 'JWT',
+                'kid' => 'authentik-rsa-1',
+            ], JSON_THROW_ON_ERROR));
+            $payloadSegment = Encoder::base64UrlEncode(json_encode([
+                'iss' => self::ISSUER,
+                'sub' => '101',
+                'aud' => self::CLIENT_ID,
+                'iat' => $now - 30,
+                'exp' => $exp,
+                'uid' => 'tok-skew',
+            ], JSON_THROW_ON_ERROR));
+            $signingInput = "{$headerSegment}.{$payloadSegment}";
+            $signature = '';
+            openssl_sign($signingInput, $signature, $this->privateKey, OPENSSL_ALGO_SHA256);
+
+            return "{$signingInput}.".Encoder::base64UrlEncode($signature);
+        };
+
+        // Expired 5s ago passes under 10s clock_tolerance
+        $verified = $this->service->verify($signJwt($now - 5));
+        $this->assertSame('101', $verified['sub']);
+
+        // Expired 25s ago fails under 10s clock_tolerance
+        try {
+            $this->service->verify($signJwt($now - 25));
+            $this->fail('Expected JWT expired beyond clock_tolerance to fail');
+        } catch (InvalidTokenClaimException) {
+            $this->addToAssertionCount(1);
+        }
+
+        // PSR-18 client carries configured connect_timeout and timeout
+        $getHttpClient = new ReflectionMethod($this->service, 'getHttpClient');
+        $httpClient = $getHttpClient->invoke($this->service);
+        $this->assertInstanceOf(GuzzleClient::class, $httpClient);
+        $this->assertSame(5, $httpClient->getConfig('connect_timeout'));
+        $this->assertSame(12, $httpClient->getConfig('timeout'));
+
+        // Memoized client & verifier stay identical within TTL, then refresh once TTL elapses
+        $getClient = new ReflectionMethod($this->service, 'getClient');
+        $getVerifier = new ReflectionMethod($this->service, 'getAccessTokenVerifier');
+
+        $clientBefore = $getClient->invoke($this->service);
+        $verifierBefore = $getVerifier->invoke($this->service);
+
+        $this->travel(120)->seconds();
+        $this->assertSame($clientBefore, $getClient->invoke($this->service));
+        $this->assertSame($verifierBefore, $getVerifier->invoke($this->service));
+
+        $this->travel(200)->seconds();
+        $this->assertNotSame($clientBefore, $getClient->invoke($this->service));
+        $this->assertNotSame($verifierBefore, $getVerifier->invoke($this->service));
     }
 }

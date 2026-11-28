@@ -17,4 +17,10 @@ return [
 
     'client_secret' => env('OIDC_CLIENT_SECRET'),
 
+    'clock_tolerance' => (int) env('OIDC_CLOCK_TOLERANCE', 10),
+
+    'http_timeout' => (int) env('OIDC_HTTP_TIMEOUT', 10),
+
+    'memoize_ttl' => (int) env('OIDC_MEMOIZE_TTL', 300),
+
 ];

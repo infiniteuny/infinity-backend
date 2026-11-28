@@ -20,7 +20,11 @@ use Facile\OpenIDClient\Service\IntrospectionService;
 use Facile\OpenIDClient\Service\UserInfoService;
 use Facile\OpenIDClient\Token\AccessTokenVerifierBuilder;
 use Facile\OpenIDClient\Token\TokenSet;
+use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
 use Jose\Component\Signature\Serializer\CompactSerializer;
+use Psr\Http\Client\ClientInterface as PsrHttpClientInterface;
 use Throwable;
 
 class OidcServiceImpl implements OidcService
@@ -43,23 +47,68 @@ class OidcServiceImpl implements OidcService
         'EdDSA',
     ];
 
-    protected IssuerInterface $issuer;
+    protected ?IssuerInterface $issuer = null;
 
-    protected ClientInterface $client;
+    protected ?ClientInterface $client = null;
 
-    protected TokenVerifierInterface $accessTokenVerifier;
+    protected ?TokenVerifierInterface $accessTokenVerifier = null;
 
-    protected IntrospectionService $introspectionService;
+    protected ?IntrospectionService $introspectionService = null;
 
-    protected UserInfoService $userInfoService;
+    protected ?UserInfoService $userInfoService = null;
+
+    protected ?PsrHttpClientInterface $httpClient = null;
+
+    protected ?int $memoizedAt = null;
 
     public function __construct(
         private PsrCacheRepository $cacheRepository,
     ) {}
 
+    protected function refreshMemoizedStateIfExpired(): void
+    {
+        $ttl = (int) config('oidc.memoize_ttl', 300);
+        $now = Carbon::now()->getTimestamp();
+
+        if ($this->memoizedAt === null) {
+            $this->memoizedAt = $now;
+
+            return;
+        }
+
+        if ($ttl <= 0 || ($now - $this->memoizedAt) >= $ttl) {
+            $this->issuer = null;
+            $this->client = null;
+            $this->accessTokenVerifier = null;
+            $this->introspectionService = null;
+            $this->userInfoService = null;
+            $this->httpClient = null;
+            $this->memoizedAt = $now;
+        }
+    }
+
+    protected function getHttpClient(): PsrHttpClientInterface
+    {
+        $this->refreshMemoizedStateIfExpired();
+
+        if ($this->httpClient !== null) {
+            return $this->httpClient;
+        }
+
+        $timeout = max(1, (int) config('oidc.http_timeout', 10));
+        $pendingRequest = Http::connectTimeout(5)->timeout($timeout);
+
+        return $this->httpClient = new GuzzleClient([
+            'handler' => $pendingRequest->buildHandlerStack(),
+            'connect_timeout' => 5,
+            'timeout' => $timeout,
+        ]);
+    }
+
     protected function getMetadataProviderBuilder(): MetadataProviderBuilder
     {
         $builder = (new MetadataProviderBuilder)
+            ->setHttpClient($this->getHttpClient())
             ->setCache($this->cacheRepository)
             // Cache metadata for 30 days
             ->setCacheTtl(2592000);
@@ -70,6 +119,7 @@ class OidcServiceImpl implements OidcService
     protected function getJwksProviderBuilder(): JwksProviderBuilder
     {
         $builder = (new JwksProviderBuilder)
+            ->withHttpClient($this->getHttpClient())
             ->withCache($this->cacheRepository)
             // Cache JWKS for 1 day
             ->withCacheTtl(86400);
@@ -89,6 +139,7 @@ class OidcServiceImpl implements OidcService
     protected function getClientBuilder(): ClientBuilder
     {
         $builder = (new ClientBuilder)
+            ->setHttpClient($this->getHttpClient())
             ->setIssuer($this->getIssuer())
             ->setClientMetadata(ClientMetadata::fromArray([
                 'client_id' => config('oidc.client_id'),
@@ -100,17 +151,20 @@ class OidcServiceImpl implements OidcService
 
     protected function getAccessTokenVerifierBuilder(): AccessTokenVerifierBuilder
     {
-        return new AccessTokenVerifierBuilder;
+        return (new AccessTokenVerifierBuilder)
+            ->setClockTolerance(max(0, (int) config('oidc.clock_tolerance', 10)));
     }
 
     protected function getIntrospectionServiceBuilder(): IntrospectionServiceBuilder
     {
-        return new IntrospectionServiceBuilder;
+        return (new IntrospectionServiceBuilder)
+            ->setHttpClient($this->getHttpClient());
     }
 
     protected function getUserInfoServiceBuilder(): UserInfoServiceBuilder
     {
-        return new UserInfoServiceBuilder;
+        return (new UserInfoServiceBuilder)
+            ->setHttpClient($this->getHttpClient());
     }
 
     protected function getIssuerMetadata(): IssuerMetadataInterface
@@ -125,6 +179,8 @@ class OidcServiceImpl implements OidcService
 
     protected function getIssuer(): IssuerInterface
     {
+        $this->refreshMemoizedStateIfExpired();
+
         if (! empty($this->issuer)) {
             return $this->issuer;
         }
@@ -135,6 +191,8 @@ class OidcServiceImpl implements OidcService
 
     protected function getClient(): ClientInterface
     {
+        $this->refreshMemoizedStateIfExpired();
+
         if (! empty($this->client)) {
             return $this->client;
         }
@@ -145,11 +203,14 @@ class OidcServiceImpl implements OidcService
 
     protected function getAccessTokenVerifier(): TokenVerifierInterface
     {
+        $this->refreshMemoizedStateIfExpired();
+
         if (! empty($this->accessTokenVerifier)) {
             return $this->accessTokenVerifier;
         }
 
         $verificationClient = (new ClientBuilder)
+            ->setHttpClient($this->getHttpClient())
             ->setIssuer($this->getIssuer())
             ->setClientMetadata(ClientMetadata::fromArray([
                 'client_id' => config('oidc.client_id'),
@@ -162,6 +223,8 @@ class OidcServiceImpl implements OidcService
 
     protected function getIntrospectionService(): IntrospectionService
     {
+        $this->refreshMemoizedStateIfExpired();
+
         if (! empty($this->introspectionService)) {
             return $this->introspectionService;
         }
@@ -172,6 +235,8 @@ class OidcServiceImpl implements OidcService
 
     protected function getUserInfoService(): UserInfoService
     {
+        $this->refreshMemoizedStateIfExpired();
+
         if (! empty($this->userInfoService)) {
             return $this->userInfoService;
         }
