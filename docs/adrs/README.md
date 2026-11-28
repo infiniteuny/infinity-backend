@@ -24,3 +24,4 @@ Each ADR follows a concise structure:
 | [ADR-0006](./0006-authentik-sso-user-and-group-synchronization.md)      | Authentik SSO User and Group Synchronization                                                   | Accepted | 2026-11-27 |
 | [ADR-0007](./0007-outline-docs-group-and-collection-synchronization.md) | Outline Docs Group and Collection Synchronization                                              | Accepted | 2026-11-27 |
 | [ADR-0008](./0008-group-integrations-table-for-external-tools.md)       | Dedicated `group_integrations` Table and Vendor-Agnostic Naming for External Tool Integrations | Accepted | 2026-11-27 |
+| [ADR-0009](./0009-external-horizon-dashboard-authentication.md)         | Delegating Laravel Horizon Dashboard Authentication to External Infrastructure                 | Accepted | 2026-11-28 |
