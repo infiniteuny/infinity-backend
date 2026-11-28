@@ -3,9 +3,12 @@
 namespace App\Http\Requests\CoreTeam;
 
 use App\Models\CoreTeam;
+use App\Models\Group;
 use App\Rules\NoDeactivateActive;
 use App\Traits\HasBooleanInput;
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -29,16 +32,12 @@ class UpdateCoreTeamRequest extends FormRequest
      */
     public function rules(): array
     {
-        $coreTeam = null;
-
-        if ($this->user()) {
-            $routeCoreTeam = $this->route('core_team');
-            $coreTeam = $routeCoreTeam instanceof CoreTeam
-                ? $routeCoreTeam
-                : (is_string($routeCoreTeam) && Str::isUuid($routeCoreTeam)
-                    ? CoreTeam::find($routeCoreTeam)
-                    : null);
-        }
+        $routeCoreTeam = $this->route('core_team');
+        $coreTeam = $routeCoreTeam instanceof CoreTeam
+            ? $routeCoreTeam
+            : ($this->user() && is_string($routeCoreTeam) && Str::isUuid($routeCoreTeam)
+                ? CoreTeam::find($routeCoreTeam)
+                : null);
 
         $yearUniqueRule = Rule::unique('core_teams', 'year');
 
@@ -47,7 +46,41 @@ class UpdateCoreTeamRequest extends FormRequest
         }
 
         return [
-            'year' => ['bail', 'sometimes', 'integer', 'between:1901,2155', $yearUniqueRule],
+            'year' => [
+                'bail',
+                'sometimes',
+                'integer',
+                'between:1901,2155',
+                $yearUniqueRule,
+                static function (string $attribute, mixed $value, Closure $fail) use ($coreTeam): void {
+                    if ((! is_int($value) && ! is_string($value)) || filter_var($value, FILTER_VALIDATE_INT) === false) {
+                        return;
+                    }
+
+                    $year = (int) $value;
+                    if ($year < 1901 || $year > 2155) {
+                        return;
+                    }
+
+                    try {
+                        $query = Group::query()
+                            ->where('name', 'Core Team '.$year)
+                            ->where('guard_name', 'api');
+
+                        if ($coreTeam instanceof CoreTeam && is_string($coreTeam->group_id) && $coreTeam->group_id !== '') {
+                            $query->where('id', '!=', $coreTeam->group_id);
+                        }
+
+                        $exists = $query->exists();
+                    } catch (QueryException) {
+                        return;
+                    }
+
+                    if ($exists) {
+                        $fail('The group name for this year is already taken.');
+                    }
+                },
+            ],
             'is_active' => [
                 'sometimes',
                 'boolean',

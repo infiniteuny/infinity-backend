@@ -160,10 +160,14 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, Team $team)
     {
-        DB::transaction(function () use ($request, $team) {
-            $team->update($request->validated());
+        $data = $request->validated();
 
-            $team->members()->syncWithoutDetaching([$team->leader_id]);
+        DB::transaction(function () use ($data, &$team) {
+            $lockedTeam = Team::whereKey($team->id)->lockForUpdate()->firstOrFail();
+            $lockedTeam->update($data);
+
+            $lockedTeam->members()->syncWithoutDetaching([$lockedTeam->leader_id]);
+            $team = $lockedTeam;
         });
 
         return new TeamResource($team);

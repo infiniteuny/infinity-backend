@@ -3,6 +3,7 @@
 namespace Tests\Unit\Http\Requests\CommunityGroupAdmin;
 
 use App\Http\Requests\CommunityGroupAdmin\StoreCommunityGroupAdminRequest;
+use App\Models\Group;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -37,5 +38,27 @@ class StoreCommunityGroupAdminRequestTest extends TestCase
         (new ReflectionMethod($validRequest, 'prepareForValidation'))->invoke($validRequest);
 
         $this->assertTrue(Validator::make($validRequest->all(), $validRequest->rules())->passes());
+    }
+
+    public function test_rejects_year_when_group_name_is_already_occupied(): void
+    {
+        Group::create([
+            'name' => 'CG Admin 2030',
+            'guard_name' => 'api',
+            'is_managed' => false,
+        ]);
+
+        $request = StoreCommunityGroupAdminRequest::create('/v1/community-group-admins', 'POST', [
+            'year' => 2030,
+            'is_active' => 'false',
+        ]);
+        (new ReflectionMethod($request, 'prepareForValidation'))->invoke($request);
+
+        $validator = Validator::make($request->all(), $request->rules());
+        $this->assertTrue($validator->fails());
+        $this->assertSame(
+            'The group name for this year is already taken.',
+            $validator->errors()->first('year'),
+        );
     }
 }

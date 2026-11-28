@@ -17,7 +17,12 @@ class UpdateGroupRequest extends FormRequest
      */
     public function rules(): array
     {
-        $nameRules = ['sometimes', 'string', 'max:255'];
+        $nameRules = [
+            'sometimes',
+            'string',
+            'max:255',
+            Rule::notRegex('/^\s*(Core\s+Team(\s+\d{4})?|Ex\s+Core\s+Team|CG\s+Admin(\s+\d{4})?|Ex\s+CG\s+Admin|Active\s+Member|Inactive\s+Member|Member|Administrator)\s*$/iu'),
+        ];
         $guardNameRules = ['sometimes', 'string', 'in:api'];
 
         if ($this->user()) {

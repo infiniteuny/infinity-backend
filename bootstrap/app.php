@@ -165,6 +165,21 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             if (
+                $sqlState === '23505'
+                || ($sqlState === '23000' && (
+                    $driverCode === 1062
+                    || (in_array($driverCode, [19, 2067], true) && str_contains(strtolower($driverMessage), 'unique'))
+                ))
+            ) {
+                return response()->json(
+                    JsendFormatter::fail(
+                        'Resource already exists or conflicts with an existing unique record.',
+                    ),
+                    409,
+                );
+            }
+
+            if (
                 $request->isMethodSafe()
                 && str_starts_with($sqlState, '22')
             ) {

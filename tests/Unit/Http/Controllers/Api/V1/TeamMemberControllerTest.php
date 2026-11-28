@@ -2,15 +2,18 @@
 
 namespace Tests\Unit\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\V1\TeamMemberController;
 use App\Models\CompetitionTeamType;
 use App\Models\Degree;
 use App\Models\Faculty;
 use App\Models\Major;
 use App\Models\Permission;
 use App\Models\Team;
+use App\Models\TeamMember;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Tests\TestCase;
 
 class TeamMemberControllerTest extends TestCase
@@ -79,5 +82,15 @@ class TeamMemberControllerTest extends TestCase
             ->assertOk()
             ->assertJsonCount(1, 'data.team_members')
             ->assertJsonPath('data.team_members.0.id', $alice->id);
+
+        $bobPivot = TeamMember::where('team_id', $team->id)
+            ->where('user_id', $bob->id)
+            ->firstOrFail();
+        // Cache pre-lock team snapshot on pivot, then simulate concurrent leadership transfer to Bob
+        $this->assertSame($alice->id, $bobPivot->team->leader_id);
+        Team::whereKey($team->id)->update(['leader_id' => $bob->id]);
+
+        $this->expectException(AccessDeniedHttpException::class);
+        app(TeamMemberController::class)->destroy($bobPivot);
     }
 }

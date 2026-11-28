@@ -15,7 +15,12 @@ class StoreGroupRequest extends FormRequest
      */
     public function rules(): array
     {
-        $nameRules = ['required', 'string', 'max:255'];
+        $nameRules = [
+            'required',
+            'string',
+            'max:255',
+            Rule::notRegex('/^\s*(Core\s+Team(\s+\d{4})?|Ex\s+Core\s+Team|CG\s+Admin(\s+\d{4})?|Ex\s+CG\s+Admin|Active\s+Member|Inactive\s+Member|Member|Administrator)\s*$/iu'),
+        ];
 
         if ($this->user()) {
             $guardName = $this->input('guard_name');

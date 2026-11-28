@@ -11,11 +11,14 @@ use App\Models\Team;
 use App\Models\TeamMember;
 use App\Traits\HasPagination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @group Team Members
@@ -116,12 +119,18 @@ class TeamMemberController extends Controller
      */
     public function store(Team $team, StoreTeamMemberRequest $request)
     {
-        $team->members()->attach($request->validated('user_id'));
+        $userId = $request->validated('user_id');
+        $teamMember = null;
 
-        $teamMember = $team
-            ->members()
-            ->wherePivot('user_id', $request->validated('user_id'))
-            ->first();
+        DB::transaction(function () use ($team, $userId, &$teamMember) {
+            $lockedTeam = Team::whereKey($team->id)->lockForUpdate()->firstOrFail();
+            $lockedTeam->members()->attach($userId);
+
+            $teamMember = $lockedTeam
+                ->members()
+                ->wherePivot('user_id', $userId)
+                ->first();
+        });
 
         return (new TeamMemberResource($teamMember))->response()->setStatusCode(201);
     }
@@ -168,6 +177,7 @@ class TeamMemberController extends Controller
     {
         $teamMemberId = $teamMember->id;
         $team = $teamMember->team;
+        $data = $request->validated();
 
         if ($team->leader_id === $teamMember->user_id) {
             throw ValidationException::withMessages([
@@ -175,13 +185,32 @@ class TeamMemberController extends Controller
             ]);
         }
 
-        $teamMember->update($request->validated());
-        $teamMember = $team
-            ->members()
-            ->wherePivot('id', $teamMemberId)
-            ->firstOrFail();
+        $updatedMember = null;
 
-        return new TeamMemberResource($teamMember);
+        DB::transaction(function () use ($request, $team, $teamMemberId, $data, &$updatedMember) {
+            $lockedTeam = Team::whereKey($team->id)->lockForUpdate()->firstOrFail();
+            $lockedPivot = TeamMember::whereKey($teamMemberId)->lockForUpdate()->firstOrFail();
+
+            if ($lockedPivot->user_id === $lockedTeam->leader_id) {
+                throw new AccessDeniedHttpException('The team leader cannot be modified.');
+            }
+
+            $authUser = $request->user();
+            if ($authUser && $lockedTeam->leader_id !== $team->leader_id) {
+                $lockedPivot->setRelation('team', $lockedTeam);
+                if (! $authUser->can('update', $lockedPivot)) {
+                    throw new AccessDeniedHttpException;
+                }
+            }
+
+            $lockedPivot->update($data);
+            $updatedMember = $lockedTeam
+                ->members()
+                ->wherePivot('id', $teamMemberId)
+                ->firstOrFail();
+        });
+
+        return new TeamMemberResource($updatedMember);
     }
 
     /**
@@ -195,19 +224,39 @@ class TeamMemberController extends Controller
     {
         $teamMemberId = $teamMember->id;
         $team = $teamMember->team;
-        $teamMember = $team
-            ->members()
-            ->wherePivot('id', $teamMemberId)
-            ->firstOrFail();
 
-        if ($team->leader_id === $teamMember->id) {
+        if ($team->leader_id === $teamMember->user_id) {
             throw ValidationException::withMessages([
                 'user_id' => ['The team leader cannot be removed from the team. Please assign a new leader before removing this member.'],
             ]);
         }
 
-        $team->members()->detach($teamMember->id);
+        $member = null;
 
-        return new TeamMemberResource($teamMember);
+        DB::transaction(function () use ($team, $teamMemberId, &$member) {
+            $lockedTeam = Team::whereKey($team->id)->lockForUpdate()->firstOrFail();
+            $lockedPivot = TeamMember::whereKey($teamMemberId)->lockForUpdate()->firstOrFail();
+
+            if ($lockedPivot->user_id === $lockedTeam->leader_id) {
+                throw new AccessDeniedHttpException('The team leader cannot be removed from the team.');
+            }
+
+            $authUser = Auth::user();
+            if ($authUser && $lockedTeam->leader_id !== $team->leader_id) {
+                $lockedPivot->setRelation('team', $lockedTeam);
+                if (! $authUser->can('delete', $lockedPivot)) {
+                    throw new AccessDeniedHttpException;
+                }
+            }
+
+            $member = $lockedTeam
+                ->members()
+                ->wherePivot('id', $teamMemberId)
+                ->firstOrFail();
+
+            $lockedTeam->members()->detach($member->id);
+        });
+
+        return new TeamMemberResource($member);
     }
 }

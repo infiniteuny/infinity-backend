@@ -91,19 +91,26 @@ class CommunityGroupAdminController extends Controller
      */
     public function store(StoreCommunityGroupAdminRequest $request)
     {
-        DB::transaction(function () use ($request, &$communityGroupAdmin) {
+        $data = $request->validated();
+
+        DB::transaction(function () use ($data, &$communityGroupAdmin) {
+            if ($data['is_active'] ?? false) {
+                CommunityGroupAdmin::where('is_active', true)->lockForUpdate()->get();
+            }
+
             $group = Group::create([
-                'name' => 'CG Admin '.$request->validated('year'),
+                'name' => 'CG Admin '.$data['year'],
                 'guard_name' => 'api',
                 'is_managed' => true,
             ]);
 
             $communityGroupAdmin = CommunityGroupAdmin::create(
-                array_merge($request->validated(), ['group_id' => $group->id])
+                array_merge($data, ['group_id' => $group->id])
             );
 
             if ($communityGroupAdmin->is_active) {
-                CommunityGroupAdmin::where('id', '!=', $communityGroupAdmin->id)
+                CommunityGroupAdmin::where('is_active', true)
+                    ->where('id', '!=', $communityGroupAdmin->id)
                     ->update(['is_active' => false]);
             }
         });
@@ -146,8 +153,14 @@ class CommunityGroupAdminController extends Controller
      */
     public function update(UpdateCommunityGroupAdminRequest $request, CommunityGroupAdmin $communityGroupAdmin)
     {
-        DB::transaction(function () use ($request, $communityGroupAdmin) {
-            $communityGroupAdmin->update($request->validated());
+        $data = $request->validated();
+
+        DB::transaction(function () use ($request, $data, $communityGroupAdmin) {
+            if ($data['is_active'] ?? false) {
+                CommunityGroupAdmin::where('is_active', true)->lockForUpdate()->get();
+            }
+
+            $communityGroupAdmin->update($data);
 
             if ($request->has('year')) {
                 $communityGroupAdmin->group->update(['name' => 'CG Admin '.$communityGroupAdmin->year]);
@@ -155,7 +168,8 @@ class CommunityGroupAdminController extends Controller
             }
 
             if ($communityGroupAdmin->is_active) {
-                CommunityGroupAdmin::where('id', '!=', $communityGroupAdmin->id)
+                CommunityGroupAdmin::where('is_active', true)
+                    ->where('id', '!=', $communityGroupAdmin->id)
                     ->update(['is_active' => false]);
             }
         });

@@ -93,19 +93,26 @@ class CoreTeamController extends Controller
      */
     public function store(StoreCoreTeamRequest $request)
     {
-        DB::transaction(function () use ($request, &$coreTeam) {
+        $data = $request->validated();
+
+        DB::transaction(function () use ($data, &$coreTeam) {
+            if ($data['is_active'] ?? false) {
+                CoreTeam::where('is_active', true)->lockForUpdate()->get();
+            }
+
             $group = Group::create([
-                'name' => 'Core Team '.$request->validated('year'),
+                'name' => 'Core Team '.$data['year'],
                 'guard_name' => 'api',
                 'is_managed' => true,
             ]);
 
             $coreTeam = CoreTeam::create(
-                array_merge($request->validated(), ['group_id' => $group->id])
+                array_merge($data, ['group_id' => $group->id])
             );
 
             if ($coreTeam->is_active) {
-                CoreTeam::where('id', '!=', $coreTeam->id)
+                CoreTeam::where('is_active', true)
+                    ->where('id', '!=', $coreTeam->id)
                     ->update(['is_active' => false]);
             }
         });
@@ -148,8 +155,14 @@ class CoreTeamController extends Controller
      */
     public function update(UpdateCoreTeamRequest $request, CoreTeam $coreTeam)
     {
-        DB::transaction(function () use ($request, $coreTeam) {
-            $coreTeam->update($request->validated());
+        $data = $request->validated();
+
+        DB::transaction(function () use ($request, $data, $coreTeam) {
+            if ($data['is_active'] ?? false) {
+                CoreTeam::where('is_active', true)->lockForUpdate()->get();
+            }
+
+            $coreTeam->update($data);
 
             if ($request->has('year')) {
                 $coreTeam->group->update(['name' => 'Core Team '.$coreTeam->year]);
@@ -157,7 +170,8 @@ class CoreTeamController extends Controller
             }
 
             if ($coreTeam->is_active) {
-                CoreTeam::where('id', '!=', $coreTeam->id)
+                CoreTeam::where('is_active', true)
+                    ->where('id', '!=', $coreTeam->id)
                     ->update(['is_active' => false]);
             }
         });
