@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\Blob;
+use App\Casts\DateOnly;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,8 +37,8 @@ class FundApplication extends Model
      * @var array
      */
     protected $casts = [
-        'competition_start_date' => 'datetime',
-        'competition_end_date' => 'datetime',
+        'competition_start_date' => DateOnly::class,
+        'competition_end_date' => DateOnly::class,
         'letter_of_acceptance' => Blob::class,
         'proposal' => Blob::class,
     ];

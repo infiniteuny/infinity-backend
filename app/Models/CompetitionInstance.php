@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\Blob;
+use App\Casts\DateOnly;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,8 +41,8 @@ class CompetitionInstance extends Model
      */
     protected $casts = [
         'logo' => Blob::class,
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'start_date' => DateOnly::class,
+        'end_date' => DateOnly::class,
     ];
 
     /**

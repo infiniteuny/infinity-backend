@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\Blob;
+use App\Casts\DateOnly;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -41,8 +42,8 @@ class Achievement extends Model
      * @var array
      */
     protected $casts = [
-        'competition_start_date' => 'datetime',
-        'competition_end_date' => 'datetime',
+        'competition_start_date' => DateOnly::class,
+        'competition_end_date' => DateOnly::class,
         'image' => Blob::class,
     ];
 
