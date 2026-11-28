@@ -81,8 +81,9 @@ class PersonaController extends Controller
             ->defaultSorts(
                 'priority',
                 '-id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $personas = $this->cursorPaginateWithTieBreaker($personas, $request);
 
         return new PersonaCollection($personas);
     }

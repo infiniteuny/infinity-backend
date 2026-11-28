@@ -111,8 +111,9 @@ class CompetitionInstanceController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-id');
+
+        $competitionInstances = $this->cursorPaginateWithTieBreaker($competitionInstances, $request);
 
         return new CompetitionInstanceCollection($competitionInstances);
     }

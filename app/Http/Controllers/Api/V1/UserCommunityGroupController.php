@@ -61,8 +61,9 @@ class UserCommunityGroupController extends Controller
             ->defaultSort(
                 'community_groups.priority',
                 '-community_groups.id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $userCommunityGroups = $this->cursorPaginateWithTieBreaker($userCommunityGroups, $request);
 
         return new UserCommunityGroupCollection($userCommunityGroups);
     }

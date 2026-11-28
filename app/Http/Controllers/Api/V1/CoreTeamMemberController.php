@@ -154,14 +154,15 @@ class CoreTeamMemberController extends Controller
             ];
         }
 
-        $coreTeamMembers = QueryBuilder::for($coreTeam->members())
+        $query = QueryBuilder::for($coreTeam->members())
             ->allowedIncludes(...$includes)
             ->allowedFilters(...$filters)
             ->allowedSorts(...$sorts)
-            ->defaultSorts('-users.id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-users.id');
 
-        if (in_array('membership.core_team_division', explode(',', $request->query('includes', '')))) {
+        $coreTeamMembers = $this->cursorPaginateWithTieBreaker($query, $request);
+
+        if (in_array('membership.core_team_division', $this->parseRequestedIncludes($request), true)) {
             Collection::make(
                 $coreTeamMembers->getCollection()->pluck('membership')->filter()
             )->load('coreTeamDivision');
@@ -277,7 +278,7 @@ class CoreTeamMemberController extends Controller
             ->allowedIncludes(...$includes)
             ->firstOrFail();
 
-        if (in_array('membership.core_team_division', explode(',', request()->query('includes', '')))) {
+        if (in_array('membership.core_team_division', $this->parseRequestedIncludes(request()), true)) {
             if ($coreTeamMember->membership) {
                 $coreTeamMember->membership->load('coreTeamDivision');
             }

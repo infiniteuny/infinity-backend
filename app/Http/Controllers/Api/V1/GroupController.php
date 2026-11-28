@@ -49,7 +49,7 @@ class GroupController extends Controller
      */
     public function index(Request $request)
     {
-        $groups = QueryBuilder::for(Group::class)
+        $query = QueryBuilder::for(Group::class)
             ->allowedFields(
                 'id',
                 'name',
@@ -70,8 +70,9 @@ class GroupController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-id');
+
+        $groups = $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new GroupCollection($groups);
     }

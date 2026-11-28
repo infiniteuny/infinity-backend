@@ -77,8 +77,9 @@ class ProjectGalleryController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-id');
+
+        $projectGalleries = $this->cursorPaginateWithTieBreaker($projectGalleries, $request);
 
         return new ProjectGalleryCollection($projectGalleries);
     }

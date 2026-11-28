@@ -53,10 +53,10 @@ class GroupPermissionController extends Controller
     {
         $groupPermission = QueryBuilder::for($group->permissions())
             ->allowedFilters(
-                AllowedFilter::exact('name', 'permissions.name'),
-                AllowedFilter::exact('guard_name', 'permissions.guard_name'),
-                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC, 'and', 'permissions.created_at'),
-                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC, 'and', 'permissions.updated_at'),
+                AllowedFilter::exact('name', 'permissions.name', false),
+                AllowedFilter::exact('guard_name', 'permissions.guard_name', false),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC, 'and', 'permissions.created_at', false),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC, 'and', 'permissions.updated_at', false),
             )
             ->allowedSorts(
                 AllowedSort::field('id', 'permissions.id'),
@@ -65,8 +65,9 @@ class GroupPermissionController extends Controller
                 AllowedSort::field('created_at', 'permissions.created_at'),
                 AllowedSort::field('updated_at', 'permissions.updated_at'),
             )
-            ->defaultSorts('-permissions.id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-permissions.id');
+
+        $groupPermission = $this->cursorPaginateWithTieBreaker($groupPermission, $request);
 
         return new GroupPermissionCollection($groupPermission);
     }

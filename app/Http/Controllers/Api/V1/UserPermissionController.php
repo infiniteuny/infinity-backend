@@ -7,14 +7,19 @@ use App\Http\Requests\UserPermission\StoreUserPermissionRequest;
 use App\Http\Requests\UserPermission\UpdateUserPermissionRequest;
 use App\Http\Resources\UserPermission\UserPermissionCollection;
 use App\Http\Resources\UserPermission\UserPermissionResource;
+use App\Models\Permission;
 use App\Models\User;
 use App\Models\UserPermission;
 use App\Traits\HasPagination;
+use App\Traits\HasQueryFilters;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
+use Spatie\QueryBuilder\Includes\IncludeInterface;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -23,7 +28,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class UserPermissionController extends Controller
 {
-    use HasPagination;
+    use HasPagination, HasQueryFilters;
 
     public function __construct()
     {
@@ -52,28 +57,51 @@ class UserPermissionController extends Controller
      */
     public function index(User $user, Request $request)
     {
-        $includes = explode(',', $request->query('includes', ''));
+        $includes = $this->parseRequestedIncludes($request);
+        $isNested = in_array('nested', $includes, true);
 
-        if (in_array('nested', $includes)) {
-            $userPermission = $user->getAllPermissions();
-        } else {
-            $userPermission = QueryBuilder::for($user->permissions())
-                ->allowedFilters(
-                    AllowedFilter::exact('name', 'permissions.name'),
-                    AllowedFilter::exact('guard_name', 'permissions.guard_name'),
-                    AllowedFilter::operator('created_at', FilterOperator::DYNAMIC, 'and', 'permissions.created_at'),
-                    AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC, 'and', 'permissions.updated_at'),
-                )
-                ->allowedSorts(
-                    AllowedSort::field('id', 'permissions.id'),
-                    AllowedSort::field('name', 'permissions.name'),
-                    AllowedSort::field('guard_name', 'permissions.guard_name'),
-                    AllowedSort::field('created_at', 'permissions.created_at'),
-                    AllowedSort::field('updated_at', 'permissions.updated_at'),
-                )
-                ->defaultSorts('-permissions.id')
-                ->cursorPaginate($this->resolvePerPage($request));
-        }
+        $nestedInclude = AllowedInclude::custom('nested', new class implements IncludeInterface
+        {
+            public function __invoke(Builder $query, string $include): void
+            {
+                // Handled via subject query selection below
+            }
+        });
+
+        $subject = $isNested
+            ? Permission::query()->where(function (Builder $query) use ($user) {
+                $query->whereHas('users', fn (Builder $userQuery) => $userQuery->where('users.id', $user->id))
+                    ->orWhereHas('groups.users', fn (Builder $groupUserQuery) => $groupUserQuery->where('users.id', $user->id));
+            })
+            : $user->permissions();
+
+        $query = QueryBuilder::for($subject, $request)
+            ->allowedFields(
+                'id',
+                'name',
+                'guard_name',
+                'created_at',
+                'updated_at',
+            )
+            ->allowedIncludes($nestedInclude)
+            ->allowedFilters(
+                AllowedFilter::exact('name', 'permissions.name', false),
+                AllowedFilter::exact('guard_name', 'permissions.guard_name', false),
+                AllowedFilter::operator('created_at', FilterOperator::DYNAMIC, 'and', 'permissions.created_at', false),
+                AllowedFilter::operator('updated_at', FilterOperator::DYNAMIC, 'and', 'permissions.updated_at', false),
+            )
+            ->allowedSorts(
+                AllowedSort::field('id', 'permissions.id'),
+                AllowedSort::field('name', 'permissions.name'),
+                AllowedSort::field('guard_name', 'permissions.guard_name'),
+                AllowedSort::field('created_at', 'permissions.created_at'),
+                AllowedSort::field('updated_at', 'permissions.updated_at'),
+            )
+            ->defaultSorts('-permissions.id');
+
+        $userPermission = $isNested
+            ? $query->get()
+            : $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new UserPermissionCollection($userPermission);
     }

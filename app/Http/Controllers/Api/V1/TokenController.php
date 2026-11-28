@@ -81,7 +81,7 @@ class TokenController extends Controller
             $tokens = $tokens->where('user_id', $userId);
         }
 
-        $tokens = $tokens->cursorPaginate($this->resolvePerPage($request));
+        $tokens = $this->cursorPaginateWithTieBreaker($tokens, $request);
 
         return new TokenCollection($tokens);
     }

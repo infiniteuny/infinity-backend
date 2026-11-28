@@ -66,8 +66,9 @@ class PermissionController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-id');
+
+        $permissions = $this->cursorPaginateWithTieBreaker($permissions, $request);
 
         return new PermissionCollection($permissions);
     }

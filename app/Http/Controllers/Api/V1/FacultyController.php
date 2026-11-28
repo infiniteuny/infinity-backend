@@ -66,8 +66,9 @@ class FacultyController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('code')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('code');
+
+        $faculties = $this->cursorPaginateWithTieBreaker($faculties, $request);
 
         return new FacultyCollection($faculties);
     }

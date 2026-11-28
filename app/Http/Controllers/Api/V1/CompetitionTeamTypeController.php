@@ -69,8 +69,9 @@ class CompetitionTeamTypeController extends Controller
             ->defaultSorts(
                 'weight',
                 '-id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $competitionTeamTypes = $this->cursorPaginateWithTieBreaker($competitionTeamTypes, $request);
 
         return new CompetitionTeamTypeCollection($competitionTeamTypes);
     }

@@ -69,8 +69,9 @@ class CompetitionScaleController extends Controller
             ->defaultSorts(
                 'weight',
                 '-id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $competitionScales = $this->cursorPaginateWithTieBreaker($competitionScales, $request);
 
         return new CompetitionScaleCollection($competitionScales);
     }

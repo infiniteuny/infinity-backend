@@ -69,8 +69,9 @@ class CompetitionOutputController extends Controller
             ->defaultSorts(
                 'weight',
                 '-id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $competitionOutputs = $this->cursorPaginateWithTieBreaker($competitionOutputs, $request);
 
         return new CompetitionOutputCollection($competitionOutputs);
     }

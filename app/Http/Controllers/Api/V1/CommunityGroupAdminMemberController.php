@@ -154,15 +154,20 @@ class CommunityGroupAdminMemberController extends Controller
             ];
         }
 
-        $communityGroupAdminMembers = QueryBuilder::for($communityGroupAdmin->members())
+        $query = QueryBuilder::for($communityGroupAdmin->members())
             ->allowedIncludes(...$includes)
             ->allowedFilters(...$filters)
             ->allowedSorts(...$sorts)
             ->defaultSorts('-users.id')
-            ->orderByDesc('community_group_admin_members.id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->orderByDesc('community_group_admin_members.id');
 
-        if (in_array('membership.community_group', explode(',', $request->query('includes', '')))) {
+        $communityGroupAdminMembers = $this->cursorPaginateWithTieBreaker(
+            $query,
+            $request,
+            ['community_group_admin_members.id'],
+        );
+
+        if (in_array('membership.community_group', $this->parseRequestedIncludes($request), true)) {
             Collection::make(
                 $communityGroupAdminMembers->getCollection()->pluck('membership')->filter()
             )->load('communityGroup');
@@ -279,7 +284,7 @@ class CommunityGroupAdminMemberController extends Controller
             ->allowedIncludes(...$includes)
             ->firstOrFail();
 
-        if (in_array('membership.community_group', explode(',', request()->query('includes', '')))) {
+        if (in_array('membership.community_group', $this->parseRequestedIncludes(request()), true)) {
             if ($communityGroupAdminMember->membership) {
                 $communityGroupAdminMember->membership->load('communityGroup');
             }

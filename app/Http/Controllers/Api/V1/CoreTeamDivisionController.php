@@ -71,8 +71,9 @@ class CoreTeamDivisionController extends Controller
             ->defaultSorts(
                 'priority',
                 '-id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $coreTeamDivisions = $this->cursorPaginateWithTieBreaker($coreTeamDivisions, $request);
 
         return new CoreTeamDivisionCollection($coreTeamDivisions);
     }

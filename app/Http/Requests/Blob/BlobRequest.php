@@ -27,7 +27,7 @@ class BlobRequest extends FormRequest
     {
         return [
             'force_download' => ['sometimes', 'boolean'],
-            'name' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'nullable', 'string', 'max:255', 'regex:/^[^\x00-\x1F\x7F\/\\\\]+$/u'],
         ];
     }
 

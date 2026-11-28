@@ -95,8 +95,7 @@ class TeamController extends Controller
             });
         }
 
-        $teams = $teams
-            ->cursorPaginate($this->resolvePerPage($request));
+        $teams = $this->cursorPaginateWithTieBreaker($teams, $request);
 
         return new TeamCollection($teams);
     }

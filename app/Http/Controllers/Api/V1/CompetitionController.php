@@ -48,7 +48,7 @@ class CompetitionController extends Controller
      */
     public function index(Request $request)
     {
-        $competitions = QueryBuilder::for(Competition::class)
+        $query = QueryBuilder::for(Competition::class)
             ->allowedFields(
                 'id',
                 'name',
@@ -71,8 +71,9 @@ class CompetitionController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-id');
+
+        $competitions = $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new CompetitionCollection($competitions);
     }

@@ -69,8 +69,9 @@ class CompetitionOrganizerTypeController extends Controller
             ->defaultSorts(
                 'weight',
                 '-id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $competitionOrganizerTypes = $this->cursorPaginateWithTieBreaker($competitionOrganizerTypes, $request);
 
         return new CompetitionOrganizerTypeCollection($competitionOrganizerTypes);
     }

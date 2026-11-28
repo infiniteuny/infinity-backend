@@ -100,8 +100,9 @@ class TeamMemberController extends Controller
                 AllowedSort::field('created_at', 'users.created_at'),
                 AllowedSort::field('updated_at', 'users.updated_at'),
             )
-            ->defaultSorts('-users.id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-users.id');
+
+        $teamMembers = $this->cursorPaginateWithTieBreaker($teamMembers, $request);
 
         return new TeamMemberCollection($teamMembers);
     }

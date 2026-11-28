@@ -145,7 +145,7 @@ class UserController extends Controller
             ];
         }
 
-        $users = QueryBuilder::for(User::class)
+        $query = QueryBuilder::for(User::class)
             ->allowedFields(
                 'id',
                 'sso_id',
@@ -166,8 +166,9 @@ class UserController extends Controller
             ->allowedIncludes(...$includes)
             ->allowedFilters(...$filters)
             ->allowedSorts(...$sorts)
-            ->defaultSorts('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-id');
+
+        $users = $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new UserCollection($users);
     }

@@ -66,8 +66,9 @@ class DegreeController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('code')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('code');
+
+        $degrees = $this->cursorPaginateWithTieBreaker($degrees, $request);
 
         return new DegreeCollection($degrees);
     }

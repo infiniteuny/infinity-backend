@@ -54,7 +54,7 @@ class CommunityGroupAdminController extends Controller
      */
     public function index(Request $request)
     {
-        $communityGroupAdmins = QueryBuilder::for(CommunityGroupAdmin::class)
+        $query = QueryBuilder::for(CommunityGroupAdmin::class)
             ->allowedFields(
                 'id',
                 'year',
@@ -75,8 +75,9 @@ class CommunityGroupAdminController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSort('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSort('-id');
+
+        $communityGroupAdmins = $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new CommunityGroupAdminCollection($communityGroupAdmins);
     }

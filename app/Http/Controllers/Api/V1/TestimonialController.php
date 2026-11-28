@@ -76,8 +76,9 @@ class TestimonialController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-id');
+
+        $testimonials = $this->cursorPaginateWithTieBreaker($testimonials, $request);
 
         return new TestimonialCollection($testimonials);
     }

@@ -69,8 +69,9 @@ class CompetitionTimeRangeController extends Controller
             ->defaultSorts(
                 'weight',
                 '-id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $competitionTimeRanges = $this->cursorPaginateWithTieBreaker($competitionTimeRanges, $request);
 
         return new CompetitionTimeRangeCollection($competitionTimeRanges);
     }

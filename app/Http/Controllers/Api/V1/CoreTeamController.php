@@ -56,7 +56,7 @@ class CoreTeamController extends Controller
      */
     public function index(Request $request)
     {
-        $coreTeams = QueryBuilder::for(CoreTeam::class)
+        $query = QueryBuilder::for(CoreTeam::class)
             ->allowedFields(
                 'id',
                 'year',
@@ -77,8 +77,9 @@ class CoreTeamController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('-id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-id');
+
+        $coreTeams = $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new CoreTeamCollection($coreTeams);
     }

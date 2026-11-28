@@ -35,11 +35,12 @@ class AchievementLeaderboardController extends Controller
      */
     public function index(Request $request)
     {
-        $years = QueryBuilder::for(AchievementLeaderboard::query()
+        $query = QueryBuilder::for(AchievementLeaderboard::query()
             ->selectRaw('DISTINCT year'))
             ->allowedSorts('year')
-            ->defaultSorts('-year')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-year');
+
+        $years = $this->cursorPaginateWithTieBreaker($query, $request, ['year']);
 
         return new AchievementLeaderboardYearCollection($years);
     }
@@ -101,30 +102,11 @@ class AchievementLeaderboardController extends Controller
             )
             ->defaultSorts('-total_points', 'id');
 
-        $baseQuery = $query->getEloquentBuilder()->getQuery();
-        $hasUniqueSort = collect($baseQuery->orders ?? [])->contains(
-            fn (array $order) => in_array(
-                $order['column'] ?? null,
-                ['id', 'achievement_leaderboards.id', 'user_id', 'achievement_leaderboards.user_id'],
-                true,
-            ),
+        $achievementLeaderboards = $this->cursorPaginateWithTieBreaker(
+            $query,
+            $request,
+            ['id', 'user_id'],
         );
-
-        if (! $hasUniqueSort) {
-            $columns = $baseQuery->columns;
-            if (
-                is_array($columns)
-                && ! in_array('*', $columns, true)
-                && ! in_array('id', $columns, true)
-                && ! in_array('achievement_leaderboards.id', $columns, true)
-            ) {
-                $query->getEloquentBuilder()->addSelect('id');
-            }
-
-            $query->orderBy('id');
-        }
-
-        $achievementLeaderboards = $query->cursorPaginate($this->resolvePerPage($request));
 
         return new AchievementLeaderboardCollection($achievementLeaderboards);
     }

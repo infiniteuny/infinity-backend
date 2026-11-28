@@ -56,7 +56,7 @@ class CommunityGroupController extends Controller
      */
     public function index(Request $request)
     {
-        $communityGroups = QueryBuilder::for(CommunityGroup::class)
+        $query = QueryBuilder::for(CommunityGroup::class)
             ->allowedFields(
                 'id',
                 'name',
@@ -86,8 +86,9 @@ class CommunityGroupController extends Controller
             ->defaultSort(
                 'priority',
                 '-id',
-            )
-            ->cursorPaginate($this->resolvePerPage($request));
+            );
+
+        $communityGroups = $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new CommunityGroupCollection($communityGroups);
     }

@@ -137,12 +137,13 @@ class CommunityGroupMemberController extends Controller
             ];
         }
 
-        $communityGroupMembers = QueryBuilder::for($communityGroup->members())
+        $query = QueryBuilder::for($communityGroup->members())
             ->allowedIncludes(...$includes)
             ->allowedFilters(...$filters)
             ->allowedSorts(...$sorts)
-            ->defaultSorts('-users.id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-users.id');
+
+        $communityGroupMembers = $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new CommunityGroupMemberCollection($communityGroupMembers);
     }

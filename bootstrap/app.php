@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\ForceJsonResponse;
+use App\Http\Middleware\SanitizeApiQuery;
 use App\Jobs\SyncAchievementLeaderboards;
 use App\Jobs\SyncActiveInactiveMemberGroup;
 use App\Jobs\SyncActiveInactiveMemberSsoGroup;
@@ -64,6 +65,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->group('api', [
             ForceJsonResponse::class,
+            SanitizeApiQuery::class,
             'throttle:api',
             SubstituteBindings::class,
         ]);
@@ -120,6 +122,28 @@ return Application::configure(basePath: dirname(__DIR__))
             );
         });
 
+        $exceptions->render(function (UnexpectedValueException $e, Request $request) {
+            if ($request->isMethodSafe() && $request->query->has('cursor')) {
+                return response()->json(
+                    JsendFormatter::fail('Invalid pagination cursor.'),
+                    400,
+                );
+            }
+        });
+
+        $exceptions->render(function (InvalidArgumentException $e, Request $request) {
+            if (
+                $request->isMethodSafe()
+                && $request->query->has('cursor')
+                && str_contains($e->getMessage(), 'Illegal operator and value combination')
+            ) {
+                return response()->json(
+                    JsendFormatter::fail('Invalid pagination cursor.'),
+                    400,
+                );
+            }
+        });
+
         $exceptions->render(function (QueryException $e, Request $request) {
             $sqlState = (string) ($e->errorInfo[0] ?? $e->getCode());
             $driverCode = $e->errorInfo[1] ?? null;
@@ -142,7 +166,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             if (
                 $request->isMethodSafe()
-                && in_array($sqlState, ['22P02', '22003', '22007', '22008'], true)
+                && str_starts_with($sqlState, '22')
             ) {
                 return response()->json(
                     JsendFormatter::fail('Invalid query parameter value.'),

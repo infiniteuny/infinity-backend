@@ -50,7 +50,7 @@ class UserGroupController extends Controller
      */
     public function index(User $user, Request $request)
     {
-        $userGroup = QueryBuilder::for($user->groups())
+        $query = QueryBuilder::for($user->groups())
             ->allowedFilters(
                 AllowedFilter::exact('name', 'groups.name'),
                 AllowedFilter::exact('guard_name', 'groups.guard_name'),
@@ -64,8 +64,9 @@ class UserGroupController extends Controller
                 AllowedSort::field('created_at', 'groups.created_at'),
                 AllowedSort::field('updated_at', 'groups.updated_at'),
             )
-            ->defaultSorts('-groups.id')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('-groups.id');
+
+        $userGroup = $this->cursorPaginateWithTieBreaker($query, $request);
 
         return new UserGroupCollection($userGroup);
     }

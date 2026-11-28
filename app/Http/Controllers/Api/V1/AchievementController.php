@@ -169,7 +169,8 @@ class AchievementController extends Controller
             ->allowedSorts(...$sorts)
             ->defaultSorts('-id');
 
-        $achievements = $achievements->cursorPaginate($this->resolvePerPage($request));
+
+        $achievements = $this->cursorPaginateWithTieBreaker($achievements, $request);
 
         return new AchievementCollection($achievements);
     }

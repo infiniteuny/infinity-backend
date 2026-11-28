@@ -115,7 +115,7 @@ class FundApplicationController extends Controller
             });
         }
 
-        $fundApplications = $fundApplications->cursorPaginate($this->resolvePerPage($request));
+        $fundApplications = $this->cursorPaginateWithTieBreaker($fundApplications, $request);
 
         return new FundApplicationCollection($fundApplications);
     }

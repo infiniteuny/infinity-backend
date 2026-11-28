@@ -71,4 +71,26 @@ class HasQueryFiltersTest extends TestCase
         $this->assertSame([], $subject->run(['filters' => ['email_address' => ['alice.putri@student.uny.ac.id']]]));
         $this->assertSame([], $subject->run(['filters' => ['email_address' => '   ']]));
     }
+
+    public function test_parse_requested_includes_handles_strings_arrays_and_nested_arrays_safely(): void
+    {
+        $subject = new class
+        {
+            use HasQueryFilters;
+
+            /**
+             * @return array<int, string>
+             */
+            public function parse(array $query): array
+            {
+                return $this->parseRequestedIncludes(Request::create('/v1/test', 'GET', $query));
+            }
+        };
+
+        $this->assertSame([], $subject->parse([]));
+        $this->assertSame([], $subject->parse(['includes' => '']));
+        $this->assertSame(['major', 'personas'], $subject->parse(['includes' => ' major , personas , major ']));
+        $this->assertSame(['nested', 'groups'], $subject->parse(['includes' => ['nested', 'groups,nested']]));
+        $this->assertSame([], $subject->parse(['includes' => [['nested']]]));
+    }
 }

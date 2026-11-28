@@ -104,7 +104,7 @@ class ConfigController extends Controller
             $configs = $configs->where('is_private', false);
         }
 
-        $configs = $configs->cursorPaginate($this->resolvePerPage($request));
+        $configs = $this->cursorPaginateWithTieBreaker($configs, $request);
 
         return new ConfigCollection($configs);
     }

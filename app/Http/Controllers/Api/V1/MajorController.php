@@ -79,8 +79,9 @@ class MajorController extends Controller
                 'created_at',
                 'updated_at',
             )
-            ->defaultSorts('code')
-            ->cursorPaginate($this->resolvePerPage($request));
+            ->defaultSorts('code');
+
+        $majors = $this->cursorPaginateWithTieBreaker($majors, $request);
 
         return new MajorCollection($majors);
     }
