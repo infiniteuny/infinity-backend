@@ -23,7 +23,7 @@ class User extends Data
         return new self(
             id: Optional::create(),
             name: $user->name,
-            email: $user->email_address,
+            email: is_null($user->email_address) ? null : trim((string) $user->email_address),
             role: $role->value,
             isSuspended: Optional::create(),
             avatarUrl: Optional::create(),

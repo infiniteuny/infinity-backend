@@ -19,12 +19,17 @@ class DeleteBlob implements ShouldBeUnique, ShouldQueue
         public string $manifest,
     ) {}
 
+    public int $uniqueFor = 900;
+
     /**
      * The number of times the job may be attempted.
-     *
-     * @var int
      */
-    public $tries = 5;
+    public int $tries = 5;
+
+    /**
+     * The number of seconds to wait before retrying an exception.
+     */
+    public int $backoff = 10;
 
     /**
      * Get the unique ID for the job.

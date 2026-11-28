@@ -4,6 +4,7 @@ namespace Tests\Unit\Guards;
 
 use App\Models\Degree;
 use App\Models\Faculty;
+use App\Models\Group;
 use App\Models\Major;
 use App\Models\Token;
 use App\Models\User;
@@ -109,6 +110,9 @@ class OidcTokenGuardTest extends TestCase
         $this->assertNull($alice->fresh()->sso_id);
 
         $originalUpdatedAt = Carbon::parse('2026-01-01 00:00:00');
+        $memberGroup = Group::create(['name' => 'Member', 'is_managed' => true]);
+        $memberGroup->users()->attach($alice->id);
+        Group::whereKey($memberGroup->id)->update(['updated_at' => $originalUpdatedAt]);
         User::withoutTimestamps(function () use ($alice, $originalUpdatedAt) {
             $alice->updated_at = $originalUpdatedAt;
             $alice->saveQuietly();
@@ -142,6 +146,38 @@ class OidcTokenGuardTest extends TestCase
         $alice->refresh();
         $this->assertSame('888', $alice->sso_id);
         $this->assertTrue($alice->updated_at->equalTo($originalUpdatedAt));
+        $this->assertTrue($memberGroup->fresh()->updated_at->gt($originalUpdatedAt));
+
+        // 4. Subsequent uses within 60s throttle last_used_at DB writes; >= 60s updates last_used_at
+        $token = Token::where('sso_id', 'active-uid')->firstOrFail();
+        $recentUse = now()->subSeconds(10)->startOfSecond();
+        $token->last_used_at = $recentUse;
+        $token->save();
+
+        $this->mock(OidcService::class, function ($mock) {
+            $mock->shouldReceive('verify')
+                ->twice()
+                ->with('active-jwt')
+                ->andReturn(['sub' => '888', 'uid' => 'active-uid']);
+        });
+
+        $this->app->instance('request', Request::create('/v1/tokens', 'GET', server: [
+            'HTTP_AUTHORIZATION' => 'Bearer active-jwt',
+        ]));
+        Auth::forgetGuards();
+        $this->assertSame($alice->id, Auth::guard('api_token')->user()?->id);
+        $this->assertTrue($token->fresh()->last_used_at->equalTo($recentUse));
+
+        $staleUse = now()->subSeconds(65)->startOfSecond();
+        $token->last_used_at = $staleUse;
+        $token->save();
+
+        $this->app->instance('request', Request::create('/v1/tokens', 'GET', server: [
+            'HTTP_AUTHORIZATION' => 'Bearer active-jwt',
+        ]));
+        Auth::forgetGuards();
+        $this->assertSame($alice->id, Auth::guard('api_token')->user()?->id);
+        $this->assertTrue($token->fresh()->last_used_at->gt($staleUse));
     }
 
     public function test_rejects_unverified_email_and_prevents_overwriting_already_linked_sso_id(): void

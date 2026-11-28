@@ -3,25 +3,47 @@
 namespace App\Jobs;
 
 use App\Models\CommunityGroupAdmin;
-use App\Models\Group;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 
-class SyncXCGAdminSsoGroups implements ShouldQueue
+class SyncXCGAdminSsoGroups implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
+
+    public int $uniqueFor = 1800;
+
+    public int $tries = 3;
+
+    public int $backoff = 10;
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array<int, object>
+     */
+    public function middleware(): array
+    {
+        return [
+            (new WithoutOverlapping('sync-xcg-admin-sso-groups'))
+                ->shared()
+                ->releaseAfter(10)
+                ->expireAfter(240),
+        ];
+    }
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-        $admins = CommunityGroupAdmin::where('is_active', false)->get();
+        $admins = CommunityGroupAdmin::with('group')->where('is_active', false)->get();
         $ssoParentId = config('services.authentik.xcg_admin_group_id');
         $ssoParentIds = is_string($ssoParentId) && trim($ssoParentId) !== '' ? [trim($ssoParentId)] : null;
 
         foreach ($admins as $admin) {
-            $group = Group::find($admin->group_id);
+            $group = $admin->group;
 
             if (! $group) {
                 continue;

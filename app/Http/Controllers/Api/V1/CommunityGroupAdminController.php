@@ -223,7 +223,7 @@ class CommunityGroupAdminController extends Controller
         });
 
         if (is_string($ssoId) && $ssoId !== '') {
-            DeleteSsoGroup::dispatch($ssoId);
+            DeleteSsoGroup::dispatch($ssoId, $groupId);
         }
 
         if (is_string($docsGroupId) && $docsGroupId !== '') {

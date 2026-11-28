@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Data\Authentik\Group as AuthentikGroup;
 use App\Models\Group;
 use App\Services\AuthentikService;
+use App\Services\AuthentikServiceImpl;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -15,6 +16,10 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
+
+    public bool $deleteWhenMissingModels = true;
+
+    public int $uniqueFor = 900;
 
     /**
      * Create a new job instance.
@@ -63,7 +68,7 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             (new WithoutOverlapping("sso-group:{$this->group->id}"))
                 ->shared()
                 ->releaseAfter(10)
-                ->expireAfter(120),
+                ->expireAfter(240),
         ];
     }
 
@@ -72,11 +77,24 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(AuthentikService $authentikService): void
     {
-        $existingSsoId = is_string($this->group->sso_id) ? trim($this->group->sso_id) : '';
+        if ($authentikService instanceof AuthentikServiceImpl && ! $authentikService->isConfigured()) {
+            return;
+        }
+
+        $syncedAt = now();
+        $group = Group::find($this->group->id);
+
+        if (! $group) {
+            return;
+        }
+
+        $this->group = $group;
+
+        $existingSsoId = is_string($group->sso_id) ? trim($group->sso_id) : '';
 
         if ($existingSsoId === '') {
             CreateSsoGroup::dispatch(
-                $this->group,
+                $group,
                 $this->ssoParentIds,
                 $this->isSuperuser,
             );
@@ -84,7 +102,7 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             return;
         }
 
-        $payload = AuthentikGroup::fromModel($this->group);
+        $payload = AuthentikGroup::fromModel($group);
 
         if (! is_null($this->ssoParentIds)) {
             $parentIds = array_values(array_filter(
@@ -109,23 +127,27 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             }
 
             $ssoGroups = $authentikService->listGroups([
-                'name' => $this->group->name,
+                'name' => $group->name,
             ]);
 
             $existingGroup = $ssoGroups->first(
-                fn (AuthentikGroup $group) => $group->name === $this->group->name
+                fn (AuthentikGroup $candidate) => $candidate->name === $group->name
             );
 
-            if ($existingGroup !== null && is_string($existingGroup->sso_id) && $existingGroup->sso_id !== '') {
-                $ssoGroup = $authentikService->updateGroup($existingGroup->sso_id, $payload);
+            $matchedSsoId = $existingGroup !== null && is_scalar($existingGroup->sso_id) && ! is_bool($existingGroup->sso_id)
+                ? trim((string) $existingGroup->sso_id)
+                : '';
+
+            if ($matchedSsoId !== '') {
+                $ssoGroup = $authentikService->updateGroup($matchedSsoId, $payload);
             } else {
                 $ssoGroup = $authentikService->createGroup($payload);
             }
         }
 
-        $this->group->sso_id = $ssoGroup->sso_id;
-        $this->group->sso_last_synced_at = now();
+        $group->sso_id = $ssoGroup->requireSsoId();
+        $group->sso_last_synced_at = $syncedAt;
 
-        Group::withoutTimestamps(fn () => $this->group->saveQuietly());
+        Group::withoutTimestamps(fn () => $group->saveQuietly());
     }
 }

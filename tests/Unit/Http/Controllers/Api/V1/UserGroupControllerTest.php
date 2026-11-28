@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Http\Controllers\Api\V1;
 
+use App\Jobs\CreateSsoGroup;
+use App\Jobs\UpdateSsoGroup;
 use App\Models\Degree;
 use App\Models\Faculty;
 use App\Models\Group;
@@ -11,6 +13,7 @@ use App\Models\User;
 use App\Models\UserGroup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 
 class UserGroupControllerTest extends TestCase
@@ -25,6 +28,8 @@ class UserGroupControllerTest extends TestCase
 
     public function test_store_returns_201_and_store_update_destroy_touch_affected_groups(): void
     {
+        Bus::fake([CreateSsoGroup::class, UpdateSsoGroup::class]);
+
         $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
         $faculty = Faculty::create(['code' => 'FT', 'name' => 'Teknik']);
         $major = Major::create([
@@ -117,5 +122,7 @@ class UserGroupControllerTest extends TestCase
         $groupB->refresh();
         $this->assertSame('2026-01-01 02:00:00', $groupA->updated_at->format('Y-m-d H:i:s'));
         $this->assertSame('2026-01-01 03:00:00', $groupB->updated_at->format('Y-m-d H:i:s'));
+
+        Bus::assertDispatchedTimes(CreateSsoGroup::class, 4);
     }
 }

@@ -7,10 +7,14 @@ use App\Http\Requests\UserGroup\StoreUserGroupRequest;
 use App\Http\Requests\UserGroup\UpdateUserGroupRequest;
 use App\Http\Resources\UserGroup\UserGroupCollection;
 use App\Http\Resources\UserGroup\UserGroupResource;
+use App\Jobs\CreateSsoGroup;
+use App\Jobs\UpdateSsoGroup;
+use App\Models\Group;
 use App\Models\User;
 use App\Models\UserGroup;
 use App\Traits\HasPagination;
 use Illuminate\Http\Request;
+use Spatie\Permission\PermissionRegistrar;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -80,12 +84,17 @@ class UserGroupController extends Controller
      */
     public function store(User $user, StoreUserGroupRequest $request)
     {
-        $user->groups()->attach($request->validated('group_id'));
+        $groupId = $request->validated('group_id');
+
+        $user->groups()->attach($groupId);
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $userGroup = $user
             ->groups()
-            ->wherePivot('group_id', $request->validated('group_id'))
+            ->wherePivot('group_id', $groupId)
             ->first();
+
+        $this->dispatchCustomGroupSsoSync($userGroup);
 
         return (new UserGroupResource($userGroup))->response()->setStatusCode(201);
     }
@@ -122,14 +131,29 @@ class UserGroupController extends Controller
     {
         $userGroupId = $userGroup->id;
         $user = $userGroup->user;
+        $previousGroupId = $userGroup->group_id;
 
         $userGroup->update($request->validated());
-        $userGroup = $user
+        $changed = $userGroup->wasChanged('group_id');
+
+        if ($changed) {
+            app(PermissionRegistrar::class)->forgetCachedPermissions();
+        }
+
+        $updatedGroup = $user
             ->groups()
             ->wherePivot('id', $userGroupId)
             ->firstOrFail();
 
-        return new UserGroupResource($userGroup);
+        if ($changed) {
+            if (is_string($previousGroupId) && $previousGroupId !== '') {
+                $this->dispatchCustomGroupSsoSync(Group::find($previousGroupId));
+            }
+
+            $this->dispatchCustomGroupSsoSync($updatedGroup);
+        }
+
+        return new UserGroupResource($updatedGroup);
     }
 
     /**
@@ -149,7 +173,23 @@ class UserGroupController extends Controller
             ->firstOrFail();
 
         $user->groups()->detach($userGroup->id);
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $this->dispatchCustomGroupSsoSync(Group::find($userGroup->id) ?? $userGroup);
 
         return new UserGroupResource($userGroup);
+    }
+
+    private function dispatchCustomGroupSsoSync(?Group $group): void
+    {
+        if (! $group || $group->is_managed) {
+            return;
+        }
+
+        if ($group->sso_id) {
+            UpdateSsoGroup::dispatch($group)->afterCommit();
+        } else {
+            CreateSsoGroup::dispatch($group)->afterCommit();
+        }
     }
 }

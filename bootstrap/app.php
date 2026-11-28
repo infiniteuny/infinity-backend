@@ -12,6 +12,7 @@ use App\Jobs\SyncCoreTeamDocsCollections;
 use App\Jobs\SyncCoreTeamDocsGroups;
 use App\Jobs\SyncCoreTeamMembersGroup;
 use App\Jobs\SyncCoreTeamSsoGroups;
+use App\Jobs\SyncCustomSsoGroups;
 use App\Jobs\SyncIndividualTeams;
 use App\Jobs\SyncMemberGroup;
 use App\Jobs\SyncMemberSsoGroup;
@@ -83,24 +84,34 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->job(new SyncAchievementLeaderboards(Date::now()->year))->daily();
+
         $schedule->job(new SyncIndividualTeams)->hourly();
+
         $schedule->call(function () {
             Bus::chain([
                 new SyncMemberGroup,
                 new SyncActiveInactiveMemberGroup,
                 new SyncCoreTeamMembersGroup,
                 new SyncCGAdminMembersGroup,
-                new SyncSsoUsers,
-                new SyncCoreTeamSsoGroups,
-                new SyncCGAdminSsoGroups,
-                new SyncXCoreTeamSsoGroups,
-                new SyncXCGAdminSsoGroups,
-                new SyncMemberSsoGroup,
-                new SyncAdminSsoGroup,
-                new SyncActiveInactiveMemberSsoGroup,
-                new SyncCoreTeamDocsGroups,
-                new SyncXCoreTeamDocsGroups,
-                new SyncCoreTeamDocsCollections,
+                function () {
+                    Bus::chain([
+                        new SyncSsoUsers,
+                        new SyncCoreTeamSsoGroups,
+                        new SyncCGAdminSsoGroups,
+                        new SyncXCoreTeamSsoGroups,
+                        new SyncXCGAdminSsoGroups,
+                        new SyncMemberSsoGroup,
+                        new SyncAdminSsoGroup,
+                        new SyncActiveInactiveMemberSsoGroup,
+                        new SyncCustomSsoGroups,
+                    ])->dispatch();
+
+                    Bus::chain([
+                        new SyncCoreTeamDocsGroups,
+                        new SyncXCoreTeamDocsGroups,
+                        new SyncCoreTeamDocsCollections,
+                    ])->dispatch();
+                },
             ])->dispatch();
         })->name('sync-groups-and-integrations')->hourly();
     })

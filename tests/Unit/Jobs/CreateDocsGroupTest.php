@@ -82,15 +82,26 @@ class CreateDocsGroupTest extends TestCase
             ]),
             self::BASE_URL.'/api/groups.add_user' => Http::response(['data' => ['groups' => []]]),
             self::BASE_URL.'/api/groups.remove_user' => Http::response(['data' => ['groups' => []]]),
-            self::BASE_URL.'/api/groups.memberships' => Http::response([
-                'data' => [
-                    'users' => [
+            self::BASE_URL.'/api/groups.memberships' => function (Request $request) use (
+                $adoptedGroupId,
+                $bobOutlineId,
+                $blankEmailUserId,
+                $paddedEmailUserId,
+            ) {
+                $users = match ($request['id']) {
+                    $adoptedGroupId => [
                         ['id' => $bobOutlineId, 'name' => 'Bob'],
                         ['id' => $blankEmailUserId, 'name' => 'Suspended Ghost'],
                         ['id' => $paddedEmailUserId, 'name' => 'Alice Active'],
                     ],
-                ],
-            ]),
+                    self::CORE_TEAM_GROUP_ID => [
+                        ['id' => $blankEmailUserId, 'name' => 'Suspended Ghost'],
+                    ],
+                    default => [],
+                };
+
+                return Http::response(['data' => ['users' => $users]]);
+            },
             self::BASE_URL.'/api/users.info' => function (Request $request) use ($blankEmailUserId) {
                 if ($request['id'] === $blankEmailUserId) {
                     return Http::response(['data' => ['id' => $blankEmailUserId, 'name' => 'Ghost', 'email' => '']]);
@@ -176,10 +187,86 @@ class CreateDocsGroupTest extends TestCase
             && $r['id'] === self::CORE_TEAM_GROUP_ID
             && $r['userId'] === $paddedEmailUserId);
 
+        // Diffing: Bob was already in $adoptedGroupId so add_user is NOT sent redundantly for the cohort group
+        Http::assertNotSent(fn (Request $r) => $r->url() === self::BASE_URL.'/api/groups.add_user'
+            && $r['id'] === $adoptedGroupId
+            && $r['userId'] === $bobOutlineId);
+
         Bus::assertDispatched(
             CreateDocsCollection::class,
             fn (CreateDocsCollection $job) => $job->group->is($group2025)
                 && $job->collectionName === 'Core Team 2025',
         );
+    }
+
+    public function test_exits_early_when_group_deleted_post_lock_or_outline_unconfigured(): void
+    {
+        Http::fake();
+
+        $deletedGroup = Group::create(['name' => 'Deleted Group', 'is_managed' => true]);
+        $job = new CreateDocsGroup($deletedGroup);
+        $deletedGroup->delete();
+
+        $job->handle(app(OutlineService::class));
+        Http::assertNothingSent();
+
+        $unconfiguredGroup = Group::create(['name' => 'Unconfigured Group', 'is_managed' => true]);
+        config(['services.outline.token' => '   ']);
+        (new CreateDocsGroup($unconfiguredGroup))->handle(app(OutlineService::class));
+        Http::assertNothingSent();
+        $this->assertNull($unconfiguredGroup->fresh()->integration);
+    }
+
+    public function test_ignores_404_on_remove_user_from_cohort_and_shared_groups(): void
+    {
+        $docsGroupId = '33333333-3333-3333-3333-333333333333';
+        $bobOutlineId = '66666666-6666-6666-6666-666666666666';
+        $staleOutlineId = '77777777-7777-7777-7777-777777777777';
+
+        $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
+        $faculty = Faculty::create(['code' => 'FT', 'name' => 'Teknik']);
+        $major = Major::create([
+            'code' => 'PTI',
+            'name' => 'Pendidikan Teknik Informatika',
+            'degree_id' => $degree->id,
+            'faculty_id' => $faculty->id,
+        ]);
+        $bob = User::create([
+            'name' => 'Bob',
+            'username' => 'bob404',
+            'email_address' => 'bob404@infiniteuny.id',
+            'phone_number' => '+6281111111199',
+            'student_id' => '24520241099',
+            'major_id' => $major->id,
+            'links' => (object) [],
+            'is_member' => true,
+            'is_extraordinary' => false,
+        ]);
+        $group = Group::create(['name' => 'Core Team 404', 'is_managed' => true]);
+        $group->users()->sync([$bob->id]);
+
+        Http::fake([
+            self::BASE_URL.'/api/groups.list' => Http::response([
+                'data' => ['groups' => [['id' => $docsGroupId, 'name' => 'Core Team 404']]],
+            ]),
+            self::BASE_URL.'/api/users.list' => Http::response([
+                'data' => [['id' => $bobOutlineId, 'name' => 'Bob', 'email' => 'bob404@infiniteuny.id']],
+            ]),
+            self::BASE_URL.'/api/groups.add_user' => Http::response(['data' => ['groups' => []]]),
+            self::BASE_URL.'/api/groups.memberships' => Http::response([
+                'data' => [
+                    'users' => [
+                        ['id' => $bobOutlineId, 'name' => 'Bob', 'email' => 'bob404@infiniteuny.id'],
+                        ['id' => $staleOutlineId, 'name' => 'Stale', 'email' => 'nobody@infiniteuny.id'],
+                    ],
+                ],
+            ]),
+            self::BASE_URL.'/api/groups.remove_user' => Http::response(['ok' => false, 'error' => 'not_found'], 404),
+        ]);
+
+        (new CreateDocsGroup($group, [self::EX_CORE_TEAM_GROUP_ID], [self::CORE_TEAM_GROUP_ID]))
+            ->handle(app(OutlineService::class));
+
+        $this->assertSame($docsGroupId, $group->fresh()->integration?->docs_group_id);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Guards;
 
+use App\Models\Group;
 use App\Models\Token;
 use App\Models\User;
 use App\Services\OidcService;
@@ -187,9 +188,18 @@ class OidcTokenGuard implements Guard
 
             $user->sso_id = $ssoId;
             $user->syncOriginalAttribute('sso_id');
+
+            $groupIds = $user->groups()->pluck('groups.id')->all();
+
+            if ($groupIds !== []) {
+                Group::whereIn('id', $groupIds)->update(['updated_at' => $now]);
+            }
         }
 
-        if (! $token->wasRecentlyCreated) {
+        if (
+            ! $token->wasRecentlyCreated
+            && (is_null($token->last_used_at) || $token->last_used_at->lte($now->copy()->subSeconds(60)))
+        ) {
             $token->last_used_at = $now;
             $token->save();
         }

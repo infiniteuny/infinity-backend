@@ -16,6 +16,7 @@ use App\Models\Major;
 use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -120,7 +121,10 @@ class CoreTeamControllerTest extends TestCase
         $this->assertDatabaseMissing('group_integrations', ['group_id' => $group->id]);
         $this->assertDatabaseCount('core_team_members', 0);
 
-        Bus::assertDispatched(DeleteSsoGroup::class, fn (DeleteSsoGroup $job) => $job->groupSsoId === 'sso-ct-2024');
+        Bus::assertDispatched(
+            DeleteSsoGroup::class,
+            fn (DeleteSsoGroup $job) => $job->groupSsoId === 'sso-ct-2024' && $job->groupId === $group->id,
+        );
         Bus::assertDispatched(
             DeleteDocsGroup::class,
             function (DeleteDocsGroup $job) use ($group) {
@@ -138,6 +142,48 @@ class CoreTeamControllerTest extends TestCase
         Bus::assertDispatched(DeleteBlob::class, fn (DeleteBlob $job) => $job->manifest === $alicePhoto);
         Bus::assertDispatched(DeleteBlob::class, fn (DeleteBlob $job) => $job->manifest === $aliceAnim);
         Bus::assertDispatched(DeleteBlob::class, fn (DeleteBlob $job) => $job->manifest === $bobPhoto);
+    }
+
+    public function test_activating_new_cohort_does_not_bump_updated_at_on_historical_inactive_cohorts(): void
+    {
+        $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
+        $faculty = Faculty::create(['code' => 'FT', 'name' => 'Teknik']);
+        $major = Major::create([
+            'code' => 'PTI',
+            'name' => 'Pendidikan Teknik Informatika',
+            'degree_id' => $degree->id,
+            'faculty_id' => $faculty->id,
+        ]);
+
+        $admin = $this->createUser($major, 'Admin', 'adminct', 'adminct@infiniteuny.id', '24520241099', '+6281111111199');
+        $admin->givePermissionTo(Permission::create(['name' => 'create-core-team', 'guard_name' => 'api']));
+
+        Carbon::setTestNow('2026-01-01 00:00:00');
+        $inactiveGroup = Group::create(['name' => 'Core Team 2023', 'guard_name' => 'api', 'is_managed' => true]);
+        $inactiveCt = CoreTeam::create(['year' => 2023, 'is_active' => false, 'group_id' => $inactiveGroup->id]);
+        $activeGroup = Group::create(['name' => 'Core Team 2024', 'guard_name' => 'api', 'is_managed' => true]);
+        $activeCt = CoreTeam::create(['year' => 2024, 'is_active' => true, 'group_id' => $activeGroup->id]);
+
+        try {
+            Carbon::setTestNow('2026-01-02 00:00:00');
+
+            $this->actingAs($admin, 'api_headers')
+                ->postJson('/v1/core-teams', [
+                    'year' => 2025,
+                    'is_active' => true,
+                ])
+                ->assertCreated();
+
+            $inactiveCt->refresh();
+            $activeCt->refresh();
+
+            $this->assertFalse($inactiveCt->is_active);
+            $this->assertSame('2026-01-01 00:00:00', $inactiveCt->updated_at->format('Y-m-d H:i:s'));
+            $this->assertFalse($activeCt->is_active);
+            $this->assertSame('2026-01-02 00:00:00', $activeCt->updated_at->format('Y-m-d H:i:s'));
+        } finally {
+            Carbon::setTestNow();
+        }
     }
 
     private function createUser(

@@ -4,6 +4,7 @@ namespace Tests\Unit\Data\Authentik;
 
 use App\Data\Authentik\User as AuthentikUser;
 use App\Models\User as UserModel;
+use RuntimeException;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -19,6 +20,7 @@ class UserTest extends TestCase
         ]);
 
         $this->assertSame(42, $parsed->sso_id);
+        $this->assertSame('42', $parsed->requireSsoId());
         $this->assertNull($parsed->name);
         $this->assertNull($parsed->email_address);
         $this->assertTrue($parsed->is_active);
@@ -26,12 +28,13 @@ class UserTest extends TestCase
         $model = new UserModel([
             'name' => 'Alice Putri',
             'username' => 'aliceputri',
-            'email_address' => 'alice@infiniteuny.id',
+            'email_address' => '  alice@infiniteuny.id  ',
             'is_member' => true,
         ]);
         $model->sso_id = '42';
 
-        $payload = AuthentikUser::fromModel($model)->toArray();
+        $dto = AuthentikUser::fromModel($model);
+        $payload = $dto->toArray();
 
         $this->assertArrayNotHasKey('pk', $payload);
         $this->assertArrayNotHasKey('path', $payload);
@@ -40,5 +43,18 @@ class UserTest extends TestCase
         $this->assertSame('aliceputri', $payload['username']);
         $this->assertSame('alice@infiniteuny.id', $payload['email']);
         $this->assertTrue($payload['is_active']);
+
+        foreach ([
+            $dto,
+            AuthentikUser::from(['pk' => null, 'username' => 'u']),
+            AuthentikUser::from(['pk' => '   ', 'username' => 'u']),
+        ] as $missingIdDto) {
+            try {
+                $missingIdDto->requireSsoId();
+                $this->fail('Expected requireSsoId() to throw RuntimeException');
+            } catch (RuntimeException) {
+                $this->addToAssertionCount(1);
+            }
+        }
     }
 }

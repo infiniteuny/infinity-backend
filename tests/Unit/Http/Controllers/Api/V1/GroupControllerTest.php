@@ -60,7 +60,10 @@ class GroupControllerTest extends TestCase
             ->deleteJson("/v1/groups/{$group->id}")
             ->assertOk();
 
-        Bus::assertDispatched(DeleteSsoGroup::class, fn (DeleteSsoGroup $job) => $job->groupSsoId === 'sso-custom-wg');
+        Bus::assertDispatched(
+            DeleteSsoGroup::class,
+            fn (DeleteSsoGroup $job) => $job->groupSsoId === 'sso-custom-wg' && $job->groupId === $group->id,
+        );
         Bus::assertDispatched(
             DeleteDocsGroup::class,
             fn (DeleteDocsGroup $job) => $job->docsGroupId === 'docs-custom-wg'

@@ -36,22 +36,22 @@ return [
     ],
 
     'authentik' => [
-        'base_url' => env('AUTHENTIK_BASE_URL', 'https://auth.infiniteuny.id'),
-        'token' => env('AUTHENTIK_TOKEN'),
-        'core_team_group_id' => env('AUTHENTIK_CORE_TEAM_GROUP_ID'),
-        'xcore_team_group_id' => env('AUTHENTIK_XCORE_TEAM_GROUP_ID'),
-        'cg_admin_group_id' => env('AUTHENTIK_CG_ADMIN_GROUP_ID'),
-        'xcg_admin_group_id' => env('AUTHENTIK_XCG_ADMIN_GROUP_ID'),
-        'member_group_id' => env('AUTHENTIK_MEMBER_GROUP_ID'),
-        'internal_group_id' => env('AUTHENTIK_INTERNAL_GROUP_ID'),
-        'admin_group_id' => env('AUTHENTIK_ADMIN_GROUP_ID'),
+        'base_url' => is_string($v = env('AUTHENTIK_BASE_URL', 'https://auth.infiniteuny.id')) ? trim($v) : $v,
+        'token' => is_string($v = env('AUTHENTIK_TOKEN')) ? trim($v) : $v,
+        'core_team_group_id' => is_string($v = env('AUTHENTIK_CORE_TEAM_GROUP_ID')) ? trim($v) : $v,
+        'xcore_team_group_id' => is_string($v = env('AUTHENTIK_XCORE_TEAM_GROUP_ID')) ? trim($v) : $v,
+        'cg_admin_group_id' => is_string($v = env('AUTHENTIK_CG_ADMIN_GROUP_ID')) ? trim($v) : $v,
+        'xcg_admin_group_id' => is_string($v = env('AUTHENTIK_XCG_ADMIN_GROUP_ID')) ? trim($v) : $v,
+        'member_group_id' => is_string($v = env('AUTHENTIK_MEMBER_GROUP_ID')) ? trim($v) : $v,
+        'internal_group_id' => is_string($v = env('AUTHENTIK_INTERNAL_GROUP_ID')) ? trim($v) : $v,
+        'admin_group_id' => is_string($v = env('AUTHENTIK_ADMIN_GROUP_ID')) ? trim($v) : $v,
     ],
 
     'outline' => [
-        'base_url' => env('OUTLINE_BASE_URL', 'https://docs.infiniteuny.id'),
-        'token' => env('OUTLINE_TOKEN'),
-        'core_team_group_id' => env('OUTLINE_CORE_TEAM_GROUP_ID'),
-        'xcore_team_group_id' => env('OUTLINE_XCORE_TEAM_GROUP_ID'),
+        'base_url' => is_string($v = env('OUTLINE_BASE_URL', 'https://docs.infiniteuny.id')) ? trim($v) : $v,
+        'token' => is_string($v = env('OUTLINE_TOKEN')) ? trim($v) : $v,
+        'core_team_group_id' => is_string($v = env('OUTLINE_CORE_TEAM_GROUP_ID')) ? trim($v) : $v,
+        'xcore_team_group_id' => is_string($v = env('OUTLINE_XCORE_TEAM_GROUP_ID')) ? trim($v) : $v,
     ],
 
 ];

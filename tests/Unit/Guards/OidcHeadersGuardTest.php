@@ -4,6 +4,7 @@ namespace Tests\Unit\Guards;
 
 use App\Models\Degree;
 use App\Models\Faculty;
+use App\Models\Group;
 use App\Models\Major;
 use App\Models\Token;
 use App\Models\User;
@@ -49,6 +50,9 @@ class OidcHeadersGuardTest extends TestCase
         ]);
 
         $originalUpdatedAt = Carbon::parse('2026-01-01 00:00:00');
+        $memberGroup = Group::create(['name' => 'Member', 'is_managed' => true]);
+        $memberGroup->users()->attach($alice->id);
+        Group::whereKey($memberGroup->id)->update(['updated_at' => $originalUpdatedAt]);
         User::withoutTimestamps(function () use ($alice, $originalUpdatedAt) {
             $alice->updated_at = $originalUpdatedAt;
             $alice->saveQuietly();
@@ -108,6 +112,43 @@ class OidcHeadersGuardTest extends TestCase
         $alice->refresh();
         $this->assertSame('555', $alice->sso_id);
         $this->assertTrue($alice->updated_at->equalTo($originalUpdatedAt));
+        $this->assertTrue($memberGroup->fresh()->updated_at->gt($originalUpdatedAt));
+
+        // 4. Subsequent uses within 60s throttle last_used_at DB writes; >= 60s updates last_used_at
+        $token = Token::where('sso_id', 'active-hdr-tok')->firstOrFail();
+        $recentUse = now()->subSeconds(15)->startOfSecond();
+        $token->last_used_at = $recentUse;
+        $token->save();
+
+        $withinWindowRequest = Request::create('/v1/tokens', 'GET', server: [
+            'HTTP_X_USER_ID' => '555',
+            'HTTP_X_USER_EMAIL' => 'alice.putri@student.uny.ac.id',
+            'HTTP_X_TOKEN_ID' => 'active-hdr-tok',
+            'HTTP_X_TOKEN_CREATED_AT' => (string) time(),
+            'HTTP_X_TOKEN_EXPIRES_AT' => (string) (time() + 3600),
+            'HTTP_AUTHORIZATION' => 'Bearer valid-jwt',
+        ]);
+        $this->app->instance('request', $withinWindowRequest);
+        Auth::forgetGuards();
+        $this->assertNotNull(Auth::guard('api_headers')->user());
+        $this->assertTrue($token->fresh()->last_used_at->equalTo($recentUse));
+
+        $staleUse = now()->subSeconds(61)->startOfSecond();
+        $token->last_used_at = $staleUse;
+        $token->save();
+
+        $afterWindowRequest = Request::create('/v1/tokens', 'GET', server: [
+            'HTTP_X_USER_ID' => '555',
+            'HTTP_X_USER_EMAIL' => 'alice.putri@student.uny.ac.id',
+            'HTTP_X_TOKEN_ID' => 'active-hdr-tok',
+            'HTTP_X_TOKEN_CREATED_AT' => (string) time(),
+            'HTTP_X_TOKEN_EXPIRES_AT' => (string) (time() + 3600),
+            'HTTP_AUTHORIZATION' => 'Bearer valid-jwt',
+        ]);
+        $this->app->instance('request', $afterWindowRequest);
+        Auth::forgetGuards();
+        $this->assertNotNull(Auth::guard('api_headers')->user());
+        $this->assertTrue($token->fresh()->last_used_at->gt($staleUse));
     }
 
     public function test_rejects_token_bearer_smuggling_introspection_subject_mismatch_and_rebind_of_linked_user(): void

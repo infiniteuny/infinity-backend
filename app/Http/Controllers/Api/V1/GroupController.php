@@ -152,7 +152,7 @@ class GroupController extends Controller
         Group::withoutTouching(fn () => $group->delete());
 
         if (is_string($ssoId) && $ssoId !== '') {
-            DeleteSsoGroup::dispatch($ssoId);
+            DeleteSsoGroup::dispatch($ssoId, $group->id);
         }
 
         if (is_string($docsGroupId) && $docsGroupId !== '') {

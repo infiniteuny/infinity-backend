@@ -6,6 +6,7 @@ use App\Data\Authentik\User as AuthentikUser;
 use App\Models\Group;
 use App\Models\User;
 use App\Services\AuthentikService;
+use App\Services\AuthentikServiceImpl;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,6 +17,10 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
+
+    public bool $deleteWhenMissingModels = true;
+
+    public int $uniqueFor = 900;
 
     public string $memberPath = 'infiniteuny.id';
 
@@ -69,7 +74,7 @@ class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
             (new WithoutOverlapping("sso-user:{$this->user->id}"))
                 ->shared()
                 ->releaseAfter(10)
-                ->expireAfter(120),
+                ->expireAfter(240),
         ];
     }
 
@@ -78,11 +83,24 @@ class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(AuthentikService $authentikService): void
     {
-        $payload = AuthentikUser::fromModel($this->user);
-        $payload->path = $this->user->is_member ? $this->memberPath : $this->nonMemberPath;
-        $payload->type = $this->user->is_member ? $this->memberType : $this->nonMemberType;
+        if ($authentikService instanceof AuthentikServiceImpl && ! $authentikService->isConfigured()) {
+            return;
+        }
 
-        $previousSsoId = is_scalar($this->user->sso_id) ? trim((string) $this->user->sso_id) : '';
+        $syncedAt = now();
+        $user = User::find($this->user->id);
+
+        if (! $user) {
+            return;
+        }
+
+        $this->user = $user;
+
+        $payload = AuthentikUser::fromModel($user);
+        $payload->path = $user->is_member ? $this->memberPath : $this->nonMemberPath;
+        $payload->type = $user->is_member ? $this->memberType : $this->nonMemberType;
+
+        $previousSsoId = is_scalar($user->sso_id) ? trim((string) $user->sso_id) : '';
         $ssoUser = null;
 
         if ($previousSsoId !== '') {
@@ -96,9 +114,10 @@ class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
         }
 
         if (is_null($ssoUser)) {
-            $targetEmail = strtolower(trim((string) $this->user->email_address));
+            $trimmedEmail = trim((string) $user->email_address);
+            $targetEmail = strtolower($trimmedEmail);
             $ssoUsers = $targetEmail !== ''
-                ? $authentikService->listUsers(['email' => $this->user->email_address])
+                ? $authentikService->listUsers(['email' => $trimmedEmail])
                 : collect();
 
             $existingUser = $ssoUsers->first(
@@ -106,21 +125,25 @@ class CreateSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
                     && strtolower(trim($candidate->email_address)) === $targetEmail
             );
 
-            if ($existingUser !== null && ! is_null($existingUser->sso_id) && (string) $existingUser->sso_id !== '') {
-                $ssoUser = $authentikService->updateUser((string) $existingUser->sso_id, $payload);
+            $existingSsoId = $existingUser !== null && is_scalar($existingUser->sso_id) && ! is_bool($existingUser->sso_id)
+                ? trim((string) $existingUser->sso_id)
+                : '';
+
+            if ($existingSsoId !== '') {
+                $ssoUser = $authentikService->updateUser($existingSsoId, $payload);
             } else {
                 $ssoUser = $authentikService->createUser($payload);
             }
         }
 
-        $newSsoId = (string) $ssoUser->sso_id;
-        $this->user->sso_id = $newSsoId;
-        $this->user->sso_last_synced_at = now();
+        $newSsoId = $ssoUser->requireSsoId();
+        $user->sso_id = $newSsoId;
+        $user->sso_last_synced_at = $syncedAt;
 
-        User::withoutTimestamps(fn () => $this->user->saveQuietly());
+        User::withoutTimestamps(fn () => $user->saveQuietly());
 
         if ($previousSsoId !== $newSsoId && $newSsoId !== '') {
-            $groupIds = $this->user->groups()->pluck('groups.id')->all();
+            $groupIds = $user->groups()->pluck('groups.id')->all();
 
             if ($groupIds !== []) {
                 Group::whereIn('id', $groupIds)->update(['updated_at' => now()]);

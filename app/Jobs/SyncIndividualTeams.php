@@ -15,6 +15,12 @@ class SyncIndividualTeams implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
 
+    public int $uniqueFor = 1800;
+
+    public int $tries = 3;
+
+    public int $backoff = 10;
+
     /**
      * Get the middleware the job should pass through.
      *
@@ -26,7 +32,7 @@ class SyncIndividualTeams implements ShouldBeUnique, ShouldQueue
             (new WithoutOverlapping('sync-individual-teams'))
                 ->shared()
                 ->dontRelease()
-                ->expireAfter(120),
+                ->expireAfter(240),
         ];
     }
 
@@ -41,10 +47,34 @@ class SyncIndividualTeams implements ShouldBeUnique, ShouldQueue
             return;
         }
 
-        User::where('is_member', true)
-            ->select('id')
-            ->chunkById(100, function ($users) use ($individualTeamTypeId) {
+        User::query()
+            ->where('is_member', true)
+            ->select(['id', 'name', 'is_member'])
+            ->chunkById(200, function ($users) use ($individualTeamTypeId) {
+                $userIds = $users->pluck('id')->all();
+
+                $existingTeamsByLeader = Team::with('members:id')
+                    ->where('team_type_id', $individualTeamTypeId)
+                    ->whereIn('leader_id', $userIds)
+                    ->get()
+                    ->groupBy('leader_id');
+
                 foreach ($users as $user) {
+                    $teamsForUser = $existingTeamsByLeader->get($user->id);
+
+                    if ($teamsForUser !== null && $teamsForUser->isNotEmpty()) {
+                        $team = $teamsForUser->first();
+                        $memberIds = $team->members->pluck('id')->all();
+
+                        if (
+                            $team->name === $user->name
+                            && $team->leader_id === $user->id
+                            && $memberIds === [$user->id]
+                        ) {
+                            continue;
+                        }
+                    }
+
                     $this->syncUserIndividualTeam($user->id, $individualTeamTypeId);
                 }
             });

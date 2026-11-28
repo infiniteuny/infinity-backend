@@ -127,7 +127,10 @@ class CommunityGroupAdminControllerTest extends TestCase
         $this->assertDatabaseMissing('group_integrations', ['group_id' => $group->id]);
         $this->assertDatabaseCount('community_group_admin_members', 0);
 
-        Bus::assertDispatched(DeleteSsoGroup::class, fn (DeleteSsoGroup $job) => $job->groupSsoId === 'sso-cga-2024');
+        Bus::assertDispatched(
+            DeleteSsoGroup::class,
+            fn (DeleteSsoGroup $job) => $job->groupSsoId === 'sso-cga-2024' && $job->groupId === $group->id,
+        );
         Bus::assertDispatched(
             DeleteDocsGroup::class,
             fn (DeleteDocsGroup $job) => $job->docsGroupId === 'docs-cga-2024'

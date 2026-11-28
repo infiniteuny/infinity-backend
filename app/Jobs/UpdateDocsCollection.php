@@ -7,6 +7,7 @@ use App\Enums\OutlinePermission;
 use App\Models\Group;
 use App\Models\GroupIntegration;
 use App\Services\OutlineService;
+use App\Services\OutlineServiceImpl;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,6 +15,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Support\Facades\DB;
+use RuntimeException;
 use Spatie\LaravelData\Optional;
 
 class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
@@ -21,6 +23,10 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
     use Queueable;
 
     private const PAGE_LIMIT = 100;
+
+    public bool $deleteWhenMissingModels = true;
+
+    public int $uniqueFor = 900;
 
     /**
      * Create a new job instance.
@@ -69,7 +75,7 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
             (new WithoutOverlapping("docs-collection:{$this->group->id}"))
                 ->shared()
                 ->releaseAfter(15)
-                ->expireAfter(120),
+                ->expireAfter(240),
         ];
     }
 
@@ -78,23 +84,36 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(OutlineService $outlineService): void
     {
-        $integration = GroupIntegration::where('group_id', $this->group->id)->first();
-        $owningGroupId = $integration?->docs_group_id;
-
-        if (is_null($owningGroupId)) {
+        if ($outlineService instanceof OutlineServiceImpl && ! $outlineService->isConfigured()) {
             return;
         }
 
-        if (is_null($integration->docs_collection_id)) {
-            CreateDocsCollection::dispatch($this->group, $this->collectionName, $this->readOnlyGroupIds);
+        $syncedAt = now();
+        $group = Group::find($this->group->id);
 
+        if (! $group) {
             return;
         }
 
-        $docsCollectionId = $integration->docs_collection_id;
+        $this->group = $group;
+
+        $integration = GroupIntegration::where('group_id', $group->id)->first();
+        $owningGroupId = is_string($integration?->docs_group_id) ? trim($integration->docs_group_id) : '';
+
+        if ($owningGroupId === '') {
+            return;
+        }
+
+        $docsCollectionId = is_string($integration?->docs_collection_id) ? trim($integration->docs_collection_id) : '';
+
+        if ($docsCollectionId === '') {
+            CreateDocsCollection::dispatch($group, $this->collectionName, $this->readOnlyGroupIds);
+
+            return;
+        }
 
         try {
-            $outlineService->updateCollection($docsCollectionId, new OutlineCollection(
+            $updated = $outlineService->updateCollection($docsCollectionId, new OutlineCollection(
                 id: Optional::create(),
                 name: $this->collectionName,
                 description: Optional::create(),
@@ -105,19 +124,20 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
                 url: Optional::create(),
                 urlId: Optional::create(),
             ));
+            $docsCollectionId = $this->requireRemoteId($updated->id, 'collection');
         } catch (RequestException $exception) {
             if ($exception->response?->status() !== 404) {
                 throw $exception;
             }
 
             $recreatedCollection = $this->findOrCreateCollection($outlineService, $this->collectionName);
-            $docsCollectionId = $recreatedCollection->id;
+            $docsCollectionId = $this->requireRemoteId($recreatedCollection->id, 'collection');
         }
 
         $synced = $this->syncCollectionGroups($outlineService, $docsCollectionId, $owningGroupId);
 
-        DB::transaction(function () use ($docsCollectionId, $owningGroupId, $synced) {
-            $fresh = GroupIntegration::where('group_id', $this->group->id)
+        DB::transaction(function () use ($group, $docsCollectionId, $owningGroupId, $synced, $syncedAt) {
+            $fresh = GroupIntegration::where('group_id', $group->id)
                 ->lockForUpdate()
                 ->first();
 
@@ -135,7 +155,7 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
                     $fresh->docs_group_last_synced_at = null;
                 }
             } else {
-                $fresh->docs_collection_last_synced_at = $fresh->docs_group_id === $owningGroupId ? now() : null;
+                $fresh->docs_collection_last_synced_at = $fresh->docs_group_id === $owningGroupId ? $syncedAt : null;
             }
 
             $fresh->save();
@@ -158,8 +178,8 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
         }
 
         $readOnlyGroupIds = array_values(array_unique(array_filter(
-            $this->readOnlyGroupIds,
-            fn ($groupId) => is_string($groupId) && $groupId !== '' && $groupId !== $owningGroupId,
+            array_map(fn ($id) => is_string($id) ? trim($id) : '', $this->readOnlyGroupIds),
+            fn (string $groupId) => $groupId !== '' && $groupId !== $owningGroupId,
         )));
 
         foreach ($readOnlyGroupIds as $groupId) {
@@ -184,8 +204,10 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
             );
 
             if ($matched !== null) {
+                $matchedId = $this->requireRemoteId($matched->id, 'collection');
+
                 if (is_string($matched->permission)) {
-                    return $outlineService->updateCollection($matched->id, new OutlineCollection(
+                    $updated = $outlineService->updateCollection($matchedId, new OutlineCollection(
                         id: Optional::create(),
                         name: $name,
                         description: Optional::create(),
@@ -196,6 +218,10 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
                         url: Optional::create(),
                         urlId: Optional::create(),
                     ));
+
+                    $this->requireRemoteId($updated->id, 'collection');
+
+                    return $updated;
                 }
 
                 return $matched;
@@ -204,7 +230,7 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
             $offset += self::PAGE_LIMIT;
         } while ($collections->count() === self::PAGE_LIMIT);
 
-        return $outlineService->createCollection(new OutlineCollection(
+        $created = $outlineService->createCollection(new OutlineCollection(
             id: Optional::create(),
             name: $name,
             description: Optional::create(),
@@ -215,5 +241,24 @@ class UpdateDocsCollection implements ShouldBeUniqueUntilProcessing, ShouldQueue
             url: Optional::create(),
             urlId: Optional::create(),
         ));
+
+        $this->requireRemoteId($created->id, 'collection');
+
+        return $created;
+    }
+
+    private function requireRemoteId(mixed $id, string $resource): string
+    {
+        if ($id instanceof Optional || ! is_scalar($id) || is_bool($id)) {
+            throw new RuntimeException("Outline {$resource} response is missing a valid scalar id.");
+        }
+
+        $normalized = trim((string) $id);
+
+        if ($normalized === '') {
+            throw new RuntimeException("Outline {$resource} response returned an empty id.");
+        }
+
+        return $normalized;
     }
 }

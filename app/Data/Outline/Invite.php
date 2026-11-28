@@ -18,7 +18,7 @@ class Invite extends Data
     {
         return new self(
             name: $user->name,
-            email: $user->email_address,
+            email: trim((string) $user->email_address),
             role: $role->value,
         );
     }

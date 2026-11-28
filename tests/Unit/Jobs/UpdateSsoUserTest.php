@@ -91,5 +91,14 @@ class UpdateSsoUserTest extends TestCase
 
         $this->assertTrue($synced->fresh()->updated_at->equalTo($pastTime));
         $this->assertTrue($group->fresh()->updated_at->equalTo($pastTime));
+
+        // Post-lock deleted user (e.g. queued behind DeleteSsoUser) exits instead of 404-resurrecting in Authentik
+        $queuedUpdate = new UpdateSsoUser($synced);
+        $group->users()->detach();
+        $synced->delete();
+
+        Http::fake();
+        $queuedUpdate->handle(app(AuthentikService::class));
+        Http::assertNothingSent();
     }
 }

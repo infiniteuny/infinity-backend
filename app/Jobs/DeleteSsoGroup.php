@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Services\AuthentikService;
+use App\Services\AuthentikServiceImpl;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,12 +15,22 @@ class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
 
+    public int $uniqueFor = 900;
+
+    public string $ssoId;
+
     /**
      * Create a new job instance.
      */
     public function __construct(
-        public string $groupSsoId,
-    ) {}
+        public string $groupSsoId = '',
+        public ?string $groupId = null,
+        ?string $ssoId = null,
+    ) {
+        $resolved = $ssoId ?? $groupSsoId;
+        $this->groupSsoId = $resolved;
+        $this->ssoId = $resolved;
+    }
 
     /**
      * The maximum number of unhandled exceptions to allow before failing.
@@ -44,7 +55,9 @@ class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function uniqueId(): string
     {
-        return $this->groupSsoId;
+        $groupId = is_string($this->groupId) ? trim($this->groupId) : '';
+
+        return $groupId !== '' ? "group:{$groupId}" : $this->ssoId;
     }
 
     /**
@@ -54,11 +67,16 @@ class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function middleware(): array
     {
+        $groupId = is_string($this->groupId) ? trim($this->groupId) : '';
+        $lockKey = $groupId !== ''
+            ? "sso-group:{$groupId}"
+            : "sso-group-delete:{$this->ssoId}";
+
         return [
-            (new WithoutOverlapping("sso-group-delete:{$this->groupSsoId}"))
+            (new WithoutOverlapping($lockKey))
                 ->shared()
                 ->releaseAfter(10)
-                ->expireAfter(120),
+                ->expireAfter(240),
         ];
     }
 
@@ -67,8 +85,18 @@ class DeleteSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(AuthentikService $authentikService): void
     {
+        if ($authentikService instanceof AuthentikServiceImpl && ! $authentikService->isConfigured()) {
+            return;
+        }
+
+        $targetSsoId = trim($this->ssoId !== '' ? $this->ssoId : $this->groupSsoId);
+
+        if ($targetSsoId === '') {
+            return;
+        }
+
         try {
-            $authentikService->deleteGroup($this->groupSsoId);
+            $authentikService->deleteGroup($targetSsoId);
         } catch (RequestException $exception) {
             if ($exception->response?->status() !== 404) {
                 throw $exception;

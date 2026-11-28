@@ -3,25 +3,49 @@
 namespace App\Jobs;
 
 use App\Models\CoreTeam;
-use App\Models\Group;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 
-class SyncXCoreTeamDocsGroups implements ShouldQueue
+class SyncXCoreTeamDocsGroups implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
+
+    public int $uniqueFor = 1800;
+
+    public int $tries = 3;
+
+    public int $backoff = 10;
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array<int, object>
+     */
+    public function middleware(): array
+    {
+        return [
+            (new WithoutOverlapping('sync-xcore-team-docs-groups'))
+                ->shared()
+                ->releaseAfter(10)
+                ->expireAfter(240),
+        ];
+    }
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-        $coreTeams = CoreTeam::where('is_active', false)->get();
-        $docsParentIds = array_values(array_filter([config('services.outline.xcore_team_group_id')]));
-        $docsRemoveParentIds = array_values(array_filter([config('services.outline.core_team_group_id')]));
+        $coreTeams = CoreTeam::with('group.integration')->where('is_active', false)->get();
+        $xcoreTeamParentId = config('services.outline.xcore_team_group_id');
+        $coreTeamParentId = config('services.outline.core_team_group_id');
+        $docsParentIds = is_string($xcoreTeamParentId) && trim($xcoreTeamParentId) !== '' ? [trim($xcoreTeamParentId)] : [];
+        $docsRemoveParentIds = is_string($coreTeamParentId) && trim($coreTeamParentId) !== '' ? [trim($coreTeamParentId)] : [];
 
         foreach ($coreTeams as $coreTeam) {
-            $group = Group::with('integration')->find($coreTeam->group_id);
+            $group = $coreTeam->group;
 
             if (! $group) {
                 continue;

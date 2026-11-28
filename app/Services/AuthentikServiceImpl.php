@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Http;
 
 class AuthentikServiceImpl implements AuthentikService
 {
+    public function isConfigured(): bool
+    {
+        return trim((string) config('services.authentik.base_url', '')) !== ''
+            && trim((string) config('services.authentik.token', '')) !== '';
+    }
+
     public function listUsers(array $filters = []): Collection
     {
         $response = Http::authentik()

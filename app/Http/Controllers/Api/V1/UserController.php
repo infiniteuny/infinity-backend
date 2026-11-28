@@ -12,6 +12,8 @@ use App\Jobs\DeleteBlob;
 use App\Jobs\DeleteSsoUser;
 use App\Jobs\UpdateSsoUser;
 use App\Models\Config;
+use App\Models\Group;
+use App\Models\Token;
 use App\Models\User;
 use App\Traits\HasPagination;
 use App\Traits\HasQueryFilters;
@@ -181,7 +183,7 @@ class UserController extends Controller
      * @apiResourceModel App\Models\User
      *
      * @bodyParam links object optional An object of external profile or social media links for the user. Example: {"github": "infiniteuny", "linkedin": "infiniteuny", "website": "https://www.infiniteuny.id"}
-     * @bodyParam links.* string The value or URL of an individual external profile or social media link. Example: https://example.com
+     * @bodyParam links.* string optional The value or URL of an individual external profile or social media link. Example: https://example.com
      */
     public function store(StoreUserRequest $request)
     {
@@ -263,7 +265,7 @@ class UserController extends Controller
      * @apiResourceModel App\Models\User
      *
      * @bodyParam links object optional An object of external profile or social media links for the user. Example: {"github": "infiniteuny", "linkedin": "infiniteuny", "website": "https://www.infiniteuny.id"}
-     * @bodyParam links.* string The value or URL of an individual external profile or social media link. Example: https://example.com
+     * @bodyParam links.* string optional The value or URL of an individual external profile or social media link. Example: https://example.com
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -273,7 +275,23 @@ class UserController extends Controller
             $data['links'] = (object) ($data['links'] ?? []);
         }
 
-        $user->update($data);
+        $oldEmail = $user->email_address;
+        $wasMember = (bool) $user->is_member;
+
+        DB::transaction(function () use ($user, $data, $oldEmail, $wasMember) {
+            $user->update($data);
+
+            if ($oldEmail !== $user->email_address) {
+                $groupIds = $user->groups()->pluck('groups.id')->all();
+                if ($groupIds !== []) {
+                    Group::whereIn('id', $groupIds)->update(['updated_at' => now()]);
+                }
+            }
+
+            if ($wasMember && ! $user->is_member) {
+                Token::where('user_id', $user->id)->delete();
+            }
+        });
 
         if ($user->sso_id) {
             UpdateSsoUser::dispatch($user);
@@ -293,27 +311,36 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $userId = $user->id;
         $ssoId = $user->sso_id;
         $blobManifests = [];
 
-        foreach (['core_team_members', 'community_group_admin_members'] as $pivotTable) {
-            $rows = DB::table($pivotTable)
-                ->where('user_id', $user->id)
-                ->get(['photo', 'animation']);
+        DB::transaction(function () use ($user, &$blobManifests) {
+            $groupIds = $user->groups()->pluck('groups.id')->all();
 
-            foreach ($rows as $row) {
-                foreach ([$row->photo, $row->animation] as $manifest) {
-                    if (is_string($manifest) && $manifest !== '') {
-                        $blobManifests[$manifest] = true;
+            foreach (['core_team_members', 'community_group_admin_members'] as $pivotTable) {
+                $rows = DB::table($pivotTable)
+                    ->where('user_id', $user->id)
+                    ->get(['photo', 'animation']);
+
+                foreach ($rows as $row) {
+                    foreach ([$row->photo, $row->animation] as $manifest) {
+                        if (is_string($manifest) && $manifest !== '') {
+                            $blobManifests[$manifest] = true;
+                        }
                     }
                 }
             }
-        }
 
-        $user->delete();
+            $user->delete();
+
+            if ($groupIds !== []) {
+                Group::whereIn('id', $groupIds)->update(['updated_at' => now()]);
+            }
+        });
 
         if (is_string($ssoId) && $ssoId !== '') {
-            DeleteSsoUser::dispatch($ssoId);
+            DeleteSsoUser::dispatch($ssoId, $userId);
         }
 
         foreach (array_keys($blobManifests) as $manifest) {

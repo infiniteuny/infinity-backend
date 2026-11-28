@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Http;
 
 class OutlineServiceImpl implements OutlineService
 {
+    public function isConfigured(): bool
+    {
+        return trim((string) config('services.outline.base_url', '')) !== ''
+            && trim((string) config('services.outline.token', '')) !== '';
+    }
+
     public function listUsers(array $filters = []): Collection
     {
         $response = Http::outline()

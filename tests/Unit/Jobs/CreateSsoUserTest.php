@@ -95,4 +95,74 @@ class CreateSsoUserTest extends TestCase
         $this->assertTrue($alice->updated_at->equalTo($pastTime));
         $this->assertTrue($memberGroup->fresh()->updated_at->gt($pastTime));
     }
+
+    public function test_skips_when_unconfigured_or_deleted_post_lock_and_records_pre_read_watermark(): void
+    {
+        $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
+        $faculty = Faculty::create(['code' => 'FT', 'name' => 'Teknik']);
+        $major = Major::create([
+            'code' => 'PTI',
+            'name' => 'Pendidikan Teknik Informatika',
+            'degree_id' => $degree->id,
+            'faculty_id' => $faculty->id,
+        ]);
+
+        $bob = User::create([
+            'name' => 'Bob',
+            'username' => 'bobuser',
+            'email_address' => '  bob@infiniteuny.id  ',
+            'phone_number' => '+6281111111188',
+            'student_id' => '24520241088',
+            'major_id' => $major->id,
+            'links' => (object) [],
+            'is_member' => true,
+            'is_extraordinary' => false,
+        ]);
+
+        // Unconfigured token skips without mutating sso_id or sso_last_synced_at
+        config([
+            'services.authentik.base_url' => self::AUTHENTIK_URL,
+            'services.authentik.token' => '',
+        ]);
+        (new CreateSsoUser($bob))->handle(app(AuthentikService::class));
+        $this->assertNull($bob->fresh()->sso_id);
+        $this->assertNull($bob->fresh()->sso_last_synced_at);
+
+        // Concurrent update occurring during HTTP flight stays newer than pre-read watermark
+        config(['services.authentik.token' => 'ak_test_token']);
+        $concurrentEditAt = Carbon::now()->addSeconds(5)->startOfSecond();
+
+        Http::fake([
+            self::AUTHENTIK_URL.'/api/v3/core/users/*' => function (Request $request) use ($bob, $concurrentEditAt) {
+                if ($request->method() === 'GET') {
+                    $this->assertSame('bob@infiniteuny.id', $request['email']);
+
+                    return Http::response(['results' => []]);
+                }
+
+                User::whereKey($bob->id)->update(['updated_at' => $concurrentEditAt]);
+
+                return Http::response([
+                    'pk' => 77,
+                    'username' => 'bobuser',
+                    'name' => 'Bob',
+                    'email' => 'bob@infiniteuny.id',
+                    'is_active' => true,
+                ]);
+            },
+        ]);
+
+        (new CreateSsoUser($bob))->handle(app(AuthentikService::class));
+
+        $bob->refresh();
+        $this->assertSame('77', $bob->sso_id);
+        $this->assertTrue($bob->sso_last_synced_at->lt($bob->updated_at));
+        Http::assertSentCount(2);
+
+        // Post-lock missing model exits immediately without additional HTTP calls
+        $deletedJob = new CreateSsoUser($bob);
+        $bob->delete();
+        $deletedJob->handle(app(AuthentikService::class));
+        Http::assertSentCount(2);
+    }
 }

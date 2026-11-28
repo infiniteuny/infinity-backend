@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Services\AuthentikService;
+use App\Services\AuthentikServiceImpl;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,12 +15,22 @@ class DeleteSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Queueable;
 
+    public int $uniqueFor = 900;
+
+    public string $ssoId;
+
     /**
      * Create a new job instance.
      */
     public function __construct(
-        public string $userSsoId,
-    ) {}
+        public string $userSsoId = '',
+        public ?string $userId = null,
+        ?string $ssoId = null,
+    ) {
+        $resolved = $ssoId ?? $userSsoId;
+        $this->userSsoId = $resolved;
+        $this->ssoId = $resolved;
+    }
 
     /**
      * The maximum number of unhandled exceptions to allow before failing.
@@ -44,7 +55,9 @@ class DeleteSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function uniqueId(): string
     {
-        return $this->userSsoId;
+        $userId = is_string($this->userId) ? trim($this->userId) : '';
+
+        return $userId !== '' ? "user:{$userId}" : $this->ssoId;
     }
 
     /**
@@ -54,11 +67,16 @@ class DeleteSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function middleware(): array
     {
+        $userId = is_string($this->userId) ? trim($this->userId) : '';
+        $lockKey = $userId !== ''
+            ? "sso-user:{$userId}"
+            : "sso-user-delete:{$this->ssoId}";
+
         return [
-            (new WithoutOverlapping("sso-user-delete:{$this->userSsoId}"))
+            (new WithoutOverlapping($lockKey))
                 ->shared()
                 ->releaseAfter(10)
-                ->expireAfter(120),
+                ->expireAfter(240),
         ];
     }
 
@@ -67,8 +85,18 @@ class DeleteSsoUser implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(AuthentikService $authentikService): void
     {
+        if ($authentikService instanceof AuthentikServiceImpl && ! $authentikService->isConfigured()) {
+            return;
+        }
+
+        $targetSsoId = trim($this->ssoId !== '' ? $this->ssoId : $this->userSsoId);
+
+        if ($targetSsoId === '') {
+            return;
+        }
+
         try {
-            $authentikService->deleteUser($this->userSsoId);
+            $authentikService->deleteUser($targetSsoId);
         } catch (RequestException $exception) {
             if ($exception->response?->status() !== 404) {
                 throw $exception;

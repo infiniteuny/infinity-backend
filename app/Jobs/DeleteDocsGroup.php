@@ -6,6 +6,7 @@ use App\Data\Outline\User as OutlineUser;
 use App\Models\CoreTeam;
 use App\Models\User;
 use App\Services\OutlineService;
+use App\Services\OutlineServiceImpl;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,6 +19,8 @@ class DeleteDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
     use Queueable;
 
     private const PAGE_LIMIT = 100;
+
+    public int $uniqueFor = 900;
 
     /**
      * Create a new job instance.
@@ -55,7 +58,9 @@ class DeleteDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function uniqueId(): string
     {
-        return $this->docsGroupId;
+        $groupId = is_string($this->groupId) ? trim($this->groupId) : '';
+
+        return $groupId !== '' ? "group:{$groupId}" : $this->docsGroupId;
     }
 
     /**
@@ -65,15 +70,16 @@ class DeleteDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function middleware(): array
     {
-        $lockKey = $this->groupId
-            ? "docs-group:{$this->groupId}"
+        $groupId = is_string($this->groupId) ? trim($this->groupId) : '';
+        $lockKey = $groupId !== ''
+            ? "docs-group:{$groupId}"
             : "docs-group-delete:{$this->docsGroupId}";
 
         return [
             (new WithoutOverlapping($lockKey))
                 ->shared()
                 ->releaseAfter(15)
-                ->expireAfter(120),
+                ->expireAfter(240),
         ];
     }
 
@@ -82,17 +88,30 @@ class DeleteDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(OutlineService $outlineService): void
     {
-        $sharedGroupIds = array_values(array_unique(array_filter($this->sharedGroupIds ?? [])));
+        if ($outlineService instanceof OutlineServiceImpl && ! $outlineService->isConfigured()) {
+            return;
+        }
+
+        $targetDocsGroupId = trim($this->docsGroupId);
+
+        if ($targetDocsGroupId === '') {
+            return;
+        }
+
+        $sharedGroupIds = array_values(array_unique(array_filter(array_map(
+            fn ($id) => is_string($id) ? trim($id) : '',
+            $this->sharedGroupIds ?? [],
+        ))));
         $groupExists = true;
 
         if ($sharedGroupIds !== []) {
-            $groupMembers = $this->fetchGroupMembers($outlineService, $this->docsGroupId, $groupExists);
+            $groupMembers = $this->fetchGroupMembers($outlineService, $targetDocsGroupId, $groupExists);
             $this->reconcileSharedGroups($outlineService, $groupMembers, $sharedGroupIds);
         }
 
         if ($groupExists) {
             try {
-                $outlineService->deleteGroup($this->docsGroupId);
+                $outlineService->deleteGroup($targetDocsGroupId);
             } catch (RequestException $exception) {
                 if ($exception->response?->status() !== 404) {
                     throw $exception;

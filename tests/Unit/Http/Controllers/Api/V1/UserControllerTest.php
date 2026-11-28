@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\V1\UserController;
 use App\Jobs\DeleteBlob;
 use App\Jobs\DeleteSsoUser;
+use App\Jobs\UpdateSsoUser;
 use App\Models\Achievement;
 use App\Models\Competition;
 use App\Models\CompetitionInstance;
@@ -13,6 +15,7 @@ use App\Models\CompetitionRank;
 use App\Models\CompetitionScale;
 use App\Models\CompetitionTeamType;
 use App\Models\CompetitionTimeRange;
+use App\Models\Config;
 use App\Models\CoreTeam;
 use App\Models\CoreTeamDivision;
 use App\Models\CoreTeamMember;
@@ -25,9 +28,15 @@ use App\Models\Team;
 use App\Models\Token;
 use App\Models\User;
 use App\Services\OidcService;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Pagination\Cursor;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Route;
+use PDOException;
+use ReflectionMethod;
 use RuntimeException;
 use Tests\TestCase;
 
@@ -278,5 +287,140 @@ class UserControllerTest extends TestCase
             ->assertOk();
         Bus::assertDispatchedTimes(DeleteBlob::class, 1);
         Bus::assertDispatched(DeleteBlob::class, fn (DeleteBlob $job) => $job->manifest === $userCtPhoto);
+        Bus::assertDispatched(
+            DeleteSsoUser::class,
+            fn (DeleteSsoUser $job) => $job->userSsoId === '102' && $job->userId === $this->malice->id,
+        );
+    }
+
+    public function test_update_email_touches_groups_revoking_membership_soft_deletes_tokens_and_destroy_touches_groups(): void
+    {
+        Bus::fake([UpdateSsoUser::class, DeleteSsoUser::class]);
+
+        $this->alice->givePermissionTo(Permission::create([
+            'name' => 'manage-user-membership',
+            'guard_name' => 'api',
+        ]));
+
+        Carbon::setTestNow('2026-01-01 00:00:00');
+        $memberGroup = Group::create([
+            'name' => 'Cohort Group',
+            'guard_name' => 'api',
+            'is_managed' => true,
+        ]);
+        $unrelatedGroup = Group::create([
+            'name' => 'Unrelated Group',
+            'guard_name' => 'api',
+            'is_managed' => true,
+        ]);
+        $this->malice->groups()->attach($memberGroup->id);
+        Group::whereIn('id', [$memberGroup->id, $unrelatedGroup->id])
+            ->update(['updated_at' => Carbon::parse('2026-01-01 00:00:00')]);
+
+        $activeToken = Token::create([
+            'sso_id' => 'tok-active',
+            'user_id' => $this->malice->id,
+            'last_used_at' => now(),
+            'created_at' => now()->subMinute(),
+            'expires_at' => now()->addHour(),
+        ]);
+
+        try {
+            Carbon::setTestNow('2026-01-01 02:00:00');
+
+            $this->actingAs($this->alice, 'api_headers')
+                ->putJson("/v1/users/{$this->malice->id}", [
+                    'email_address' => 'new.malice@student.uny.ac.id',
+                    'is_member' => false,
+                ])
+                ->assertOk();
+
+            $memberGroup->refresh();
+            $unrelatedGroup->refresh();
+            $this->assertSame('2026-01-01 02:00:00', $memberGroup->updated_at->format('Y-m-d H:i:s'));
+            $this->assertSame('2026-01-01 00:00:00', $unrelatedGroup->updated_at->format('Y-m-d H:i:s'));
+            $this->assertSoftDeleted('tokens', ['id' => $activeToken->id]);
+
+            Carbon::setTestNow('2026-01-01 03:00:00');
+
+            $this->actingAs($this->alice, 'api_headers')
+                ->deleteJson("/v1/users/{$this->malice->id}")
+                ->assertOk();
+
+            $memberGroup->refresh();
+            $unrelatedGroup->refresh();
+            $this->assertSame('2026-01-01 03:00:00', $memberGroup->updated_at->format('Y-m-d H:i:s'));
+            $this->assertSame('2026-01-01 00:00:00', $unrelatedGroup->updated_at->format('Y-m-d H:i:s'));
+        } finally {
+            Carbon::setTestNow();
+        }
+    }
+
+    public function test_extend_membership_rejects_empty_or_malformed_reregistration_date_configs_and_docblocks_mark_links_optional(): void
+    {
+        $storeDoc = (string) (new ReflectionMethod(UserController::class, 'store'))->getDocComment();
+        $updateDoc = (string) (new ReflectionMethod(UserController::class, 'update'))->getDocComment();
+        $this->assertStringContainsString('@bodyParam links object optional', $storeDoc);
+        $this->assertStringContainsString('@bodyParam links object optional', $updateDoc);
+
+        Config::create(['key' => 'allow_reregistration', 'value' => 'true', 'type' => 'BOOLEAN', 'is_private' => false]);
+        $startCfg = Config::create(['key' => 'start_reregistration_date', 'value' => '   ', 'type' => 'STRING', 'is_private' => false]);
+        $endCfg = Config::create(['key' => 'end_reregistration_date', 'value' => '2026-12-31', 'type' => 'STRING', 'is_private' => false]);
+
+        $this->actingAs($this->alice, 'api_headers')
+            ->postJson("/v1/users/{$this->alice->id}/extend")
+            ->assertStatus(403)
+            ->assertJsonPath('message', 'Reregistration period is not configured.');
+
+        $startCfg->update(['value' => 'not-a-valid-date']);
+
+        $this->actingAs($this->alice, 'api_headers')
+            ->postJson("/v1/users/{$this->alice->id}/extend")
+            ->assertStatus(403)
+            ->assertJsonPath('message', 'Reregistration period is not configured.');
+
+        $startCfg->update(['value' => '2026-01-01']);
+        $endCfg->update(['value' => 'invalid-end-date']);
+
+        $this->actingAs($this->alice, 'api_headers')
+            ->postJson("/v1/users/{$this->alice->id}/extend")
+            ->assertStatus(403)
+            ->assertJsonPath('message', 'Reregistration period is not configured.');
+    }
+
+    public function test_invalid_cursor_2d_filter_null_byte_and_unique_violation_exception_rendering(): void
+    {
+        $mismatchedCursor = (new Cursor(['non_existent_sort_column' => 'abc'], true))->encode();
+
+        $this->getJson("/v1/users?cursor={$mismatchedCursor}")
+            ->assertStatus(400)
+            ->assertJsonPath('message', 'Invalid pagination cursor.');
+
+        $this->getJson('/v1/users?cursor=not-base64-json')
+            ->assertStatus(400)
+            ->assertJsonPath('message', 'Invalid pagination cursor.');
+
+        $this->getJson('/v1/users?cursor[]=array')
+            ->assertStatus(400)
+            ->assertJsonPath('message', 'Invalid pagination cursor.');
+
+        $this->getJson('/v1/users?filters[major_id][][]=nested')
+            ->assertStatus(400)
+            ->assertJsonPath('message', 'Invalid query parameter value.');
+
+        $this->getJson('/v1/users?filters[name]=bad%00byte')
+            ->assertStatus(400)
+            ->assertJsonPath('message', 'Invalid query parameter value.');
+
+        Route::middleware('api')->post('/_test/unique-violation', function () {
+            $pdoException = new PDOException('SQLSTATE[23505]: Unique violation: duplicate key value');
+            $pdoException->errorInfo = ['23505', 7, 'duplicate key value violates unique constraint'];
+
+            throw new QueryException('pgsql', 'insert into users ...', [], $pdoException);
+        });
+
+        $this->postJson('/_test/unique-violation')
+            ->assertStatus(409)
+            ->assertJsonPath('message', 'Resource already exists or conflicts with an existing unique record.');
     }
 }

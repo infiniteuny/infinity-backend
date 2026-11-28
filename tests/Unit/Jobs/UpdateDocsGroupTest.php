@@ -176,4 +176,86 @@ class UpdateDocsGroupTest extends TestCase
             && $r['id'] === self::CORE_TEAM_GROUP_ID
             && $r['userId'] === $dianaOutlineId);
     }
+
+    public function test_steady_state_diffing_skips_redundant_writes_and_post_lock_deleted_group_exits_early(): void
+    {
+        $docsGroupId = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+        $aliceOutlineId = '12121212-1212-1212-1212-121212121212';
+
+        $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
+        $faculty = Faculty::create(['code' => 'FT', 'name' => 'Teknik']);
+        $major = Major::create([
+            'code' => 'PTI',
+            'name' => 'Pendidikan Teknik Informatika',
+            'degree_id' => $degree->id,
+            'faculty_id' => $faculty->id,
+        ]);
+        $division = CoreTeamDivision::create(['name' => 'Engineering', 'priority' => 1]);
+
+        $group2026 = Group::create(['name' => 'Core Team 2026']);
+        $coreTeam2026 = CoreTeam::create(['year' => 2026, 'is_active' => true, 'group_id' => $group2026->id]);
+        GroupIntegration::create([
+            'group_id' => $group2026->id,
+            'docs_group_id' => $docsGroupId,
+            'docs_collection_id' => 'cccccccc-cccc-cccc-cccc-cccccccccccc',
+            'docs_group_last_synced_at' => now()->subHour(),
+            'docs_collection_last_synced_at' => now()->subHour(),
+        ]);
+
+        $alice = User::create([
+            'name' => 'Alice',
+            'username' => 'alice2026',
+            'email_address' => 'alice2026@infiniteuny.id',
+            'phone_number' => '+6281111111226',
+            'student_id' => '24520241226',
+            'major_id' => $major->id,
+            'links' => (object) [],
+            'is_member' => true,
+            'is_extraordinary' => false,
+        ]);
+        CoreTeamMember::create([
+            'core_team_id' => $coreTeam2026->id,
+            'user_id' => $alice->id,
+            'core_team_division_id' => $division->id,
+            'photo' => 'photo.png',
+        ]);
+        $group2026->users()->sync([$alice->id]);
+
+        Http::fake([
+            self::BASE_URL.'/api/groups.update' => Http::response([
+                'data' => ['id' => $docsGroupId, 'name' => 'Core Team 2026'],
+            ]),
+            self::BASE_URL.'/api/users.list' => Http::response([
+                'data' => [['id' => $aliceOutlineId, 'name' => 'Alice', 'email' => 'alice2026@infiniteuny.id']],
+            ]),
+            self::BASE_URL.'/api/groups.memberships' => function (Request $request) use ($docsGroupId, $aliceOutlineId) {
+                $users = match ($request['id']) {
+                    $docsGroupId, self::CORE_TEAM_GROUP_ID => [
+                        ['id' => $aliceOutlineId, 'name' => 'Alice', 'email' => 'alice2026@infiniteuny.id'],
+                    ],
+                    default => [],
+                };
+
+                return Http::response(['data' => ['users' => $users]]);
+            },
+        ]);
+
+        (new UpdateDocsGroup($group2026, [self::CORE_TEAM_GROUP_ID], [self::EX_CORE_TEAM_GROUP_ID]))
+            ->handle(app(OutlineService::class));
+
+        Http::assertNotSent(fn (Request $r) => $r->url() === self::BASE_URL.'/api/groups.add_user');
+        Http::assertNotSent(fn (Request $r) => $r->url() === self::BASE_URL.'/api/groups.remove_user');
+
+        // Post-lock deleted group exits cleanly without HTTP writes
+        $queuedJob = new UpdateDocsGroup($group2026);
+        CoreTeamMember::where('core_team_id', $coreTeam2026->id)->delete();
+        $coreTeam2026->delete();
+        GroupIntegration::where('group_id', $group2026->id)->delete();
+        $group2026->users()->detach();
+        $group2026->delete();
+
+        Http::fake();
+        $queuedJob->handle(app(OutlineService::class));
+        Http::assertNothingSent();
+    }
 }
