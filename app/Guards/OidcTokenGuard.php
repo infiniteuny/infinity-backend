@@ -97,10 +97,6 @@ class OidcTokenGuard implements Guard
             try {
                 $userInfo = $this->oidcService->getUserInfo($credentials['token']);
 
-                if (array_key_exists('email_verified', $userInfo) && $userInfo['email_verified'] !== true) {
-                    return false;
-                }
-
                 $email = isset($userInfo['email'])
                     ? mb_strtolower(trim((string) $userInfo['email']), 'UTF-8')
                     : '';

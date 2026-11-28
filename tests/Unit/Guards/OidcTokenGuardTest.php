@@ -180,7 +180,7 @@ class OidcTokenGuardTest extends TestCase
         $this->assertTrue($token->fresh()->last_used_at->gt($staleUse));
     }
 
-    public function test_rejects_unverified_email_and_prevents_overwriting_already_linked_sso_id(): void
+    public function test_allows_authentik_default_unverified_email_on_unbound_user_and_prevents_overwriting_already_linked_sso_id(): void
     {
         $linkedAdmin = User::create([
             'name' => 'Admin User',
@@ -228,24 +228,33 @@ class OidcTokenGuardTest extends TestCase
         $this->assertNull(Auth::guard('api_token')->user());
         $this->assertSame('100', $linkedAdmin->fresh()->sso_id);
 
-        // 2. Explicit email_verified === false on unbound user is rejected
+        // 2. Authentik default email scope (email_verified === false) still binds an unbound local user
         $this->mock(OidcService::class, function ($mock) {
             $mock->shouldReceive('verify')
                 ->once()
-                ->with('unverified-email-jwt')
-                ->andReturn(['sub' => '777', 'uid' => 'unverified-uid']);
+                ->with('authentik-default-email-jwt')
+                ->andReturn(['sub' => '777', 'uid' => 'authentik-default-uid']);
             $mock->shouldReceive('getUserInfo')
                 ->once()
-                ->with('unverified-email-jwt')
+                ->with('authentik-default-email-jwt')
                 ->andReturn(['email' => 'unbound@infiniteuny.id', 'email_verified' => false]);
-            $mock->shouldNotReceive('introspect');
+            $mock->shouldReceive('introspect')
+                ->once()
+                ->with('authentik-default-email-jwt')
+                ->andReturn([
+                    'active' => true,
+                    'sub' => '777',
+                    'uid' => 'authentik-default-uid',
+                    'iat' => time() - 60,
+                    'exp' => time() + 3600,
+                ]);
         });
 
         $this->app->instance('request', Request::create('/v1/users', 'GET', server: [
-            'HTTP_AUTHORIZATION' => 'Bearer unverified-email-jwt',
+            'HTTP_AUTHORIZATION' => 'Bearer authentik-default-email-jwt',
         ]));
         Auth::forgetGuards();
-        $this->assertNull(Auth::guard('api_token')->user());
-        $this->assertNull($unboundMember->fresh()->sso_id);
+        $this->assertSame($unboundMember->id, Auth::guard('api_token')->user()?->id);
+        $this->assertSame('777', $unboundMember->fresh()->sso_id);
     }
 }

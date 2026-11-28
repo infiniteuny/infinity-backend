@@ -7,6 +7,7 @@ use App\Http\Requests\UserPermission\StoreUserPermissionRequest;
 use App\Http\Requests\UserPermission\UpdateUserPermissionRequest;
 use App\Http\Resources\UserPermission\UserPermissionCollection;
 use App\Http\Resources\UserPermission\UserPermissionResource;
+use App\Models\GroupPermission;
 use App\Models\Permission;
 use App\Models\User;
 use App\Models\UserPermission;
@@ -46,6 +47,7 @@ class UserPermissionController extends Controller
      *
      * @apiResourceModel App\Models\Permission states=pivotUserPermission paginate=10,cursor
      *
+     * @queryParam fields string Comma-separated list of fields to include. Allowed values: `id`, `name`, `guard_name`, `created_at`, `updated_at`. No-example
      * @queryParam includes string Comma-separated list of options to include. Use `nested` to return all direct and group-inherited permissions without pagination. No-example
      * @queryParam filters[name] string Filter by exact `name`. No-example
      * @queryParam filters[guard_name] string Filter by exact `guard_name`. No-example
@@ -57,23 +59,37 @@ class UserPermissionController extends Controller
      */
     public function index(User $user, Request $request)
     {
-        $includes = $this->parseRequestedIncludes($request);
-        $isNested = in_array('nested', $includes, true);
+        $isNested = in_array('nested', $this->parseRequestedIncludes($request), true);
 
         $nestedInclude = AllowedInclude::custom('nested', new class implements IncludeInterface
         {
-            public function __invoke(Builder $query, string $include): void
-            {
-                // Handled via subject query selection below
-            }
+            public function __invoke(Builder $query, string $include): void {}
         });
 
-        $subject = $isNested
-            ? Permission::query()->where(function (Builder $query) use ($user) {
-                $query->whereHas('users', fn (Builder $userQuery) => $userQuery->where('users.id', $user->id))
-                    ->orWhereHas('groups.users', fn (Builder $groupUserQuery) => $groupUserQuery->where('users.id', $user->id));
-            })
-            : $user->permissions();
+        if ($isNested) {
+            $inheritedEntitlements = GroupPermission::query()
+                ->join('user_groups', 'user_groups.group_id', '=', 'group_permissions.group_id')
+                ->where('user_groups.user_id', $user->id)
+                ->selectRaw(
+                    'group_permissions.permission_id, group_permissions.id as group_entitlement_id, group_permissions.group_id as group_entitlement_group_id, ROW_NUMBER() OVER (PARTITION BY group_permissions.permission_id ORDER BY group_permissions.id ASC) as rn'
+                );
+
+            $subject = Permission::query()
+                ->leftJoin('user_permissions', function ($join) use ($user) {
+                    $join->on('user_permissions.permission_id', '=', 'permissions.id')
+                        ->where('user_permissions.user_id', '=', $user->id);
+                })
+                ->leftJoinSub($inheritedEntitlements, 'inherited_group_permissions', function ($join) {
+                    $join->on('inherited_group_permissions.permission_id', '=', 'permissions.id')
+                        ->where('inherited_group_permissions.rn', '=', 1);
+                })
+                ->where(function (Builder $query) {
+                    $query->whereNotNull('user_permissions.id')
+                        ->orWhereNotNull('inherited_group_permissions.group_entitlement_id');
+                });
+        } else {
+            $subject = $user->permissions();
+        }
 
         $query = QueryBuilder::for($subject, $request)
             ->allowedFields(
@@ -99,9 +115,53 @@ class UserPermissionController extends Controller
             )
             ->defaultSorts('-permissions.id');
 
-        $userPermission = $isNested
-            ? $query->get()
-            : $this->cursorPaginateWithTieBreaker($query, $request);
+        if ($isNested) {
+            $eloquent = $query->getEloquentBuilder();
+            if ($eloquent->getQuery()->columns === null) {
+                $eloquent->select('permissions.*');
+            }
+
+            $eloquent->addSelect([
+                'permissions.id as _pivot_permission_id',
+                'user_permissions.id as _direct_entitlement_id',
+                'inherited_group_permissions.group_entitlement_id as _group_entitlement_id',
+                'inherited_group_permissions.group_entitlement_group_id as _group_entitlement_group_id',
+            ]);
+
+            $userPermission = $query->get()->each(function (Permission $permission) use ($user): void {
+                $permissionId = $permission->getAttribute('_pivot_permission_id');
+                $directId = $permission->getAttribute('_direct_entitlement_id');
+                $groupEntitlementId = $permission->getAttribute('_group_entitlement_id');
+                $groupId = $permission->getAttribute('_group_entitlement_group_id');
+
+                unset(
+                    $permission['_pivot_permission_id'],
+                    $permission['_direct_entitlement_id'],
+                    $permission['_group_entitlement_id'],
+                    $permission['_group_entitlement_group_id'],
+                );
+
+                if ($directId !== null) {
+                    $entitlement = (new UserPermission)->forceFill([
+                        'user_id' => $user->id,
+                        'permission_id' => $permissionId,
+                        'id' => $directId,
+                    ]);
+                    $entitlement->exists = true;
+                    $permission->setRelation('entitlement', $entitlement);
+                } elseif ($groupEntitlementId !== null && $groupId !== null) {
+                    $entitlement = (new GroupPermission)->forceFill([
+                        'group_id' => $groupId,
+                        'permission_id' => $permissionId,
+                        'id' => $groupEntitlementId,
+                    ]);
+                    $entitlement->exists = true;
+                    $permission->setRelation('entitlement', $entitlement);
+                }
+            });
+        } else {
+            $userPermission = $this->cursorPaginateWithTieBreaker($query, $request);
+        }
 
         return new UserPermissionCollection($userPermission);
     }
