@@ -29,12 +29,17 @@ class SyncCoreTeamDocsCollections implements ShouldQueue
                 continue;
             }
 
+            $integration = $group->integration;
             $collectionName = 'Core Team '.$coreTeam->year;
-            $lastSyncedAt = $group->integration->docs_collection_last_synced_at;
+            $lastSyncedAt = $integration->docs_collection_last_synced_at;
 
-            if (is_null($lastSyncedAt)) {
+            if (is_null($integration->docs_collection_id)) {
                 CreateDocsCollection::dispatch($group, $collectionName, $readOnlyGroupIds);
-            } elseif ($lastSyncedAt->lt($coreTeam->updated_at) || $lastSyncedAt->lt($group->updated_at)) {
+            } elseif (
+                is_null($lastSyncedAt)
+                || $lastSyncedAt->lt($coreTeam->updated_at)
+                || $lastSyncedAt->lt($group->updated_at)
+            ) {
                 UpdateDocsCollection::dispatch($group, $collectionName, $readOnlyGroupIds);
             }
         }

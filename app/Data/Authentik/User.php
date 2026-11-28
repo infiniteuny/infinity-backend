@@ -11,11 +11,11 @@ class User extends Data
 {
     public function __construct(
         #[MapName('pk')]
-        public string|null|Optional $sso_id,
-        public string|Optional $name,
+        public int|string|null|Optional $sso_id,
+        public string|null|Optional $name,
         public string|Optional $username,
         #[MapName('email')]
-        public string|Optional $email_address,
+        public string|null|Optional $email_address,
         public bool|Optional $is_active,
         public string|Optional $path,
         public string|Optional $type,
@@ -24,11 +24,11 @@ class User extends Data
     public static function fromModel(UserModel $user): self
     {
         return new self(
-            sso_id: $user->sso_id,
+            sso_id: Optional::create(),
             name: $user->name,
             username: $user->username,
             email_address: $user->email_address,
-            is_active: $user->is_member,
+            is_active: (bool) $user->is_member,
             path: Optional::create(),
             type: Optional::create(),
         );

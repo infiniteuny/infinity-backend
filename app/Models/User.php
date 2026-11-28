@@ -63,6 +63,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'links' => 'object',
         'is_member' => 'boolean',
         'is_extraordinary' => 'boolean',
+        'sso_last_synced_at' => 'datetime',
     ];
 
     /**

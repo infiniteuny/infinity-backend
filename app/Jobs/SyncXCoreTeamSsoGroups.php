@@ -18,6 +18,7 @@ class SyncXCoreTeamSsoGroups implements ShouldQueue
     {
         $coreTeams = CoreTeam::where('is_active', false)->get();
         $ssoParentId = config('services.authentik.xcore_team_group_id');
+        $ssoParentIds = is_string($ssoParentId) && trim($ssoParentId) !== '' ? [trim($ssoParentId)] : null;
 
         foreach ($coreTeams as $coreTeam) {
             $group = Group::find($coreTeam->group_id);
@@ -27,9 +28,9 @@ class SyncXCoreTeamSsoGroups implements ShouldQueue
             }
 
             if (is_null($group->sso_last_synced_at)) {
-                CreateSsoGroup::dispatch($group, [$ssoParentId]);
-            } elseif ($group->sso_last_synced_at < $group->updated_at) {
-                UpdateSsoGroup::dispatch($group, [$ssoParentId]);
+                CreateSsoGroup::dispatch($group, $ssoParentIds);
+            } elseif ($group->sso_last_synced_at->lt($group->updated_at) || $group->sso_last_synced_at->lt($coreTeam->updated_at)) {
+                UpdateSsoGroup::dispatch($group, $ssoParentIds);
             }
         }
     }

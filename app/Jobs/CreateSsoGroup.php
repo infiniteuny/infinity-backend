@@ -75,7 +75,14 @@ class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
         $payload = AuthentikGroup::fromModel($this->group);
 
         if (! is_null($this->ssoParentIds)) {
-            $payload->sso_parent_ids = array_values(array_filter($this->ssoParentIds));
+            $parentIds = array_values(array_filter(
+                $this->ssoParentIds,
+                fn ($id) => is_string($id) && trim($id) !== '',
+            ));
+
+            if ($parentIds !== []) {
+                $payload->sso_parent_ids = $parentIds;
+            }
         }
 
         if (! is_null($this->isSuperuser)) {
@@ -83,10 +90,11 @@ class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
         }
 
         $ssoGroup = null;
+        $existingSsoId = is_string($this->group->sso_id) ? trim($this->group->sso_id) : '';
 
-        if ($this->group->sso_id) {
+        if ($existingSsoId !== '') {
             try {
-                $ssoGroup = $authentikService->updateGroup($this->group->sso_id, $payload);
+                $ssoGroup = $authentikService->updateGroup($existingSsoId, $payload);
             } catch (RequestException $exception) {
                 if ($exception->response?->status() !== 404) {
                     throw $exception;
@@ -99,11 +107,11 @@ class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
                 'name' => $this->group->name,
             ]);
 
-            if ($ssoGroups->isNotEmpty()) {
-                $existingGroup = $ssoGroups->first(
-                    fn (AuthentikGroup $group) => $group->name === $this->group->name
-                ) ?? $ssoGroups->first();
+            $existingGroup = $ssoGroups->first(
+                fn (AuthentikGroup $group) => $group->name === $this->group->name
+            );
 
+            if ($existingGroup !== null && is_string($existingGroup->sso_id) && $existingGroup->sso_id !== '') {
                 $ssoGroup = $authentikService->updateGroup($existingGroup->sso_id, $payload);
             } else {
                 $ssoGroup = $authentikService->createGroup($payload);
@@ -112,6 +120,7 @@ class CreateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
         $this->group->sso_id = $ssoGroup->sso_id;
         $this->group->sso_last_synced_at = now();
-        $this->group->save();
+
+        Group::withoutTimestamps(fn () => $this->group->saveQuietly());
     }
 }

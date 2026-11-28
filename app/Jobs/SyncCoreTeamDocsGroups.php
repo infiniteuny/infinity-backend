@@ -29,10 +29,10 @@ class SyncCoreTeamDocsGroups implements ShouldQueue
 
             $lastSyncedAt = $group->integration?->docs_group_last_synced_at;
 
-            if (is_null($lastSyncedAt)) {
-                CreateDocsGroup::dispatch($group, $docsParentIds, $docsRemoveParentIds);
+            if (is_null($group->integration?->docs_group_id) || is_null($lastSyncedAt)) {
+                CreateDocsGroup::dispatch($group, $docsParentIds, $docsRemoveParentIds, syncCollectionAfter: true);
             } elseif ($lastSyncedAt->lt($group->updated_at) || $lastSyncedAt->lt($coreTeam->updated_at)) {
-                UpdateDocsGroup::dispatch($group, $docsParentIds, $docsRemoveParentIds);
+                UpdateDocsGroup::dispatch($group, $docsParentIds, $docsRemoveParentIds, syncCollectionAfter: true);
             }
         }
     }

@@ -18,6 +18,7 @@ class SyncCGAdminSsoGroups implements ShouldQueue
     {
         $admins = CommunityGroupAdmin::where('is_active', true)->get();
         $ssoParentId = config('services.authentik.cg_admin_group_id');
+        $ssoParentIds = is_string($ssoParentId) && trim($ssoParentId) !== '' ? [trim($ssoParentId)] : null;
 
         foreach ($admins as $admin) {
             $group = Group::find($admin->group_id);
@@ -27,9 +28,9 @@ class SyncCGAdminSsoGroups implements ShouldQueue
             }
 
             if (is_null($group->sso_last_synced_at)) {
-                CreateSsoGroup::dispatch($group, [$ssoParentId]);
-            } elseif ($group->sso_last_synced_at < $group->updated_at) {
-                UpdateSsoGroup::dispatch($group, [$ssoParentId]);
+                CreateSsoGroup::dispatch($group, $ssoParentIds);
+            } elseif ($group->sso_last_synced_at->lt($group->updated_at) || $group->sso_last_synced_at->lt($admin->updated_at)) {
+                UpdateSsoGroup::dispatch($group, $ssoParentIds);
             }
         }
     }

@@ -9,6 +9,7 @@ use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 
 class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
@@ -71,7 +72,9 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
      */
     public function handle(AuthentikService $authentikService): void
     {
-        if (is_null($this->group->sso_id)) {
+        $existingSsoId = is_string($this->group->sso_id) ? trim($this->group->sso_id) : '';
+
+        if ($existingSsoId === '') {
             CreateSsoGroup::dispatch(
                 $this->group,
                 $this->ssoParentIds,
@@ -81,20 +84,48 @@ class UpdateSsoGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             return;
         }
 
-        $ssoGroup = AuthentikGroup::fromModel($this->group);
+        $payload = AuthentikGroup::fromModel($this->group);
 
         if (! is_null($this->ssoParentIds)) {
-            $ssoGroup->sso_parent_ids = array_values(array_filter($this->ssoParentIds));
+            $parentIds = array_values(array_filter(
+                $this->ssoParentIds,
+                fn ($id) => is_string($id) && trim($id) !== '',
+            ));
+
+            if ($parentIds !== []) {
+                $payload->sso_parent_ids = $parentIds;
+            }
         }
 
         if (! is_null($this->isSuperuser)) {
-            $ssoGroup->is_superuser = $this->isSuperuser;
+            $payload->is_superuser = $this->isSuperuser;
         }
 
-        $ssoGroup = $authentikService->updateGroup($this->group->sso_id, $ssoGroup);
+        try {
+            $ssoGroup = $authentikService->updateGroup($existingSsoId, $payload);
+        } catch (RequestException $exception) {
+            if ($exception->response?->status() !== 404) {
+                throw $exception;
+            }
+
+            $ssoGroups = $authentikService->listGroups([
+                'name' => $this->group->name,
+            ]);
+
+            $existingGroup = $ssoGroups->first(
+                fn (AuthentikGroup $group) => $group->name === $this->group->name
+            );
+
+            if ($existingGroup !== null && is_string($existingGroup->sso_id) && $existingGroup->sso_id !== '') {
+                $ssoGroup = $authentikService->updateGroup($existingGroup->sso_id, $payload);
+            } else {
+                $ssoGroup = $authentikService->createGroup($payload);
+            }
+        }
 
         $this->group->sso_id = $ssoGroup->sso_id;
         $this->group->sso_last_synced_at = now();
-        $this->group->save();
+
+        Group::withoutTimestamps(fn () => $this->group->saveQuietly());
     }
 }

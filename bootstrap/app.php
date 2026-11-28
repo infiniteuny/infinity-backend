@@ -35,6 +35,8 @@ use Illuminate\Http\Middleware\ValidatePathEncoding;
 use Illuminate\Http\Middleware\ValidatePostSize;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -80,21 +82,25 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withSchedule(function (Schedule $schedule) {
         $schedule->job(new SyncAchievementLeaderboards(Date::now()->year))->daily();
         $schedule->job(new SyncIndividualTeams)->hourly();
-        $schedule->job(new SyncMemberGroup)->hourly();
-        $schedule->job(new SyncActiveInactiveMemberGroup)->hourly();
-        $schedule->job(new SyncCoreTeamMembersGroup)->hourly();
-        $schedule->job(new SyncCGAdminMembersGroup)->hourly();
-        $schedule->job(new SyncSsoUsers)->hourly();
-        $schedule->job(new SyncCoreTeamSsoGroups)->hourly();
-        $schedule->job(new SyncCGAdminSsoGroups)->hourly();
-        $schedule->job(new SyncXCoreTeamSsoGroups)->hourly();
-        $schedule->job(new SyncXCGAdminSsoGroups)->hourly();
-        $schedule->job(new SyncMemberSsoGroup)->hourly();
-        $schedule->job(new SyncAdminSsoGroup)->hourly();
-        $schedule->job(new SyncActiveInactiveMemberSsoGroup)->hourly();
-        $schedule->job(new SyncCoreTeamDocsGroups)->hourly();
-        $schedule->job(new SyncXCoreTeamDocsGroups)->hourly();
-        $schedule->job(new SyncCoreTeamDocsCollections)->hourly();
+        $schedule->call(function () {
+            Bus::chain([
+                new SyncMemberGroup,
+                new SyncActiveInactiveMemberGroup,
+                new SyncCoreTeamMembersGroup,
+                new SyncCGAdminMembersGroup,
+                new SyncSsoUsers,
+                new SyncCoreTeamSsoGroups,
+                new SyncCGAdminSsoGroups,
+                new SyncXCoreTeamSsoGroups,
+                new SyncXCGAdminSsoGroups,
+                new SyncMemberSsoGroup,
+                new SyncAdminSsoGroup,
+                new SyncActiveInactiveMemberSsoGroup,
+                new SyncCoreTeamDocsGroups,
+                new SyncXCoreTeamDocsGroups,
+                new SyncCoreTeamDocsCollections,
+            ])->dispatch();
+        })->name('sync-groups-and-integrations')->hourly();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e) {

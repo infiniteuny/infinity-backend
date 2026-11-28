@@ -36,6 +36,10 @@ class OutlineServiceImpl implements OutlineService
 
     public function inviteUsers(array $invites, bool $suppressEmail = false): Collection
     {
+        if ($invites === []) {
+            return collect();
+        }
+
         $payload = [
             'invites' => array_map(
                 fn (Invite $invite) => $invite->toArray(),

@@ -15,14 +15,15 @@ class SyncSsoUsers implements ShouldQueue
      */
     public function handle(): void
     {
-        $users = User::whereNull('sso_last_synced_at')
+        $users = User::whereNull('sso_id')
+            ->orWhereNull('sso_last_synced_at')
             ->orWhereColumn('sso_last_synced_at', '<', 'updated_at')
             ->get();
 
         foreach ($users as $user) {
-            if (is_null($user->sso_last_synced_at)) {
+            if (is_null($user->sso_id) || is_null($user->sso_last_synced_at)) {
                 CreateSsoUser::dispatch($user);
-            } elseif ($user->sso_last_synced_at < $user->updated_at) {
+            } elseif ($user->sso_last_synced_at->lt($user->updated_at)) {
                 UpdateSsoUser::dispatch($user);
             }
         }

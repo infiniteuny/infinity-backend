@@ -37,6 +37,16 @@ class Group extends Model implements RoleContract
         'integration',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'is_managed' => 'boolean',
+        'sso_last_synced_at' => 'datetime',
+    ];
+
     public function __construct(array $attributes = [])
     {
         $attributes['guard_name'] ??= 'api';

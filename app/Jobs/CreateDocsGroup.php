@@ -37,6 +37,7 @@ class CreateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
         /** @var string[]|null */
         public ?array $docsRemoveParentIds = null,
         public bool $suppressInviteEmail = false,
+        public bool $syncCollectionAfter = false,
     ) {}
 
     /**
@@ -89,7 +90,10 @@ class CreateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
         $this->syncGroupUsers($outlineService, $outlineGroup->id);
 
-        DB::transaction(function () use ($outlineGroup) {
+        $needsCreateCollection = false;
+        $needsUpdateCollection = false;
+
+        DB::transaction(function () use ($outlineGroup, &$needsCreateCollection, &$needsUpdateCollection) {
             $integration = GroupIntegration::where('group_id', $this->group->id)
                 ->lockForUpdate()
                 ->first() ?? new GroupIntegration(['group_id' => $this->group->id]);
@@ -101,19 +105,51 @@ class CreateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             $integration->docs_group_id = $outlineGroup->id;
             $integration->docs_group_last_synced_at = now();
             $integration->save();
+
+            $needsCreateCollection = is_null($integration->docs_collection_id);
+            $needsUpdateCollection = ! $needsCreateCollection && is_null($integration->docs_collection_last_synced_at);
         });
+
+        if ($this->syncCollectionAfter && ($needsCreateCollection || $needsUpdateCollection)) {
+            $coreTeam = CoreTeam::where('group_id', $this->group->id)->first();
+
+            if ($coreTeam) {
+                $collectionName = 'Core Team '.$coreTeam->year;
+                $readOnlyGroupIds = array_values(array_filter([
+                    config('services.outline.core_team_group_id'),
+                    config('services.outline.xcore_team_group_id'),
+                ]));
+
+                if ($needsCreateCollection) {
+                    CreateDocsCollection::dispatch($this->group, $collectionName, $readOnlyGroupIds);
+                } else {
+                    UpdateDocsCollection::dispatch($this->group, $collectionName, $readOnlyGroupIds);
+                }
+            }
+        }
     }
 
     private function findOrCreateGroup(OutlineService $outlineService, string $name): OutlineGroup
     {
-        $existing = $outlineService->listGroups([
-            'name' => $name,
-            'limit' => self::PAGE_LIMIT,
-        ])->first(fn (OutlineGroup $group) => is_string($group->name) && $group->name === $name);
+        $offset = 0;
 
-        if ($existing !== null) {
-            return $existing;
-        }
+        do {
+            $groups = $outlineService->listGroups([
+                'query' => $name,
+                'limit' => self::PAGE_LIMIT,
+                'offset' => $offset,
+            ]);
+
+            $existing = $groups->first(
+                fn (OutlineGroup $group) => is_string($group->name) && $group->name === $name
+            );
+
+            if ($existing !== null) {
+                return $existing;
+            }
+
+            $offset += self::PAGE_LIMIT;
+        } while ($groups->count() === self::PAGE_LIMIT);
 
         return $outlineService->createGroup(new OutlineGroup(
             id: Optional::create(),
@@ -300,13 +336,13 @@ class CreateDocsGroup implements ShouldBeUniqueUntilProcessing, ShouldQueue
             throw $exception;
         }
 
-        if (! is_string($outlineUser->email) || $outlineUser->email === '') {
-            return;
-        }
+        $normalizedEmail = is_string($outlineUser->email) ? strtolower(trim($outlineUser->email)) : '';
 
-        $localUser = User::with(['coreTeams'])
-            ->whereRaw('LOWER(email_address) = ?', [strtolower($outlineUser->email)])
-            ->first();
+        $localUser = $normalizedEmail !== ''
+            ? User::with(['coreTeams'])
+                ->whereRaw('LOWER(TRIM(email_address)) = ?', [$normalizedEmail])
+                ->first()
+            : null;
 
         foreach ($sharedGroupIds as $sharedGroupId) {
             if ($this->shouldUserBelongToSharedGroup($localUser, $sharedGroupId, default: false)) {
