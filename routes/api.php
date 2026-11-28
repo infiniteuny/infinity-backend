@@ -67,7 +67,8 @@ Route::group([
         'prefix' => 'leaderboards',
     ], function () {
         Route::apiResource('achievements', AchievementLeaderboardController::class)
-            ->only(['index', 'show']);
+            ->only(['index', 'show'])
+            ->whereNumber('achievement');
     });
 
     Route::apiResources([

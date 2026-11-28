@@ -114,8 +114,8 @@ return Application::configure(basePath: dirname(__DIR__))
             );
         });
 
-        $exceptions->render(function (QueryException $e) {
-            $sqlState = (string) $e->getCode();
+        $exceptions->render(function (QueryException $e, Request $request) {
+            $sqlState = (string) ($e->errorInfo[0] ?? $e->getCode());
             $driverCode = $e->errorInfo[1] ?? null;
             $driverMessage = (string) ($e->errorInfo[2] ?? $e->getMessage());
 
@@ -131,6 +131,16 @@ return Application::configure(basePath: dirname(__DIR__))
                         'Operation cannot be completed due to a foreign key constraint, which usually means that the record is still referenced by other records.',
                     ),
                     409,
+                );
+            }
+
+            if (
+                $request->isMethodSafe()
+                && in_array($sqlState, ['22P02', '22003', '22007', '22008'], true)
+            ) {
+                return response()->json(
+                    JsendFormatter::fail('Invalid query parameter value.'),
+                    400,
                 );
             }
         });
