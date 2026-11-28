@@ -11,6 +11,18 @@ run_seeders=${RUN_SEEDERS:-"false"}
 init() {
     echo "Container mode: $container_mode"
 
+    mkdir -p "${ROOT}/storage/app/local/private" \
+    "${ROOT}/storage/app/local/public" \
+    "${ROOT}/storage/framework/sessions" \
+    "${ROOT}/storage/framework/views" \
+    "${ROOT}/storage/framework/cache/data" \
+    "${ROOT}/storage/framework/testing" \
+    "${ROOT}/storage/logs" \
+    "${ROOT}/bootstrap/cache" \
+    "${ROOT}/public/static" && \
+    chmod -R a+rw "${ROOT}/storage" && \
+    ln -sfn "${ROOT}/storage/app/local/public" "${ROOT}/public/static/public"
+
     if [ "${run_migrations}" = "true" ]; then
         echo "Running migrations database ..."
         php "${ROOT}/artisan" migrate --isolated --force
@@ -21,19 +33,7 @@ init() {
         php "${ROOT}/artisan" db:seed --force
     fi
 
-    mkdir -p "${ROOT}/storage/app/local/private" \
-    "${ROOT}/storage/app/local/public" \
-    "${ROOT}/storage/framework/sessions" \
-    "${ROOT}/storage/framework/views" \
-    "${ROOT}/storage/framework/cache" \
-    "${ROOT}/storage/framework/testing" \
-    "${ROOT}/storage/logs" \
-    "${ROOT}/bootstrap/cache" \
-    "${ROOT}/public/static" && \
-    chmod -R a+rw "${ROOT}/storage" && \
-    ln -sfn "${ROOT}/storage/app/local/public" "${ROOT}/public/static/public"
-
-    php "${ROOT}/artisan" optimize:clear; \
+    php "${ROOT}/artisan" optimize:clear --except=cache
     php "${ROOT}/artisan" optimize
 }
 
