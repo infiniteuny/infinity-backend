@@ -35,7 +35,7 @@ return [
     |
     */
 
-    'server' => env('OCTANE_SERVER', 'swoole'),
+    'server' => env('OCTANE_SERVER', 'frankenphp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -127,9 +127,10 @@ return [
     |
     */
 
-    'warm' => [
-        ...Octane::defaultServicesToWarm(),
-    ],
+    'warm' => array_values(array_diff(Octane::defaultServicesToWarm(), [
+        'session',
+        'session.store',
+    ])),
 
     'flush' => [
         //

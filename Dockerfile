@@ -88,7 +88,6 @@ ENV USER=octane \
     TERM=xterm-color \
     LANG=C.UTF-8 \
     WITH_HORIZON=false \
-    WITH_REVERB=false \
     WITH_SCHEDULER=false \
     APP_ENV=${APP_ENV} \
     APP_DEBUG=false \
@@ -152,7 +151,7 @@ RUN --mount=type=bind,from=vendor,source=/usr/bin/composer,target=/usr/bin/compo
     --no-dev && \
     chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
 
-EXPOSE 8000 8080
+EXPOSE 8000
 
 HEALTHCHECK --start-period=5s --interval=1s --timeout=3s --retries=10 CMD healthcheck || exit 1
 

@@ -45,9 +45,6 @@ elif [ "${container_mode}" = "server" ]; then
 elif [ "${container_mode}" = "horizon" ]; then
     init
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.horizon.conf
-elif [ "${container_mode}" = "reverb" ]; then
-    init
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.reverb.conf
 elif [ "${container_mode}" = "scheduler" ]; then
     init
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.scheduler.conf
