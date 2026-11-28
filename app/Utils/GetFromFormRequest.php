@@ -42,6 +42,7 @@ class GetFromFormRequest extends BaseGetFromFormRequest
 
         // Set the route properly, so it works for users who have code that checks for the route.
         /** @var LaravelFormRequest $formRequest */
+        $formRequest->setUserResolver(static fn () => null);
         $formRequest->setRouteResolver(function () use ($formRequest, $route, $endpointData) {
             // Also need to bind the request to the route in case their code tries to inspect current request
             $route = $route->bind($formRequest);

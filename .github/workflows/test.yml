@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Pint & PHPUnit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5"
+          extensions: bcmath, exif, gd, intl, mbstring, pdo_sqlite, pdo_pgsql, redis, sodium, zip
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@4.0.0
+        with:
+          composer-options: "--prefer-dist --optimize-autoloader"
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --ansi
+
+      - name: Check code style (Pint)
+        run: ./vendor/bin/pint --test
+
+      - name: Run test suite (PHPUnit)
+        run: ./vendor/bin/phpunit --display-deprecations --display-warnings

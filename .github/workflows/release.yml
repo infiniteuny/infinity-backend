@@ -30,8 +30,14 @@ jobs:
       - name: Check if branch and release type match
         id: guard
         run: |
-          if [[ "$RELEASE_TYPE" == "prod" && ( "$REF_TYPE" != "branch" || "$REF_NAME" != "main" ) ]]; then
+          if [[ ! "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "Version must be a valid base semver (e.g. 1.2.3)! Aborting."
+            VERSION_MISMATCH='true';
+          elif [[ "$RELEASE_TYPE" == "prod" && ( "$REF_TYPE" != "branch" || "$REF_NAME" != "main" ) ]]; then
             echo "Production releases must only be triggered from the main branch! Aborting."
+            VERSION_MISMATCH='true';
+          elif [[ "$RELEASE_TYPE" == "prod" && -n "$PRE_RELEASE_VERSION" ]]; then
+            echo "A pre-release version must not be set for production releases! Aborting."
             VERSION_MISMATCH='true';
           elif [[ "$RELEASE_TYPE" != "prod" && "$REF_TYPE" != "branch" ]]; then
             echo "Non-production releases must be triggered from a branch! Aborting."
@@ -39,15 +45,19 @@ jobs:
           elif [[ "$RELEASE_TYPE" != "prod" && -z "$PRE_RELEASE_VERSION" ]]; then
             echo "A pre-release version is required for non-production releases! Aborting."
             VERSION_MISMATCH='true';
+          elif [[ "$RELEASE_TYPE" != "prod" && ! "$PRE_RELEASE_VERSION" =~ ^(0|[1-9][0-9]*)$ ]]; then
+            echo "Pre-release version must be a non-negative integer without leading zeros! Aborting."
+            VERSION_MISMATCH='true';
           else
-            echo "Branch and release type match! Proceeding."
+            echo "Branch, version, and release type match! Proceeding."
             VERSION_MISMATCH='false';
           fi
 
-          echo "version_mismatch=$(echo $VERSION_MISMATCH)" >> "$GITHUB_OUTPUT";
+          echo "version_mismatch=${VERSION_MISMATCH}" >> "$GITHUB_OUTPUT"
         env:
           REF_NAME: ${{ github.ref_name }}
           REF_TYPE: ${{ github.ref_type }}
+          VERSION: ${{ inputs.version }}
           RELEASE_TYPE: ${{ inputs.release_type }}
           PRE_RELEASE_VERSION: ${{ inputs.pre_release_version }}
 
@@ -117,7 +127,11 @@ jobs:
           composer-options: "--ignore-platform-reqs --optimize-autoloader"
 
       - name: Update app version
-        run: sed -i "s/'version' => '.*',/'version' => '${{ steps.version.outputs.version }}',/g" config/app.php
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          sed -i "s/^\([[:space:]]*'version' => \)'[^']*',$/\1'${VERSION}',/" config/app.php
+          grep -Fq "'version' => '${VERSION}'," config/app.php
 
       - name: Generate documentations
         run: |
@@ -235,10 +249,11 @@ jobs:
           cache-to: type=gha,scope=${{ matrix.scope }},mode=max
 
       - name: Export digest
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
         run: |
           mkdir -p /tmp/digests
-          digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}"
+          touch "/tmp/digests/${DIGEST#sha256:}"
 
       - name: Upload digest artifact
         uses: actions/upload-artifact@v7.0.2
@@ -269,11 +284,13 @@ jobs:
       - name: Prepare sources
         id: sources
         working-directory: /tmp/digests
+        env:
+          REPOSITORY: ${{ github.repository }}
         run: |
           {
             echo 'sources<<EOF'
             for f in *; do
-              echo "ghcr.io/${{ github.repository }}@sha256:${f}"
+              echo "ghcr.io/${REPOSITORY}@sha256:${f}"
             done
             echo EOF
           } >> "$GITHUB_OUTPUT"
