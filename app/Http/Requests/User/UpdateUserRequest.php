@@ -71,14 +71,14 @@ class UpdateUserRequest extends FormRequest
         }
 
         $rules = [
-            'name' => ['sometimes', 'string'],
-            'username' => ['sometimes', 'string', Rule::unique('users', 'username')->ignore($ignoreUser)],
-            'email_address' => ['sometimes', 'email', Rule::unique('users', 'email_address')->ignore($ignoreUser)],
-            'phone_number' => ['sometimes', 'string', Rule::unique('users', 'phone_number')->ignore($ignoreUser)],
-            'student_id' => ['sometimes', 'string', Rule::unique('users', 'student_id')->ignore($ignoreUser)],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'username' => ['sometimes', 'string', 'max:150', Rule::unique('users', 'username')->ignore($ignoreUser)],
+            'email_address' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('users', 'email_address')->ignore($ignoreUser)],
+            'phone_number' => ['sometimes', 'string', 'max:255', Rule::unique('users', 'phone_number')->ignore($ignoreUser)],
+            'student_id' => ['sometimes', 'string', 'max:255', Rule::unique('users', 'student_id')->ignore($ignoreUser)],
             'major_id' => ['sometimes', 'uuid', 'exists:majors,id'],
             'links' => ['sometimes', 'nullable', new Associative],
-            'links.*' => ['string'],
+            'links.*' => ['string', 'max:2048'],
             'start_date' => $startDateRules,
             'end_date' => $endDateRules,
             'is_member' => ['sometimes', 'boolean'],

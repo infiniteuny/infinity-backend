@@ -17,8 +17,8 @@ class StoreMajorRequest extends FormRequest
         return [
             'degree_id' => ['required', 'uuid', 'exists:degrees,id'],
             'faculty_id' => ['required', 'uuid', 'exists:faculties,id'],
-            'code' => ['required', 'string', 'unique:majors'],
-            'name' => ['required', 'string'],
+            'code' => ['required', 'string', 'max:255', 'unique:majors'],
+            'name' => ['required', 'string', 'max:255'],
         ];
     }
 

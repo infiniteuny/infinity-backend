@@ -29,8 +29,8 @@ class UpdateConfigRequest extends FormRequest
         $config = $this->route('config');
 
         return [
-            'key' => ['sometimes', 'string', Rule::unique('configs', 'key')->ignore($config)],
-            'value' => ['sometimes', 'string'],
+            'key' => ['sometimes', 'string', 'max:255', Rule::unique('configs', 'key')->ignore($config)],
+            'value' => ['sometimes', 'string', 'max:255'],
             'type' => ['sometimes', 'string', 'in:STRING,INTEGER,BOOLEAN'],
             'is_private' => ['sometimes', 'boolean'],
         ];

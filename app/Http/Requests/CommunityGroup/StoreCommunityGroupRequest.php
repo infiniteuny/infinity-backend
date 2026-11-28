@@ -26,7 +26,7 @@ class StoreCommunityGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'unique:community_groups,name'],
+            'name' => ['required', 'string', 'max:255', 'unique:community_groups,name'],
             'priority' => ['required', 'integer', 'between:0,127'],
             'description' => ['required', 'string'],
             'logo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],

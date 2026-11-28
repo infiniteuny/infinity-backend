@@ -17,7 +17,7 @@ class UpdateProjectGalleryRequest extends FormRequest
         return [
             'title' => ['sometimes', 'string', 'max:255'],
             'description' => ['sometimes', 'string'],
-            'url' => ['sometimes', 'string', 'url:http,https'],
+            'url' => ['sometimes', 'string', 'max:255', 'url:http,https'],
             'image' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }

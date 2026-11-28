@@ -15,8 +15,8 @@ class StoreCompetitionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'shortname' => ['nullable', 'string'],
+            'name' => ['required', 'string', 'max:255'],
+            'shortname' => ['nullable', 'string', 'max:255'],
         ];
     }
 

@@ -56,16 +56,16 @@ class UpdateCompetitionInstanceRequest extends FormRequest
 
         return [
             'competition_id' => ['sometimes', 'uuid', 'exists:competitions,id'],
-            'name' => ['sometimes', 'string'],
-            'shortname' => ['sometimes', 'nullable', 'string'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'shortname' => ['sometimes', 'nullable', 'string', 'max:255'],
             'description' => ['sometimes', 'string'],
             'url' => ['sometimes', 'nullable', 'string', 'url:http,https'],
-            'organizer' => ['sometimes', 'string'],
+            'organizer' => ['sometimes', 'string', 'max:255'],
             'organizer_type_id' => ['sometimes', 'uuid', 'exists:competition_organizer_types,id'],
             'logo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'start_date' => $startDateRules,
             'end_date' => $endDateRules,
-            'location' => ['sometimes', 'string'],
+            'location' => ['sometimes', 'string', 'max:255'],
         ];
     }
 

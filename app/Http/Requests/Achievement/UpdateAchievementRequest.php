@@ -85,7 +85,7 @@ class UpdateAchievementRequest extends FormRequest
             'competition_time_range_id' => ['sometimes', 'uuid', 'exists:competition_time_ranges,id'],
             'competition_output_id' => ['sometimes', 'uuid', 'exists:competition_outputs,id'],
             'competition_rank_id' => ['sometimes', 'uuid', 'exists:competition_ranks,id'],
-            'competition_branch' => ['sometimes', 'string'],
+            'competition_branch' => ['sometimes', 'string', 'max:255'],
             'competition_start_date' => $startDateRules,
             'competition_end_date' => $endDateRules,
             'description' => ['sometimes', 'string'],

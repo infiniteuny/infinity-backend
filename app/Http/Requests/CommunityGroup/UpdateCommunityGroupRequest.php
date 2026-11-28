@@ -29,7 +29,7 @@ class UpdateCommunityGroupRequest extends FormRequest
         $communityGroup = $this->route('community_group');
 
         return [
-            'name' => ['sometimes', 'string', Rule::unique('community_groups', 'name')->ignore($communityGroup)],
+            'name' => ['sometimes', 'string', 'max:255', Rule::unique('community_groups', 'name')->ignore($communityGroup)],
             'priority' => ['sometimes', 'integer', 'between:0,127'],
             'description' => ['sometimes', 'string'],
             'logo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],

@@ -15,7 +15,7 @@ class StoreCompetitionRankRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
             'weight' => ['required', 'integer', 'between:0,2147483647'],
         ];
     }

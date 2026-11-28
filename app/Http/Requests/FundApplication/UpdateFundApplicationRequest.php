@@ -82,7 +82,7 @@ class UpdateFundApplicationRequest extends FormRequest
             'team_id' => $teamIdRules,
             'competition_instance_id' => ['sometimes', 'uuid', 'exists:competition_instances,id'],
             'competition_scale_id' => ['sometimes', 'uuid', 'exists:competition_scales,id'],
-            'competition_branch' => ['sometimes', 'string'],
+            'competition_branch' => ['sometimes', 'string', 'max:255'],
             'competition_start_date' => $startDateRules,
             'competition_end_date' => $endDateRules,
             'letter_of_acceptance' => ['sometimes', 'file', 'mimes:pdf,jpg,jpeg,png,webp', 'max:20480'],

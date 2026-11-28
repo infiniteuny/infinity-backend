@@ -18,8 +18,8 @@ class UpdateFacultyRequest extends FormRequest
         $faculty = $this->route('faculty');
 
         return [
-            'code' => ['sometimes', 'string', Rule::unique('faculties', 'code')->ignore($faculty)],
-            'name' => ['sometimes', 'string'],
+            'code' => ['sometimes', 'string', 'max:255', Rule::unique('faculties', 'code')->ignore($faculty)],
+            'name' => ['sometimes', 'string', 'max:255'],
         ];
     }
 

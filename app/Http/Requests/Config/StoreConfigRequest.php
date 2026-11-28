@@ -26,8 +26,8 @@ class StoreConfigRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'key' => ['required', 'string', 'unique:configs,key'],
-            'value' => ['required', 'string'],
+            'key' => ['required', 'string', 'max:255', 'unique:configs,key'],
+            'value' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'in:STRING,INTEGER,BOOLEAN'],
             'is_private' => ['required', 'boolean'],
         ];

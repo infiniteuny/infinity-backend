@@ -34,4 +34,23 @@ class StoreConfigRequestTest extends TestCase
         $this->assertTrue($invalidValidator->fails());
         $this->assertStringContainsString('true or false', $invalidValidator->errors()->first('is_private'));
     }
+
+    public function test_enforces_max_255_on_key_and_value(): void
+    {
+        $makeValidator = static function (string $key, string $value) {
+            $request = StoreConfigRequest::create('/v1/configs', 'POST', [
+                'key' => $key,
+                'value' => $value,
+                'type' => 'STRING',
+                'is_private' => 'false',
+            ]);
+            (new ReflectionMethod($request, 'prepareForValidation'))->invoke($request);
+
+            return Validator::make($request->all(), $request->rules());
+        };
+
+        $this->assertTrue($makeValidator(str_repeat('k', 255), str_repeat('v', 255))->passes());
+        $this->assertTrue($makeValidator(str_repeat('k', 256), 'val')->fails());
+        $this->assertTrue($makeValidator('key_ok', str_repeat('v', 256))->fails());
+    }
 }

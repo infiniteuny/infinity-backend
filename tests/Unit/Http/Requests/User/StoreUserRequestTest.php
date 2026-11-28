@@ -9,6 +9,8 @@ use App\Models\Major;
 use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Validator;
+use ReflectionMethod;
 use Tests\TestCase;
 
 class StoreUserRequestTest extends TestCase
@@ -65,5 +67,51 @@ class StoreUserRequestTest extends TestCase
         $this->assertSame('fallback', $request->validated('is_member', 'fallback'));
         $this->assertArrayNotHasKey('is_member', $request->validated());
         $this->assertArrayNotHasKey('is_extraordinary', $request->validated());
+    }
+
+    public function test_enforces_username_max_150_and_varchar_fields_max_255(): void
+    {
+        $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
+        $faculty = Faculty::create(['code' => 'FT', 'name' => 'Teknik']);
+        $major = Major::create([
+            'code' => 'PTI',
+            'name' => 'Pendidikan Teknik Informatika',
+            'degree_id' => $degree->id,
+            'faculty_id' => $faculty->id,
+        ]);
+
+        $invalidRequest = StoreUserRequest::create('/v1/users', 'POST', [
+            'name' => str_repeat('n', 256),
+            'username' => str_repeat('u', 151),
+            'email_address' => str_repeat('e', 245).'@example.com',
+            'phone_number' => str_repeat('1', 256),
+            'student_id' => str_repeat('2', 256),
+            'major_id' => $major->id,
+            'is_member' => 'false',
+            'is_extraordinary' => 'false',
+        ]);
+        (new ReflectionMethod($invalidRequest, 'prepareForValidation'))->invoke($invalidRequest);
+
+        $validator = Validator::make($invalidRequest->all(), $invalidRequest->rules());
+        $this->assertTrue($validator->fails());
+        $this->assertTrue($validator->errors()->has('name'));
+        $this->assertTrue($validator->errors()->has('username'));
+        $this->assertTrue($validator->errors()->has('email_address'));
+        $this->assertTrue($validator->errors()->has('phone_number'));
+        $this->assertTrue($validator->errors()->has('student_id'));
+
+        $validRequest = StoreUserRequest::create('/v1/users', 'POST', [
+            'name' => str_repeat('n', 255),
+            'username' => str_repeat('u', 150),
+            'email_address' => 'valid@infiniteuny.id',
+            'phone_number' => str_repeat('1', 255),
+            'student_id' => str_repeat('2', 255),
+            'major_id' => $major->id,
+            'is_member' => 'false',
+            'is_extraordinary' => 'false',
+        ]);
+        (new ReflectionMethod($validRequest, 'prepareForValidation'))->invoke($validRequest);
+
+        $this->assertTrue(Validator::make($validRequest->all(), $validRequest->rules())->passes());
     }
 }

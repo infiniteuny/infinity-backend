@@ -15,7 +15,7 @@ class UpdateCompetitionScaleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'string', 'max:255'],
             'weight' => ['sometimes', 'integer', 'between:0,2147483647'],
         ];
     }

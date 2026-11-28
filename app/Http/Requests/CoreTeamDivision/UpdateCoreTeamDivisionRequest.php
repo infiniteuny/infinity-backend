@@ -18,7 +18,7 @@ class UpdateCoreTeamDivisionRequest extends FormRequest
         $coreTeamDivision = $this->route('core_team_division');
 
         return [
-            'name' => ['sometimes', 'string', Rule::unique('core_team_divisions', 'name')->ignore($coreTeamDivision)],
+            'name' => ['sometimes', 'string', 'max:255', Rule::unique('core_team_divisions', 'name')->ignore($coreTeamDivision)],
             'priority' => ['sometimes', 'integer', 'between:0,127'],
         ];
     }

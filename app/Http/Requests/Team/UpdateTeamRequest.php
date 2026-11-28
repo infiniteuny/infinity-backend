@@ -25,7 +25,7 @@ class UpdateTeamRequest extends FormRequest
         return [
             'leader_id' => ['sometimes', 'uuid', 'exists:users,id'],
             'team_type_id' => ['sometimes', 'uuid', $teamTypeExistsRule],
-            'name' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'string', 'max:255'],
         ];
     }
 

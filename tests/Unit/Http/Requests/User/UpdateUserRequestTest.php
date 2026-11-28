@@ -68,4 +68,32 @@ class UpdateUserRequestTest extends TestCase
 
         $this->assertTrue($adminRequest->validated('is_member'));
     }
+
+    public function test_enforces_username_max_150_and_varchar_fields_max_255(): void
+    {
+        $request = UpdateUserRequest::create('/v1/users/id', 'PATCH', [
+            'name' => str_repeat('n', 256),
+            'username' => str_repeat('u', 151),
+            'email_address' => str_repeat('e', 245).'@example.com',
+            'phone_number' => str_repeat('1', 256),
+            'student_id' => str_repeat('2', 256),
+        ]);
+
+        $validator = Validator::make($request->all(), $request->rules());
+        $this->assertTrue($validator->fails());
+        $this->assertTrue($validator->errors()->has('name'));
+        $this->assertTrue($validator->errors()->has('username'));
+        $this->assertTrue($validator->errors()->has('email_address'));
+        $this->assertTrue($validator->errors()->has('phone_number'));
+        $this->assertTrue($validator->errors()->has('student_id'));
+
+        $validRequest = UpdateUserRequest::create('/v1/users/id', 'PATCH', [
+            'name' => str_repeat('n', 255),
+            'username' => str_repeat('u', 150),
+            'phone_number' => str_repeat('1', 255),
+            'student_id' => str_repeat('2', 255),
+        ]);
+
+        $this->assertTrue(Validator::make($validRequest->all(), $validRequest->rules())->passes());
+    }
 }

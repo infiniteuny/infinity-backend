@@ -16,16 +16,16 @@ class StoreCompetitionInstanceRequest extends FormRequest
     {
         return [
             'competition_id' => ['required', 'uuid', 'exists:competitions,id'],
-            'name' => ['required', 'string'],
-            'shortname' => ['nullable', 'string'],
+            'name' => ['required', 'string', 'max:255'],
+            'shortname' => ['nullable', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'url' => ['nullable', 'string', 'url:http,https'],
-            'organizer' => ['required', 'string'],
+            'organizer' => ['required', 'string', 'max:255'],
             'organizer_type_id' => ['required', 'uuid', 'exists:competition_organizer_types,id'],
             'logo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'start_date' => ['required', 'date', 'before_or_equal:end_date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
-            'location' => ['required', 'string'],
+            'location' => ['required', 'string', 'max:255'],
         ];
     }
 

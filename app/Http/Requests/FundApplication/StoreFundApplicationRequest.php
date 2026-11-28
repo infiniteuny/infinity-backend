@@ -30,7 +30,7 @@ class StoreFundApplicationRequest extends FormRequest
             'team_id' => $teamIdRules,
             'competition_instance_id' => ['required', 'uuid', 'exists:competition_instances,id'],
             'competition_scale_id' => ['required', 'uuid', 'exists:competition_scales,id'],
-            'competition_branch' => ['required', 'string'],
+            'competition_branch' => ['required', 'string', 'max:255'],
             'competition_start_date' => ['required', 'date', 'before_or_equal:competition_end_date'],
             'competition_end_date' => ['required', 'date', 'after_or_equal:competition_start_date'],
             'letter_of_acceptance' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png,webp', 'max:20480'],

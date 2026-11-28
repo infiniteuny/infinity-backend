@@ -38,14 +38,14 @@ class StoreUserRequest extends FormRequest
         }
 
         $rules = [
-            'name' => ['required', 'string'],
-            'username' => ['required', 'string', 'unique:users,username'],
-            'email_address' => ['required', 'email', 'unique:users,email_address'],
-            'phone_number' => ['required', 'string', 'unique:users,phone_number'],
-            'student_id' => ['required', 'string', 'unique:users,student_id'],
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:150', 'unique:users,username'],
+            'email_address' => ['required', 'string', 'email', 'max:255', 'unique:users,email_address'],
+            'phone_number' => ['required', 'string', 'max:255', 'unique:users,phone_number'],
+            'student_id' => ['required', 'string', 'max:255', 'unique:users,student_id'],
             'major_id' => ['required', 'uuid', 'exists:majors,id'],
             'links' => ['sometimes', 'nullable', new Associative],
-            'links.*' => ['string'],
+            'links.*' => ['string', 'max:2048'],
             'start_date' => $startDateRules,
             'end_date' => $endDateRules,
             'is_member' => ['required', 'boolean'],

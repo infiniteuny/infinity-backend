@@ -20,8 +20,8 @@ class UpdateMajorRequest extends FormRequest
         return [
             'degree_id' => ['sometimes', 'uuid', 'exists:degrees,id'],
             'faculty_id' => ['sometimes', 'uuid', 'exists:faculties,id'],
-            'code' => ['sometimes', 'string', Rule::unique('majors', 'code')->ignore($major)],
-            'name' => ['sometimes', 'string'],
+            'code' => ['sometimes', 'string', 'max:255', Rule::unique('majors', 'code')->ignore($major)],
+            'name' => ['sometimes', 'string', 'max:255'],
         ];
     }
 

@@ -18,7 +18,7 @@ class UpdatePersonaRequest extends FormRequest
         $persona = $this->route('persona');
 
         return [
-            'name' => ['sometimes', 'string', Rule::unique('personas', 'name')->ignore($persona)],
+            'name' => ['sometimes', 'string', 'max:255', Rule::unique('personas', 'name')->ignore($persona)],
             'priority' => ['sometimes', 'integer', 'between:0,127'],
             'description' => ['sometimes', 'string'],
             'logo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],

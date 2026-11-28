@@ -15,8 +15,8 @@ class UpdateCompetitionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'shortname' => ['sometimes', 'nullable', 'string'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'shortname' => ['sometimes', 'nullable', 'string', 'max:255'],
         ];
     }
 

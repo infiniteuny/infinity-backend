@@ -18,8 +18,8 @@ class UpdateDegreeRequest extends FormRequest
         $degree = $this->route('degree');
 
         return [
-            'code' => ['sometimes', 'string', Rule::unique('degrees', 'code')->ignore($degree)],
-            'name' => ['sometimes', 'string'],
+            'code' => ['sometimes', 'string', 'max:255', Rule::unique('degrees', 'code')->ignore($degree)],
+            'name' => ['sometimes', 'string', 'max:255'],
         ];
     }
 

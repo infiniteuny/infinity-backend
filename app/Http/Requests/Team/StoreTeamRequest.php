@@ -33,7 +33,7 @@ class StoreTeamRequest extends FormRequest
         return [
             'leader_id' => $leaderIdRules,
             'team_type_id' => ['required', 'uuid', $teamTypeExistsRule],
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
         ];
     }
 

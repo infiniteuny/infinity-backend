@@ -33,7 +33,7 @@ class StoreAchievementRequest extends FormRequest
             'competition_time_range_id' => ['required', 'uuid', 'exists:competition_time_ranges,id'],
             'competition_output_id' => ['required', 'uuid', 'exists:competition_outputs,id'],
             'competition_rank_id' => ['required', 'uuid', 'exists:competition_ranks,id'],
-            'competition_branch' => ['required', 'string'],
+            'competition_branch' => ['required', 'string', 'max:255'],
             'competition_start_date' => ['required', 'date', 'before_or_equal:competition_end_date'],
             'competition_end_date' => ['required', 'date', 'after_or_equal:competition_start_date'],
             'description' => ['required', 'string'],

@@ -32,4 +32,18 @@ class UpdateConfigRequestTest extends TestCase
         $this->assertSame(false, $validRequest->input('is_private'));
         $this->assertTrue(Validator::make($validRequest->all(), $validRequest->rules())->passes());
     }
+
+    public function test_enforces_max_255_on_key_and_value(): void
+    {
+        $request = UpdateConfigRequest::create('/v1/configs/id', 'PATCH', [
+            'key' => str_repeat('k', 256),
+            'value' => str_repeat('v', 256),
+        ]);
+        (new ReflectionMethod($request, 'prepareForValidation'))->invoke($request);
+
+        $validator = Validator::make($request->all(), $request->rules());
+        $this->assertTrue($validator->fails());
+        $this->assertTrue($validator->errors()->has('key'));
+        $this->assertTrue($validator->errors()->has('value'));
+    }
 }
