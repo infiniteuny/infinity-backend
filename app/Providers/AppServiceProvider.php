@@ -15,6 +15,7 @@ use App\Services\OidcService;
 use App\Services\OidcServiceImpl;
 use App\Services\OutlineService;
 use App\Services\OutlineServiceImpl;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -119,11 +120,24 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             if (! config('app.rate_limiter.enabled')) {
                 return Limit::none();
-            } else {
-                $user = Auth::guard()->user() ?: Auth::guard(config('auth.defaults.semi_public_guard'))->user();
-
-                return Limit::perSecond(100)->by($user?->id ?: $request->ip());
             }
+
+            $routeMiddleware = $request->route()?->gatherMiddleware() ?? [];
+            $isProtectedRoute = Auth::hasUser() || collect($routeMiddleware)->contains(
+                static fn (mixed $middleware): bool => is_string($middleware)
+                    && (
+                        $middleware === 'auth'
+                        || str_starts_with($middleware, 'auth:')
+                        || $middleware === Authenticate::class
+                        || str_starts_with($middleware, Authenticate::class.':')
+                    ),
+            );
+
+            $user = $isProtectedRoute
+                ? (Auth::guard()->user() ?: Auth::guard(config('auth.defaults.semi_public_guard'))->user())
+                : Auth::guard(config('auth.defaults.semi_public_guard'))->user();
+
+            return Limit::perSecond(100)->by($user?->id ?: $request->ip());
         });
     }
 }

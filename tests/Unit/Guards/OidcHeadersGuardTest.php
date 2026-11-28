@@ -18,24 +18,31 @@ class OidcHeadersGuardTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_defers_quiet_case_insensitive_sso_id_binding_until_after_revocation_check(): void
+    private Major $major;
+
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
         $faculty = Faculty::create(['code' => 'FT', 'name' => 'Teknik']);
-        $major = Major::create([
+        $this->major = Major::create([
             'code' => 'PTI',
             'name' => 'Pendidikan Teknik Informatika',
             'degree_id' => $degree->id,
             'faculty_id' => $faculty->id,
         ]);
+    }
 
+    public function test_defers_quiet_case_insensitive_sso_id_binding_until_after_revocation_check(): void
+    {
         $alice = User::create([
             'name' => 'Alice Putri',
             'username' => 'aliceputri',
             'email_address' => 'Alice.Putri@student.uny.ac.id',
             'phone_number' => '+6281111111111',
             'student_id' => '24520241001',
-            'major_id' => $major->id,
+            'major_id' => $this->major->id,
             'links' => (object) [],
             'is_member' => true,
             'is_extraordinary' => false,
@@ -76,6 +83,8 @@ class OidcHeadersGuardTest extends TestCase
                 ->with('valid-jwt')
                 ->andReturn([
                     'active' => true,
+                    'sub' => '555',
+                    'uid' => 'active-hdr-tok',
                     'iat' => time() - 60,
                     'exp' => time() + 3600,
                 ]);
@@ -99,5 +108,83 @@ class OidcHeadersGuardTest extends TestCase
         $alice->refresh();
         $this->assertSame('555', $alice->sso_id);
         $this->assertTrue($alice->updated_at->equalTo($originalUpdatedAt));
+    }
+
+    public function test_rejects_token_bearer_smuggling_introspection_subject_mismatch_and_rebind_of_linked_user(): void
+    {
+        $admin = User::create([
+            'name' => 'Admin User',
+            'username' => 'adminuser',
+            'email_address' => 'admin@infiniteuny.id',
+            'phone_number' => '+6281111111112',
+            'student_id' => '24520241002',
+            'major_id' => $this->major->id,
+            'links' => (object) [],
+            'is_member' => true,
+            'is_extraordinary' => false,
+        ]);
+        $admin->sso_id = '100';
+        $admin->saveQuietly();
+
+        Token::create([
+            'sso_id' => 'known-admin-tok',
+            'user_id' => $admin->id,
+            'last_used_at' => now()->subMinute(),
+            'created_at' => now()->subMinutes(5),
+            'expires_at' => now()->addHour(),
+        ]);
+
+        // 1. "Token Bearer ..." prefix smuggling (which bypasses Envoy jwt_authn) is rejected at offset > 0
+        $smuggledRequest = Request::create('/v1/users', 'GET', server: [
+            'HTTP_X_USER_ID' => '100',
+            'HTTP_X_USER_EMAIL' => 'admin@infiniteuny.id',
+            'HTTP_X_TOKEN_ID' => 'known-admin-tok',
+            'HTTP_X_TOKEN_CREATED_AT' => (string) time(),
+            'HTTP_X_TOKEN_EXPIRES_AT' => (string) (time() + 3600),
+            'HTTP_AUTHORIZATION' => 'Token Bearer anything',
+        ]);
+        $this->app->instance('request', $smuggledRequest);
+        Auth::forgetGuards();
+        $this->assertNull(Auth::guard('api_headers')->user());
+
+        // 2. Introspection returning a different 'sub' than X-User-Id is rejected without minting an admin Token
+        $this->mock(OidcService::class, function ($mock) {
+            $mock->shouldReceive('introspect')
+                ->once()
+                ->with('attacker-jwt')
+                ->andReturn([
+                    'active' => true,
+                    'sub' => '999',
+                    'iat' => time() - 60,
+                    'exp' => time() + 3600,
+                ]);
+        });
+
+        $mismatchSubRequest = Request::create('/v1/users', 'GET', server: [
+            'HTTP_X_USER_ID' => '100',
+            'HTTP_X_USER_EMAIL' => 'admin@infiniteuny.id',
+            'HTTP_X_TOKEN_ID' => 'forged-tok-id',
+            'HTTP_X_TOKEN_CREATED_AT' => (string) time(),
+            'HTTP_X_TOKEN_EXPIRES_AT' => (string) (time() + 3600),
+            'HTTP_AUTHORIZATION' => 'Bearer attacker-jwt',
+        ]);
+        $this->app->instance('request', $mismatchSubRequest);
+        Auth::forgetGuards();
+        $this->assertNull(Auth::guard('api_headers')->user());
+        $this->assertDatabaseMissing('tokens', ['sso_id' => 'forged-tok-id']);
+
+        // 3. Duplicate-email Authentik account ('999') cannot overwrite already-linked admin->sso_id ('100')
+        $rebindAttempt = Request::create('/v1/users', 'GET', server: [
+            'HTTP_X_USER_ID' => '999',
+            'HTTP_X_USER_EMAIL' => 'admin@infiniteuny.id',
+            'HTTP_X_TOKEN_ID' => 'attacker-tok-id',
+            'HTTP_X_TOKEN_CREATED_AT' => (string) time(),
+            'HTTP_X_TOKEN_EXPIRES_AT' => (string) (time() + 3600),
+            'HTTP_AUTHORIZATION' => 'Bearer attacker-jwt',
+        ]);
+        $this->app->instance('request', $rebindAttempt);
+        Auth::forgetGuards();
+        $this->assertNull(Auth::guard('api_headers')->user());
+        $this->assertSame('100', $admin->fresh()->sso_id);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Throwable;
@@ -90,10 +91,15 @@ class OidcTokenGuard implements Guard
         // Check if the token subject exists in the users database
         $user = $this->provider->retrieveByCredentials(['sso_id' => $ssoId]);
 
-        // If the user is not found, try to get the user info from the OIDC server
+        // If the user is not found, try to match an unbound user from OIDC userinfo
         if (is_null($user)) {
             try {
                 $userInfo = $this->oidcService->getUserInfo($credentials['token']);
+
+                if (array_key_exists('email_verified', $userInfo) && $userInfo['email_verified'] !== true) {
+                    return false;
+                }
+
                 $email = isset($userInfo['email'])
                     ? mb_strtolower(trim((string) $userInfo['email']), 'UTF-8')
                     : '';
@@ -103,7 +109,11 @@ class OidcTokenGuard implements Guard
                 }
 
                 /** @var User|null $user */
-                $user = User::whereRaw('LOWER(TRIM(email_address)) = ?', [$email])->first();
+                $user = User::whereRaw('LOWER(TRIM(email_address)) = ?', [$email])
+                    ->where(static function ($query): void {
+                        $query->whereNull('sso_id')->orWhere('sso_id', '');
+                    })
+                    ->first();
 
                 if (is_null($user)) {
                     return false;
@@ -117,20 +127,29 @@ class OidcTokenGuard implements Guard
 
         // Check if the token is already used to authenticate before
         $token = Token::withTrashed()->where('sso_id', $tokenUid)->first();
+        $now = Carbon::now();
 
         // If the token is not found in the database, check if it is still active
         if (is_null($token)) {
             try {
                 $tokenInfo = $this->oidcService->introspect($credentials['token']);
 
-                if (! empty($tokenInfo['active']) && isset($tokenInfo['iat'], $tokenInfo['exp'])) {
+                if (
+                    ! empty($tokenInfo['active'])
+                    && isset($tokenInfo['iat'], $tokenInfo['exp'])
+                    && is_numeric($tokenInfo['iat'])
+                    && is_numeric($tokenInfo['exp'])
+                    && (int) $tokenInfo['exp'] > $now->getTimestamp()
+                    && (! isset($tokenInfo['sub']) || (string) $tokenInfo['sub'] === $ssoId)
+                    && (! isset($tokenInfo['uid']) || (string) $tokenInfo['uid'] === $tokenUid)
+                ) {
                     $token = Token::withTrashed()->createOrFirst(
                         ['sso_id' => $tokenUid],
                         [
                             'user_id' => $user->id,
-                            'last_used_at' => Carbon::now(),
-                            'created_at' => Carbon::createFromTimestamp($tokenInfo['iat']),
-                            'expires_at' => Carbon::createFromTimestamp($tokenInfo['exp']),
+                            'last_used_at' => $now,
+                            'created_at' => Carbon::createFromTimestamp((int) $tokenInfo['iat']),
+                            'expires_at' => Carbon::createFromTimestamp((int) $tokenInfo['exp']),
                         ],
                     );
                 } else {
@@ -141,19 +160,37 @@ class OidcTokenGuard implements Guard
             }
         }
 
-        if ($token->trashed() || $token->user_id !== $user->id) {
+        if (
+            $token->trashed()
+            || $token->user_id !== $user->id
+            || ($token->expires_at !== null && $token->expires_at->lte($now))
+        ) {
             return false;
         }
 
         if ($shouldBindSsoId) {
-            User::withoutTimestamps(function () use ($user, $ssoId) {
-                $user->sso_id = $ssoId;
-                $user->saveQuietly();
-            });
+            try {
+                $updated = User::query()
+                    ->whereKey($user->id)
+                    ->where(static function ($query): void {
+                        $query->whereNull('sso_id')->orWhere('sso_id', '');
+                    })
+                    ->toBase()
+                    ->update(['sso_id' => $ssoId]);
+            } catch (UniqueConstraintViolationException) {
+                return false;
+            }
+
+            if ($updated === 0 && User::whereKey($user->id)->value('sso_id') !== $ssoId) {
+                return false;
+            }
+
+            $user->sso_id = $ssoId;
+            $user->syncOriginalAttribute('sso_id');
         }
 
         if (! $token->wasRecentlyCreated) {
-            $token->last_used_at = Carbon::now();
+            $token->last_used_at = $now;
             $token->save();
         }
 
@@ -173,10 +210,22 @@ class OidcTokenGuard implements Guard
     }
 
     /**
-     * Get the access token from the current request
+     * Get the access token from the current request strictly at offset 0.
      */
     private function getAccessToken(): ?string
     {
-        return $this->request->bearerToken();
+        $values = $this->request->headers->all('Authorization');
+
+        if (count($values) !== 1 || ! is_string($values[0])) {
+            return null;
+        }
+
+        $authorization = trim($values[0]);
+
+        if (preg_match('/\ABearer[ \t]+([^\s,]+)\z/i', $authorization, $matches) !== 1) {
+            return null;
+        }
+
+        return $matches[1];
     }
 }

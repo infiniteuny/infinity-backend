@@ -19,24 +19,31 @@ class OidcTokenGuardTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_handles_missing_uid_memoizes_failed_validation_and_defers_quiet_sso_id_binding(): void
+    private Major $major;
+
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $degree = Degree::create(['code' => 'S1', 'name' => 'Sarjana']);
         $faculty = Faculty::create(['code' => 'FT', 'name' => 'Teknik']);
-        $major = Major::create([
+        $this->major = Major::create([
             'code' => 'PTI',
             'name' => 'Pendidikan Teknik Informatika',
             'degree_id' => $degree->id,
             'faculty_id' => $faculty->id,
         ]);
+    }
 
+    public function test_handles_missing_uid_memoizes_failed_validation_and_defers_quiet_sso_id_binding(): void
+    {
         $alice = User::create([
             'name' => 'Alice Putri',
             'username' => 'aliceputri',
             'email_address' => 'Alice.Putri@student.uny.ac.id',
             'phone_number' => '+6281111111111',
             'student_id' => '24520241001',
-            'major_id' => $major->id,
+            'major_id' => $this->major->id,
             'links' => (object) [],
             'is_member' => true,
             'is_extraordinary' => false,
@@ -135,5 +142,74 @@ class OidcTokenGuardTest extends TestCase
         $alice->refresh();
         $this->assertSame('888', $alice->sso_id);
         $this->assertTrue($alice->updated_at->equalTo($originalUpdatedAt));
+    }
+
+    public function test_rejects_unverified_email_and_prevents_overwriting_already_linked_sso_id(): void
+    {
+        $linkedAdmin = User::create([
+            'name' => 'Admin User',
+            'username' => 'adminuser',
+            'email_address' => 'admin@infiniteuny.id',
+            'phone_number' => '+6281111111112',
+            'student_id' => '24520241002',
+            'major_id' => $this->major->id,
+            'links' => (object) [],
+            'is_member' => true,
+            'is_extraordinary' => false,
+        ]);
+        $linkedAdmin->sso_id = '100';
+        $linkedAdmin->saveQuietly();
+
+        $unboundMember = User::create([
+            'name' => 'Unbound Member',
+            'username' => 'unboundmember',
+            'email_address' => 'unbound@infiniteuny.id',
+            'phone_number' => '+6281111111113',
+            'student_id' => '24520241003',
+            'major_id' => $this->major->id,
+            'links' => (object) [],
+            'is_member' => true,
+            'is_extraordinary' => false,
+        ]);
+
+        // 1. Already-linked user cannot be re-bound by a different Authentik 'sub' sharing the same email
+        $this->mock(OidcService::class, function ($mock) {
+            $mock->shouldReceive('verify')
+                ->once()
+                ->with('dup-email-jwt')
+                ->andReturn(['sub' => '999', 'uid' => 'dup-uid']);
+            $mock->shouldReceive('getUserInfo')
+                ->once()
+                ->with('dup-email-jwt')
+                ->andReturn(['email' => 'admin@infiniteuny.id', 'email_verified' => true]);
+            $mock->shouldNotReceive('introspect');
+        });
+
+        $this->app->instance('request', Request::create('/v1/users', 'GET', server: [
+            'HTTP_AUTHORIZATION' => 'Bearer dup-email-jwt',
+        ]));
+        Auth::forgetGuards();
+        $this->assertNull(Auth::guard('api_token')->user());
+        $this->assertSame('100', $linkedAdmin->fresh()->sso_id);
+
+        // 2. Explicit email_verified === false on unbound user is rejected
+        $this->mock(OidcService::class, function ($mock) {
+            $mock->shouldReceive('verify')
+                ->once()
+                ->with('unverified-email-jwt')
+                ->andReturn(['sub' => '777', 'uid' => 'unverified-uid']);
+            $mock->shouldReceive('getUserInfo')
+                ->once()
+                ->with('unverified-email-jwt')
+                ->andReturn(['email' => 'unbound@infiniteuny.id', 'email_verified' => false]);
+            $mock->shouldNotReceive('introspect');
+        });
+
+        $this->app->instance('request', Request::create('/v1/users', 'GET', server: [
+            'HTTP_AUTHORIZATION' => 'Bearer unverified-email-jwt',
+        ]));
+        Auth::forgetGuards();
+        $this->assertNull(Auth::guard('api_token')->user());
+        $this->assertNull($unboundMember->fresh()->sso_id);
     }
 }

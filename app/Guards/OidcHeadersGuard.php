@@ -9,6 +9,7 @@ use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Throwable;
@@ -73,12 +74,13 @@ class OidcHeadersGuard implements Guard
         }
 
         $ssoId = (string) $credentials['headers']['user_id'];
+        $tokenId = (string) $credentials['headers']['token_id'];
         $shouldBindSsoId = false;
 
         // Check if the token subject exists in the users database
         $user = $this->provider->retrieveByCredentials(['sso_id' => $ssoId]);
 
-        // If the user is not found, try to match the user by case-insensitive email
+        // If the user is not found, try to match an unbound user by case-insensitive email
         if (is_null($user)) {
             try {
                 $email = mb_strtolower(trim((string) $credentials['headers']['user_email']), 'UTF-8');
@@ -88,7 +90,11 @@ class OidcHeadersGuard implements Guard
                 }
 
                 /** @var User|null $user */
-                $user = User::whereRaw('LOWER(TRIM(email_address)) = ?', [$email])->first();
+                $user = User::whereRaw('LOWER(TRIM(email_address)) = ?', [$email])
+                    ->where(static function ($query): void {
+                        $query->whereNull('sso_id')->orWhere('sso_id', '');
+                    })
+                    ->first();
 
                 if (is_null($user)) {
                     return false;
@@ -101,21 +107,30 @@ class OidcHeadersGuard implements Guard
         }
 
         // Check if the token is already used to authenticate before
-        $token = Token::withTrashed()->where('sso_id', $credentials['headers']['token_id'])->first();
+        $token = Token::withTrashed()->where('sso_id', $tokenId)->first();
+        $now = Carbon::now();
 
-        // If the token is not found in the database, check if it is still active
+        // If the token is not found in the database, check if it is still active and matches the claimed subject
         if (is_null($token)) {
             try {
                 $tokenInfo = $this->oidcService->introspect($credentials['headers']['token']);
 
-                if (! empty($tokenInfo['active']) && isset($tokenInfo['iat'], $tokenInfo['exp'])) {
+                if (
+                    ! empty($tokenInfo['active'])
+                    && isset($tokenInfo['iat'], $tokenInfo['exp'], $tokenInfo['sub'])
+                    && is_numeric($tokenInfo['iat'])
+                    && is_numeric($tokenInfo['exp'])
+                    && (int) $tokenInfo['exp'] > $now->getTimestamp()
+                    && (string) $tokenInfo['sub'] === $ssoId
+                    && (! isset($tokenInfo['uid']) || (string) $tokenInfo['uid'] === $tokenId)
+                ) {
                     $token = Token::withTrashed()->createOrFirst(
-                        ['sso_id' => $credentials['headers']['token_id']],
+                        ['sso_id' => $tokenId],
                         [
                             'user_id' => $user->id,
-                            'last_used_at' => Carbon::now(),
-                            'created_at' => Carbon::createFromTimestamp($tokenInfo['iat']),
-                            'expires_at' => Carbon::createFromTimestamp($tokenInfo['exp']),
+                            'last_used_at' => $now,
+                            'created_at' => Carbon::createFromTimestamp((int) $tokenInfo['iat']),
+                            'expires_at' => Carbon::createFromTimestamp((int) $tokenInfo['exp']),
                         ],
                     );
                 } else {
@@ -126,19 +141,37 @@ class OidcHeadersGuard implements Guard
             }
         }
 
-        if ($token->trashed() || $token->user_id !== $user->id) {
+        if (
+            $token->trashed()
+            || $token->user_id !== $user->id
+            || ($token->expires_at !== null && $token->expires_at->lte($now))
+        ) {
             return false;
         }
 
         if ($shouldBindSsoId) {
-            User::withoutTimestamps(function () use ($user, $ssoId) {
-                $user->sso_id = $ssoId;
-                $user->saveQuietly();
-            });
+            try {
+                $updated = User::query()
+                    ->whereKey($user->id)
+                    ->where(static function ($query): void {
+                        $query->whereNull('sso_id')->orWhere('sso_id', '');
+                    })
+                    ->toBase()
+                    ->update(['sso_id' => $ssoId]);
+            } catch (UniqueConstraintViolationException) {
+                return false;
+            }
+
+            if ($updated === 0 && User::whereKey($user->id)->value('sso_id') !== $ssoId) {
+                return false;
+            }
+
+            $user->sso_id = $ssoId;
+            $user->syncOriginalAttribute('sso_id');
         }
 
         if (! $token->wasRecentlyCreated) {
-            $token->last_used_at = Carbon::now();
+            $token->last_used_at = $now;
             $token->save();
         }
 
@@ -158,28 +191,70 @@ class OidcHeadersGuard implements Guard
     }
 
     /**
-     * Get the credential headers from the current request
+     * Get the credential headers from the current request.
      */
     private function getCredentialHeaders(): ?array
     {
-        $userId = $this->request->header('X-User-Id');
-        $userEmail = $this->request->header('X-User-Email');
-        $tokenId = $this->request->header('X-Token-Id');
-        $tokenCreatedAt = $this->request->header('X-Token-Created-At');
-        $tokenExpiresAt = $this->request->header('X-Token-Expires-At');
-        $token = $this->request->bearerToken();
+        $userId = $this->getSingleHeader('X-User-Id');
+        $userEmail = $this->getSingleHeader('X-User-Email');
+        $tokenId = $this->getSingleHeader('X-Token-Id');
+        $tokenCreatedAt = $this->getSingleHeader('X-Token-Created-At');
+        $tokenExpiresAt = $this->getSingleHeader('X-Token-Expires-At');
+        $token = $this->getStrictBearerToken();
 
-        if ($userId && $userEmail && $tokenId && $tokenCreatedAt && $tokenExpiresAt && $token) {
-            return [
-                'user_id' => $userId,
-                'user_email' => $userEmail,
-                'token_id' => $tokenId,
-                'token_created_at' => $tokenCreatedAt,
-                'token_expires_at' => $tokenExpiresAt,
-                'token' => $token,
-            ];
-        } else {
+        if (
+            $userId === null
+            || $userEmail === null
+            || $tokenId === null
+            || $tokenCreatedAt === null
+            || $tokenExpiresAt === null
+            || $token === null
+            || ! ctype_digit($tokenCreatedAt)
+            || ! ctype_digit($tokenExpiresAt)
+            || (int) $tokenExpiresAt <= Carbon::now()->getTimestamp()
+        ) {
             return null;
         }
+
+        return [
+            'user_id' => $userId,
+            'user_email' => $userEmail,
+            'token_id' => $tokenId,
+            'token_created_at' => $tokenCreatedAt,
+            'token_expires_at' => $tokenExpiresAt,
+            'token' => $token,
+        ];
+    }
+
+    private function getSingleHeader(string $name): ?string
+    {
+        $values = $this->request->headers->all($name);
+
+        if (count($values) !== 1 || ! is_string($values[0])) {
+            return null;
+        }
+
+        $trimmed = trim($values[0]);
+
+        return $trimmed !== '' ? $trimmed : null;
+    }
+
+    /**
+     * Extract a Bearer token strictly at offset 0 so non-Bearer prefixes
+     * (e.g. "Token Bearer ...") cannot bypass Envoy's jwt_authn extractor.
+     */
+    private function getStrictBearerToken(): ?string
+    {
+        $authorization = $this->getSingleHeader('Authorization');
+
+        if ($authorization === null) {
+            return null;
+        }
+
+        if (preg_match('/\ABearer[ \t]+([^\s,]+)\z/i', $authorization, $matches) !== 1) {
+            return null;
+        }
+
+        return $matches[1];
     }
 }
