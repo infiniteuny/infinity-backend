@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasPermissions;
+use BackedEnum;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,6 +18,15 @@ class Group extends Model implements RoleContract
     use HasFactory, HasPermissions, HasUuids;
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'guard_name' => 'api',
+    ];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -25,6 +36,48 @@ class Group extends Model implements RoleContract
         'sso_last_synced_at',
         'integration',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        $attributes['guard_name'] ??= 'api';
+
+        parent::__construct($attributes);
+    }
+
+    public static function create(array $attributes = [])
+    {
+        $attributes['guard_name'] ??= 'api';
+
+        return parent::create($attributes);
+    }
+
+    public static function findByName(BackedEnum|string $name, ?string $guardName = null): RoleContract
+    {
+        return parent::findByName($name, $guardName ?? 'api');
+    }
+
+    public static function findById(int|string $id, ?string $guardName = null): RoleContract
+    {
+        return parent::findById($id, $guardName ?? 'api');
+    }
+
+    public static function findOrCreate(BackedEnum|string $name, ?string $guardName = null): RoleContract
+    {
+        return parent::findOrCreate($name, $guardName ?? 'api');
+    }
+
+    protected function getDefaultGuardName(): string
+    {
+        return $this->attributes['guard_name'] ?? 'api';
+    }
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     */
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format(DATE_ATOM);
+    }
 
     public function integration(): HasOne
     {

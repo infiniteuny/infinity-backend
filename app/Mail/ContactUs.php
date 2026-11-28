@@ -11,11 +11,17 @@ class ContactUs extends Mailable
     use Queueable, SerializesModels;
 
     /**
+     * @var array<string, mixed>
+     */
+    public array $data;
+
+    /**
      * Create a new message instance.
      *
+     * @param  array<string, mixed>  $data
      * @return void
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->data = $data;
     }

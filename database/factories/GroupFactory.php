@@ -29,7 +29,7 @@ class GroupFactory extends Factory
         return [
             'id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->unique()->word()),
-            'guard_name' => 'oidc',
+            'guard_name' => 'api',
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

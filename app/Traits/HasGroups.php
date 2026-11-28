@@ -60,17 +60,26 @@ trait HasGroups
 
     public function assignGroup(...$roles)
     {
-        return $this->assignRole(...$roles);
+        $result = $this->assignRole(...$roles);
+        $this->unsetRelation('groups');
+
+        return $result;
     }
 
-    public function removeGroup(string|int|Role|BackedEnum $role)
+    public function removeGroup(string|int|array|Role|Collection|BackedEnum ...$role)
     {
-        return $this->removeRole($role);
+        $result = $this->removeRole(...$role);
+        $this->unsetRelation('groups');
+
+        return $result;
     }
 
     public function syncGroups(...$roles)
     {
-        return $this->syncRoles(...$roles);
+        $result = $this->syncRoles(...$roles);
+        $this->unsetRelation('groups');
+
+        return $result;
     }
 
     public function hasGroup(string|int|array|Role|Collection|BackedEnum $roles, ?string $guard = null): bool

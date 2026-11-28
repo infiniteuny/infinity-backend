@@ -15,7 +15,7 @@ class Blob implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value ? Storage::url($value) : null;
+        return is_string($value) && trim($value) !== '' ? Storage::url($value) : null;
     }
 
     /**

@@ -16,6 +16,7 @@ use App\Models\Major;
 use App\Models\Persona;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class BaseSeeder extends Seeder
 {
@@ -1149,45 +1150,84 @@ class BaseSeeder extends Seeder
         ];
 
         foreach ($degrees as $degree) {
-            Degree::firstOrCreate($degree);
+            Degree::firstOrCreate(
+                ['code' => $degree['code']],
+                Arr::except($degree, ['code']),
+            );
         }
         foreach ($faculties as $faculty) {
-            Faculty::firstOrCreate($faculty);
+            Faculty::firstOrCreate(
+                ['code' => $faculty['code']],
+                Arr::except($faculty, ['code']),
+            );
         }
+
+        $degreesByCode = Degree::pluck('id', 'code');
+        $facultiesByCode = Faculty::pluck('id', 'code');
+
         foreach ($majors as $major) {
-            Major::firstOrCreate([
-                'degree_id' => Degree::where('code', $major['degree_id'])->firstOrFail()->id,
-                'faculty_id' => Faculty::where('code', $major['faculty_id'])->firstOrFail()->id,
-                'code' => $major['code'],
-                'name' => $major['name'],
-            ]);
+            Major::firstOrCreate(
+                ['code' => $major['code']],
+                [
+                    'degree_id' => $degreesByCode[$major['degree_id']],
+                    'faculty_id' => $facultiesByCode[$major['faculty_id']],
+                    'name' => $major['name'],
+                ],
+            );
         }
         foreach ($personas as $persona) {
-            Persona::firstOrCreate($persona);
+            Persona::firstOrCreate(
+                ['name' => $persona['name']],
+                Arr::except($persona, ['name']),
+            );
         }
         foreach ($communityGroups as $communityGroup) {
-            CommunityGroup::firstOrCreate($communityGroup);
+            CommunityGroup::firstOrCreate(
+                ['name' => $communityGroup['name']],
+                Arr::except($communityGroup, ['name']),
+            );
         }
         foreach ($coreTeamDivisions as $coreTeamDivision) {
-            CoreTeamDivision::firstOrCreate($coreTeamDivision);
+            CoreTeamDivision::firstOrCreate(
+                ['name' => $coreTeamDivision['name']],
+                Arr::except($coreTeamDivision, ['name']),
+            );
         }
         foreach ($competitionOrganizerTypes as $competitionOrganizerType) {
-            CompetitionOrganizerType::firstOrCreate($competitionOrganizerType);
+            CompetitionOrganizerType::firstOrCreate(
+                ['name' => $competitionOrganizerType['name']],
+                Arr::except($competitionOrganizerType, ['name']),
+            );
         }
         foreach ($competitionOutputs as $competitionOutput) {
-            CompetitionOutput::firstOrCreate($competitionOutput);
+            CompetitionOutput::firstOrCreate(
+                ['name' => $competitionOutput['name']],
+                Arr::except($competitionOutput, ['name']),
+            );
         }
         foreach ($competitionRanks as $competitionRank) {
-            CompetitionRank::firstOrCreate($competitionRank);
+            CompetitionRank::firstOrCreate(
+                ['name' => $competitionRank['name']],
+                Arr::except($competitionRank, ['name']),
+            );
         }
         foreach ($competitionScales as $competitionScale) {
-            CompetitionScale::firstOrCreate($competitionScale);
+            CompetitionScale::firstOrCreate(
+                ['name' => $competitionScale['name']],
+                Arr::except($competitionScale, ['name']),
+            );
         }
         foreach ($competitionTimeRanges as $competitionTimeRange) {
-            CompetitionTimeRange::firstOrCreate($competitionTimeRange);
+            CompetitionTimeRange::firstOrCreate(
+                ['name' => $competitionTimeRange['name']],
+                Arr::except($competitionTimeRange, ['name']),
+            );
         }
         foreach ($competitionTeamTypes as $competitionTeamType) {
-            CompetitionTeamType::firstOrCreate($competitionTeamType);
+            CompetitionTeamType::firstOrCreate(
+                ['name' => $competitionTeamType['name']],
+                Arr::except($competitionTeamType, ['name']),
+            );
         }
     }
 }

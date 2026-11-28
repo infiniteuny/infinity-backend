@@ -41,6 +41,10 @@ class DeleteBlob implements ShouldBeUnique, ShouldQueue
      */
     public function handle(): void
     {
+        if (trim($this->manifest) === '') {
+            return;
+        }
+
         Storage::delete($this->manifest);
     }
 }
