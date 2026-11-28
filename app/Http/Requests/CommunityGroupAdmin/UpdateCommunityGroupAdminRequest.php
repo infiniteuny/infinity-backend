@@ -4,6 +4,7 @@ namespace App\Http\Requests\CommunityGroupAdmin;
 
 use App\Models\CommunityGroupAdmin;
 use App\Rules\NoDeactivateActive;
+use App\Traits\HasBooleanInput;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -11,16 +12,14 @@ use Illuminate\Validation\Rule;
 
 class UpdateCommunityGroupAdminRequest extends FormRequest
 {
+    use HasBooleanInput;
+
     /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void
     {
-        if ($this->has('is_active')) {
-            $this->merge([
-                'is_active' => filter_var($this->input('is_active'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            ]);
-        }
+        $this->prepareBooleanInput(['is_active']);
     }
 
     /**
@@ -48,7 +47,7 @@ class UpdateCommunityGroupAdminRequest extends FormRequest
         }
 
         return [
-            'year' => ['sometimes', 'integer', $yearUniqueRule],
+            'year' => ['bail', 'sometimes', 'integer', 'between:1901,2155', $yearUniqueRule],
             'is_active' => [
                 'sometimes',
                 'boolean',

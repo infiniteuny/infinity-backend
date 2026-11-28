@@ -2,21 +2,20 @@
 
 namespace App\Http\Requests\CommunityGroup;
 
+use App\Traits\HasBooleanInput;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCommunityGroupRequest extends FormRequest
 {
+    use HasBooleanInput;
+
     /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void
     {
-        if ($this->has('is_active')) {
-            $this->merge([
-                'is_active' => filter_var($this->input('is_active'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            ]);
-        }
+        $this->prepareBooleanInput(['is_active']);
     }
 
     /**

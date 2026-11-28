@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 use App\Models\User;
 use App\Rules\Associative;
+use App\Traits\HasBooleanInput;
 use DateTimeInterface;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -12,18 +13,14 @@ use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
+    use HasBooleanInput;
+
     /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void
     {
-        foreach (['is_member', 'is_extraordinary'] as $field) {
-            if ($this->has($field)) {
-                $this->merge([
-                    $field => filter_var($this->input($field), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-                ]);
-            }
-        }
+        $this->prepareBooleanInput(['is_member', 'is_extraordinary']);
     }
 
     /**
@@ -100,9 +97,9 @@ class UpdateUserRequest extends FormRequest
         return $rules;
     }
 
-    public function validated($key = null, $default = null): array
+    public function validated($key = null, $default = null): mixed
     {
-        $validated = parent::validated($key, $default);
+        $validated = parent::validated();
 
         if ($this->user()?->cannot('manage-user-membership')) {
             unset(
@@ -113,7 +110,7 @@ class UpdateUserRequest extends FormRequest
             );
         }
 
-        return $validated;
+        return data_get($validated, $key, $default);
     }
 
     /**

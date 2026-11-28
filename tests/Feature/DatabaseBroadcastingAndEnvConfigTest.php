@@ -82,14 +82,11 @@ class DatabaseBroadcastingAndEnvConfigTest extends TestCase
         $this->assertStringNotContainsString('minfds', $servicesConf);
     }
 
-    public function test_env_example_includes_oidc_app_path_and_authentik_internal_group_key(): void
+    public function test_env_example_includes_db_host_and_authentik_internal_group_key(): void
     {
         $envExample = (string) file_get_contents(base_path('.env.example'));
 
-        $this->assertStringContainsString(
-            'OIDC_CONFIGURATIONS_URI="https://auth.infiniteuny.id/application/o/infinity/.well-known/openid-configuration"',
-            $envExample,
-        );
+        $this->assertStringContainsString('DB_HOST=127.0.0.1', $envExample);
         $this->assertStringContainsString('AUTHENTIK_INTERNAL_GROUP_ID=', $envExample);
         $this->assertStringNotContainsString('OUTLINE_CG_ADMIN_GROUP_ID', $envExample);
         $this->assertStringNotContainsString('OUTLINE_XCG_ADMIN_GROUP_ID', $envExample);

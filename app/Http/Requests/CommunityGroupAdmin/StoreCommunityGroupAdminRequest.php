@@ -2,21 +2,20 @@
 
 namespace App\Http\Requests\CommunityGroupAdmin;
 
+use App\Traits\HasBooleanInput;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCommunityGroupAdminRequest extends FormRequest
 {
+    use HasBooleanInput;
+
     /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void
     {
-        if ($this->has('is_active')) {
-            $this->merge([
-                'is_active' => filter_var($this->input('is_active'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            ]);
-        }
+        $this->prepareBooleanInput(['is_active']);
     }
 
     /**
@@ -27,7 +26,7 @@ class StoreCommunityGroupAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'year' => ['required', 'integer', 'unique:community_group_admins,year'],
+            'year' => ['bail', 'required', 'integer', 'between:1901,2155', 'unique:community_group_admins,year'],
             'is_active' => ['required', 'boolean'],
         ];
     }

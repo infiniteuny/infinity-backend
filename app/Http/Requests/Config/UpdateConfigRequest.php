@@ -2,22 +2,21 @@
 
 namespace App\Http\Requests\Config;
 
+use App\Traits\HasBooleanInput;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateConfigRequest extends FormRequest
 {
+    use HasBooleanInput;
+
     /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void
     {
-        if ($this->has('is_private')) {
-            $this->merge([
-                'is_private' => filter_var($this->input('is_private'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            ]);
-        }
+        $this->prepareBooleanInput(['is_private']);
     }
 
     /**

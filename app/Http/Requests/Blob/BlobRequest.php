@@ -2,21 +2,20 @@
 
 namespace App\Http\Requests\Blob;
 
+use App\Traits\HasBooleanInput;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BlobRequest extends FormRequest
 {
+    use HasBooleanInput;
+
     /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void
     {
-        if ($this->has('force_download')) {
-            $this->merge([
-                'force_download' => filter_var($this->input('force_download'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            ]);
-        }
+        $this->prepareBooleanInput(['force_download']);
     }
 
     /**
