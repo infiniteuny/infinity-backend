@@ -167,6 +167,7 @@ class UserControllerTest extends TestCase
                 ->andThrow(new RuntimeException('Invalid JWT signature'));
             $mock->shouldNotReceive('introspect');
         });
+        Auth::forgetGuards();
 
         $this->getJson("/v1/users/{$this->malice->id}", [
             'X-User-Id' => '102',
