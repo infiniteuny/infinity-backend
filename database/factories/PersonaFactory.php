@@ -28,7 +28,7 @@ class PersonaFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'name' => Str::title($this->faker->unique()->word()),
+            'name' => Str::title($this->faker->unique()->words(2, true)),
             'priority' => $this->faker->numberBetween(1, 127),
             'description' => $this->faker->text(),
             'logo' => json_encode([

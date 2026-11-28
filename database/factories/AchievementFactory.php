@@ -3,8 +3,15 @@
 namespace Database\Factories;
 
 use App\Models\Achievement;
+use App\Models\CompetitionInstance;
+use App\Models\CompetitionOutput;
+use App\Models\CompetitionRank;
+use App\Models\CompetitionScale;
+use App\Models\CompetitionTimeRange;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -28,15 +35,17 @@ class AchievementFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'team_id' => $this->faker->uuid(),
-            'competition_instance_id' => $this->faker->uuid(),
-            'competition_scale_id' => $this->faker->uuid(),
-            'competition_time_range_id' => $this->faker->uuid(),
-            'competition_output_id' => $this->faker->uuid(),
-            'competition_rank_id' => $this->faker->uuid(),
+            'team_id' => Team::factory(),
+            'competition_instance_id' => CompetitionInstance::factory(),
+            'competition_scale_id' => CompetitionScale::factory(),
+            'competition_time_range_id' => CompetitionTimeRange::factory(),
+            'competition_output_id' => CompetitionOutput::factory(),
+            'competition_rank_id' => CompetitionRank::factory(),
             'competition_branch' => Str::title($this->faker->word()),
             'competition_start_date' => $this->faker->date(),
-            'competition_end_date' => $this->faker->date(),
+            'competition_end_date' => fn (array $attributes) => Carbon::parse($attributes['competition_start_date'])
+                ->addDays($this->faker->numberBetween(0, 30))
+                ->format('Y-m-d'),
             'description' => $this->faker->text(),
             'image' => json_encode([
                 'disk' => 'local',

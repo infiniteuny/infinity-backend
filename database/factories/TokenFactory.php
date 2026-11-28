@@ -3,8 +3,10 @@
 namespace Database\Factories;
 
 use App\Models\Token;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends Factory<Token>
@@ -25,13 +27,17 @@ class TokenFactory extends Factory
      */
     public function definition(): array
     {
+        $createdAt = Carbon::instance($this->faker->dateTimeBetween('-1 month', 'now'));
+
         return [
             'id' => $this->faker->uuid(),
-            'sso_id' => $this->faker->uuid(),
-            'user_id' => $this->faker->uuid(),
-            'last_used_at' => $this->faker->dateTime(),
-            'created_at' => $this->faker->dateTime(),
-            'expires_at' => $this->faker->dateTime(),
+            'sso_id' => $this->faker->unique()->uuid(),
+            'user_id' => User::factory(),
+            'last_used_at' => fn (array $attributes) => Carbon::parse($attributes['created_at'])
+                ->addMinutes($this->faker->numberBetween(0, 60)),
+            'created_at' => $createdAt,
+            'expires_at' => fn (array $attributes) => Carbon::parse($attributes['created_at'])
+                ->addDays($this->faker->numberBetween(1, 30)),
         ];
     }
 }

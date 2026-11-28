@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\CompetitionTeamType;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -28,9 +30,9 @@ class TeamFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'leader_id' => $this->faker->uuid(),
-            'team_type_id' => $this->faker->uuid(),
-            'name' => Str::title($this->faker->unique()->word()),
+            'leader_id' => User::factory(),
+            'team_type_id' => CompetitionTeamType::factory(),
+            'name' => Str::title($this->faker->unique()->words(2, true)),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

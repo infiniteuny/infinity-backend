@@ -28,7 +28,7 @@ class CoreTeamDivisionFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'name' => Str::title($this->faker->unique()->word()),
+            'name' => Str::title($this->faker->unique()->words(2, true)),
             'priority' => $this->faker->numberBetween(1, 127),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

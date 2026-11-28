@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\AchievementLeaderboard;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,9 +28,9 @@ class AchievementLeaderboardFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'user_id' => $this->faker->uuid(),
-            'year' => $this->faker->year(),
-            'total_points' => $this->faker->numberBetween(0, 2147483647),
+            'user_id' => User::factory(),
+            'year' => (int) $this->faker->year(),
+            'total_points' => $this->faker->numberBetween(0, 100000),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

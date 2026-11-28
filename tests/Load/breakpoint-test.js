@@ -464,6 +464,88 @@ export function teardown(setupResult) {
     const ids = setupResult.ids;
 
     group("Teardown - Cleanup", () => {
+        const deleteMatchingResources = (
+            endpoint,
+            collectionKey,
+            predicate,
+        ) => {
+            const idsToDelete = new Set();
+            let cursor = null;
+
+            for (let page = 0; page < 20; page++) {
+                const query = cursor
+                    ? `per_page=500&cursor=${encodeURIComponent(cursor)}`
+                    : "per_page=500";
+                const res = trackedRequest(
+                    "GET",
+                    `${BASE_URL}${endpoint}?${query}`,
+                    null,
+                    { ...AUTH_HEADERS, Accept: "application/json" },
+                    "teardown",
+                );
+                if (res.status !== 200) break;
+
+                let body;
+                try {
+                    body = res.json();
+                } catch (_) {
+                    break;
+                }
+
+                const items = body?.data?.[collectionKey];
+                if (!Array.isArray(items) || items.length === 0) break;
+
+                for (const item of items) {
+                    if (item?.id && predicate(item)) {
+                        idsToDelete.add(item.id);
+                    }
+                }
+
+                cursor = body?.data?.meta?.next_cursor || null;
+                if (!cursor) break;
+            }
+
+            for (const id of idsToDelete) {
+                trackedRequest(
+                    "DELETE",
+                    `${BASE_URL}${endpoint}/${id}`,
+                    null,
+                    AUTH_HEADERS,
+                    "teardown",
+                );
+            }
+        };
+
+        if (ids.teamId || ids.competitionInstanceId) {
+            const matchesSetupResources = (item) =>
+                (ids.teamId && item.team_id === ids.teamId) ||
+                (ids.competitionInstanceId &&
+                    item.competition_instance_id === ids.competitionInstanceId);
+
+            deleteMatchingResources(
+                "/v1/achievements",
+                "achievements",
+                matchesSetupResources,
+            );
+            deleteMatchingResources(
+                "/v1/fund-applications",
+                "fund_applications",
+                matchesSetupResources,
+            );
+        }
+
+        if (ids.userId || ids.competitionTeamTypeId) {
+            deleteMatchingResources(
+                "/v1/teams",
+                "teams",
+                (item) =>
+                    item.id !== ids.teamId &&
+                    ((ids.userId && item.leader_id === ids.userId) ||
+                        (ids.competitionTeamTypeId &&
+                            item.team_type_id === ids.competitionTeamTypeId)),
+            );
+        }
+
         const deletions = [
             // Level 4: Delete resources that depend on multiple other resources
             ids.userPermissionId

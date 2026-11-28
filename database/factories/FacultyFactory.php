@@ -28,7 +28,7 @@ class FacultyFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'code' => sprintf('%02d', $this->faker->unique()->numberBetween(1, 99)),
+            'code' => sprintf('%04d', $this->faker->unique()->numberBetween(100, 999999)),
             'name' => Str::title($this->faker->word()),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

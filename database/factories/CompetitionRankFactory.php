@@ -26,11 +26,10 @@ class CompetitionRankFactory extends Factory
      */
     public function definition(): array
     {
-
         return [
             'id' => $this->faker->uuid(),
             'name' => Str::title($this->faker->word()),
-            'weight' => $this->faker->numberBetween(0, 2147483647),
+            'weight' => $this->faker->numberBetween(1, 100),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

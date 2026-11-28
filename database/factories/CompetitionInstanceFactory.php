@@ -2,9 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Competition;
 use App\Models\CompetitionInstance;
+use App\Models\CompetitionOrganizerType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -28,13 +31,13 @@ class CompetitionInstanceFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'competition_id' => $this->faker->uuid(),
+            'competition_id' => Competition::factory(),
             'name' => Str::title($this->faker->name()),
             'shortname' => Str::upper($this->faker->lexify('???')),
             'description' => $this->faker->text(),
             'url' => $this->faker->url(),
             'organizer' => $this->faker->company(),
-            'organizer_type_id' => $this->faker->uuid(),
+            'organizer_type_id' => CompetitionOrganizerType::factory(),
             'logo' => json_encode([
                 'disk' => 'local',
                 'visibility' => 'private',
@@ -42,7 +45,9 @@ class CompetitionInstanceFactory extends Factory
                 'name' => 'some-logo-id.jpg',
             ]),
             'start_date' => $this->faker->date(),
-            'end_date' => $this->faker->date(),
+            'end_date' => fn (array $attributes) => Carbon::parse($attributes['start_date'])
+                ->addDays($this->faker->numberBetween(0, 30))
+                ->format('Y-m-d'),
             'location' => $this->faker->city(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

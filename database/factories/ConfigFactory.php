@@ -27,9 +27,13 @@ class ConfigFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'key' => $this->faker->unique()->word(),
-            'value' => $this->faker->word(),
+            'key' => strtolower($this->faker->unique()->lexify('config_????????')),
             'type' => $this->faker->randomElement(['STRING', 'INTEGER', 'BOOLEAN']),
+            'value' => fn (array $attributes) => match ($attributes['type'] ?? 'STRING') {
+                'INTEGER' => (string) $this->faker->numberBetween(0, 1000),
+                'BOOLEAN' => $this->faker->boolean() ? 'true' : 'false',
+                default => $this->faker->word(),
+            },
             'is_private' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),

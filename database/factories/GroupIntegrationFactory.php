@@ -29,8 +29,8 @@ class GroupIntegrationFactory extends Factory
         return [
             'id' => $this->faker->uuid(),
             'group_id' => Group::factory(),
-            'docs_group_id' => $this->faker->uuid(),
-            'docs_collection_id' => $this->faker->uuid(),
+            'docs_group_id' => $this->faker->unique()->uuid(),
+            'docs_collection_id' => $this->faker->unique()->uuid(),
             'docs_group_last_synced_at' => $this->faker->dateTime(),
             'docs_collection_last_synced_at' => $this->faker->dateTime(),
             'created_at' => $this->faker->dateTime(),

@@ -64,7 +64,9 @@ class DummyGuard implements Guard
 
         if (! $user) {
             if (class_exists(FakerFactory::class)) {
-                $user = User::factory()->make();
+                $user = User::factory()->make([
+                    'major_id' => (string) Str::uuid7(),
+                ]);
             } else {
                 $user = new User([
                     'name' => 'Dummy User',

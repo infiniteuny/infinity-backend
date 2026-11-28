@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\CommunityGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<CommunityGroup>
@@ -27,7 +28,7 @@ class CommunityGroupFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'name' => $this->faker->unique()->word(),
+            'name' => Str::title($this->faker->unique()->words(2, true)),
             'priority' => $this->faker->numberBetween(1, 127),
             'description' => $this->faker->text(),
             'logo' => json_encode([
@@ -40,5 +41,20 @@ class CommunityGroupFactory extends Factory
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
+    }
+
+    public function pivotCommunityGroupMember(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'membership' => [
+                    'id' => $this->faker->uuid(),
+                    'user_id' => $this->faker->uuid(),
+                    'community_group_id' => $attributes['id'],
+                    'created_at' => $this->faker->dateTime()->format(DATE_ATOM),
+                    'updated_at' => $this->faker->dateTime()->format(DATE_ATOM),
+                ],
+            ];
+        });
     }
 }

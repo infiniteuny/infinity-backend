@@ -3,9 +3,11 @@
 namespace Database\Factories;
 
 use App\Facades\Storage;
+use App\Models\Major;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -29,20 +31,22 @@ class UserFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'sso_id' => $this->faker->uuid(),
+            'sso_id' => (string) $this->faker->unique()->numberBetween(100000, 999999999),
             'name' => Str::title($this->faker->name()),
-            'username' => $this->faker->unique()->userName(),
+            'username' => Str::limit($this->faker->unique()->userName(), 150, ''),
             'email_address' => $this->faker->unique()->email(),
             'phone_number' => $this->faker->unique()->phoneNumber(),
             'student_id' => sprintf('%011d', $this->faker->unique()->numberBetween(10000000000, 99999999999)),
-            'major_id' => $this->faker->unique()->uuid(),
+            'major_id' => Major::factory(),
             'links' => [
-                'github' => $this->faker->unique()->userName(),
-                'linkedin' => $this->faker->unique()->userName(),
+                'github' => $this->faker->userName(),
+                'linkedin' => $this->faker->userName(),
                 'website' => $this->faker->url(),
             ],
             'start_date' => $this->faker->date(),
-            'end_date' => $this->faker->date(),
+            'end_date' => fn (array $attributes) => $attributes['start_date'] !== null
+                ? Carbon::parse($attributes['start_date'])->addDays($this->faker->numberBetween(0, 365))->format('Y-m-d')
+                : null,
             'is_member' => $this->faker->boolean(),
             'is_extraordinary' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTime(),

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Degree;
+use App\Models\Faculty;
 use App\Models\Major;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,9 +30,9 @@ class MajorFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'degree_id' => $this->faker->uuid(),
-            'faculty_id' => $this->faker->uuid(),
-            'code' => sprintf('%04d', $this->faker->unique()->numberBetween(101, 9999)),
+            'degree_id' => Degree::factory(),
+            'faculty_id' => Faculty::factory(),
+            'code' => sprintf('%06d', $this->faker->unique()->numberBetween(10000, 999999)),
             'name' => Str::title($this->faker->word()),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
