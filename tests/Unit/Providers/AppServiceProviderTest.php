@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Providers;
 
+use App\Enums\StorageVisibility;
+use App\Facades\Storage as BlobStorage;
 use App\Models\Degree;
 use App\Models\Faculty;
 use App\Models\Major;
@@ -11,6 +13,7 @@ use App\Providers\AppServiceProvider;
 use App\Services\OidcService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +61,53 @@ class AppServiceProviderTest extends TestCase
         $this->assertSame(30, $authentikOptions['timeout']);
         $this->assertSame(10, $outlineOptions['connect_timeout']);
         $this->assertSame(30, $outlineOptions['timeout']);
+    }
+
+    public function test_builds_valid_subpath_temporary_blob_urls_without_doubling_origin_prefix(): void
+    {
+        $originalUrl = config('app.url');
+        Storage::fake('local');
+
+        try {
+            URL::setRequest(Request::create('http://infinity-backend.infinity.svc.cluster.local/v1/fund-applications'));
+            config(['app.url' => 'https://api.infiniteuny.id/infinity/']);
+
+            (new AppServiceProvider($this->app))->boot();
+
+            $manifest = BlobStorage::store(
+                UploadedFile::fake()->create('proposal.pdf', 16, 'application/pdf'),
+                'fund-applications/proposals',
+                StorageVisibility::PRIVATE,
+                disk: 'local',
+            );
+
+            $signedUrl = BlobStorage::url($manifest);
+
+            $this->assertStringStartsWith(
+                'https://api.infiniteuny.id/infinity/static/private/private/fund-applications/proposals/',
+                $signedUrl,
+            );
+            $this->assertStringNotContainsString('/infinity/infinity/', $signedUrl);
+            $this->assertStringNotContainsString('//static', $signedUrl);
+
+            // Simulate Istio HTTPRoute ReplacePrefixMatch: / rewriting /infinity/* -> /*
+            $rewrittenUri = preg_replace('#^https://api\.infiniteuny\.id/infinity#', '', $signedUrl);
+            $this->assertIsString($rewrittenUri);
+            $this->assertStringStartsWith('/static/private/private/fund-applications/proposals/', $rewrittenUri);
+
+            $response = $this->get(
+                'http://infinity-backend.infinity.svc.cluster.local'.$rewrittenUri.'&force_download=true&name=proposal.pdf',
+                ['X-Forwarded-Proto' => 'https'],
+            );
+            $response->assertOk();
+            $this->assertStringContainsString(
+                'attachment; filename=proposal.pdf',
+                (string) $response->headers->get('Content-Disposition'),
+            );
+        } finally {
+            config(['app.url' => $originalUrl]);
+            (new AppServiceProvider($this->app))->boot();
+        }
     }
 
     public function test_api_rate_limiter_does_not_invoke_default_headers_guard_on_semi_public_routes(): void

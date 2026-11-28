@@ -57,10 +57,16 @@ class AppServiceProvider extends ServiceProvider
         URL::useOrigin($appUrl);
         if (is_string($appUrl) && str_starts_with(strtolower($appUrl), 'https://')) {
             URL::forceScheme('https');
+        } else {
+            URL::forceScheme(null);
         }
         Storage::disk('local')->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
+            $relativeUrlGenerator = clone URL::getFacadeRoot();
+            $relativeUrlGenerator->useOrigin(null);
+            $relativeUrlGenerator->setRequest(Request::create('/'));
+
             return URL::to(
-                URL::temporarySignedRoute(
+                $relativeUrlGenerator->temporarySignedRoute(
                     'blobs.show',
                     $expiration,
                     array_merge($options, ['blob' => $path]),

@@ -20,7 +20,7 @@ Without explicit documentation, two implementation choices in `BlobController`, 
 ## Decision
 
 1. **`BlobController` is exclusively for `local` disk private blobs:**
-    - `AppServiceProvider` registers `Storage::disk('local')->buildTemporaryUrlsUsing(...)` to generate signed relative URLs pointing to `route('blobs.show')` (`GET /static/private/{blob}`).
+    - `AppServiceProvider` registers `Storage::disk('local')->buildTemporaryUrlsUsing(...)` to sign the route-relative path `/static/private/{blob}` (`route('blobs.show')`) without any `APP_URL` subpath prefix (via an origin-cleared `UrlGenerator` clone) before prepending `APP_URL` via `URL::to(...)`, ensuring valid signatures and non-duplicated subpaths behind reverse-proxy prefix rewrites (such as Istio `ReplacePrefixMatch: /`).
     - `BlobController` intentionally serves files only from `Storage::disk('local')`. When blobs are stored on the `s3` disk, `StorageRepositoryImpl::url()` delegates directly to Flysystem S3 presigned URLs, and `BlobController` is never invoked.
 2. **`BlobRequest` validates optional `GET` query parameters:**
     - `BlobRequest` validates query string parameters on `GET /static/private/{blob}` — specifically `force_download` (boolean toggle between `download()` attachment vs `serve()` inline response) and `name` (custom download/display filename).
