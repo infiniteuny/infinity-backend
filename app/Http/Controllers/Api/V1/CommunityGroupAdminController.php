@@ -12,6 +12,7 @@ use App\Jobs\DeleteDocsGroup;
 use App\Jobs\DeleteSsoGroup;
 use App\Models\CommunityGroupAdmin;
 use App\Models\Group;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -24,6 +25,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CommunityGroupAdminController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.CommunityGroupAdmin::class)->only('store');
@@ -73,7 +76,7 @@ class CommunityGroupAdminController extends Controller
                 'updated_at',
             )
             ->defaultSort('-id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CommunityGroupAdminCollection($communityGroupAdmins);
     }

@@ -8,6 +8,7 @@ use App\Http\Requests\Degree\UpdateDegreeRequest;
 use App\Http\Resources\Degree\DegreeCollection;
 use App\Http\Resources\Degree\DegreeResource;
 use App\Models\Degree;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class DegreeController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(Degree::class, 'degree');
@@ -64,7 +67,7 @@ class DegreeController extends Controller
                 'updated_at',
             )
             ->defaultSorts('code')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new DegreeCollection($degrees);
     }

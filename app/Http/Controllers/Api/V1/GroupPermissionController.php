@@ -9,6 +9,7 @@ use App\Http\Resources\GroupPermission\GroupPermissionCollection;
 use App\Http\Resources\GroupPermission\GroupPermissionResource;
 use App\Models\Group;
 use App\Models\GroupPermission;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -22,6 +23,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class GroupPermissionController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:viewAny,'.GroupPermission::class)->only('index');
@@ -63,7 +66,7 @@ class GroupPermissionController extends Controller
                 AllowedSort::field('updated_at', 'permissions.updated_at'),
             )
             ->defaultSorts('-permissions.id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new GroupPermissionCollection($groupPermission);
     }
@@ -85,7 +88,7 @@ class GroupPermissionController extends Controller
             ->wherePivot('permission_id', $request->validated('permission_id'))
             ->first();
 
-        return new GroupPermissionResource($groupPermission);
+        return (new GroupPermissionResource($groupPermission))->response()->setStatusCode(201);
     }
 
     /**

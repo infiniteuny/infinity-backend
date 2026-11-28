@@ -8,6 +8,7 @@ use App\Http\Requests\Team\UpdateTeamRequest;
 use App\Http\Resources\Team\TeamCollection;
 use App\Http\Resources\Team\TeamResource;
 use App\Models\Team;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class TeamController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(Team::class, 'team');
@@ -93,7 +96,7 @@ class TeamController extends Controller
         }
 
         $teams = $teams
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new TeamCollection($teams);
     }

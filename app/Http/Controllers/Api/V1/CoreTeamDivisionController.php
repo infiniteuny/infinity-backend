@@ -9,6 +9,7 @@ use App\Http\Resources\CoreTeamDivision\CoreTeamDivisionCollection;
 use App\Http\Resources\CoreTeamDivision\CoreTeamDivisionResource;
 use App\Jobs\DeleteBlob;
 use App\Models\CoreTeamDivision;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -21,6 +22,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CoreTeamDivisionController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(CoreTeamDivision::class, 'core_team_division');
@@ -69,7 +72,7 @@ class CoreTeamDivisionController extends Controller
                 'priority',
                 '-id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CoreTeamDivisionCollection($coreTeamDivisions);
     }

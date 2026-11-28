@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCommunityGroup\UserCommunityGroupCollection;
 use App\Models\User;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -17,6 +18,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class UserCommunityGroupController extends Controller
 {
+    use HasPagination;
+
     /**
      * List all user community groups
      *
@@ -59,7 +62,7 @@ class UserCommunityGroupController extends Controller
                 'community_groups.priority',
                 '-community_groups.id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new UserCommunityGroupCollection($userCommunityGroups);
     }

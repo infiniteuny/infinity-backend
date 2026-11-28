@@ -23,6 +23,15 @@ class CoreTeamDivision extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'priority' => 'integer',
+    ];
+
+    /**
      * Prepare a date for array / JSON serialization.
      */
     protected function serializeDate(DateTimeInterface $date): string

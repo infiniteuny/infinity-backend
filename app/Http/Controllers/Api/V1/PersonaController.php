@@ -11,6 +11,7 @@ use App\Http\Resources\Persona\PersonaCollection;
 use App\Http\Resources\Persona\PersonaResource;
 use App\Jobs\DeleteBlob;
 use App\Models\Persona;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -23,6 +24,8 @@ use Throwable;
  */
 class PersonaController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.Persona::class)->only('store');
@@ -79,7 +82,7 @@ class PersonaController extends Controller
                 'priority',
                 '-id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new PersonaCollection($personas);
     }

@@ -9,6 +9,7 @@ use App\Http\Resources\UserPersona\UserPersonaCollection;
 use App\Http\Resources\UserPersona\UserPersonaResource;
 use App\Models\User;
 use App\Models\UserPersona;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -21,6 +22,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class UserPersonaController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.UserPersona::class.',user')->only('store');
@@ -67,7 +70,7 @@ class UserPersonaController extends Controller
                 'personas.priority',
                 '-personas.id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new UserPersonaCollection($userPersona);
     }
@@ -88,7 +91,7 @@ class UserPersonaController extends Controller
             ->wherePivot('persona_id', $request->validated('persona_id'))
             ->first();
 
-        return new UserPersonaResource($userPersona);
+        return (new UserPersonaResource($userPersona))->response()->setStatusCode(201);
     }
 
     /**

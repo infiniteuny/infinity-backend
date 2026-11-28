@@ -91,7 +91,7 @@ class UserGroupTouchTest extends TestCase
             ->postJson("/v1/users/{$this->member->id}/groups", [
                 'group_id' => $groupA->id,
             ]);
-        $storeResponse->assertOk();
+        $storeResponse->assertCreated();
 
         $groupA->refresh();
         $groupB->refresh();

@@ -11,7 +11,17 @@ class Encoder
 
     public static function base64UrlDecode(string $data): string|false
     {
-        return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+        $remainder = strlen($data) % 4;
+
+        if ($remainder === 1) {
+            return false;
+        }
+
+        $padded = $remainder > 0
+            ? str_pad(strtr($data, '-_', '+/'), strlen($data) + (4 - $remainder), '=', STR_PAD_RIGHT)
+            : strtr($data, '-_', '+/');
+
+        return base64_decode($padded, true);
     }
 
     public static function isBase64Url(string $data): bool

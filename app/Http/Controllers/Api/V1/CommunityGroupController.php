@@ -11,6 +11,7 @@ use App\Http\Resources\CommunityGroup\CommunityGroupCollection;
 use App\Http\Resources\CommunityGroup\CommunityGroupResource;
 use App\Jobs\DeleteBlob;
 use App\Models\CommunityGroup;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -24,6 +25,8 @@ use Throwable;
  */
 class CommunityGroupController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.CommunityGroup::class)->only('store');
@@ -84,7 +87,7 @@ class CommunityGroupController extends Controller
                 'priority',
                 '-id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CommunityGroupCollection($communityGroups);
     }

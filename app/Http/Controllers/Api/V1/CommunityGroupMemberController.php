@@ -9,6 +9,7 @@ use App\Http\Resources\CommunityGroupMember\CommunityGroupMemberCollection;
 use App\Http\Resources\CommunityGroupMember\CommunityGroupMemberResource;
 use App\Models\CommunityGroup;
 use App\Models\CommunityGroupMember;
+use App\Traits\HasPagination;
 use App\Traits\HasQueryFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CommunityGroupMemberController extends Controller
 {
-    use HasQueryFilters;
+    use HasPagination, HasQueryFilters;
 
     public function __construct()
     {
@@ -141,7 +142,7 @@ class CommunityGroupMemberController extends Controller
             ->allowedFilters(...$filters)
             ->allowedSorts(...$sorts)
             ->defaultSorts('-users.id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CommunityGroupMemberCollection($communityGroupMembers);
     }
@@ -162,7 +163,7 @@ class CommunityGroupMemberController extends Controller
             ->wherePivot('user_id', $request->validated('user_id'))
             ->first();
 
-        return new CommunityGroupMemberResource($communityGroupMember);
+        return (new CommunityGroupMemberResource($communityGroupMember))->response()->setStatusCode(201);
     }
 
     /**

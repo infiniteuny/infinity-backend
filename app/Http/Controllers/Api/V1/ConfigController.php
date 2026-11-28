@@ -8,6 +8,7 @@ use App\Http\Requests\Config\UpdateConfigRequest;
 use App\Http\Resources\Config\ConfigCollection;
 use App\Http\Resources\Config\ConfigResource;
 use App\Models\Config;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -21,6 +22,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ConfigController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.Config::class)->only('store');
@@ -101,7 +104,7 @@ class ConfigController extends Controller
             $configs = $configs->where('is_private', false);
         }
 
-        $configs = $configs->cursorPaginate($request->query('per_page', 10));
+        $configs = $configs->cursorPaginate($this->resolvePerPage($request));
 
         return new ConfigCollection($configs);
     }

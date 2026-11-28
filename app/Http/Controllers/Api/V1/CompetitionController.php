@@ -8,6 +8,7 @@ use App\Http\Requests\Competition\UpdateCompetitionRequest;
 use App\Http\Resources\Competition\CompetitionCollection;
 use App\Http\Resources\Competition\CompetitionResource;
 use App\Models\Competition;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CompetitionController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.Competition::class)->only('store');
@@ -69,7 +72,7 @@ class CompetitionController extends Controller
                 'updated_at',
             )
             ->defaultSorts('-id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CompetitionCollection($competitions);
     }

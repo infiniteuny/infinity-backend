@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Token\TokenCollection;
 use App\Http\Resources\Token\TokenResource;
 use App\Models\Token;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -18,6 +19,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class TokenController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:viewAny,'.Token::class)->only('index');
@@ -78,7 +81,7 @@ class TokenController extends Controller
             $tokens = $tokens->where('user_id', $userId);
         }
 
-        $tokens = $tokens->cursorPaginate($request->query('per_page', 10));
+        $tokens = $tokens->cursorPaginate($this->resolvePerPage($request));
 
         return new TokenCollection($tokens);
     }

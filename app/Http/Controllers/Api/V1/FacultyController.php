@@ -8,6 +8,7 @@ use App\Http\Requests\Faculty\UpdateFacultyRequest;
 use App\Http\Resources\Faculty\FacultyCollection;
 use App\Http\Resources\Faculty\FacultyResource;
 use App\Models\Faculty;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class FacultyController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(Faculty::class, 'faculty');
@@ -64,7 +67,7 @@ class FacultyController extends Controller
                 'updated_at',
             )
             ->defaultSorts('code')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new FacultyCollection($faculties);
     }

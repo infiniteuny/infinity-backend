@@ -8,6 +8,7 @@ use App\Http\Requests\CompetitionTeamType\UpdateCompetitionTeamTypeRequest;
 use App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeCollection;
 use App\Http\Resources\CompetitionTeamType\CompetitionTeamTypeResource;
 use App\Models\CompetitionTeamType;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CompetitionTeamTypeController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(CompetitionTeamType::class, 'competition_team_type');
@@ -67,7 +70,7 @@ class CompetitionTeamTypeController extends Controller
                 'weight',
                 '-id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CompetitionTeamTypeCollection($competitionTeamTypes);
     }

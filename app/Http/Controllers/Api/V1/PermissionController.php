@@ -8,6 +8,7 @@ use App\Http\Requests\Permission\UpdatePermissionRequest;
 use App\Http\Resources\Permission\PermissionCollection;
 use App\Http\Resources\Permission\PermissionResource;
 use App\Models\Permission;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class PermissionController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(Permission::class, 'permission');
@@ -64,7 +67,7 @@ class PermissionController extends Controller
                 'updated_at',
             )
             ->defaultSorts('-id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new PermissionCollection($permissions);
     }

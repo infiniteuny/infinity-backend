@@ -8,6 +8,7 @@ use App\Http\Requests\Major\UpdateMajorRequest;
 use App\Http\Resources\Major\MajorCollection;
 use App\Http\Resources\Major\MajorResource;
 use App\Models\Major;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class MajorController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(Major::class, 'major');
@@ -77,7 +80,7 @@ class MajorController extends Controller
                 'updated_at',
             )
             ->defaultSorts('code')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new MajorCollection($majors);
     }

@@ -34,6 +34,16 @@ class CoreTeam extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'year' => 'integer',
+        'is_active' => 'boolean',
+    ];
+
+    /**
      * Prepare a date for array / JSON serialization.
      */
     protected function serializeDate(DateTimeInterface $date): string

@@ -8,6 +8,7 @@ use App\Http\Requests\CompetitionOutput\UpdateCompetitionOutputRequest;
 use App\Http\Resources\CompetitionOutput\CompetitionOutputCollection;
 use App\Http\Resources\CompetitionOutput\CompetitionOutputResource;
 use App\Models\CompetitionOutput;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CompetitionOutputController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(CompetitionOutput::class, 'competition_output');
@@ -67,7 +70,7 @@ class CompetitionOutputController extends Controller
                 'weight',
                 '-id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CompetitionOutputCollection($competitionOutputs);
     }

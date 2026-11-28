@@ -28,7 +28,9 @@ trait HasBulkCreate
                 return (new static)->newModelInstance($attribute);
             });
 
-        (new static)->saveMany($models);
+        if (! (new static)->saveMany($models)) {
+            return collect();
+        }
 
         return $models;
     }

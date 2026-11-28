@@ -11,6 +11,7 @@ use App\Http\Resources\ProjectGallery\ProjectGalleryCollection;
 use App\Http\Resources\ProjectGallery\ProjectGalleryResource;
 use App\Jobs\DeleteBlob;
 use App\Models\ProjectGallery;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -23,6 +24,8 @@ use Throwable;
  */
 class ProjectGalleryController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.ProjectGallery::class)->only('store');
@@ -75,7 +78,7 @@ class ProjectGalleryController extends Controller
                 'updated_at',
             )
             ->defaultSorts('-id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new ProjectGalleryCollection($projectGalleries);
     }

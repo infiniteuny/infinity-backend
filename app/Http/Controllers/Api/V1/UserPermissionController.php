@@ -9,6 +9,7 @@ use App\Http\Resources\UserPermission\UserPermissionCollection;
 use App\Http\Resources\UserPermission\UserPermissionResource;
 use App\Models\User;
 use App\Models\UserPermission;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -22,6 +23,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class UserPermissionController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:viewAny,'.UserPermission::class.',user')->only('index');
@@ -33,8 +36,6 @@ class UserPermissionController extends Controller
 
     /**
      * List all user permissions
-     *
-     * @unauthenticated
      *
      * @apiResourceCollection App\Http\Resources\UserPermission\UserPermissionCollection
      *
@@ -71,7 +72,7 @@ class UserPermissionController extends Controller
                     AllowedSort::field('updated_at', 'permissions.updated_at'),
                 )
                 ->defaultSorts('-permissions.id')
-                ->cursorPaginate($request->query('per_page', 10));
+                ->cursorPaginate($this->resolvePerPage($request));
         }
 
         return new UserPermissionCollection($userPermission);
@@ -94,13 +95,11 @@ class UserPermissionController extends Controller
             ->wherePivot('permission_id', $request->validated('permission_id'))
             ->first();
 
-        return new UserPermissionResource($userPermission);
+        return (new UserPermissionResource($userPermission))->response()->setStatusCode(201);
     }
 
     /**
      * Retrieve a user permission
-     *
-     * @unauthenticated
      *
      * @apiResource App\Http\Resources\UserPermission\UserPermissionResource
      *

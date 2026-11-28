@@ -37,7 +37,7 @@ SUMMARY_LOG="$LOG_DIR/summary-$TIMESTAMP.json"
 
 FIXTURES_DIR="$SCRIPT_DIR/fixtures"
 MISSING=0
-for f in test-image.jpg test-animation.gif test-document.pdf; do
+for f in test-image.jpg test-animation.gif test-document.pdf test-document.docx; do
     if [ ! -f "$FIXTURES_DIR/$f" ]; then
         echo "WARNING: Missing fixture: $FIXTURES_DIR/$f"
         MISSING=1
@@ -49,7 +49,8 @@ if [ "$MISSING" = "1" ]; then
     echo "Place the following files in $FIXTURES_DIR/:"
     echo "  - test-image.jpg       (for image, photo, logo fields)"
     echo "  - test-animation.gif   (for animation fields)"
-    echo "  - test-document.pdf    (for letter_of_acceptance, proposal fields)"
+    echo "  - test-document.pdf    (for letter_of_acceptance fields)"
+    echo "  - test-document.docx   (for proposal fields)"
     echo ""
     read -p "Continue without fixtures? (y/N) " -r REPLY
     if [ "$REPLY" != "y" ] && [ "$REPLY" != "Y" ]; then
@@ -65,7 +66,15 @@ fi
 
 HTML_REPORT="$LOG_DIR/html-report-$TIMESTAMP.html"
 
-ENV_FLAGS="--env K6_BEARER_TOKEN=$TOKEN --env K6_BASE_URL=$BASE_URL --env K6_LOGS_DIR=$LOG_DIR --env K6_WEB_DASHBOARD=true --env K6_WEB_DASHBOARD_EXPORT=$HTML_REPORT"
+run_k6() {
+    k6 "$@" \
+        --env "K6_BEARER_TOKEN=$TOKEN" \
+        --env "K6_BASE_URL=$BASE_URL" \
+        --env "K6_LOGS_DIR=$LOG_DIR" \
+        --env "K6_WEB_DASHBOARD=true" \
+        --env "K6_WEB_DASHBOARD_EXPORT=$HTML_REPORT" \
+        "$TEST_SCRIPT"
+}
 
 CLOUD_EXEC_MODE=""
 if [ "$USE_CLOUD" = "1" ]; then
@@ -117,27 +126,27 @@ if [ "$MODE" = "smoke" ]; then
     if [ "$USE_CLOUD" = "1" ]; then
         if [ "$CLOUD_EXEC_MODE" = "local" ]; then
             echo "=== Running SMOKE test (11 scenarios, 1 VU each, 30s) - Local with cloud logging ==="
-            k6 cloud run --local-execution --summary-export "$SUMMARY_LOG" $ENV_FLAGS "$TEST_SCRIPT"
+            run_k6 cloud run --local-execution --summary-export "$SUMMARY_LOG"
         else
             echo "=== Running SMOKE test (11 scenarios, 1 VU each, 30s) - Cloud ==="
-            k6 cloud run --summary-export "$SUMMARY_LOG" $ENV_FLAGS "$TEST_SCRIPT"
+            run_k6 cloud run --summary-export "$SUMMARY_LOG"
         fi
     else
         echo "=== Running SMOKE test (11 scenarios, 1 VU each, 30s) ==="
-        k6 run --out "json=$DETAIL_LOG" $ENV_FLAGS "$TEST_SCRIPT"
+        run_k6 run --out "json=$DETAIL_LOG"
     fi
 else
     if [ "$USE_CLOUD" = "1" ]; then
         if [ "$CLOUD_EXEC_MODE" = "local" ]; then
             echo "=== Running BREAKPOINT test - Local with cloud logging ==="
-            k6 cloud run --local-execution --summary-export "$SUMMARY_LOG" $ENV_FLAGS "$TEST_SCRIPT"
+            run_k6 cloud run --local-execution --summary-export "$SUMMARY_LOG"
         else
             echo "=== Running BREAKPOINT test - Cloud ==="
-            k6 cloud run --summary-export "$SUMMARY_LOG" $ENV_FLAGS "$TEST_SCRIPT"
+            run_k6 cloud run --summary-export "$SUMMARY_LOG"
         fi
     else
         echo "=== Running BREAKPOINT test ==="
-        k6 run --out "json=$DETAIL_LOG" $ENV_FLAGS "$TEST_SCRIPT"
+        run_k6 run --out "json=$DETAIL_LOG"
     fi
 fi
 

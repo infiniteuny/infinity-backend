@@ -13,6 +13,7 @@ use App\Jobs\DeleteSsoUser;
 use App\Jobs\UpdateSsoUser;
 use App\Models\Config;
 use App\Models\User;
+use App\Traits\HasPagination;
 use App\Traits\HasQueryFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -29,7 +30,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class UserController extends Controller
 {
-    use HasQueryFilters;
+    use HasPagination, HasQueryFilters;
 
     public function __construct()
     {
@@ -165,7 +166,7 @@ class UserController extends Controller
             ->allowedFilters(...$filters)
             ->allowedSorts(...$sorts)
             ->defaultSorts('-id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new UserCollection($users);
     }

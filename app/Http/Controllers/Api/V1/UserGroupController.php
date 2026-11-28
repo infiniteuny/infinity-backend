@@ -9,6 +9,7 @@ use App\Http\Resources\UserGroup\UserGroupCollection;
 use App\Http\Resources\UserGroup\UserGroupResource;
 use App\Models\User;
 use App\Models\UserGroup;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -21,6 +22,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class UserGroupController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:viewAny,'.UserGroup::class.',user')->only('index');
@@ -62,7 +65,7 @@ class UserGroupController extends Controller
                 AllowedSort::field('updated_at', 'groups.updated_at'),
             )
             ->defaultSorts('-groups.id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new UserGroupCollection($userGroup);
     }
@@ -83,7 +86,7 @@ class UserGroupController extends Controller
             ->wherePivot('group_id', $request->validated('group_id'))
             ->first();
 
-        return new UserGroupResource($userGroup);
+        return (new UserGroupResource($userGroup))->response()->setStatusCode(201);
     }
 
     /**

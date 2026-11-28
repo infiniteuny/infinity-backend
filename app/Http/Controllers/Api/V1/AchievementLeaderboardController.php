@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AchievementLeaderboard\AchievementLeaderboardCollection;
 use App\Http\Resources\AchievementLeaderboard\AchievementLeaderboardYearCollection;
 use App\Models\AchievementLeaderboard;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -17,6 +18,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class AchievementLeaderboardController extends Controller
 {
+    use HasPagination;
+
     /**
      * List all achievement leaderboard years
      *
@@ -36,7 +39,7 @@ class AchievementLeaderboardController extends Controller
             ->selectRaw('DISTINCT year'))
             ->allowedSorts('year')
             ->defaultSorts('-year')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new AchievementLeaderboardYearCollection($years);
     }
@@ -121,7 +124,7 @@ class AchievementLeaderboardController extends Controller
             $query->orderBy('id');
         }
 
-        $achievementLeaderboards = $query->cursorPaginate($request->query('per_page', 10));
+        $achievementLeaderboards = $query->cursorPaginate($this->resolvePerPage($request));
 
         return new AchievementLeaderboardCollection($achievementLeaderboards);
     }

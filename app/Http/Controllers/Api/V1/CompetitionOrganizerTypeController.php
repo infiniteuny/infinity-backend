@@ -8,6 +8,7 @@ use App\Http\Requests\CompetitionOrganizerType\UpdateCompetitionOrganizerTypeReq
 use App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeCollection;
 use App\Http\Resources\CompetitionOrganizerType\CompetitionOrganizerTypeResource;
 use App\Models\CompetitionOrganizerType;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CompetitionOrganizerTypeController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(CompetitionOrganizerType::class, 'competition_organizer_type');
@@ -67,7 +70,7 @@ class CompetitionOrganizerTypeController extends Controller
                 'weight',
                 '-id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CompetitionOrganizerTypeCollection($competitionOrganizerTypes);
     }

@@ -11,6 +11,7 @@ use App\Http\Resources\Testimonial\TestimonialCollection;
 use App\Http\Resources\Testimonial\TestimonialResource;
 use App\Jobs\DeleteBlob;
 use App\Models\Testimonial;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -23,6 +24,8 @@ use Throwable;
  */
 class TestimonialController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.Testimonial::class)->only('store');
@@ -74,7 +77,7 @@ class TestimonialController extends Controller
                 'updated_at',
             )
             ->defaultSorts('-id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new TestimonialCollection($testimonials);
     }

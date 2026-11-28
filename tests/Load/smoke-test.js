@@ -365,6 +365,13 @@ export function setup() {
         }
     });
 
+    if (hasFailure) {
+        teardown({ ids });
+        throw new Error(
+            "Setup failed: one or more prerequisite resources could not be created.",
+        );
+    }
+
     return { ids, hasFailure };
 }
 

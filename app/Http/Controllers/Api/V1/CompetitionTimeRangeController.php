@@ -8,6 +8,7 @@ use App\Http\Requests\CompetitionTimeRange\UpdateCompetitionTimeRangeRequest;
 use App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeCollection;
 use App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeResource;
 use App\Models\CompetitionTimeRange;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CompetitionTimeRangeController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(CompetitionTimeRange::class, 'competition_time_range');
@@ -67,7 +70,7 @@ class CompetitionTimeRangeController extends Controller
                 'weight',
                 '-id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CompetitionTimeRangeCollection($competitionTimeRanges);
     }
@@ -111,7 +114,11 @@ class CompetitionTimeRangeController extends Controller
     }
 
     /**
-     * Update a competition time range.
+     * Update a competition time range
+     *
+     * @apiResource App\Http\Resources\CompetitionTimeRange\CompetitionTimeRangeResource
+     *
+     * @apiResourceModel App\Models\CompetitionTimeRange
      */
     public function update(UpdateCompetitionTimeRangeRequest $request, CompetitionTimeRange $competitionTimeRange)
     {

@@ -286,7 +286,7 @@ class SemiPublicGuardAndRedactionTest extends TestCase
         $this->postJson("/v1/community-groups/{$this->communityGroup->id}/members", [
             'user_id' => $this->member->id,
         ])
-            ->assertStatus(200)
+            ->assertCreated()
             ->assertJsonPath('data.community_group_member.email_address', 'member@student.uny.ac.id');
 
         $this->postJson("/v1/community-group-admins/{$this->communityGroupAdmin->id}/members", [
@@ -294,7 +294,7 @@ class SemiPublicGuardAndRedactionTest extends TestCase
             'community_group_id' => $this->communityGroup->id,
             'photo' => UploadedFile::fake()->image('cga.png'),
         ])
-            ->assertStatus(200)
+            ->assertCreated()
             ->assertJsonPath('data.community_group_admin_member.email_address', 'member@student.uny.ac.id');
 
         $this->postJson("/v1/core-teams/{$this->coreTeam->id}/members", [
@@ -302,7 +302,7 @@ class SemiPublicGuardAndRedactionTest extends TestCase
             'core_team_division_id' => $this->division->id,
             'photo' => UploadedFile::fake()->image('ct.png'),
         ])
-            ->assertStatus(200)
+            ->assertCreated()
             ->assertJsonPath('data.core_team_member.email_address', 'member@student.uny.ac.id');
 
         $this->patchJson("/v1/achievements/{$this->achievement->id}", [

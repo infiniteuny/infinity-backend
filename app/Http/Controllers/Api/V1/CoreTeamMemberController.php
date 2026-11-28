@@ -12,6 +12,7 @@ use App\Http\Resources\CoreTeamMember\CoreTeamMemberResource;
 use App\Jobs\DeleteBlob;
 use App\Models\CoreTeam;
 use App\Models\CoreTeamMember;
+use App\Traits\HasPagination;
 use App\Traits\HasQueryFilters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,7 +32,7 @@ use Throwable;
  */
 class CoreTeamMemberController extends Controller
 {
-    use HasQueryFilters;
+    use HasPagination, HasQueryFilters;
 
     public function __construct()
     {
@@ -158,7 +159,7 @@ class CoreTeamMemberController extends Controller
             ->allowedFilters(...$filters)
             ->allowedSorts(...$sorts)
             ->defaultSorts('-users.id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         if (in_array('membership.core_team_division', explode(',', $request->query('includes', '')))) {
             Collection::make(
@@ -221,7 +222,7 @@ class CoreTeamMemberController extends Controller
             ->wherePivot('user_id', $request->validated('user_id'))
             ->first();
 
-        return new CoreTeamMemberResource($coreTeamMember);
+        return (new CoreTeamMemberResource($coreTeamMember))->response()->setStatusCode(201);
     }
 
     /**

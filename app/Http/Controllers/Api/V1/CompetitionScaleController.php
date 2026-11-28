@@ -8,6 +8,7 @@ use App\Http\Requests\CompetitionScale\UpdateCompetitionScaleRequest;
 use App\Http\Resources\CompetitionScale\CompetitionScaleCollection;
 use App\Http\Resources\CompetitionScale\CompetitionScaleResource;
 use App\Models\CompetitionScale;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -19,6 +20,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class CompetitionScaleController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(CompetitionScale::class, 'competition_scale');
@@ -67,7 +70,7 @@ class CompetitionScaleController extends Controller
                 'weight',
                 '-id',
             )
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CompetitionScaleCollection($competitionScales);
     }

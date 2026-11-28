@@ -12,6 +12,7 @@ use App\Jobs\DeleteDocsGroup;
 use App\Jobs\DeleteSsoGroup;
 use App\Jobs\UpdateSsoGroup;
 use App\Models\Group;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Enums\FilterOperator;
@@ -23,6 +24,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class GroupController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(Group::class, 'group');
@@ -68,7 +71,7 @@ class GroupController extends Controller
                 'updated_at',
             )
             ->defaultSorts('-id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new GroupCollection($groups);
     }

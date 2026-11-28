@@ -15,8 +15,7 @@ class Associative implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        // If keys are a consecutive list of numbers, it’s not an associative array.
-        if (! is_array($value) || array_keys($value) === range(0, count($value) - 1)) {
+        if (! is_array($value) || ($value !== [] && array_is_list($value))) {
             $fail("The {$attribute} field must be an associative array.");
         }
     }

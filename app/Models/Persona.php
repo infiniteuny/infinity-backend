@@ -32,6 +32,7 @@ class Persona extends Model
      * @var array
      */
     protected $casts = [
+        'priority' => 'integer',
         'logo' => Blob::class,
     ];
 

@@ -55,7 +55,7 @@ export function trackedRequest(method, url, body, headers, groupName) {
             res = http.request(method, url, body, params);
     }
 
-    const isError = res.status >= 400;
+    const isError = res.status === 0 || res.status >= 400;
 
     apiResponseTime.add(res.timings.duration);
     apiThroughput.add(1);
@@ -100,5 +100,7 @@ export function extractId(res) {
 let _uidCounter = 0;
 export function uid() {
     _uidCounter++;
-    return `uid_${_uidCounter}_${Date.now() % 100000}`;
+    const vu = typeof __VU !== 'undefined' ? __VU : 0;
+    const rand = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    return `${vu}_${_uidCounter}_${Date.now() % 100000}${rand}`;
 }

@@ -10,6 +10,7 @@ use App\Http\Resources\FundApplication\FundApplicationCollection;
 use App\Http\Resources\FundApplication\FundApplicationResource;
 use App\Jobs\DeleteBlob;
 use App\Models\FundApplication;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -24,6 +25,8 @@ use Throwable;
  */
 class FundApplicationController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->authorizeResource(FundApplication::class, 'fund_application');
@@ -112,7 +115,7 @@ class FundApplicationController extends Controller
             });
         }
 
-        $fundApplications = $fundApplications->cursorPaginate($request->query('per_page', 10));
+        $fundApplications = $fundApplications->cursorPaginate($this->resolvePerPage($request));
 
         return new FundApplicationCollection($fundApplications);
     }

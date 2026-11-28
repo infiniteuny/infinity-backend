@@ -10,6 +10,7 @@ use App\Http\Resources\Achievement\AchievementCollection;
 use App\Http\Resources\Achievement\AchievementResource;
 use App\Jobs\DeleteBlob;
 use App\Models\Achievement;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -24,6 +25,8 @@ use Throwable;
  */
 class AchievementController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.Achievement::class)->only('store');
@@ -166,7 +169,7 @@ class AchievementController extends Controller
             ->allowedSorts(...$sorts)
             ->defaultSorts('-id');
 
-        $achievements = $achievements->cursorPaginate($request->query('per_page', 10));
+        $achievements = $achievements->cursorPaginate($this->resolvePerPage($request));
 
         return new AchievementCollection($achievements);
     }

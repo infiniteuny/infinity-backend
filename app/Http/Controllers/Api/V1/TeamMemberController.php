@@ -9,6 +9,7 @@ use App\Http\Resources\TeamMember\TeamMemberCollection;
 use App\Http\Resources\TeamMember\TeamMemberResource;
 use App\Models\Team;
 use App\Models\TeamMember;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -22,6 +23,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class TeamMemberController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:viewAny,'.TeamMember::class.',team')->only('index');
@@ -98,7 +101,7 @@ class TeamMemberController extends Controller
                 AllowedSort::field('updated_at', 'users.updated_at'),
             )
             ->defaultSorts('-users.id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new TeamMemberCollection($teamMembers);
     }
@@ -119,7 +122,7 @@ class TeamMemberController extends Controller
             ->wherePivot('user_id', $request->validated('user_id'))
             ->first();
 
-        return new TeamMemberResource($teamMember);
+        return (new TeamMemberResource($teamMember))->response()->setStatusCode(201);
     }
 
     /**

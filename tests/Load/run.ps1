@@ -46,7 +46,7 @@ if (-not (Test-Path -LiteralPath $LogDir)) {
 
 # Check for fixture files
 $MissingFiles = @()
-$FixtureNames = @('test-image.jpg', 'test-animation.gif', 'test-document.pdf')
+$FixtureNames = @('test-image.jpg', 'test-animation.gif', 'test-document.pdf', 'test-document.docx')
 
 foreach ($f in $FixtureNames) {
     $Path = Join-Path $FixturesDir $f
@@ -64,7 +64,8 @@ if ($MissingFiles.Count -gt 0) {
     Write-Host ""
     Write-Host "  - test-image.jpg       (for image, photo, logo fields)" -ForegroundColor Cyan
     Write-Host "  - test-animation.gif   (for animation fields)" -ForegroundColor Cyan
-    Write-Host "  - test-document.pdf    (for letter_of_acceptance, proposal fields)" -ForegroundColor Cyan
+    Write-Host "  - test-document.pdf    (for letter_of_acceptance fields)" -ForegroundColor Cyan
+    Write-Host "  - test-document.docx   (for proposal fields)" -ForegroundColor Cyan
     Write-Host ""
 
     $Continue = Read-Host "Continue without fixtures? (y/N)"

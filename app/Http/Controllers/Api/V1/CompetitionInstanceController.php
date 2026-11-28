@@ -10,6 +10,7 @@ use App\Http\Resources\CompetitionInstance\CompetitionInstanceCollection;
 use App\Http\Resources\CompetitionInstance\CompetitionInstanceResource;
 use App\Jobs\DeleteBlob;
 use App\Models\CompetitionInstance;
+use App\Traits\HasPagination;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -23,6 +24,8 @@ use Throwable;
  */
 class CompetitionInstanceController extends Controller
 {
+    use HasPagination;
+
     public function __construct()
     {
         $this->middleware('can:create,'.CompetitionInstance::class)->only('store');
@@ -109,7 +112,7 @@ class CompetitionInstanceController extends Controller
                 'updated_at',
             )
             ->defaultSorts('-id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         return new CompetitionInstanceCollection($competitionInstances);
     }

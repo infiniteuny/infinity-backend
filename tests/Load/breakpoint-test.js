@@ -446,6 +446,13 @@ export function setup() {
         }
     });
 
+    if (hasFailure) {
+        teardown({ ids });
+        throw new Error(
+            "Setup failed: one or more prerequisite resources could not be created.",
+        );
+    }
+
     return { ids, hasFailure };
 }
 
@@ -599,7 +606,7 @@ export function updateAchievements(setupResult) {
 // handleSummary: Write JSON results to file, standard k6 summary to console
 // ============================================================================
 export function handleSummary(data) {
-    const logsDir = __ENV.K6_LOGS_DIR || "tests/k6/logs";
+    const logsDir = __ENV.K6_LOGS_DIR || "tests/Load/logs";
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
     const metrics = data.metrics;

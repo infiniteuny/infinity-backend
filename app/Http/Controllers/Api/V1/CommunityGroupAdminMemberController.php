@@ -12,6 +12,7 @@ use App\Http\Resources\CommunityGroupAdminMember\CommunityGroupAdminMemberResour
 use App\Jobs\DeleteBlob;
 use App\Models\CommunityGroupAdmin;
 use App\Models\CommunityGroupAdminMember;
+use App\Traits\HasPagination;
 use App\Traits\HasQueryFilters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,7 +32,7 @@ use Throwable;
  */
 class CommunityGroupAdminMemberController extends Controller
 {
-    use HasQueryFilters;
+    use HasPagination, HasQueryFilters;
 
     public function __construct()
     {
@@ -159,7 +160,7 @@ class CommunityGroupAdminMemberController extends Controller
             ->allowedSorts(...$sorts)
             ->defaultSorts('-users.id')
             ->orderByDesc('community_group_admin_members.id')
-            ->cursorPaginate($request->query('per_page', 10));
+            ->cursorPaginate($this->resolvePerPage($request));
 
         if (in_array('membership.community_group', explode(',', $request->query('includes', '')))) {
             Collection::make(
@@ -223,7 +224,7 @@ class CommunityGroupAdminMemberController extends Controller
             ->wherePivot('community_group_id', $request->validated('community_group_id'))
             ->first();
 
-        return new CommunityGroupAdminMemberResource($communityGroupAdminMember);
+        return (new CommunityGroupAdminMemberResource($communityGroupAdminMember))->response()->setStatusCode(201);
     }
 
     /**
